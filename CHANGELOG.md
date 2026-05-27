@@ -6,8 +6,47 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Null-calibrated C1/C3** (`ecowave/scoring/segmentation.py`): C1/C3 are redefined
+  from raw high-stress counts to **phase-separation (eta-squared) calibrated against a
+  surrogate null** — a curve confirms only when its phase-structure beats random
+  segmentations of the same shape (per phase-count, so extra phases don't inflate it).
+  *Finding (2008): the PELT benchmark D scores C1=3/C3=2 while Elliott A/B/C now score
+  C1≤1 and are rejected — the new C1 enforces the "waves in only one curve" rule. Across
+  pilots the gate discriminates: champions beat the null for 2016/2020 but are
+  red-flagged for 2008/2022/2000.* See `methodology/improvement_roadmap.md` (#6).
+- **Null / surrogate falsifiability test** (`ecowave/scoring/null_test.py`): the
+  champion's phase-separation (mean η²) is tested against random segmentations and
+  per-curve circular-shift surrogates, with a p-value and a red flag when p ≥ 0.05.
+  Rendered in `model_comparison_<pilot>.md`. See roadmap (#1).
+- **Model D — non-Elliott benchmark** (`ecowave/waves/model_d_regime.py`): PELT
+  multivariate change-point detection (via `ruptures`) derives regime phases from
+  the stress matrix and is scored on C1/C3 by the same pipeline, shown as a
+  benchmark beside A/B/C (not part of the weighted verdict). *Finding: D ties
+  champion B on C1/C3 for 2008.* See roadmap (#2). New dependency: `ruptures`.
+- **Three new pilots** (2020 COVID, 2022 energy/inflation, 2000 dot-com) with
+  per-pilot reference-window overrides and reference crisis dating; 2020 and 2022
+  are **pre-registered out-of-sample holdouts** (`holdout`/`registered_at` on
+  `Pilot`). See roadmap (#3).
+- **EWS validation** (`ecowave/evaluation.py`, CLI `evaluate-ews`): AUROC of monthly
+  mean stress vs independent crisis dating (NBER, CEPR/EABCN, Laeven-Valencia, ECB
+  CISS), pooled and per pilot. *Result: pooled AUROC = 0.78; holdouts 2020 = 0.84,
+  2022 = 0.92 — the stress measurement is valid out-of-sample even though the
+  Elliott segmentation is not.*
+- **Methodology roadmap** (`methodology/improvement_roadmap.md`) documenting the six
+  improvement levers; `anti_pseudoscience_rules.md`, `wave_validation_rules.md` and
+  `scoring_rules.md` updated to require the null test, the non-Elliott benchmark and
+  an out-of-sample holdout.
 - **Configurable dethrone margin** via `ECOWAVE_DETHRONE_MARGIN` (default 0.30): the
   weighted-score gap a challenger needs to dethrone the champion on a relaxed 3/6 win.
+
+### Changed
+- **Verdict thresholds recalibrated** for the null-calibrated C1/C3 scale
+  (`scoring_rules.md`): `strong` now requires `T ≥ 2.2` **and** C1 ≥ 2 **and** C3 ≥ 2
+  (was `T ≥ 2.4` alone) so a model cannot be `strong` on narrative when its falsifiable
+  evidence is coincidental; `usable` lowered to `T ≥ 1.5` (was 1.8); else `fragile`.
+- DB schema (`db/schema.sql`): `model_code` CHECK constraints now allow `'D'` in
+  `model_scores`, `model_comparisons` and `wave_candidates`. **The local SQLite DB
+  must be recreated** (`make clean` then re-run a pilot, or delete `db/ecowave.db`).
 - **Second pilot 2011-2016** and a multi-pilot architecture (`ecowave/pilots.py`):
   a pilot defines its window, Dow context, competing models A/B/C and champion. Pilot
   2016 covers the late euro crisis / recovery / 2015-2016 shocks, reusing the same

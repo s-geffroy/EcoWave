@@ -16,13 +16,16 @@ HEADER = "model_code,criterion_code,criterion_label,raw_score,justification,anal
 
 
 def _panel_high_stress() -> pd.DataFrame:
+    """Two-regime panel aligned with Model B (calm 2007-2009, crisis 2010-2012)."""
+    months = [f"{y}-{m:02d}" for y in range(2007, 2013) for m in range(1, 13)]
     rows = []
     for code in ["E1", "E2", "D1", "L1", "S1"]:
-        for m in ["2008-08", "2008-09", "2008-10", "2008-11"]:
+        for m in months:
+            stress = 90.0 if m >= "2010-01" else 10.0
             rows.append({
                 "month": m, "variable_code": code, "raw_value": 50.0,
-                "z_precrisis": 3.0, "stress_precrisis": 95.0,
-                "z_structural": 3.0, "stress_structural": 90.0,
+                "z_precrisis": 0.0, "stress_precrisis": stress,
+                "z_structural": 0.0, "stress_structural": stress,
                 "status": "available", "source": "x", "confidence": "A", "notes": "",
             })
     return pd.DataFrame(rows)
@@ -60,16 +63,16 @@ def test_full_annotation_unblocks_and_scores(tmp_path):
         for m in ["A", "B", "C"] for c in ["C2", "C4", "C5", "C6"]
     )
     ann = load_annotations(_write(tmp_path / "a.csv", body))
-    scores = compute_model_scores(_panel_high_stress(), ann)
+    scores = compute_model_scores(_panel_high_stress(), ann, n_draws=150)
     # No blocked rows remain.
     assert (scores["status"] != "blocked").all()
     verdicts = model_verdicts(scores)
     assert verdicts["complete"].all()
-    # C1=3 (4+ curves), C3 high, all qualitative=3 -> strong.
-    assert (verdicts["verdict"] == "strong").all()
+    # B's boundary aligns with the regime shift -> C1/C3 high, all qualitative=3 -> strong.
+    assert verdicts.set_index("model_code").loc["B", "verdict"] == "strong"
     # All six criteria are DB-insertable now.
     assert len(db_insertable_rows(scores)) == 18
-    # All models tie at 3 on every criterion -> no challenger dethrones B.
+    # Challengers cannot beat B on the computed criteria -> B conserved.
     text = champion_challenger(scores, verdicts)
     assert "Champion provisoire: B (conservé)" in text
 
@@ -118,5 +121,5 @@ def test_auto_rejection_when_c5_zero(tmp_path):
             body += f"{m},{c},lbl,3,ok,me,2026-01-01\n"
         body += f"{m},C5,lbl,0,no added value,me,2026-01-01\n"
     ann = load_annotations(_write(tmp_path / "a.csv", body))
-    verdicts = model_verdicts(compute_model_scores(_panel_high_stress(), ann))
+    verdicts = model_verdicts(compute_model_scores(_panel_high_stress(), ann, n_draws=150))
     assert (verdicts["verdict"] == "rejected").all()

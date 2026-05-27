@@ -24,7 +24,7 @@ from ecowave.db import (
 )
 from ecowave.ingest.ecb import ingest_ecb_variable
 from ecowave.ingest.fred import ingest_fred_components, ingest_fred_variable
-from ecowave.ingest.manifest import load_manifest
+from ecowave.ingest.manifest import ReferenceWindow, load_manifest
 from ecowave.ingest.manual_events import ingest_events, monthly_intervention_intensity
 from ecowave.ingest.worldbank import ingest_worldbank_variable
 from ecowave.normalize.panel import (
@@ -43,6 +43,8 @@ from ecowave.scoring.model_scores import (
     db_insertable_rows,
     model_verdicts,
 )
+from ecowave.scoring.null_test import champion_null_report
+from ecowave.waves.model_d_regime import fit_model_d
 from ecowave.validation import check_config
 
 SCHEMA_PATH = Path("/app/db/schema.sql")
@@ -64,10 +66,18 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     if not config.ok:
         raise typer.Exit(code=1)
 
-    # The manifest defines the data sources; the pilot defines the analysis window.
-    manifest = replace(load_manifest(MANIFEST_PATH),
-                       panel_start=pilot_def.panel_start, panel_end=pilot_def.panel_end)
+    # The manifest defines the data sources; the pilot defines the analysis window
+    # and may override the reference windows (e.g. a clean pre-crisis baseline).
+    base = load_manifest(MANIFEST_PATH)
+    overrides = {"panel_start": pilot_def.panel_start, "panel_end": pilot_def.panel_end}
+    if pilot_def.precrisis is not None:
+        overrides["precrisis"] = ReferenceWindow(*pilot_def.precrisis)
+    if pilot_def.structural is not None:
+        overrides["structural"] = ReferenceWindow(*pilot_def.structural)
+    manifest = replace(base, **overrides)
     typer.echo(f"Pilot {pilot}: {pilot_def.title} — window {pilot_def.panel_start}..{pilot_def.panel_end}")
+    if pilot_def.holdout:
+        typer.echo(f"  HOLDOUT pilot (pre-registered {pilot_def.registered_at}): out-of-sample test.")
     con = connect(settings.db_path)
     run_id = start_ingestion_run(con, mode=mode, notes=f"pilot {pilot}")
     typer.echo(f"Ingestion run #{run_id} started (mode={mode}).")
@@ -142,18 +152,40 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     annotations = load_annotations(settings.annotations_dir / f"model_scores_qualitative_{pilot}.csv")
     if annotations:
         typer.echo(f"Loaded {len(annotations)} analyst annotation(s) for C2/C4/C5/C6.")
-    scores = compute_model_scores(panel, annotations, models=pilot_def.models)
+
+    # Model D: data-driven, non-Elliott benchmark (phases derived from the panel).
+    model_d = fit_model_d(panel)
+    typer.echo(f"  Model D (PELT) detected {len(model_d['candidate_phases'])} regime(s).")
+    models = {**pilot_def.models, "D": model_d}
+
+    scores = compute_model_scores(panel, annotations, models=models)
     replace_model_scores(con, db_insertable_rows(scores))
-    verdicts = model_verdicts(scores)
+
+    # A/B/C carry the full weighted verdict; D is a benchmark on the computed criteria only.
+    elliott_scores = scores[scores["model_code"] != "D"]
+    verdicts = model_verdicts(elliott_scores)
     for v in verdicts.itertuples():
         add_analyst_note(con, "model", f"{pilot}:{v.model_code}",
                          f"verdict={v.verdict}; weighted={v.weighted_score}; complete={v.complete}; {v.notes}")
 
     # Persist final verdicts only for models scored on all six criteria.
-    comparison_rows = _comparison_rows(scores, verdicts)
+    comparison_rows = _comparison_rows(elliott_scores, verdicts)
     replace_model_comparisons(con, comparison_rows)
-    champion_text = champion_challenger(scores, verdicts, pilot_def.champion,
+    champion_text = champion_challenger(elliott_scores, verdicts, pilot_def.champion,
                                         margin=settings.dethrone_margin)
+
+    # Null / surrogate test on the champion's phase-separation evidence.
+    null_report = _run_null_test(panel, models, pilot_def.champion)
+    if null_report is not None:
+        flagged = null_report["flag_random"] or null_report["flag_shift"]
+        sev = "warning" if flagged else "info"
+        msg = (f"champion {pilot_def.champion} mean eta^2={null_report['real']:.3f}; "
+               + "; ".join(f"{r.method} p={r.p_value:.3f}" for r in null_report["results"]))
+        log_validation(settings.db_path, severity=sev, component="null_test",
+                       message=msg, mode_effect="evidence_only")
+        add_analyst_note(con, "model", f"{pilot}:{pilot_def.champion}", f"null_test: {msg}")
+        typer.echo(f"  Null test: {msg}"
+                   + ("  [RED FLAG: not distinguishable from chance]" if flagged else ""))
 
     _write_scores(settings, scores, verdicts, pilot)
 
@@ -173,7 +205,8 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
 
     reports = generate_reports(settings=settings, pilot_def=pilot_def, mode=mode, panel=panel,
                                curves=curves, scores=scores, verdicts=verdicts,
-                               failures=failures, champion_text=champion_text)
+                               failures=failures, champion_text=champion_text,
+                               null_report=null_report, model_d=model_d)
 
     typer.echo(f"Panel + scores written to {settings.data_processed_dir}")
     for path in reports:
@@ -199,6 +232,13 @@ def _handle_failure(con, settings: Settings, mode: str, run_id: int, component: 
         con.close()
         typer.echo(f"STRICT mode: ingestion of '{component}' failed: {message}", err=True)
         raise typer.Exit(code=1)
+
+
+def _run_null_test(panel: pd.DataFrame, models: dict, champion: str) -> dict | None:
+    """Test whether the champion's phase-separation beats random/time-scrambled nulls."""
+    if champion not in models:
+        return None
+    return champion_null_report(panel, models[champion])
 
 
 def _comparison_rows(scores: pd.DataFrame, verdicts: pd.DataFrame) -> list[dict]:

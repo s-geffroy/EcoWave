@@ -74,6 +74,22 @@ def sources(
     typer.echo(f"Sources page written: {out}")
 
 
+@app.command("evaluate-ews")
+def evaluate_ews(
+    output: str = typer.Option("/app/reports/ews_validation.md", "--output"),
+) -> None:
+    """Out-of-sample AUROC of stress vs reference crisis dating, across all pilots."""
+    from ecowave.evaluation import evaluate_all
+
+    settings = Settings.from_env()
+    evals, pooled, md = evaluate_all(settings)
+    out = Path(output)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(md, encoding="utf-8")
+    typer.echo(f"Pooled AUROC (mean stress) = {pooled:.3f} over {len(evals)} pilot(s).")
+    typer.echo(f"EWS validation written: {out}")
+
+
 @app.command("generate-report")
 def generate_report(
     pilot: str = typer.Option("2008", "--pilot"),

@@ -35,19 +35,59 @@ def _curve_coverage(panel: pd.DataFrame) -> str:
 
 
 def _model_table(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
-    pivot = scores.pivot(index="model_code", columns="criterion_code", values="raw_score")
+    pivot = scores.pivot_table(index="model_code", columns="criterion_code",
+                               values="raw_score", aggfunc="first")
     verdict_map = verdicts.set_index("model_code")
+    present = [m for m in ["A", "B", "C", "D"] if m in pivot.index]
     lines = ["| Model | C1 | C2 | C3 | C4 | C5 | C6 | weighted | verdict |",
              "|---|---|---|---|---|---|---|---:|---|"]
-    for m in ["A", "B", "C"]:
+    for m in present:
         def cell(c):
-            v = pivot.loc[m, c] if (m in pivot.index and c in pivot.columns) else None
+            v = pivot.loc[m, c] if c in pivot.columns else None
             return "—" if v is None or pd.isna(v) else str(int(v))
-        pw = verdict_map.loc[m, "weighted_score"] if m in verdict_map.index else "—"
-        vd = verdict_map.loc[m, "verdict"] if m in verdict_map.index else "—"
+        if m in verdict_map.index:
+            pw = verdict_map.loc[m, "weighted_score"]
+            vd = verdict_map.loc[m, "verdict"]
+        else:  # Model D: non-Elliott benchmark, computed criteria only
+            pw, vd = "—", "benchmark"
         lines.append(f"| {m} | {cell('C1')} | {cell('C2')} | {cell('C3')} | {cell('C4')} | "
                      f"{cell('C5')} | {cell('C6')} | {pw} | **{vd}** |")
     return "\n".join(lines)
+
+
+def _null_section(null_report: dict | None) -> str:
+    if not null_report:
+        return ("_Null/surrogate test not run (champion unavailable)._")
+    lines = [
+        f"Champion phase-separation: **mean η² = {null_report['real']:.3f}** "
+        f"(share of cross-curve stress variance explained by the champion's phases). "
+        f"Only this auto-computed evidence is falsifiable; C2/C4/C5/C6 are excluded.",
+        "",
+        "| Null | mean η² (null) | percentile of champion | p-value | verdict |",
+        "|---|---:|---:|---:|---|",
+    ]
+    for r in null_report["results"]:
+        beats = "beats chance" if r.p_value < null_report["alpha"] else "**RED FLAG: ≈ chance**"
+        lines.append(f"| {r.method} | {r.null_mean:.3f} | {r.percentile:.1f}% | "
+                     f"{r.p_value:.3f} | {beats} |")
+    if null_report["flag_random"] or null_report["flag_shift"]:
+        lines += ["", "> ⚠️ The champion is **not** distinguishable from a null at "
+                  f"α={null_report['alpha']}: its multi-curve evidence may be coincidental."]
+    return "\n".join(lines)
+
+
+def _model_d_section(model_d: dict | None) -> str:
+    if not model_d:
+        return "_Model D (auto-detected regimes) not available._"
+    phases = "; ".join(f"{label} {start}..{end}"
+                       for label, start, end in model_d["candidate_phases"])
+    pen = model_d.get("penalty")
+    pen_txt = f"penalty={pen:.2f}" if isinstance(pen, (int, float)) else "single regime (fallback)"
+    return (f"**{model_d['name']}** — {model_d.get('method', 'PELT')} ({pen_txt}).\n\n"
+            f"Detected regimes: {phases}.\n\n"
+            "D is scored by the same pipeline as A/B/C on the auto-computed criteria (C1/C3). "
+            "If D matches or beats the Elliott champion there, Elliott adds no measurable "
+            "structure over an automatic change-point detector.")
 
 
 def _models_line(pilot_def: Pilot) -> str:
@@ -60,7 +100,8 @@ def _models_line(pilot_def: Pilot) -> str:
 
 def generate_reports(settings: Settings, pilot_def: Pilot, mode: str, panel: pd.DataFrame,
                      curves: pd.DataFrame, scores: pd.DataFrame, verdicts: pd.DataFrame,
-                     failures: list[str], champion_text: str = "") -> list[Path]:
+                     failures: list[str], champion_text: str = "",
+                     null_report: dict | None = None, model_d: dict | None = None) -> list[Path]:
     pilot = pilot_def.code
     window = f"{pilot_def.panel_start} .. {pilot_def.panel_end}"
     settings.reports_dir.mkdir(parents=True, exist_ok=True)
@@ -154,6 +195,14 @@ Raw scores 0-3. `—` = blocked (qualitative criterion not auto-scored in V1).
 {_model_table(scores, verdicts)}
 
 Weights: C1=0.25, C2=0.20, C3=0.20, C4=0.10, C5=0.15, C6=0.10.
+
+## Non-Elliott benchmark (Model D)
+
+{_model_d_section(model_d)}
+
+## Null / surrogate test (falsifiability)
+
+{_null_section(null_report)}
 
 ## Champion / challenger
 
