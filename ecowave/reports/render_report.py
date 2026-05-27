@@ -64,10 +64,11 @@ Generated: {_ts()}  ·  Mode: `{mode}`
 
 ## Final verdict: PROVISIONAL / BLOCKED
 
-EcoWave does **not** deliver a final analytical verdict in V1. The social (S) and
-information (I) curves have no automatable source and the qualitative scoring
-criteria (C2, C4, C5, C6) require analyst judgement. All {blocked_models} models
-are therefore marked **blocked**. This is by design (see anti-pseudoscience rules).
+EcoWave does **not** deliver a final analytical verdict in V1. The information (I)
+curve and part of the social curve (S2, protests) have no automatable source, and
+the qualitative scoring criteria (C2, C4, C5, C6) require analyst judgement. All
+{blocked_models} models are therefore marked **blocked**. This is by design
+(see anti-pseudoscience rules).
 
 ## Source completeness
 

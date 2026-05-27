@@ -122,6 +122,19 @@
       ]
     },
     {
+      "variable_code": "S1",
+      "provider": "FRED",
+      "series_id": "LRHU24TTEZM156S",
+      "dataset_name": "Youth unemployment rate, ages 15-24, Euro Area (monthly)",
+      "frequency_raw": "monthly",
+      "monthly_agg": "avg",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "B",
+      "requires_key": true,
+      "license_notes": "OECD/Eurostat via FRED; activates the social (S) curve"
+    },
+    {
       "variable_code": "L1",
       "provider": "FRED",
       "series_id": "DCOILBRENTEU",
@@ -149,7 +162,6 @@
   ],
   "not_automatable_v1": [
     { "variable_code": "L2", "reason": "World trade volume: no clean free monthly series covering 1990-2012" },
-    { "variable_code": "S1", "reason": "Euro area youth unemployment: source not integrated in V1" },
     { "variable_code": "S2", "reason": "Anti-austerity protests: no automatable source (manual curation only)" },
     { "variable_code": "I1", "reason": "Crisis media volume: GDELT disabled in V1" },
     { "variable_code": "I2", "reason": "Media tone/negativity: GDELT disabled in V1" }

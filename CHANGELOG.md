@@ -6,6 +6,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Social (S) curve activated**: S1 = Euro Area youth unemployment (ages 15-24,
+  FRED `LRHU24TTEZM156S`). The S curve now contributes to multi-curve synchronisation
+  (C1), e.g. 4 confirming curves (E/D/L/S) in 2010-2012. S2 (protests) stays `missing`.
 - **Composite variables** (US + Euro Area) for the E-curve: E4 (real GDP QoQ growth,
   GDPC1 + CLVMNACSCAB1GQEA19), E5 (unemployment, UNRATE + LRHUTTTTEZM156S),
   E6 (HICP/CPI YoY deviation, CPIAUCSL + CP0000EZ19M086NEST). Each region is

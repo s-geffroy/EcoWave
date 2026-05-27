@@ -1,18 +1,19 @@
 # EcoWave — Pilot 2008
 
-Generated: 2026-05-27T17:40:45.421283+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T17:49:24.576205+00:00  ·  Mode: `strict`
 
 ## Final verdict: PROVISIONAL / BLOCKED
 
-EcoWave does **not** deliver a final analytical verdict in V1. The social (S) and
-information (I) curves have no automatable source and the qualitative scoring
-criteria (C2, C4, C5, C6) require analyst judgement. All 3 models
-are therefore marked **blocked**. This is by design (see anti-pseudoscience rules).
+EcoWave does **not** deliver a final analytical verdict in V1. The information (I)
+curve and part of the social curve (S2, protests) have no automatable source, and
+the qualitative scoring criteria (C2, C4, C5, C6) require analyst judgement. All
+3 models are therefore marked **blocked**. This is by design
+(see anti-pseudoscience rules).
 
 ## Source completeness
 
-- Variables with real data: **10**
-- Variables missing (no V1 source): **7**
+- Variables with real data: **11**
+- Variables missing (no V1 source): **6**
 - Ingestion failures this run: **0** 
 
 ### Curve coverage
@@ -20,7 +21,7 @@ are therefore marked **blocked**. This is by design (see anti-pseudoscience rule
 |---|---:|
 | E | 6 |
 | D | 3 |
-| S | 0 |
+| S | 1 |
 | L | 1 |
 | I | 0 |
 
@@ -40,7 +41,7 @@ are therefore marked **blocked**. This is by design (see anti-pseudoscience rule
 | I2 | 0 | 0 | 72 |
 | L1 | 72 | 0 | 0 |
 | L2 | 0 | 0 | 72 |
-| S1 | 0 | 0 | 72 |
+| S1 | 72 | 0 | 0 |
 | S2 | 0 | 0 | 72 |
 
 ## Method

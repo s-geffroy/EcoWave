@@ -144,7 +144,8 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     if failures:
         typer.echo(f"Run completed PARTIAL — {len(failures)} source(s) failed; verdict provisional/blocked.")
     else:
-        typer.echo("Run complete. Verdict remains provisional/blocked (S/I curves absent in V1).")
+        typer.echo("Run complete. Verdict remains provisional/blocked "
+                   "(I curve and S2 absent; C2/C4/C5/C6 require analyst judgement).")
 
 
 def _handle_failure(con, settings: Settings, mode: str, run_id: int, component: str,
