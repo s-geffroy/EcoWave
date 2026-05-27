@@ -6,6 +6,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **L2 world trade volume via World Bank Open Data** (`NE.IMP.GNFS.KD`, WLD, annual):
+  completes the logistics curve. Captures the 2009 global trade collapse (stress 100).
+  New World Bank ingestion (`ingest_worldbank_variable`) with raw provenance. S2 and I2
+  remain `missing` (no open monthly source for 2007-2012; researched UN/ACLED/GDELT).
 - **Analyst annotation system for C2/C4/C5/C6**: `annotations/model_scores_qualitative.csv`
   (+ README rubric) lets an analyst score the qualitative criteria with a **mandatory
   justification** (validated; no score without evidence). The pipeline merges them with

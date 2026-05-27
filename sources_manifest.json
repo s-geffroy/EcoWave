@@ -160,6 +160,19 @@
       "license_notes": "Derived from events_master.csv; no pre-crisis baseline -> partial status"
     },
     {
+      "variable_code": "L2",
+      "provider": "WORLD_BANK",
+      "series_id": "NE.IMP.GNFS.KD",
+      "dataset_name": "World imports of goods and services, volume (World Bank, WLD, annual)",
+      "frequency_raw": "annual",
+      "monthly_agg": "last",
+      "value_transform": "pct_change",
+      "stress_orientation": "contraction_is_stress",
+      "confidence": "B",
+      "requires_key": false,
+      "license_notes": "World Bank Open Data (CC BY 4.0); annual world trade volume, YoY contraction = stress"
+    },
+    {
       "variable_code": "I1",
       "provider": "FRED",
       "dataset_name": "Crisis media volume — news-based Economic Policy Uncertainty, US + Europe (monthly)",
@@ -176,8 +189,7 @@
     }
   ],
   "not_automatable_v1": [
-    { "variable_code": "L2", "reason": "World trade volume: no clean free monthly series covering 1990-2012" },
-    { "variable_code": "S2", "reason": "Anti-austerity protests: no automatable source (manual curation only)" },
-    { "variable_code": "I2", "reason": "Media tone/negativity: needs sentiment data (e.g. GDELT tone), not yet available" }
+    { "variable_code": "S2", "reason": "Anti-austerity protests: no open monthly source for 2010-2012 (UN does not track protests; ACLED covers Europe only from ~2020). Manual curation only." },
+    { "variable_code": "I2", "reason": "Media tone/negativity: needs sentiment data (e.g. GDELT tone); no UN/World Bank substitute" }
   ]
 }

@@ -24,6 +24,7 @@ from ecowave.ingest.ecb import ingest_ecb_variable
 from ecowave.ingest.fred import ingest_fred_components, ingest_fred_variable
 from ecowave.ingest.manifest import load_manifest
 from ecowave.ingest.manual_events import ingest_events, monthly_intervention_intensity
+from ecowave.ingest.worldbank import ingest_worldbank_variable
 from ecowave.normalize.panel import (
     PANEL_COLUMNS,
     build_composite_variable_rows,
@@ -92,6 +93,10 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
                 elif spec.provider == "ECB":
                     series, source_id = ingest_ecb_variable(
                         spec, settings.ecb_api_base, settings.data_raw_dir, con, run_id
+                    )
+                elif spec.provider == "WORLD_BANK":
+                    series, source_id = ingest_worldbank_variable(
+                        spec, settings.world_bank_api_base, settings.data_raw_dir, con, run_id
                     )
                 elif spec.provider == "EVENTS_DERIVED":
                     series = monthly_intervention_intensity(events_path)

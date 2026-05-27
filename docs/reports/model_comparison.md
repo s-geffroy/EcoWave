@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2008)
 
-Generated: 2026-05-27T18:19:19.413054+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:30:21.335849+00:00  ·  Mode: `strict`
 
 ## Scores A / B / C
 
@@ -40,4 +40,4 @@ Champion provisoire: B. A gagne sur 1/6 critères → ne détrône pas B. C gagn
 - B/C1: 5 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'I', 'L', 'S']
 - B/C3: part d'observations robustes sur les 2 fenêtres = 0.42
 - C/C1: 4 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'I', 'L']
-- C/C3: part d'observations robustes sur les 2 fenêtres = 0.58
+- C/C3: part d'observations robustes sur les 2 fenêtres = 0.57

@@ -26,13 +26,16 @@ A et C attaquent B selon les **mêmes critères** C1–C6 (voir `scoring_rules.m
 
 | Courbe | Variables avec données réelles | Source |
 |---|---|---|
-| E (économique) | E1 VIX, E2 TED, E3 drawdown actions, E4 PIB, E5 chômage, E6 inflation | FRED |
-| D (institutionnel) | D1 CISS, D2 spread IT-DE, D3 interventions (events) | ECB SDMX / FRED / events |
-| L (logistique) | L1 pétrole Brent | FRED |
-| S / I | — (aucune source automatisable en V1) | `missing` |
+| E (économique) | E1 VIX, E2 TED, E3 drawdown actions, E4 PIB (US+EA), E5 chômage (US+EA), E6 inflation (US+EA) | FRED |
+| D (institutionnel) | D1 CISS, D2 panier de spreads IT/ES/PT, D3 interventions (events) | ECB SDMX / FRED / events |
+| S (social) | S1 chômage des jeunes zone euro | FRED |
+| L (logistique) | L1 pétrole Brent, L2 commerce mondial | FRED / Banque mondiale |
+| I (information) | I1 incertitude médiatique (EPU US+EU, proxy) | FRED |
 
-Les variables sans source (S1, S2, L2, I1, I2) sont marquées `missing`.
-Le verdict final reste **provisional/blocked** par construction (règles anti-pseudoscience).
+Les **5 courbes sont peuplées**. Restent `missing` faute de source ouverte : **S2**
+(manifestations) et **I2** (tonalité média, nécessite GDELT). Le verdict reste
+`provisional/blocked` tant que les critères qualitatifs C2/C4/C5/C6 ne sont pas
+annotés par un analyste (voir `annotations/`).
 
 ## Architecture V1
 

@@ -1,6 +1,6 @@
 # EcoWave — Pilot 2008
 
-Generated: 2026-05-27T18:19:19.411160+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:30:21.333604+00:00  ·  Mode: `strict`
 
 ## Final verdict: SCORED (analyst-annotated)
 
@@ -8,7 +8,7 @@ All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst
 
 ## Source completeness
 
-- Variables with real data: **12**
+- Variables with real data: **13**
 - Variables missing (no V1 source): **5**
 - Ingestion failures this run: **0** 
 
@@ -18,7 +18,7 @@ All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst
 | E | 6 |
 | D | 3 |
 | S | 1 |
-| L | 1 |
+| L | 2 |
 | I | 1 |
 
 ### Per-variable status (months 2007-01 .. 2012-12)
@@ -36,7 +36,7 @@ All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst
 | I1 | 72 | 0 | 0 |
 | I2 | 0 | 0 | 72 |
 | L1 | 72 | 0 | 0 |
-| L2 | 0 | 0 | 72 |
+| L2 | 6 | 0 | 66 |
 | S1 | 72 | 0 | 0 |
 | S2 | 0 | 0 | 72 |
 
