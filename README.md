@@ -64,13 +64,31 @@ en expliquant pourquoi.
 
 ## Site de documentation (GitHub Pages)
 
+Site en ligne : <https://s-geffroy.github.io/EcoWave/>
+
+Prévisualisation locale (dans le container) :
+
 ```bash
-make site         # synchronise docs/ puis build MkDocs (dans le container)
+make site         # synchronise docs/ puis build MkDocs --strict
 make docs-serve   # prévisualisation sur http://localhost:8000
 ```
 
 Le site est déployé automatiquement sur GitHub Pages à chaque push sur `main`
-(workflow `.github/workflows/pages.yml`).
+(workflow `.github/workflows/pages.yml`, actions sur Node 24).
+
+### Procédure de publication (première fois)
+
+```bash
+# 1. Créer le dépôt public et pousser
+gh repo create s-geffroy/EcoWave --public --source . --remote origin --push
+
+# 2. Activer GitHub Pages avec la source "GitHub Actions"
+gh api -X POST repos/s-geffroy/EcoWave/pages -f build_type=workflow
+```
+
+Ensuite, chaque push sur `main` reconstruit et redéploie le site. Pour publier
+des rapports fraîchement générés, lancer `make run-pilot-strict` puis `make site`
+(qui copie `reports/` dans `docs/reports/`) avant de committer et pousser.
 
 ## Avertissement méthodologique
 

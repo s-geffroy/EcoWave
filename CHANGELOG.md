@@ -3,6 +3,18 @@
 All notable changes to EcoWave are documented here.
 Format based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+### Added
+- Published the project to GitHub (`s-geffroy/EcoWave`, public) and enabled
+  **GitHub Pages** (source = GitHub Actions). Live site: <https://s-geffroy.github.io/EcoWave/>.
+- README "Publication / GitHub Pages" section documenting the deploy procedure.
+
+### Changed
+- CI: bumped `actions/checkout@v5` and `actions/setup-python@v6`, and set
+  `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` so all workflow actions run on
+  Node 24 (Node 20 is deprecated on GitHub runners).
+
 ## [0.1.0] - 2026-05-27
 
 ### Added
