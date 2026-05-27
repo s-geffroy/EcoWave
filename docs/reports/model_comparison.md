@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2008)
 
-Generated: 2026-05-27T17:55:32.314920+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:06:42.862892+00:00  ·  Mode: `strict`
 
 ## Scores A / B / C
 
@@ -24,9 +24,9 @@ criteria, but C2/C4/C5/C6 are not yet scored and S/I curves are absent.
 
 ## Computation notes
 
-- A/C1: 4 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'L', 'S']
-- A/C3: part d'observations robustes sur les 2 fenêtres = 0.41
-- B/C1: 4 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'L', 'S']
-- B/C3: part d'observations robustes sur les 2 fenêtres = 0.41
-- C/C1: 3 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'L']
-- C/C3: part d'observations robustes sur les 2 fenêtres = 0.57
+- A/C1: 5 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'I', 'L', 'S']
+- A/C3: part d'observations robustes sur les 2 fenêtres = 0.42
+- B/C1: 5 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'I', 'L', 'S']
+- B/C3: part d'observations robustes sur les 2 fenêtres = 0.42
+- C/C1: 4 courbe(s) confirmante(s) (>=2 mois stress>= 75): ['D', 'E', 'I', 'L']
+- C/C3: part d'observations robustes sur les 2 fenêtres = 0.58

@@ -1,19 +1,19 @@
 # EcoWave — Pilot 2008
 
-Generated: 2026-05-27T17:55:32.313018+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:06:42.860852+00:00  ·  Mode: `strict`
 
 ## Final verdict: PROVISIONAL / BLOCKED
 
-EcoWave does **not** deliver a final analytical verdict in V1. The information (I)
-curve and part of the social curve (S2, protests) have no automatable source, and
-the qualitative scoring criteria (C2, C4, C5, C6) require analyst judgement. All
-3 models are therefore marked **blocked**. This is by design
-(see anti-pseudoscience rules).
+EcoWave does **not** deliver a final analytical verdict in V1. The information curve
+is only **proxied** (I1 via news-based EPU; I2 media tone still absent), S2 (protests)
+has no automatable source, and the qualitative scoring criteria (C2, C4, C5, C6)
+require analyst judgement. All 3 models are therefore marked
+**blocked**. This is by design (see anti-pseudoscience rules).
 
 ## Source completeness
 
-- Variables with real data: **11**
-- Variables missing (no V1 source): **6**
+- Variables with real data: **12**
+- Variables missing (no V1 source): **5**
 - Ingestion failures this run: **0** 
 
 ### Curve coverage
@@ -23,7 +23,7 @@ the qualitative scoring criteria (C2, C4, C5, C6) require analyst judgement. All
 | D | 3 |
 | S | 1 |
 | L | 1 |
-| I | 0 |
+| I | 1 |
 
 ### Per-variable status (months 2007-01 .. 2012-12)
 | Variable | available | partial | missing |
@@ -37,7 +37,7 @@ the qualitative scoring criteria (C2, C4, C5, C6) require analyst judgement. All
 | E4 | 24 | 0 | 48 |
 | E5 | 72 | 0 | 0 |
 | E6 | 72 | 0 | 0 |
-| I1 | 0 | 0 | 72 |
+| I1 | 72 | 0 | 0 |
 | I2 | 0 | 0 | 72 |
 | L1 | 72 | 0 | 0 |
 | L2 | 0 | 0 | 72 |

@@ -6,6 +6,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Information (I) curve proxied without GDELT**: I1 = news-based Economic Policy
+  Uncertainty (Baker-Bloom-Davis) for US (`USEPUINDXM`) + Europe (`EUEPUINDXM`),
+  a newspaper-article-count measure of crisis media volume (confidence C). All five
+  curves now carry data → C1 reaches 5 confirming curves (E/D/S/L/I). I2 (media tone)
+  stays `missing` pending sentiment data.
 - **Curve figures**: the pipeline now renders `curve_stress.png` (stress per curve
   E/D/S/L 2007-2012) and `model_windows.png` (A/B/C candidate windows vs mean stress),
   published under a new **Curves** section of the site.

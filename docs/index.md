@@ -5,10 +5,11 @@
 **2007–2012 systemic crisis** — without falling into pseudoscience.
 
 !!! warning "Provisional / blocked by design"
-    EcoWave V1 does **not** issue a final analytical verdict. The social (S) and
-    information (I) curves have no automatable data source in V1, and four of the
-    six scoring criteria require analyst judgement. Every model is reported as
-    **blocked**. This is a deliberate guardrail, not a bug.
+    EcoWave V1 does **not** issue a final analytical verdict. The information curve is
+    only proxied (I1 via news-based EPU; I2 tone absent), the social protest variable
+    (S2) has no automatable source, and four of the six scoring criteria require
+    analyst judgement. Every model is reported as **blocked**. This is a deliberate
+    guardrail, not a bug.
 
 ## What it does
 

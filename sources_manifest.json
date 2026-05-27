@@ -158,12 +158,26 @@
       "confidence": "C",
       "requires_key": false,
       "license_notes": "Derived from events_master.csv; no pre-crisis baseline -> partial status"
+    },
+    {
+      "variable_code": "I1",
+      "provider": "FRED",
+      "dataset_name": "Crisis media volume — news-based Economic Policy Uncertainty, US + Europe (monthly)",
+      "frequency_raw": "monthly",
+      "monthly_agg": "avg",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "C",
+      "requires_key": true,
+      "license_notes": "Baker-Bloom-Davis EPU via FRED (newspaper-article counts); GDELT-free proxy for I1",
+      "components": [
+        { "label": "US-EPU", "series_id": "USEPUINDXM", "value_transform": "level" },
+        { "label": "EU-EPU", "series_id": "EUEPUINDXM", "value_transform": "level" }
+      ]
     }
   ],
   "not_automatable_v1": [
     { "variable_code": "L2", "reason": "World trade volume: no clean free monthly series covering 1990-2012" },
     { "variable_code": "S2", "reason": "Anti-austerity protests: no automatable source (manual curation only)" },
-    { "variable_code": "I1", "reason": "Crisis media volume: GDELT disabled in V1" },
-    { "variable_code": "I2", "reason": "Media tone/negativity: GDELT disabled in V1" }
+    { "variable_code": "I2", "reason": "Media tone/negativity: needs sentiment data (e.g. GDELT tone), not yet available" }
   ]
 }

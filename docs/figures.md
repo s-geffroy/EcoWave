@@ -6,8 +6,9 @@ the high-stress threshold (75) used by the C1 synchronisation criterion.
 
 ## Curve stress, 2007–2012
 
-Stress aggregated by curve (E economic, D institutional, S social, L logistics).
-The information (I) curve has no automatable source in V1 and is therefore absent.
+Stress aggregated by curve (E economic, D institutional, S social, L logistics,
+I information). The I curve is a **proxy** (I1 = news-based EPU); its tone component
+(I2) is still absent.
 
 ![Curve stress 2007-2012](figures/curve_stress.png)
 
