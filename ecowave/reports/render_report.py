@@ -196,6 +196,11 @@ Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 ## Confidence grades
 
 Per-variable confidence grades (A-D) are carried in the monthly panel `confidence` column.
+
+## Data sources
+
+Every series is cited with provider, identifier and licence on the
+[Data sources](../sources.md) page (generated from `sources_manifest.json`).
 """, encoding="utf-8")
 
     return [main, comparison, validation]

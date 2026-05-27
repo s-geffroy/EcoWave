@@ -58,6 +58,22 @@ def run_pilot(
     run_pilot_impl(settings=settings, pilot=pilot, mode=mode)
 
 
+@app.command("sources")
+def sources(
+    output: str = typer.Option("/app/docs/sources.md", "--output"),
+    manifest: str = typer.Option("/app/sources_manifest.json", "--manifest"),
+) -> None:
+    """Generate the cited data-sources page from the manifest."""
+    from ecowave.ingest.manifest import load_manifest
+    from ecowave.reports.sources import render_sources_markdown
+
+    md = render_sources_markdown(load_manifest(Path(manifest)))
+    out = Path(output)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(md, encoding="utf-8")
+    typer.echo(f"Sources page written: {out}")
+
+
 @app.command("generate-report")
 def generate_report(
     pilot: str = typer.Option("2008", "--pilot"),

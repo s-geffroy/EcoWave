@@ -53,3 +53,4 @@ nav:
       - "Pilot 2011-2016 — model comparison": reports/model_comparison_2016.md
       - "Pilot 2011-2016 — validation": reports/validation_summary_2016.md
   - Data: data.md
+  - Sources: sources.md

@@ -1,6 +1,6 @@
 # EcoWave — Validation summary (Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks)
 
-Generated: 2026-05-27T19:42:15.289879+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
+Generated: 2026-05-27T20:04:46.824564+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
 ## Run outcome
 
@@ -25,3 +25,8 @@ Generated: 2026-05-27T19:42:15.289879+00:00  ·  Mode: `strict`  ·  Window: 201
 ## Confidence grades
 
 Per-variable confidence grades (A-D) are carried in the monthly panel `confidence` column.
+
+## Data sources
+
+Every series is cited with provider, identifier and licence on the
+[Data sources](../sources.md) page (generated from `sources_manifest.json`).

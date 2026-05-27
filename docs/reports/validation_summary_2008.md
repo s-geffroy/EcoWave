@@ -1,6 +1,6 @@
 # EcoWave — Validation summary (Pilot 2008: Global financial crisis + euro sovereign crisis)
 
-Generated: 2026-05-27T19:42:05.262472+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
+Generated: 2026-05-27T20:04:39.432267+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
 
 ## Run outcome
 
@@ -25,3 +25,8 @@ Generated: 2026-05-27T19:42:05.262472+00:00  ·  Mode: `strict`  ·  Window: 200
 ## Confidence grades
 
 Per-variable confidence grades (A-D) are carried in the monthly panel `confidence` column.
+
+## Data sources
+
+Every series is cited with provider, identifier and licence on the
+[Data sources](../sources.md) page (generated from `sources_manifest.json`).

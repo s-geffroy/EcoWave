@@ -1,6 +1,6 @@
 # EcoWave — Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks
 
-Generated: 2026-05-27T19:42:15.286923+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
+Generated: 2026-05-27T20:04:46.821748+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
 ## Final verdict: SCORED (analyst-annotated)
 

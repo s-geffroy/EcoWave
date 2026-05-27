@@ -6,6 +6,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
+# Cited data-sources page (generated from the manifest)
+ecowave sources --output docs/sources.md --manifest sources_manifest.json
+
 # Methodology (static canonical docs)
 cp methodology/*.md docs/methodology/
 cp variable_dictionary.md docs/methodology/variable_dictionary.md
