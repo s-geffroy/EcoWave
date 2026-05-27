@@ -24,6 +24,11 @@ HIGH_STRESS = 75.0
 CHAMPION = "B"
 MODELS = {"A": MODEL_A, "B": MODEL_B, "C": MODEL_C}
 
+# Champion/challenger thresholds.
+DETHRONE_WINS = 4          # criteria a challenger must win outright to dethrone
+DETHRONE_SOFT_WINS = 3     # relaxed criteria count, valid only if the weighted score diverges
+DETHRONE_MARGIN = 0.30     # weighted-score margin (0-3 scale) that relaxes 4/6 to 3/6
+
 
 def _months_in_model(model: dict) -> set[str]:
     months: set[str] = set()
@@ -146,17 +151,44 @@ def model_verdicts(scores: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def champion_challenger(scores: pd.DataFrame, verdicts: pd.DataFrame, champion: str = CHAMPION) -> str:
-    """Adjudicate champion vs challengers only when all models are complete (≥4/6 to dethrone)."""
+def champion_challenger(scores: pd.DataFrame, verdicts: pd.DataFrame, champion: str = CHAMPION,
+                        margin: float = DETHRONE_MARGIN) -> str:
+    """Adjudicate champion vs challengers when all models are complete.
+
+    A challenger dethrones the champion if it wins ≥4/6 criteria, OR if it wins ≥3/6
+    AND its weighted score exceeds the champion's by at least `margin` (the relaxed rule
+    for a clearly diverging weighted score).
+    """
     if not verdicts["complete"].all():
         return ("Champion/challenger non tranché: les annotations qualitatives sont "
                 "incomplètes pour au moins un modèle (verdict provisoire/bloqué).")
     pivot = (scores[scores["status"].isin({"computed", "annotated"})]
              .pivot(index="model_code", columns="criterion_code", values="raw_score"))
-    challengers = [m for m in pivot.index if m != champion]
+    weighted = verdicts.set_index("model_code")["weighted_score"]
+    champ_w = float(weighted[champion])
+
     lines = []
-    for challenger in challengers:
+    dethroners = []
+    for challenger in [m for m in pivot.index if m != champion]:
         wins = int((pivot.loc[challenger] > pivot.loc[champion]).sum())
-        outcome = f"détrône {champion}" if wins >= 4 else f"ne détrône pas {champion}"
-        lines.append(f"{challenger} gagne sur {wins}/6 critères → {outcome}.")
-    return f"Champion provisoire: {champion}. " + " ".join(lines)
+        diff = float(weighted[challenger]) - champ_w
+        if wins >= DETHRONE_WINS:
+            reason, dethrone = f"≥{DETHRONE_WINS}/6 critères", True
+        elif wins >= DETHRONE_SOFT_WINS and diff >= margin:
+            reason, dethrone = f"{wins}/6 critères mais score pondéré +{diff:.2f} ≥ {margin}", True
+        else:
+            reason, dethrone = "", False
+        if dethrone:
+            dethroners.append(challenger)
+            outcome = f"détrône {champion} ({reason})"
+        else:
+            outcome = f"ne détrône pas {champion}"
+        lines.append(f"{challenger}: {wins}/6 critères, score {float(weighted[challenger]):.2f} "
+                     f"vs {champ_w:.2f} → {outcome}.")
+
+    if dethroners:
+        winner = max(dethroners, key=lambda m: float(weighted[m]))
+        header = f"Champion provisoire: {winner} (détrône {champion})."
+    else:
+        header = f"Champion provisoire: {champion} (conservé)."
+    return header + " " + " ".join(lines)

@@ -5,6 +5,7 @@ import pytest
 
 from ecowave.scoring.annotations import load_annotations
 from ecowave.scoring.model_scores import (
+    WEIGHTS,
     champion_challenger,
     compute_model_scores,
     db_insertable_rows,
@@ -68,7 +69,46 @@ def test_full_annotation_unblocks_and_scores(tmp_path):
     assert (verdicts["verdict"] == "strong").all()
     # All six criteria are DB-insertable now.
     assert len(db_insertable_rows(scores)) == 18
-    assert "Champion provisoire" in champion_challenger(scores, verdicts)
+    # All models tie at 3 on every criterion -> no challenger dethrones B.
+    text = champion_challenger(scores, verdicts)
+    assert "Champion provisoire: B (conservé)" in text
+
+
+def test_relaxed_rule_dethrones_on_weighted_divergence():
+    # C wins exactly 3/6 vs B but its weighted score diverges (+0.50) -> C dethrones B.
+    raws = {
+        "B": {"C1": 3, "C2": 2, "C3": 2, "C4": 2, "C5": 2, "C6": 2},
+        "C": {"C1": 3, "C2": 3, "C3": 3, "C4": 3, "C5": 2, "C6": 2},
+        "A": {"C1": 1, "C2": 1, "C3": 1, "C4": 1, "C5": 1, "C6": 1},
+    }
+    rows = [{"model_code": m, "criterion_code": c, "raw_score": v, "status": "annotated"}
+            for m, cr in raws.items() for c, v in cr.items()]
+    scores = pd.DataFrame(rows)
+    verdicts = pd.DataFrame([
+        {"model_code": m, "weighted_score": round(sum(cr[c] * WEIGHTS[c] for c in cr), 4),
+         "complete": True, "verdict": "x"}
+        for m, cr in raws.items()
+    ])
+    text = champion_challenger(scores, verdicts, "B")
+    assert "Champion provisoire: C (détrône B)" in text
+
+
+def test_three_wins_without_divergence_keeps_champion():
+    # C wins 3/6 (low-weight criteria) but loses C1, so the weighted margin (+0.10) < 0.30 -> B kept.
+    raws = {
+        "B": {"C1": 3, "C2": 2, "C3": 2, "C4": 2, "C5": 2, "C6": 2},
+        "C": {"C1": 2, "C2": 2, "C3": 2, "C4": 3, "C5": 3, "C6": 3},
+    }
+    rows = [{"model_code": m, "criterion_code": c, "raw_score": v, "status": "annotated"}
+            for m, cr in raws.items() for c, v in cr.items()]
+    scores = pd.DataFrame(rows)
+    verdicts = pd.DataFrame([
+        {"model_code": m, "weighted_score": round(sum(cr[c] * WEIGHTS[c] for c in cr), 4),
+         "complete": True, "verdict": "x"}
+        for m, cr in raws.items()
+    ])
+    text = champion_challenger(scores, verdicts, "B")
+    assert "Champion provisoire: B (conservé)" in text
 
 
 def test_auto_rejection_when_c5_zero(tmp_path):

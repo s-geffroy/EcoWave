@@ -1,6 +1,6 @@
 # EcoWave — Pilot 2008: Global financial crisis + euro sovereign crisis
 
-Generated: 2026-05-27T19:32:19.366618+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
+Generated: 2026-05-27T19:37:52.569939+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
 
 ## Final verdict: SCORED (analyst-annotated)
 

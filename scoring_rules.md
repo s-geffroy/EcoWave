@@ -51,5 +51,11 @@ A model is rejected if:
 
 ## Champion / challenger
 
-Model **B** is the provisional champion. A challenger (A or C) dethrones B only if it
-beats B on **≥ 4 of 6** criteria — adjudicated only once all models are fully scored.
+Model **B** is the provisional champion. A challenger (A or C) dethrones B if either:
+
+1. it beats B on **≥ 4 of 6** criteria; **or**
+2. it beats B on **≥ 3 of 6** criteria **and** its weighted score exceeds B's by at
+   least **0.30** (relaxed rule for a clearly diverging weighted score).
+
+Adjudicated only once all models are fully scored. The dethroner with the highest
+weighted score becomes the provisional champion.

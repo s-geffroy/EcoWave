@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks)
 
-Generated: 2026-05-27T19:31:47.589410+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
+Generated: 2026-05-27T19:37:33.097420+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
 ## Scores A / B / C
 
@@ -16,7 +16,7 @@ Weights: C1=0.25, C2=0.20, C3=0.20, C4=0.10, C5=0.15, C6=0.10.
 
 ## Champion / challenger
 
-Champion provisoire: B. A gagne sur 1/6 critères → ne détrône pas B. C gagne sur 3/6 critères → ne détrône pas B.
+Champion provisoire: C (détrône B). A: 1/6 critères, score 1.90 vs 2.25 → ne détrône pas B. C: 3/6 critères, score 2.75 vs 2.25 → détrône B (3/6 critères mais score pondéré +0.50 ≥ 0.3).
 
 ## Annotated criteria (analyst judgement)
 

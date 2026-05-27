@@ -47,8 +47,8 @@ Weighted total `T = Σ raw_score × weight` (range 0–3). Then:
 | T ≥ 1.8 | `usable` |
 | otherwise | `fragile` |
 
-Champion **B** is dethroned only if a challenger (A or C) beats it on **≥ 4 of 6**
-criteria. See `scoring_rules.md`.
+Champion **B** is dethroned if a challenger beats it on **≥ 4 of 6** criteria, or on
+**≥ 3 of 6** when its weighted score exceeds B's by **≥ 0.30**. See `scoring_rules.md`.
 
 ## Per-pilot files
 

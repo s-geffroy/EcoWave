@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2008: Global financial crisis + euro sovereign crisis)
 
-Generated: 2026-05-27T19:32:19.368671+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
+Generated: 2026-05-27T19:37:52.571885+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
 
 ## Scores A / B / C
 
@@ -16,7 +16,7 @@ Weights: C1=0.25, C2=0.20, C3=0.20, C4=0.10, C5=0.15, C6=0.10.
 
 ## Champion / challenger
 
-Champion provisoire: B. A gagne sur 1/6 critères → ne détrône pas B. C gagne sur 2/6 critères → ne détrône pas B.
+Champion provisoire: B (conservé). A: 1/6 critères, score 2.00 vs 2.60 → ne détrône pas B. C: 2/6 critères, score 2.30 vs 2.60 → ne détrône pas B.
 
 ## Annotated criteria (analyst judgement)
 
