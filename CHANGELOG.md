@@ -6,6 +6,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Configurable dethrone margin** via `ECOWAVE_DETHRONE_MARGIN` (default 0.30): the
+  weighted-score gap a challenger needs to dethrone the champion on a relaxed 3/6 win.
 - **Second pilot 2011-2016** and a multi-pilot architecture (`ecowave/pilots.py`):
   a pilot defines its window, Dow context, competing models A/B/C and champion. Pilot
   2016 covers the late euro crisis / recovery / 2015-2016 shocks, reusing the same

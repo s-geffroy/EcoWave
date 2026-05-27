@@ -21,6 +21,7 @@ class Settings:
     reports_dir: Path
     figures_dir: Path
     annotations_dir: Path
+    dethrone_margin: float
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -39,6 +40,7 @@ class Settings:
             reports_dir=Path(os.getenv("REPORTS_DIR", "/app/reports")),
             figures_dir=Path(os.getenv("FIGURES_DIR", "/app/figures")),
             annotations_dir=Path(os.getenv("ANNOTATIONS_DIR", "/app/annotations")),
+            dethrone_margin=float(os.getenv("ECOWAVE_DETHRONE_MARGIN", "0.30")),
         )
 
 

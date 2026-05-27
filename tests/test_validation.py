@@ -24,6 +24,7 @@ def _settings(tmp_path: Path, fred_key: str, db_name: str = "ecowave.db") -> Set
         reports_dir=tmp_path / "reports",
         figures_dir=tmp_path / "figures",
         annotations_dir=tmp_path / "annotations",
+        dethrone_margin=0.30,
     )
 
 

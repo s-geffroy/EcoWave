@@ -1,6 +1,6 @@
 # EcoWave — Validation summary (Pilot 2008: Global financial crisis + euro sovereign crisis)
 
-Generated: 2026-05-27T19:37:52.572604+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
+Generated: 2026-05-27T19:42:05.262472+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
 
 ## Run outcome
 

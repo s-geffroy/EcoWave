@@ -152,7 +152,8 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     # Persist final verdicts only for models scored on all six criteria.
     comparison_rows = _comparison_rows(scores, verdicts)
     replace_model_comparisons(con, comparison_rows)
-    champion_text = champion_challenger(scores, verdicts, pilot_def.champion)
+    champion_text = champion_challenger(scores, verdicts, pilot_def.champion,
+                                        margin=settings.dethrone_margin)
 
     _write_scores(settings, scores, verdicts, pilot)
 

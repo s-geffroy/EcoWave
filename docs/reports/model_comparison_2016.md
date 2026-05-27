@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks)
 
-Generated: 2026-05-27T19:37:33.097420+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
+Generated: 2026-05-27T19:42:15.289102+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
 ## Scores A / B / C
 
