@@ -20,6 +20,7 @@ class Settings:
     events_dir: Path
     reports_dir: Path
     figures_dir: Path
+    annotations_dir: Path
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -37,6 +38,7 @@ class Settings:
             events_dir=Path(os.getenv("EVENTS_DIR", "/app/events")),
             reports_dir=Path(os.getenv("REPORTS_DIR", "/app/reports")),
             figures_dir=Path(os.getenv("FIGURES_DIR", "/app/figures")),
+            annotations_dir=Path(os.getenv("ANNOTATIONS_DIR", "/app/annotations")),
         )
 
 

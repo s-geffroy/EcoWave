@@ -1,14 +1,10 @@
 # EcoWave — Pilot 2008
 
-Generated: 2026-05-27T18:06:42.860852+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:16:33.993815+00:00  ·  Mode: `strict`
 
-## Final verdict: PROVISIONAL / BLOCKED
+## Final verdict: SCORED (analyst-annotated)
 
-EcoWave does **not** deliver a final analytical verdict in V1. The information curve
-is only **proxied** (I1 via news-based EPU; I2 media tone still absent), S2 (protests)
-has no automatable source, and the qualitative scoring criteria (C2, C4, C5, C6)
-require analyst judgement. All 3 models are therefore marked
-**blocked**. This is by design (see anti-pseudoscience rules).
+All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst-annotated). Verdicts and the champion/challenger adjudication below are therefore decisive for this evidence base. Remaining data gaps (I2 media tone, S2 protests) are documented as limitations.
 
 ## Source completeness
 
@@ -58,6 +54,7 @@ auto-computed from the real panel. See `model_comparison.md`.
 
 ## Known structural limitations
 
-- E-curve uses US series (Euro Area not integrated in V1).
+- E-curve combines US + Euro Area (composite); E4 GDP is quarterly only.
 - D-curve structural window is short (ECB CISS starts 1999) → C3 weak for D.
 - D3 derived from curated events only → no pre-crisis baseline (status `partial`).
+- I1 is a news-based EPU proxy (not GDELT); I2 (tone) and S2 (protests) still missing.

@@ -36,13 +36,13 @@ def _curve_coverage(panel: pd.DataFrame) -> str:
 def _model_table(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
     pivot = scores.pivot(index="model_code", columns="criterion_code", values="raw_score")
     verdict_map = verdicts.set_index("model_code")
-    lines = ["| Model | C1 | C2 | C3 | C4 | C5 | C6 | partial weighted | verdict |",
+    lines = ["| Model | C1 | C2 | C3 | C4 | C5 | C6 | weighted | verdict |",
              "|---|---|---|---|---|---|---|---:|---|"]
     for m in ["A", "B", "C"]:
         def cell(c):
             v = pivot.loc[m, c] if (m in pivot.index and c in pivot.columns) else None
             return "—" if v is None or pd.isna(v) else str(int(v))
-        pw = verdict_map.loc[m, "partial_weighted_score"] if m in verdict_map.index else "—"
+        pw = verdict_map.loc[m, "weighted_score"] if m in verdict_map.index else "—"
         vd = verdict_map.loc[m, "verdict"] if m in verdict_map.index else "—"
         lines.append(f"| {m} | {cell('C1')} | {cell('C2')} | {cell('C3')} | {cell('C4')} | "
                      f"{cell('C5')} | {cell('C6')} | {pw} | **{vd}** |")
@@ -51,24 +51,44 @@ def _model_table(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
 
 def generate_reports(settings: Settings, pilot: str, mode: str, panel: pd.DataFrame,
                      curves: pd.DataFrame, scores: pd.DataFrame, verdicts: pd.DataFrame,
-                     failures: list[str]) -> list[Path]:
+                     failures: list[str], champion_text: str = "") -> list[Path]:
     settings.reports_dir.mkdir(parents=True, exist_ok=True)
     n_available_vars = panel[panel["status"] == "available"]["variable_code"].nunique()
     n_missing_vars = panel[panel["status"] == "missing"]["variable_code"].nunique()
     blocked_models = int((verdicts["verdict"] == "blocked").sum()) if not verdicts.empty else 0
+    all_complete = (not verdicts.empty) and bool(verdicts["complete"].all())
+
+    if not champion_text:
+        champion_text = (
+            "Champion provisoire: B. Arbitrage non tranché tant que les annotations "
+            "qualitatives (C2/C4/C5/C6) ne sont pas complètes pour les trois modèles."
+        )
+
+    if all_complete:
+        verdict_header = "## Final verdict: SCORED (analyst-annotated)"
+        verdict_para = (
+            "All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 "
+            "analyst-annotated). Verdicts and the champion/challenger adjudication below "
+            "are therefore decisive for this evidence base. Remaining data gaps (I2 media "
+            "tone, S2 protests) are documented as limitations."
+        )
+    else:
+        verdict_header = "## Final verdict: PROVISIONAL / BLOCKED"
+        verdict_para = (
+            f"EcoWave does **not** deliver a final analytical verdict yet. The qualitative "
+            f"criteria (C2, C4, C5, C6) require analyst annotation (see `annotations/`), and "
+            f"{blocked_models} model(s) remain **blocked**. Fill the annotation template to "
+            f"obtain decisive verdicts. This gate is by design (anti-pseudoscience rules)."
+        )
 
     main = settings.reports_dir / f"report_{pilot}_pilot.md"
     main.write_text(f"""# EcoWave — Pilot {pilot}
 
 Generated: {_ts()}  ·  Mode: `{mode}`
 
-## Final verdict: PROVISIONAL / BLOCKED
+{verdict_header}
 
-EcoWave does **not** deliver a final analytical verdict in V1. The information curve
-is only **proxied** (I1 via news-based EPU; I2 media tone still absent), S2 (protests)
-has no automatable source, and the qualitative scoring criteria (C2, C4, C5, C6)
-require analyst judgement. All {blocked_models} models are therefore marked
-**blocked**. This is by design (see anti-pseudoscience rules).
+{verdict_para}
 
 ## Source completeness
 
@@ -96,15 +116,21 @@ auto-computed from the real panel. See `model_comparison.md`.
 
 ## Known structural limitations
 
-- E-curve uses US series (Euro Area not integrated in V1).
+- E-curve combines US + Euro Area (composite); E4 GDP is quarterly only.
 - D-curve structural window is short (ECB CISS starts 1999) → C3 weak for D.
 - D3 derived from curated events only → no pre-crisis baseline (status `partial`).
+- I1 is a news-based EPU proxy (not GDELT); I2 (tone) and S2 (protests) still missing.
 """, encoding="utf-8")
 
     computed_notes = "\n".join(
         f"- {r.model_code}/{r.criterion_code}: {r.notes}"
         for r in scores[scores["status"] == "computed"].itertuples()
     )
+    annotated_rows = scores[scores["status"] == "annotated"]
+    annotated_notes = "\n".join(
+        f"- {r.model_code}/{r.criterion_code} = {int(r.raw_score)}: {r.notes}"
+        for r in annotated_rows.itertuples()
+    ) or "_No analyst annotations yet — C2/C4/C5/C6 remain blocked._"
     comparison = settings.reports_dir / "model_comparison.md"
     comparison.write_text(f"""# EcoWave — Model comparison (Pilot {pilot})
 
@@ -120,11 +146,11 @@ Weights: C1=0.25, C2=0.20, C3=0.20, C4=0.10, C5=0.15, C6=0.10.
 
 ## Champion / challenger
 
-Model **B** (nested cycles 2007-2009 / 2010-2012) is the *provisional* champion.
-B cannot be confirmed nor dethroned in V1: a challenger must beat it on ≥4 of 6
-criteria, but C2/C4/C5/C6 are not yet scored and S/I curves are absent.
+{champion_text}
 
-**All verdicts are `blocked`.** No model is accepted as a final answer.
+## Annotated criteria (analyst judgement)
+
+{annotated_notes}
 
 ## Computation notes
 
@@ -182,5 +208,7 @@ def generate_report(settings: Settings, pilot: str, mode: str) -> Path:
     panel = pd.read_csv(panel_path)
     scores = pd.read_csv(scores_path)
     verdicts = pd.read_csv(verdicts_path)
+    if "complete" in verdicts.columns:
+        verdicts["complete"] = verdicts["complete"].astype(str).str.lower().isin({"true", "1"})
     reports = generate_reports(settings, pilot, mode, panel, pd.DataFrame(), scores, verdicts, [])
     return reports[0]

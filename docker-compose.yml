@@ -11,6 +11,7 @@ services:
       - ./reports:/app/reports
       - ./figures:/app/figures
       - ./methodology:/app/methodology
+      - ./annotations:/app/annotations
       - ./docs:/app/docs
       - ./scripts:/app/scripts
       - ./sources_manifest.json:/app/sources_manifest.json

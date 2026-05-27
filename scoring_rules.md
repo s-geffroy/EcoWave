@@ -18,12 +18,38 @@ Raw criterion scores:
 - 2 = plausible
 - 3 = robuste
 
+## Computed vs annotated criteria
+
+- **C1** and **C3** are auto-computed from the real panel (synchronisation count and
+  dual-window robustness share).
+- **C2, C4, C5, C6** are qualitative: filled by an analyst in
+  `annotations/model_scores_qualitative.csv`, **with a mandatory justification**.
+  No score is accepted without evidence; a model stays `blocked` until all six are set.
+
+## Verdict thresholds
+
+Weighted total `T = Σ raw_score × weight` (range 0–3), computed only when all six
+criteria are filled:
+
+| Condition | Verdict |
+|---|---|
+| any criterion empty | `blocked` |
+| C1 ≤ 1, or C3 = 0, or C5 = 0 (auto-rejection) | `rejected` |
+| T ≥ 2.4 | `strong` |
+| T ≥ 1.8 | `usable` |
+| otherwise | `fragile` |
+
 ## Automatic rejection
 
 A model is rejected if:
 
-1. its waves are visible in only one curve;
-2. it depends on only one reference window;
-3. it requires too many narrative exceptions;
-4. it fails to distinguish 2007-2009 from 2010-2012 when claiming two cycles;
-5. it adds no explanatory value beyond chronology.
+1. its waves are visible in only one curve (mapped to **C1 ≤ 1**);
+2. it depends on only one reference window (mapped to **C3 = 0**);
+3. it requires too many narrative exceptions (analyst lowers **C2/C4**);
+4. it fails to distinguish 2007-2009 from 2010-2012 when claiming two cycles (analyst, B);
+5. it adds no explanatory value beyond chronology (mapped to **C5 = 0**).
+
+## Champion / challenger
+
+Model **B** is the provisional champion. A challenger (A or C) dethrones B only if it
+beats B on **≥ 4 of 6** criteria — adjudicated only once all models are fully scored.

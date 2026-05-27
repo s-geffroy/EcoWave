@@ -23,6 +23,7 @@ def _settings(tmp_path: Path, fred_key: str, db_name: str = "ecowave.db") -> Set
         events_dir=tmp_path / "events",
         reports_dir=tmp_path / "reports",
         figures_dir=tmp_path / "figures",
+        annotations_dir=tmp_path / "annotations",
     )
 
 

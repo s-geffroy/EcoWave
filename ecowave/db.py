@@ -181,6 +181,20 @@ def replace_model_scores(con: sqlite3.Connection, rows: list[dict]) -> None:
     con.commit()
 
 
+def replace_model_comparisons(con: sqlite3.Connection, rows: list[dict]) -> None:
+    """Persist final verdicts. Only complete models (all six 0-3 scores) are inserted."""
+    con.execute("DELETE FROM model_comparisons")
+    for r in rows:
+        con.execute(
+            """INSERT INTO model_comparisons(model_code, c1_sync, c2_boundaries, c3_robustness,
+                 c4_parsimony, c5_added_value, c6_transferability, weighted_score, verdict, notes)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (r["model_code"], r["C1"], r["C2"], r["C3"], r["C4"], r["C5"], r["C6"],
+             r["weighted_score"], r["verdict"], r.get("notes", "")),
+        )
+    con.commit()
+
+
 def add_analyst_note(con: sqlite3.Connection, object_type: str, object_id: str, note: str,
                      author: str = "ecowave-pipeline") -> None:
     con.execute(

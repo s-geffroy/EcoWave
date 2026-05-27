@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Analyst annotation system for C2/C4/C5/C6**: `annotations/model_scores_qualitative.csv`
+  (+ README rubric) lets an analyst score the qualitative criteria with a **mandatory
+  justification** (validated; no score without evidence). The pipeline merges them with
+  the auto-computed C1/C3, produces a full weighted verdict (`strong`/`usable`/`fragile`/
+  `rejected`) once all six are filled, persists `model_comparisons`, and adjudicates
+  champion/challenger (B dethroned only on ≥4/6). Verdict thresholds documented in
+  `scoring_rules.md`. An illustrative first pass scores B=strong (2.6), A/C=usable.
 - **Information (I) curve proxied without GDELT**: I1 = news-based Economic Policy
   Uncertainty (Baker-Bloom-Davis) for US (`USEPUINDXM`) + Europe (`EUEPUINDXM`),
   a newspaper-article-count measure of crisis media volume (confidence C). All five

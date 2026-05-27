@@ -15,6 +15,7 @@ from ecowave.db import (
     init_db,
     log_validation,
     replace_curve_scores,
+    replace_model_comparisons,
     replace_model_scores,
     start_ingestion_run,
     upsert_monthly_observation,
@@ -30,8 +31,11 @@ from ecowave.normalize.panel import (
     build_variable_rows,
 )
 from ecowave.reports.render_report import generate_reports
+from ecowave.scoring.annotations import load_annotations
 from ecowave.scoring.curve_scores import aggregate_curve_scores
 from ecowave.scoring.model_scores import (
+    CRITERIA,
+    champion_challenger,
     compute_model_scores,
     db_insertable_rows,
     model_verdicts,
@@ -123,12 +127,20 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     curves = aggregate_curve_scores(panel)
     replace_curve_scores(con, curves.to_dict("records"))
 
-    scores = compute_model_scores(panel)
+    annotations = load_annotations(settings.annotations_dir / "model_scores_qualitative.csv")
+    if annotations:
+        typer.echo(f"Loaded {len(annotations)} analyst annotation(s) for C2/C4/C5/C6.")
+    scores = compute_model_scores(panel, annotations)
     replace_model_scores(con, db_insertable_rows(scores))
     verdicts = model_verdicts(scores)
     for v in verdicts.itertuples():
         add_analyst_note(con, "model", v.model_code,
-                         f"verdict={v.verdict}; partial_weighted={v.partial_weighted_score}; {v.notes}")
+                         f"verdict={v.verdict}; weighted={v.weighted_score}; complete={v.complete}; {v.notes}")
+
+    # Persist final verdicts only for models scored on all six criteria.
+    comparison_rows = _comparison_rows(scores, verdicts)
+    replace_model_comparisons(con, comparison_rows)
+    champion_text = champion_challenger(scores, verdicts)
 
     _write_scores(settings, scores, verdicts)
 
@@ -147,16 +159,20 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     con.close()
 
     reports = generate_reports(settings=settings, pilot=pilot, mode=mode, panel=panel,
-                               curves=curves, scores=scores, verdicts=verdicts, failures=failures)
+                               curves=curves, scores=scores, verdicts=verdicts,
+                               failures=failures, champion_text=champion_text)
 
     typer.echo(f"Panel + scores written to {settings.data_processed_dir}")
     for path in reports:
         typer.echo(f"Report: {path}")
     if failures:
         typer.echo(f"Run completed PARTIAL — {len(failures)} source(s) failed; verdict provisional/blocked.")
+    elif bool(verdicts["complete"].all()):
+        summary = ", ".join(f"{v.model_code}={v.verdict}" for v in verdicts.itertuples())
+        typer.echo(f"Run complete. All six criteria scored — verdicts: {summary}. {champion_text}")
     else:
         typer.echo("Run complete. Verdict remains provisional/blocked "
-                   "(I curve only proxied, S2 and I2 absent; C2/C4/C5/C6 require analyst judgement).")
+                   "(C2/C4/C5/C6 await analyst annotation in annotations/).")
 
 
 def _handle_failure(con, settings: Settings, mode: str, run_id: int, component: str,
@@ -170,6 +186,25 @@ def _handle_failure(con, settings: Settings, mode: str, run_id: int, component: 
         con.close()
         typer.echo(f"STRICT mode: ingestion of '{component}' failed: {message}", err=True)
         raise typer.Exit(code=1)
+
+
+def _comparison_rows(scores: pd.DataFrame, verdicts: pd.DataFrame) -> list[dict]:
+    """Build model_comparisons rows for models scored on all six criteria."""
+    rows: list[dict] = []
+    filled = scores[scores["status"].isin({"computed", "annotated"})]
+    for v in verdicts.itertuples():
+        if not v.complete:
+            continue
+        by_crit = {r.criterion_code: int(r.raw_score)
+                   for r in filled[filled["model_code"] == v.model_code].itertuples()}
+        rows.append({
+            "model_code": v.model_code,
+            **{code: by_crit[code] for code, _, _ in CRITERIA},
+            "weighted_score": float(v.weighted_score),
+            "verdict": v.verdict,
+            "notes": v.notes,
+        })
+    return rows
 
 
 def _write_panel(settings: Settings, panel: pd.DataFrame) -> None:

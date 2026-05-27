@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
+from ecowave.scoring.annotations import Annotation
 from ecowave.waves.model_a_unique_cycle import MODEL_A
 from ecowave.waves.model_b_nested_cycles import MODEL_B
 from ecowave.waves.model_c_acute_shock import MODEL_C
@@ -14,11 +15,13 @@ CRITERIA = [
     ("C5", "valeur_ajoutee_vs_chronologie", 0.15),
     ("C6", "transferabilite_2011_2016", 0.10),
 ]
+WEIGHTS = {code: w for code, _, w in CRITERIA}
 
-# Criteria that require analyst judgement and cannot be honestly auto-derived in V1.
+# Criteria that require analyst judgement (filled via annotations, not auto-derived).
 QUALITATIVE = {"C2", "C4", "C5", "C6"}
 
 HIGH_STRESS = 75.0
+CHAMPION = "B"
 MODELS = {"A": MODEL_A, "B": MODEL_B, "C": MODEL_C}
 
 
@@ -61,8 +64,10 @@ def _c3_robustness(panel: pd.DataFrame, model: dict) -> tuple[int, str]:
     return score, f"part d'observations robustes sur les 2 fenêtres = {agree:.2f}"
 
 
-def compute_model_scores(panel: pd.DataFrame) -> pd.DataFrame:
-    """Compute C1/C3 from real panel data; leave qualitative criteria blocked (no fabrication)."""
+def compute_model_scores(panel: pd.DataFrame,
+                         annotations: dict[tuple[str, str], Annotation] | None = None) -> pd.DataFrame:
+    """Compute C1/C3 from data; fill C2/C4/C5/C6 from analyst annotations when present."""
+    annotations = annotations or {}
     rows = []
     for model_code, model in MODELS.items():
         c1, c1_note = _c1_synchronisation(panel, model)
@@ -71,56 +76,84 @@ def compute_model_scores(panel: pd.DataFrame) -> pd.DataFrame:
         for code, label, weight in CRITERIA:
             if code in computed:
                 raw, note = computed[code]
-                rows.append({
-                    "model_code": model_code,
-                    "criterion_code": code,
-                    "criterion_label": label,
-                    "raw_score": raw,
-                    "weight": weight,
-                    "weighted_score": round(raw * weight, 4),
-                    "status": "computed",
-                    "notes": note,
-                })
+                status = "computed"
+            elif (model_code, code) in annotations:
+                ann = annotations[(model_code, code)]
+                raw, status = ann.raw_score, "annotated"
+                note = f"[{ann.analyst} {ann.date}] {ann.justification}"
             else:
                 rows.append({
-                    "model_code": model_code,
-                    "criterion_code": code,
-                    "criterion_label": label,
-                    "raw_score": None,
-                    "weight": weight,
-                    "weighted_score": None,
+                    "model_code": model_code, "criterion_code": code, "criterion_label": label,
+                    "raw_score": None, "weight": weight, "weighted_score": None,
                     "status": "blocked",
-                    "notes": "qualitative criterion: requires analyst judgement; not auto-scored in V1",
+                    "notes": "qualitative criterion: needs analyst annotation (see annotations/)",
                 })
+                continue
+            rows.append({
+                "model_code": model_code, "criterion_code": code, "criterion_label": label,
+                "raw_score": raw, "weight": weight, "weighted_score": round(raw * weight, 4),
+                "status": status, "notes": note,
+            })
     return pd.DataFrame(rows)
 
 
 def db_insertable_rows(scores: pd.DataFrame) -> list[dict]:
-    """Only honestly-computed integer rows (schema forbids NULL raw_score)."""
-    computed = scores[scores["status"] == "computed"]
+    """Honestly-scored integer rows (computed or annotated); schema forbids NULL raw_score."""
+    filled = scores[scores["status"].isin({"computed", "annotated"})]
     return [
         {
-            "model_code": r.model_code,
-            "criterion_code": r.criterion_code,
-            "raw_score": int(r.raw_score),
-            "weight": float(r.weight),
-            "weighted_score": float(r.weighted_score),
-            "notes": r.notes,
+            "model_code": r.model_code, "criterion_code": r.criterion_code,
+            "raw_score": int(r.raw_score), "weight": float(r.weight),
+            "weighted_score": float(r.weighted_score), "notes": r.notes,
         }
-        for r in computed.itertuples()
+        for r in filled.itertuples()
     ]
 
 
+def _verdict_for(raw_by_crit: dict[str, int]) -> tuple[float, str]:
+    total = round(sum(raw_by_crit[c] * WEIGHTS[c] for c in raw_by_crit), 4)
+    # Automatic rejection rules (scoring_rules.md).
+    if raw_by_crit["C1"] <= 1 or raw_by_crit["C3"] == 0 or raw_by_crit["C5"] == 0:
+        return total, "rejected"
+    if total >= 2.4:
+        return total, "strong"
+    if total >= 1.8:
+        return total, "usable"
+    return total, "fragile"
+
+
 def model_verdicts(scores: pd.DataFrame) -> pd.DataFrame:
-    """Each model stays 'blocked' while any criterion is blocked. Partial weighted total reported."""
+    """Full verdict when all six criteria are filled; otherwise blocked with a partial total."""
     rows = []
     for model_code, grp in scores.groupby("model_code"):
-        blocked = (grp["status"] == "blocked").any()
-        partial_total = grp.loc[grp["status"] == "computed", "weighted_score"].sum()
+        filled = grp[grp["status"].isin({"computed", "annotated"})]
+        raw_by_crit = {r.criterion_code: int(r.raw_score) for r in filled.itertuples()}
+        complete = set(raw_by_crit) == {c for c, _, _ in CRITERIA}
+        if complete:
+            total, verdict = _verdict_for(raw_by_crit)
+            note = "all six criteria filled (C1/C3 computed; C2/C4/C5/C6 annotated)"
+        else:
+            total = round(float(filled["weighted_score"].sum()), 4)
+            verdict = "blocked"
+            missing = sorted({c for c, _, _ in CRITERIA} - set(raw_by_crit))
+            note = f"blocked: criteria not yet annotated: {missing}"
         rows.append({
-            "model_code": model_code,
-            "partial_weighted_score": round(float(partial_total), 4),
-            "verdict": "blocked" if blocked else "usable",
-            "notes": "verdict bloqué: critères qualitatifs C2/C4/C5/C6 non évalués + courbes S/I absentes",
+            "model_code": model_code, "weighted_score": total, "complete": complete,
+            "verdict": verdict, "notes": note,
         })
     return pd.DataFrame(rows)
+
+
+def champion_challenger(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
+    """Adjudicate B vs A/C only when all models are complete (≥4/6 criteria to dethrone B)."""
+    if not verdicts["complete"].all():
+        return ("Champion/challenger non tranché: les annotations qualitatives sont "
+                "incomplètes pour au moins un modèle (verdict provisoire/bloqué).")
+    pivot = (scores[scores["status"].isin({"computed", "annotated"})]
+             .pivot(index="model_code", columns="criterion_code", values="raw_score"))
+    lines = []
+    for challenger in ("A", "C"):
+        wins = int((pivot.loc[challenger] > pivot.loc[CHAMPION]).sum())
+        outcome = "détrône B" if wins >= 4 else "ne détrône pas B"
+        lines.append(f"{challenger} gagne sur {wins}/6 critères → {outcome}.")
+    return "Champion provisoire: B. " + " ".join(lines)

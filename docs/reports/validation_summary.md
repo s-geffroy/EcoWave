@@ -1,12 +1,12 @@
 # EcoWave — Validation summary (Pilot 2008)
 
-Generated: 2026-05-27T18:06:42.863710+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:16:33.996535+00:00  ·  Mode: `strict`
 
 ## Run outcome
 
 - Mode: `strict`
 - Ingestion failures: 0 (none)
-- Models blocked: 3 / 3
+- Models blocked: 0 / 3
 
 ## Reference windows used
 
