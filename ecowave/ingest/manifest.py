@@ -8,6 +8,15 @@ DEFAULT_MANIFEST_PATH = Path("/app/sources_manifest.json")
 
 
 @dataclass(frozen=True)
+class ComponentSpec:
+    label: str
+    provider: str
+    value_transform: str
+    series_id: str | None = None
+    minus_series_id: str | None = None
+
+
+@dataclass(frozen=True)
 class IngestionSpec:
     variable_code: str
     provider: str
@@ -21,6 +30,11 @@ class IngestionSpec:
     series_key: str | None = None
     requires_key: bool = False
     license_notes: str = ""
+    components: tuple[ComponentSpec, ...] = ()
+
+    @property
+    def is_composite(self) -> bool:
+        return bool(self.components)
 
 
 @dataclass(frozen=True)
@@ -58,6 +72,16 @@ def load_manifest(path: Path = DEFAULT_MANIFEST_PATH) -> Manifest:
             series_key=item.get("series_key"),
             requires_key=bool(item.get("requires_key", False)),
             license_notes=item.get("license_notes", ""),
+            components=tuple(
+                ComponentSpec(
+                    label=c["label"],
+                    provider=c.get("provider", "FRED"),
+                    value_transform=c.get("value_transform", item.get("value_transform", "level")),
+                    series_id=c.get("series_id"),
+                    minus_series_id=c.get("minus_series_id"),
+                )
+                for c in item.get("components", [])
+            ),
         )
         for item in data.get("ingestion_plan", [])
     ]

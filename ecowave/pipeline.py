@@ -18,10 +18,15 @@ from ecowave.db import (
     upsert_monthly_observation,
 )
 from ecowave.ingest.ecb import ingest_ecb_variable
-from ecowave.ingest.fred import ingest_fred_variable
+from ecowave.ingest.fred import ingest_fred_components, ingest_fred_variable
 from ecowave.ingest.manifest import load_manifest
 from ecowave.ingest.manual_events import ingest_events, monthly_intervention_intensity
-from ecowave.normalize.panel import PANEL_COLUMNS, build_missing_rows, build_variable_rows
+from ecowave.normalize.panel import (
+    PANEL_COLUMNS,
+    build_composite_variable_rows,
+    build_missing_rows,
+    build_variable_rows,
+)
 from ecowave.reports.render_report import generate_reports
 from ecowave.scoring.curve_scores import aggregate_curve_scores
 from ecowave.scoring.model_scores import (
@@ -67,22 +72,29 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
 
     for spec in manifest.specs:
         try:
-            if spec.provider in {"FRED", "FRED_SPREAD"}:
-                series, source_id = ingest_fred_variable(
+            if spec.is_composite:
+                components, source_id = ingest_fred_components(
                     spec, settings.fred_api_key, settings.data_raw_dir, con, run_id
                 )
-            elif spec.provider == "ECB":
-                series, source_id = ingest_ecb_variable(
-                    spec, settings.ecb_api_base, settings.data_raw_dir, con, run_id
-                )
-            elif spec.provider == "EVENTS_DERIVED":
-                series = monthly_intervention_intensity(events_path)
-                source_id = None
+                source_label = f"{spec.provider}:composite({len(components)})"
+                rows = build_composite_variable_rows(spec, components, manifest, source_label)
             else:
-                raise ValueError(f"Unknown provider {spec.provider}")
+                if spec.provider in {"FRED", "FRED_SPREAD"}:
+                    series, source_id = ingest_fred_variable(
+                        spec, settings.fred_api_key, settings.data_raw_dir, con, run_id
+                    )
+                elif spec.provider == "ECB":
+                    series, source_id = ingest_ecb_variable(
+                        spec, settings.ecb_api_base, settings.data_raw_dir, con, run_id
+                    )
+                elif spec.provider == "EVENTS_DERIVED":
+                    series = monthly_intervention_intensity(events_path)
+                    source_id = None
+                else:
+                    raise ValueError(f"Unknown provider {spec.provider}")
+                source_label = f"{spec.provider}:{spec.series_id or spec.series_key or 'events'}"
+                rows = build_variable_rows(spec, series, manifest, source_label)
 
-            source_label = f"{spec.provider}:{spec.series_id or spec.series_key or 'events'}"
-            rows = build_variable_rows(spec, series, manifest, source_label)
             source_ids[spec.variable_code] = source_id
             all_rows.extend(rows)
             typer.echo(f"  {spec.variable_code} ({spec.provider}) ingested.")

@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Composite variables** (US + Euro Area) for the E-curve: E4 (real GDP QoQ growth,
+  GDPC1 + CLVMNACSCAB1GQEA19), E5 (unemployment, UNRATE + LRHUTTTTEZM156S),
+  E6 (HICP/CPI YoY deviation, CPIAUCSL + CP0000EZ19M086NEST). Each region is
+  normalized against its own reference windows, then stress is averaged.
+- **D2 broadened** to a euro-periphery basket of 10Y sovereign spreads vs Germany
+  (IT, ES, PT), replacing the single Italy-Germany proxy.
+- Manifest/ingestion/panel now support composite variables (`components` block);
+  new `build_composite_variable_rows` and `ingest_fred_components`.
 - Published the project to GitHub (`s-geffroy/EcoWave`, public) and enabled
   **GitHub Pages** (source = GitHub Actions). Live site: <https://s-geffroy.github.io/EcoWave/>.
 - README "Publication / GitHub Pages" section documenting the deploy procedure.

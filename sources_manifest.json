@@ -49,41 +49,47 @@
     {
       "variable_code": "E4",
       "provider": "FRED",
-      "series_id": "A191RL1Q225SBEA",
-      "dataset_name": "Real GDP, percent change from preceding period (US, quarterly)",
+      "dataset_name": "Real GDP QoQ growth — composite US + Euro Area (quarterly)",
       "frequency_raw": "quarterly",
       "monthly_agg": "last",
-      "value_transform": "level",
       "stress_orientation": "lower_growth_is_stress",
       "confidence": "B",
       "requires_key": true,
-      "license_notes": "US only in V1; Euro Area not integrated"
+      "license_notes": "US (GDPC1) + Euro Area (CLVMNACSCAB1GQEA19); each normalized vs own history",
+      "components": [
+        { "label": "US", "series_id": "GDPC1", "value_transform": "pct_change" },
+        { "label": "EA", "series_id": "CLVMNACSCAB1GQEA19", "value_transform": "pct_change" }
+      ]
     },
     {
       "variable_code": "E5",
       "provider": "FRED",
-      "series_id": "UNRATE",
-      "dataset_name": "US Unemployment Rate (monthly)",
+      "dataset_name": "Unemployment rate — composite US + Euro Area (monthly)",
       "frequency_raw": "monthly",
       "monthly_agg": "avg",
-      "value_transform": "level",
       "stress_orientation": "higher_is_stress",
       "confidence": "B",
       "requires_key": true,
-      "license_notes": "US only in V1; Euro Area not integrated"
+      "license_notes": "US (UNRATE) + Euro Area (LRHUTTTTEZM156S)",
+      "components": [
+        { "label": "US", "series_id": "UNRATE", "value_transform": "level" },
+        { "label": "EA", "series_id": "LRHUTTTTEZM156S", "value_transform": "level" }
+      ]
     },
     {
       "variable_code": "E6",
       "provider": "FRED",
-      "series_id": "CPIAUCSL",
-      "dataset_name": "US CPI all items (monthly); YoY inflation deviation from 2%",
+      "dataset_name": "Inflation YoY deviation from 2% — composite US + Euro Area (monthly)",
       "frequency_raw": "monthly",
       "monthly_agg": "last",
-      "value_transform": "infl_dev",
       "stress_orientation": "extreme_deviation_is_stress",
       "confidence": "B",
       "requires_key": true,
-      "license_notes": "US only in V1; target assumed 2%"
+      "license_notes": "US (CPIAUCSL) + Euro Area HICP (CP0000EZ19M086NEST); target assumed 2%",
+      "components": [
+        { "label": "US", "series_id": "CPIAUCSL", "value_transform": "infl_dev" },
+        { "label": "EA", "series_id": "CP0000EZ19M086NEST", "value_transform": "infl_dev" }
+      ]
     },
     {
       "variable_code": "D1",
@@ -101,17 +107,19 @@
     },
     {
       "variable_code": "D2",
-      "provider": "FRED_SPREAD",
-      "series_id": "IRLTLT01ITM156N",
-      "minus_series_id": "IRLTLT01DEM156N",
-      "dataset_name": "Italy minus Germany 10Y government bond yield spread (monthly)",
+      "provider": "FRED",
+      "dataset_name": "Euro periphery 10Y sovereign spreads vs Germany — basket IT/ES/PT (monthly)",
       "frequency_raw": "monthly",
       "monthly_agg": "avg",
-      "value_transform": "level",
       "stress_orientation": "higher_is_stress",
       "confidence": "B",
       "requires_key": true,
-      "license_notes": "OECD via FRED; proxy for euro sovereign stress"
+      "license_notes": "OECD long-term rates via FRED; periphery basket vs Germany",
+      "components": [
+        { "label": "IT-DE", "series_id": "IRLTLT01ITM156N", "minus_series_id": "IRLTLT01DEM156N", "value_transform": "level" },
+        { "label": "ES-DE", "series_id": "IRLTLT01ESM156N", "minus_series_id": "IRLTLT01DEM156N", "value_transform": "level" },
+        { "label": "PT-DE", "series_id": "IRLTLT01PTM156N", "minus_series_id": "IRLTLT01DEM156N", "value_transform": "level" }
+      ]
     },
     {
       "variable_code": "L1",

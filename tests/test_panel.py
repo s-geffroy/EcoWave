@@ -5,6 +5,7 @@ import pandas as pd
 from ecowave.ingest.manifest import IngestionSpec, Manifest, ReferenceWindow
 from ecowave.normalize.panel import (
     apply_value_transform,
+    build_composite_variable_rows,
     build_missing_rows,
     build_variable_rows,
 )
@@ -48,6 +49,24 @@ def test_build_variable_rows_normalizes_against_precrisis():
     assert by_month["2007-01"]["status"] == "available"
     assert by_month["2007-01"]["stress_precrisis"] >= 90
     assert by_month["2007-01"]["raw_value"] == 80.0
+
+
+def test_composite_averages_components():
+    # Two components (e.g. US + EA), each calm pre-crisis then a spike in 2007-02.
+    idx = [f"{y}-{m:02d}" for y in range(1995, 2008) for m in range(1, 13)]
+    us = pd.Series([5.0] * len(idx), index=idx)
+    ea = pd.Series([9.0] * len(idx), index=idx)
+    us["2007-02"] = 40.0
+    ea["2007-02"] = 50.0
+    rows = build_composite_variable_rows(
+        _spec(), [("level", us), ("level", ea)], _manifest(), "FRED:composite(2)"
+    )
+    by_month = {r["month"]: r for r in rows}
+    assert by_month["2007-02"]["status"] == "available"
+    assert "composite of 2/2" in by_month["2007-02"]["notes"]
+    # raw_value is the mean of the two component features at the spike.
+    assert by_month["2007-02"]["raw_value"] == 45.0
+    assert by_month["2007-02"]["stress_precrisis"] >= 90
 
 
 def test_missing_rows_marked_missing():

@@ -1,6 +1,6 @@
 # EcoWave — Pilot 2008
 
-Generated: 2026-05-27T17:18:28.492427+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T17:40:45.421283+00:00  ·  Mode: `strict`
 
 ## Final verdict: PROVISIONAL / BLOCKED
 
