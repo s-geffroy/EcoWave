@@ -3,6 +3,7 @@ from __future__ import annotations
 import pandas as pd
 
 from ecowave.scoring.annotations import Annotation
+from ecowave.scoring.segmentation import confirming_curves
 from ecowave.waves.model_a_unique_cycle import MODEL_A
 from ecowave.waves.model_b_nested_cycles import MODEL_B
 from ecowave.waves.model_c_acute_shock import MODEL_C
@@ -20,9 +21,22 @@ WEIGHTS = {code: w for code, _, w in CRITERIA}
 # Criteria that require analyst judgement (filled via annotations, not auto-derived).
 QUALITATIVE = {"C2", "C4", "C5", "C6"}
 
-HIGH_STRESS = 75.0
 CHAMPION = "B"
 MODELS = {"A": MODEL_A, "B": MODEL_B, "C": MODEL_C}
+
+# Null-calibration of the auto-computed criteria C1/C3 (see scoring/segmentation.py).
+DEFAULT_NULL_DRAWS = 500
+DEFAULT_SEED = 0
+DEFAULT_ALPHA = 0.05
+
+# Verdict thresholds, recalibrated for the null-calibrated C1/C3 scale: C1/C3 are now
+# hard to score high (they must beat a surrogate null), so 'strong' additionally
+# requires the falsifiable evidence to be solid (C1≥2 and C3≥2), not just a strong
+# narrative. T is the weighted total on a 0-3 scale.
+STRONG_MIN = 2.2
+USABLE_MIN = 1.5
+STRONG_C1_MIN = 2
+STRONG_C3_MIN = 2
 
 # Champion/challenger thresholds.
 DETHRONE_WINS = 4          # criteria a challenger must win outright to dethrone
@@ -30,56 +44,46 @@ DETHRONE_SOFT_WINS = 3     # relaxed criteria count, valid only if the weighted 
 DETHRONE_MARGIN = 0.30     # weighted-score margin (0-3 scale) that relaxes 4/6 to 3/6
 
 
-def _months_in_model(model: dict) -> set[str]:
-    months: set[str] = set()
-    for _, start, end in model["candidate_phases"]:
-        rng = pd.period_range(start=start, end=end, freq="M")
-        months.update(d.strftime("%Y-%m") for d in rng)
-    return months
+def _computed_criteria(panel: pd.DataFrame, model: dict, n_draws: int, seed: int,
+                       alpha: float) -> dict[str, tuple[int, str]]:
+    """C1 (synchronisation) and C3 (dual-window robustness), calibrated against the null.
 
+    A curve 'confirms' only if its phase-separation (eta-squared) beats the
+    (1-alpha) percentile of random segmentations of the same shape — so a random
+    segmentation of a crisis window scores ~0 and the champion must earn its score.
+    """
+    ev = confirming_curves(panel, model, n_draws=n_draws, seed=seed, alpha=alpha)
+    confirm, robust, n = ev["confirm_pre"], ev["robust_both"], ev["n_curves"]
 
-def _c1_synchronisation(panel: pd.DataFrame, model: dict) -> tuple[int, str]:
-    months = _months_in_model(model)
-    sub = panel[(panel["month"].isin(months)) & (panel["status"] == "available")].copy()
-    sub["curve"] = sub["variable_code"].str[0]
-    confirming = set()
-    for curve, grp in sub.groupby("curve"):
-        if (grp["stress_precrisis"] >= HIGH_STRESS).sum() >= 2:
-            confirming.add(curve)
-    n = len(confirming)
-    score = min(3, n)
-    return score, f"{n} courbe(s) confirmante(s) (>=2 mois stress>= {HIGH_STRESS:.0f}): {sorted(confirming)}"
+    c1 = min(3, len(confirm))
+    c1_note = (f"{len(confirm)} courbe(s) battant le nul (alpha={alpha}) sur la séparation "
+               f"inter-phases pré-crise: {sorted(confirm)}")
 
-
-def _c3_robustness(panel: pd.DataFrame, model: dict) -> tuple[int, str]:
-    months = _months_in_model(model)
-    sub = panel[(panel["month"].isin(months)) & (panel["status"] == "available")]
-    both = sub.dropna(subset=["stress_precrisis", "stress_structural"])
-    if both.empty:
-        return 0, "aucune observation normalisée sur les deux fenêtres"
-    agree = ((both["stress_precrisis"] >= HIGH_STRESS) & (both["stress_structural"] >= HIGH_STRESS)).mean()
-    if agree >= 0.5:
-        score = 3
-    elif agree >= 0.3:
-        score = 2
-    elif agree > 0:
-        score = 1
+    share = (len(robust) / n) if n else 0.0
+    if share >= 0.5:
+        c3 = 3
+    elif share >= 0.3:
+        c3 = 2
+    elif share > 0:
+        c3 = 1
     else:
-        score = 0
-    return score, f"part d'observations robustes sur les 2 fenêtres = {agree:.2f}"
+        c3 = 0
+    c3_note = (f"{len(robust)}/{n} courbe(s) robustes sur les 2 fenêtres au-delà du nul "
+               f"{sorted(robust)} (part={share:.2f})")
+    return {"C1": (c1, c1_note), "C3": (c3, c3_note)}
 
 
 def compute_model_scores(panel: pd.DataFrame,
                          annotations: dict[tuple[str, str], Annotation] | None = None,
-                         models: dict | None = None) -> pd.DataFrame:
+                         models: dict | None = None, *,
+                         n_draws: int = DEFAULT_NULL_DRAWS, seed: int = DEFAULT_SEED,
+                         alpha: float = DEFAULT_ALPHA) -> pd.DataFrame:
     """Compute C1/C3 from data; fill C2/C4/C5/C6 from analyst annotations when present."""
     annotations = annotations or {}
     models = models if models is not None else MODELS
     rows = []
     for model_code, model in models.items():
-        c1, c1_note = _c1_synchronisation(panel, model)
-        c3, c3_note = _c3_robustness(panel, model)
-        computed = {"C1": (c1, c1_note), "C3": (c3, c3_note)}
+        computed = _computed_criteria(panel, model, n_draws, seed, alpha)
         for code, label, weight in CRITERIA:
             if code in computed:
                 raw, note = computed[code]
@@ -119,12 +123,16 @@ def db_insertable_rows(scores: pd.DataFrame) -> list[dict]:
 
 def _verdict_for(raw_by_crit: dict[str, int]) -> tuple[float, str]:
     total = round(sum(raw_by_crit[c] * WEIGHTS[c] for c in raw_by_crit), 4)
-    # Automatic rejection rules (scoring_rules.md).
+    # Automatic rejection (scoring_rules.md): falsifiable evidence in ≤1 curve (C1≤1),
+    # no dual-window robustness (C3=0), or no added value over chronology (C5=0).
     if raw_by_crit["C1"] <= 1 or raw_by_crit["C3"] == 0 or raw_by_crit["C5"] == 0:
         return total, "rejected"
-    if total >= 2.4:
+    # 'strong' demands solid null-calibrated computed evidence, not just narrative:
+    # ≥2 curves confirm beyond chance AND dual-window robustness.
+    if (total >= STRONG_MIN and raw_by_crit["C1"] >= STRONG_C1_MIN
+            and raw_by_crit["C3"] >= STRONG_C3_MIN):
         return total, "strong"
-    if total >= 1.8:
+    if total >= USABLE_MIN:
         return total, "usable"
     return total, "fragile"
 

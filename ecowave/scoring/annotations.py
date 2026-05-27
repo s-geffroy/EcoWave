@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 REQUIRED_COLUMNS = ["model_code", "criterion_code", "raw_score", "justification"]
-VALID_MODELS = {"A", "B", "C"}
+VALID_MODELS = {"A", "B", "C", "D"}
 VALID_CRITERIA = {"C2", "C4", "C5", "C6"}
 
 

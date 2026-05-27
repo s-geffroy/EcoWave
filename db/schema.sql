@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS curve_scores (
 
 CREATE TABLE IF NOT EXISTS wave_candidates (
   id INTEGER PRIMARY KEY,
-  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C')),
+  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C','D')),
   wave_label TEXT NOT NULL,
   start_month TEXT NOT NULL,
   end_month TEXT NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS wave_candidates (
 
 CREATE TABLE IF NOT EXISTS model_scores (
   id INTEGER PRIMARY KEY,
-  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C')),
+  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C','D')),
   criterion_code TEXT NOT NULL,
   raw_score INTEGER NOT NULL CHECK(raw_score BETWEEN 0 AND 3),
   weight REAL NOT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS model_scores (
 
 CREATE TABLE IF NOT EXISTS model_comparisons (
   id INTEGER PRIMARY KEY,
-  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C')),
+  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C','D')),
   c1_sync INTEGER NOT NULL CHECK(c1_sync BETWEEN 0 AND 3),
   c2_boundaries INTEGER NOT NULL CHECK(c2_boundaries BETWEEN 0 AND 3),
   c3_robustness INTEGER NOT NULL CHECK(c3_robustness BETWEEN 0 AND 3),
