@@ -1,10 +1,10 @@
 # EcoWave — Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks
 
-Generated: 2026-05-27T19:23:57.314790+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
+Generated: 2026-05-27T19:31:47.587253+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
-## Final verdict: PROVISIONAL / BLOCKED
+## Final verdict: SCORED (analyst-annotated)
 
-EcoWave does **not** deliver a final analytical verdict yet. The qualitative criteria (C2, C4, C5, C6) require analyst annotation (see `annotations/`), and 3 model(s) remain **blocked**. Fill the annotation template to obtain decisive verdicts. This gate is by design (anti-pseudoscience rules).
+All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst-annotated). Verdicts and the champion/challenger adjudication below are therefore decisive for this evidence base. Remaining data gaps (I2 media tone, S2 protests) are documented as limitations.
 
 ## Source completeness
 

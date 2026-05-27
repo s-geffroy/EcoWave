@@ -1,13 +1,13 @@
 model_code,criterion_code,criterion_label,raw_score,justification,analyst,date
-A,C2,clarte_des_ruptures,,,,
-A,C4,parcimonie,,,,
-A,C5,valeur_ajoutee_vs_chronologie,,,,
-A,C6,transferabilite_2011_2016,,,,
-B,C2,clarte_des_ruptures,,,,
-B,C4,parcimonie,,,,
-B,C5,valeur_ajoutee_vs_chronologie,,,,
-B,C6,transferabilite_2011_2016,,,,
-C,C2,clarte_des_ruptures,,,,
-C,C4,parcimonie,,,,
-C,C5,valeur_ajoutee_vs_chronologie,,,,
-C,C6,transferabilite_2011_2016,,,,
+A,C2,clarte_des_ruptures,1,Un cycle unique masque la rupture nette de juillet 2012 (Draghi) et l heterogeneite de 2013-2016,SGe,2026-05-27
+A,C4,parcimonie,3,Tres parcimonieux: un seul cycle,SGe,2026-05-27
+A,C5,valeur_ajoutee_vs_chronologie,1,Apporte peu vs chronologie; 2013-2016 trop epars pour 5 vagues,SGe,2026-05-27
+A,C6,transferabilite_2011_2016,1,Grammaire 5-vagues se transfere mal a une reprise diffuse,SGe,2026-05-27
+B,C2,clarte_des_ruptures,2,Rupture 2012 nette mais bornes du 2e cycle 2013-2016 floues,SGe,2026-05-27
+B,C4,parcimonie,2,Deux cycles: raisonnable,SGe,2026-05-27
+B,C5,valeur_ajoutee_vs_chronologie,2,Distingue crise aigue et reprise mais le 2e cycle est faible,SGe,2026-05-27
+B,C6,transferabilite_2011_2016,2,Transferable mais 2e cycle moins coherent qu en 2008,SGe,2026-05-27
+C,C2,clarte_des_ruptures,3,Choc aigu 2011-2012 tres net et bien date (pic spreads puis Draghi 2012-07),SGe,2026-05-27
+C,C4,parcimonie,3,Minimaliste: Elliott sur le seul episode aigu - Dow gere le reste,SGe,2026-05-27
+C,C5,valeur_ajoutee_vs_chronologie,2,Isole l episode Elliott-able mais ignore 2013-2016,SGe,2026-05-27
+C,C6,transferabilite_2011_2016,2,Bonne transferabilite du principe Elliott-sur-choc-aigu,SGe,2026-05-27

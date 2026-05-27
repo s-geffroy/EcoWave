@@ -1,12 +1,12 @@
 # EcoWave — Validation summary (Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks)
 
-Generated: 2026-05-27T19:23:57.317346+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
+Generated: 2026-05-27T19:31:47.590186+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
 ## Run outcome
 
 - Mode: `strict`
 - Ingestion failures: 0 (none)
-- Models blocked: 3 / 3
+- Models blocked: 0 / 3
 
 ## Reference windows used
 

@@ -28,7 +28,13 @@ def load_annotations(path: Path) -> dict[tuple[str, str], Annotation]:
     if not path.exists():
         return {}
 
-    df = pd.read_csv(path, dtype=str).fillna("")
+    try:
+        df = pd.read_csv(path, dtype=str).fillna("")
+    except Exception as exc:  # noqa: BLE001
+        raise ValueError(
+            f"Cannot parse annotation file {path.name}: {exc}. "
+            "Tip: wrap any justification containing a comma in double quotes."
+        ) from exc
     missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"Annotation file missing columns: {missing}")
