@@ -23,13 +23,14 @@ def plot_curve_stress(curves: pd.DataFrame, output_path: Path) -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     pivot = curves.pivot(index="month", columns="curve", values="stress_precrisis").sort_index()
 
+    window = f"{pivot.index.min()}..{pivot.index.max()}" if len(pivot.index) else ""
     fig, ax = plt.subplots(figsize=(11, 5))
     for curve in CURVE_ORDER:
         if curve in pivot.columns and pivot[curve].notna().any():
             ax.plot(pivot.index, pivot[curve], marker="o", markersize=3,
                     linewidth=1.6, label=CURVE_LABELS[curve])
     ax.axhline(75, color="grey", linestyle="--", linewidth=0.8, label="high-stress threshold (75)")
-    ax.set_title("EcoWave — curve stress (pre-crisis percentile), 2007-2012")
+    ax.set_title(f"EcoWave — curve stress (pre-crisis percentile), {window}")
     ax.set_xlabel("month")
     ax.set_ylabel("stress percentile (0-100)")
     ax.set_ylim(0, 105)

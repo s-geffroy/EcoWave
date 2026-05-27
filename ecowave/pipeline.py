@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from pathlib import Path
 
 import pandas as pd
 import typer
 
 from ecowave.config import Settings
+from ecowave.pilots import Pilot, get_pilot
 from ecowave.figures.plot_curves import plot_curve_stress
 from ecowave.figures.plot_models import plot_model_windows
 from ecowave.db import (
@@ -49,8 +51,10 @@ MANIFEST_PATH = Path("/app/sources_manifest.json")
 
 
 def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
-    if pilot != "2008":
-        raise typer.BadParameter("Only pilot 2008 is implemented.")
+    try:
+        pilot_def = get_pilot(pilot)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
 
     if not settings.db_path.exists():
         init_db(settings.db_path, SCHEMA_PATH, SEED_PATH)
@@ -60,7 +64,10 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     if not config.ok:
         raise typer.Exit(code=1)
 
-    manifest = load_manifest(MANIFEST_PATH)
+    # The manifest defines the data sources; the pilot defines the analysis window.
+    manifest = replace(load_manifest(MANIFEST_PATH),
+                       panel_start=pilot_def.panel_start, panel_end=pilot_def.panel_end)
+    typer.echo(f"Pilot {pilot}: {pilot_def.title} — window {pilot_def.panel_start}..{pilot_def.panel_end}")
     con = connect(settings.db_path)
     run_id = start_ingestion_run(con, mode=mode, notes=f"pilot {pilot}")
     typer.echo(f"Ingestion run #{run_id} started (mode={mode}).")
@@ -118,7 +125,7 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
         all_rows.extend(build_missing_rows(code, reason, manifest))
 
     panel = pd.DataFrame(all_rows, columns=PANEL_COLUMNS)
-    _write_panel(settings, panel)
+    _write_panel(settings, panel, pilot_def)
 
     for r in panel.itertuples():
         upsert_monthly_observation(
@@ -132,29 +139,29 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     curves = aggregate_curve_scores(panel)
     replace_curve_scores(con, curves.to_dict("records"))
 
-    annotations = load_annotations(settings.annotations_dir / "model_scores_qualitative.csv")
+    annotations = load_annotations(settings.annotations_dir / f"model_scores_qualitative_{pilot}.csv")
     if annotations:
         typer.echo(f"Loaded {len(annotations)} analyst annotation(s) for C2/C4/C5/C6.")
-    scores = compute_model_scores(panel, annotations)
+    scores = compute_model_scores(panel, annotations, models=pilot_def.models)
     replace_model_scores(con, db_insertable_rows(scores))
     verdicts = model_verdicts(scores)
     for v in verdicts.itertuples():
-        add_analyst_note(con, "model", v.model_code,
+        add_analyst_note(con, "model", f"{pilot}:{v.model_code}",
                          f"verdict={v.verdict}; weighted={v.weighted_score}; complete={v.complete}; {v.notes}")
 
     # Persist final verdicts only for models scored on all six criteria.
     comparison_rows = _comparison_rows(scores, verdicts)
     replace_model_comparisons(con, comparison_rows)
-    champion_text = champion_challenger(scores, verdicts)
+    champion_text = champion_challenger(scores, verdicts, pilot_def.champion)
 
-    _write_scores(settings, scores, verdicts)
+    _write_scores(settings, scores, verdicts, pilot)
 
     # Figures
     settings.figures_dir.mkdir(parents=True, exist_ok=True)
     try:
-        plot_curve_stress(curves, settings.figures_dir / "curve_stress.png")
-        plot_model_windows(curves, settings.figures_dir / "model_windows.png")
-        typer.echo("Figures written: curve_stress.png, model_windows.png")
+        plot_curve_stress(curves, settings.figures_dir / f"curve_stress_{pilot}.png")
+        plot_model_windows(curves, settings.figures_dir / f"model_windows_{pilot}.png", pilot_def.models)
+        typer.echo(f"Figures written: curve_stress_{pilot}.png, model_windows_{pilot}.png")
     except Exception as exc:  # noqa: BLE001
         typer.echo(f"Figure generation skipped: {exc}", err=True)
 
@@ -163,7 +170,7 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
                          notes=("failures: " + ", ".join(failures)) if failures else "all sources ok")
     con.close()
 
-    reports = generate_reports(settings=settings, pilot=pilot, mode=mode, panel=panel,
+    reports = generate_reports(settings=settings, pilot_def=pilot_def, mode=mode, panel=panel,
                                curves=curves, scores=scores, verdicts=verdicts,
                                failures=failures, champion_text=champion_text)
 
@@ -212,13 +219,14 @@ def _comparison_rows(scores: pd.DataFrame, verdicts: pd.DataFrame) -> list[dict]
     return rows
 
 
-def _write_panel(settings: Settings, panel: pd.DataFrame) -> None:
+def _write_panel(settings: Settings, panel: pd.DataFrame, pilot_def: Pilot) -> None:
     settings.data_processed_dir.mkdir(parents=True, exist_ok=True)
-    panel.to_csv(settings.data_processed_dir / "monthly_panel_2007_2012.csv", index=False)
-    panel.to_parquet(settings.data_processed_dir / "monthly_panel_2007_2012.parquet", index=False)
+    stem = f"monthly_panel_{pilot_def.panel_start[:4]}_{pilot_def.panel_end[:4]}"
+    panel.to_csv(settings.data_processed_dir / f"{stem}.csv", index=False)
+    panel.to_parquet(settings.data_processed_dir / f"{stem}.parquet", index=False)
 
 
-def _write_scores(settings: Settings, scores: pd.DataFrame, verdicts: pd.DataFrame) -> None:
-    scores.to_csv(settings.data_processed_dir / "model_scores_abc.csv", index=False)
-    scores.to_parquet(settings.data_processed_dir / "model_scores_abc.parquet", index=False)
-    verdicts.to_csv(settings.data_processed_dir / "model_verdicts.csv", index=False)
+def _write_scores(settings: Settings, scores: pd.DataFrame, verdicts: pd.DataFrame, pilot: str) -> None:
+    scores.to_csv(settings.data_processed_dir / f"model_scores_abc_{pilot}.csv", index=False)
+    scores.to_parquet(settings.data_processed_dir / f"model_scores_abc_{pilot}.parquet", index=False)
+    verdicts.to_csv(settings.data_processed_dir / f"model_verdicts_{pilot}.csv", index=False)

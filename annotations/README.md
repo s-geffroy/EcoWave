@@ -7,7 +7,7 @@ EcoWave auto-computes only **C1** (multi-curve synchronisation) and **C3**
 This is the anti-pseudoscience gate: **no score is accepted without a written
 justification**, and a model stays `blocked` until all six criteria are filled.
 
-## How to fill `model_scores_qualitative.csv`
+## How to fill `model_scores_qualitative_<pilot>.csv`
 
 One row per `(model, criterion)`. Edit only `raw_score`, `justification`,
 `analyst`, `date`:
@@ -50,11 +50,19 @@ Weighted total `T = Σ raw_score × weight` (range 0–3). Then:
 Champion **B** is dethroned only if a challenger (A or C) beats it on **≥ 4 of 6**
 criteria. See `scoring_rules.md`.
 
+## Per-pilot files
+
+There is one annotation file per pilot:
+
+- `model_scores_qualitative_2008.csv` — pilot 2008 (window 2007-2012)
+- `model_scores_qualitative_2016.csv` — pilot 2016 (window 2011-2016)
+
 ## Apply
 
 ```bash
 docker compose run --rm --entrypoint ecowave ecowave run-pilot 2008 --mode strict
+docker compose run --rm --entrypoint ecowave ecowave run-pilot 2016 --mode strict
 ```
 
-The pipeline auto-loads this file (if present) and writes the completed verdicts to
-`model_comparisons` in SQLite, `data_processed/model_verdicts.csv`, and the reports.
+The pipeline auto-loads the matching file (if present) and writes the completed verdicts
+to `model_comparisons` in SQLite, `data_processed/model_verdicts_<pilot>.csv`, and the reports.

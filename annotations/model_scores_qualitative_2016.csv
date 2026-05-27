@@ -1,0 +1,13 @@
+model_code,criterion_code,criterion_label,raw_score,justification,analyst,date
+A,C2,clarte_des_ruptures,,,,
+A,C4,parcimonie,,,,
+A,C5,valeur_ajoutee_vs_chronologie,,,,
+A,C6,transferabilite_2011_2016,,,,
+B,C2,clarte_des_ruptures,,,,
+B,C4,parcimonie,,,,
+B,C5,valeur_ajoutee_vs_chronologie,,,,
+B,C6,transferabilite_2011_2016,,,,
+C,C2,clarte_des_ruptures,,,,
+C,C4,parcimonie,,,,
+C,C5,valeur_ajoutee_vs_chronologie,,,,
+C,C6,transferabilite_2011_2016,,,,

@@ -1,10 +1,10 @@
-# EcoWave — Pilot 2008: Global financial crisis + euro sovereign crisis
+# EcoWave — Pilot 2016: Late euro sovereign crisis, recovery and 2015-2016 shocks
 
-Generated: 2026-05-27T19:23:48.795479+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
+Generated: 2026-05-27T19:23:57.314790+00:00  ·  Mode: `strict`  ·  Window: 2011-01 .. 2016-12
 
-## Final verdict: SCORED (analyst-annotated)
+## Final verdict: PROVISIONAL / BLOCKED
 
-All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst-annotated). Verdicts and the champion/challenger adjudication below are therefore decisive for this evidence base. Remaining data gaps (I2 media tone, S2 protests) are documented as limitations.
+EcoWave does **not** deliver a final analytical verdict yet. The qualitative criteria (C2, C4, C5, C6) require analyst annotation (see `annotations/`), and 3 model(s) remain **blocked**. Fill the annotation template to obtain decisive verdicts. This gate is by design (anti-pseudoscience rules).
 
 ## Source completeness
 
@@ -21,12 +21,12 @@ All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst
 | L | 2 |
 | I | 1 |
 
-### Per-variable status (months 2007-01 .. 2012-12)
+### Per-variable status (months 2011-01 .. 2016-12)
 | Variable | available | partial | missing |
 |---|---:|---:|---:|
 | D1 | 72 | 0 | 0 |
 | D2 | 72 | 0 | 0 |
-| D3 | 3 | 0 | 69 |
+| D3 | 1 | 0 | 71 |
 | E1 | 72 | 0 | 0 |
 | E2 | 72 | 0 | 0 |
 | E3 | 72 | 0 | 0 |
@@ -42,15 +42,15 @@ All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 analyst
 
 ## Method
 
-- Dow context window: 2001-2006 (accumulation / primary regime context)
-- Elliott active window: 2007-01 .. 2012-12
-- Competing models: A = Unique Elliott cycle 2007-2012; B = Nested cycles 2007-2009 and 2010-2012 (provisional champion); C = Elliott limited to acute 2008 shock
+- Dow context window: 2009-2010 (post-crash recovery context)
+- Elliott active window: 2011-01 .. 2016-12
+- Competing models: A = Unique cycle 2011-2016; B = Nested cycles 2011-2012 and 2013-2016 (provisional champion); C = Elliott limited to the acute 2011-2012 euro shock
 - Dual reference windows: pre-crisis 1990-2006, structural 1990-2019 (Covid/Ukraine excluded)
 
 ## Computed criteria (honest, data-driven)
 
 Only C1 (multi-curve synchronisation) and C3 (reference-window robustness) are
-auto-computed from the real panel. See `model_comparison_2008.md`.
+auto-computed from the real panel. See `model_comparison_2016.md`.
 
 ## Known structural limitations
 

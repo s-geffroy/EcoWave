@@ -1,4 +1,4 @@
-.PHONY: build init-db check-config check-config-strict run-pilot run-pilot-strict report test shell clean site docs-serve
+.PHONY: build init-db check-config check-config-strict run-pilot run-pilot-strict run-pilot-2016-strict pilots-strict report test shell clean site docs-serve
 
 build:
 	docker compose build
@@ -17,6 +17,11 @@ run-pilot:
 
 run-pilot-strict:
 	docker compose run --rm --entrypoint ecowave ecowave run-pilot 2008 --mode strict
+
+run-pilot-2016-strict:
+	docker compose run --rm --entrypoint ecowave ecowave run-pilot 2016 --mode strict
+
+pilots-strict: run-pilot-strict run-pilot-2016-strict
 
 site:
 	docker compose run --rm --entrypoint bash ecowave scripts/sync_docs.sh

@@ -8,22 +8,16 @@ matplotlib.use("Agg")  # headless container
 import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from ecowave.waves.model_a_unique_cycle import MODEL_A
-from ecowave.waves.model_b_nested_cycles import MODEL_B
-from ecowave.waves.model_c_acute_shock import MODEL_C
-
-MODELS = [("A", MODEL_A), ("B", MODEL_B), ("C", MODEL_C)]
-
-
-def plot_model_windows(curves: pd.DataFrame, output_path: Path) -> Path:
+def plot_model_windows(curves: pd.DataFrame, output_path: Path, models: dict) -> Path:
     """Plot the mean cross-curve stress with each model's candidate phase windows."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    model_items = list(models.items())
     mean_stress = (curves.groupby("month")["stress_precrisis"].mean().sort_index())
     months = list(mean_stress.index)
     pos = {m: i for i, m in enumerate(months)}
 
-    fig, axes = plt.subplots(len(MODELS), 1, figsize=(11, 8), sharex=True)
-    for ax, (code, model) in zip(axes, MODELS):
+    fig, axes = plt.subplots(len(model_items), 1, figsize=(11, 8), sharex=True)
+    for ax, (code, model) in zip(axes, model_items):
         ax.plot(range(len(months)), mean_stress.values, color="black", linewidth=1.4)
         ax.axhline(75, color="grey", linestyle="--", linewidth=0.8)
         for i, (label, start, end) in enumerate(model["candidate_phases"]):

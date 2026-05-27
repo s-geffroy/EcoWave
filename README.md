@@ -6,11 +6,16 @@ systémique **2007-2012** (crise financière globale + crise de la dette souvera
 
 Site de documentation : <https://s-geffroy.github.io/EcoWave/>
 
-## Périmètre
+## Périmètre — deux pilotes
 
-- **Contexte Dow** : 2001-2006 (régime structurel)
-- **Fenêtre Elliott active** : 2007-2012
-- **Pilote 2 prévu** : 2011-2016
+| Pilote | Fenêtre | Crise | Contexte Dow |
+|---|---|---|---|
+| **2008** | 2007-2012 | Crise financière globale + dette souveraine euro | 2001-2006 |
+| **2016** | 2011-2016 | Crise euro tardive, reprise, chocs 2015-2016 | 2009-2010 |
+
+Le pilote 2016 réutilise les **mêmes sources et la même grammaire** que 2008 — c'est le
+test de **transférabilité** (critère C6). Chaque pilote a ses modèles A/B/C, ses
+annotations, ses rapports et ses figures.
 
 ## Hypothèses concurrentes
 

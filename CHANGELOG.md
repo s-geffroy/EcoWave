@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Second pilot 2011-2016** and a multi-pilot architecture (`ecowave/pilots.py`):
+  a pilot defines its window, Dow context, competing models A/B/C and champion. Pilot
+  2016 covers the late euro crisis / recovery / 2015-2016 shocks, reusing the same
+  sources and grammar (transferability test, C6). Pipeline, scoring, figures, reports
+  and annotations are now per-pilot; outputs are suffixed by pilot. Run with
+  `ecowave run-pilot 2016` (or `make pilots-strict`). The site has separate report
+  sections and figures for each pilot.
+
 - **L2 world trade volume via World Bank Open Data** (`NE.IMP.GNFS.KD`, WLD, annual):
   completes the logistics curve. Captures the 2009 global trade collapse (stress 100).
   New World Bank ingestion (`ingest_worldbank_variable`) with raw provenance. S2 and I2

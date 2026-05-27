@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 
 from ecowave.config import Settings
+from ecowave.pilots import Pilot, get_pilot
 
 
 def _ts() -> str:
@@ -49,9 +50,19 @@ def _model_table(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
-def generate_reports(settings: Settings, pilot: str, mode: str, panel: pd.DataFrame,
+def _models_line(pilot_def: Pilot) -> str:
+    parts = []
+    for code, model in pilot_def.models.items():
+        tag = " (provisional champion)" if code == pilot_def.champion else ""
+        parts.append(f"{code} = {model['name']}{tag}")
+    return "; ".join(parts)
+
+
+def generate_reports(settings: Settings, pilot_def: Pilot, mode: str, panel: pd.DataFrame,
                      curves: pd.DataFrame, scores: pd.DataFrame, verdicts: pd.DataFrame,
                      failures: list[str], champion_text: str = "") -> list[Path]:
+    pilot = pilot_def.code
+    window = f"{pilot_def.panel_start} .. {pilot_def.panel_end}"
     settings.reports_dir.mkdir(parents=True, exist_ok=True)
     n_available_vars = panel[panel["status"] == "available"]["variable_code"].nunique()
     n_missing_vars = panel[panel["status"] == "missing"]["variable_code"].nunique()
@@ -82,9 +93,9 @@ def generate_reports(settings: Settings, pilot: str, mode: str, panel: pd.DataFr
         )
 
     main = settings.reports_dir / f"report_{pilot}_pilot.md"
-    main.write_text(f"""# EcoWave — Pilot {pilot}
+    main.write_text(f"""# EcoWave — Pilot {pilot}: {pilot_def.title}
 
-Generated: {_ts()}  ·  Mode: `{mode}`
+Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 
 {verdict_header}
 
@@ -99,20 +110,20 @@ Generated: {_ts()}  ·  Mode: `{mode}`
 ### Curve coverage
 {_curve_coverage(panel)}
 
-### Per-variable status (months 2007-01 .. 2012-12)
+### Per-variable status (months {window})
 {_variable_status_table(panel)}
 
 ## Method
 
-- Dow context window: 2001-2006 (regime context)
-- Elliott active window: 2007-2012
-- Competing models: A (unique cycle), B (nested cycles, provisional champion), C (acute shock only)
+- Dow context window: {pilot_def.dow_context}
+- Elliott active window: {window}
+- Competing models: {_models_line(pilot_def)}
 - Dual reference windows: pre-crisis 1990-2006, structural 1990-2019 (Covid/Ukraine excluded)
 
 ## Computed criteria (honest, data-driven)
 
 Only C1 (multi-curve synchronisation) and C3 (reference-window robustness) are
-auto-computed from the real panel. See `model_comparison.md`.
+auto-computed from the real panel. See `model_comparison_{pilot}.md`.
 
 ## Known structural limitations
 
@@ -131,10 +142,10 @@ auto-computed from the real panel. See `model_comparison.md`.
         f"- {r.model_code}/{r.criterion_code} = {int(r.raw_score)}: {r.notes}"
         for r in annotated_rows.itertuples()
     ) or "_No analyst annotations yet — C2/C4/C5/C6 remain blocked._"
-    comparison = settings.reports_dir / "model_comparison.md"
-    comparison.write_text(f"""# EcoWave — Model comparison (Pilot {pilot})
+    comparison = settings.reports_dir / f"model_comparison_{pilot}.md"
+    comparison.write_text(f"""# EcoWave — Model comparison (Pilot {pilot}: {pilot_def.title})
 
-Generated: {_ts()}  ·  Mode: `{mode}`
+Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 
 ## Scores A / B / C
 
@@ -157,10 +168,10 @@ Weights: C1=0.25, C2=0.20, C3=0.20, C4=0.10, C5=0.15, C6=0.10.
 {computed_notes}
 """, encoding="utf-8")
 
-    validation = settings.reports_dir / "validation_summary.md"
-    validation.write_text(f"""# EcoWave — Validation summary (Pilot {pilot})
+    validation = settings.reports_dir / f"validation_summary_{pilot}.md"
+    validation.write_text(f"""# EcoWave — Validation summary (Pilot {pilot}: {pilot_def.title})
 
-Generated: {_ts()}  ·  Mode: `{mode}`
+Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 
 ## Run outcome
 
@@ -192,15 +203,17 @@ Per-variable confidence grades (A-D) are carried in the monthly panel `confidenc
 
 def generate_report(settings: Settings, pilot: str, mode: str) -> Path:
     """Standalone report generation from already-processed outputs (CLI generate-report)."""
-    panel_path = settings.data_processed_dir / "monthly_panel_2007_2012.csv"
-    scores_path = settings.data_processed_dir / "model_scores_abc.csv"
-    verdicts_path = settings.data_processed_dir / "model_verdicts.csv"
+    pilot_def = get_pilot(pilot)
+    stem = f"monthly_panel_{pilot_def.panel_start[:4]}_{pilot_def.panel_end[:4]}"
+    panel_path = settings.data_processed_dir / f"{stem}.csv"
+    scores_path = settings.data_processed_dir / f"model_scores_abc_{pilot}.csv"
+    verdicts_path = settings.data_processed_dir / f"model_verdicts_{pilot}.csv"
     if not panel_path.exists():
         settings.reports_dir.mkdir(parents=True, exist_ok=True)
         path = settings.reports_dir / f"report_{pilot}_pilot.md"
         path.write_text(
             f"# EcoWave — Pilot {pilot}\n\nMode: `{mode}`\n\n"
-            "No processed panel found. Run `ecowave run-pilot 2008` first.\n",
+            f"No processed panel found. Run `ecowave run-pilot {pilot}` first.\n",
             encoding="utf-8",
         )
         return path
@@ -210,5 +223,5 @@ def generate_report(settings: Settings, pilot: str, mode: str) -> Path:
     verdicts = pd.read_csv(verdicts_path)
     if "complete" in verdicts.columns:
         verdicts["complete"] = verdicts["complete"].astype(str).str.lower().isin({"true", "1"})
-    reports = generate_reports(settings, pilot, mode, panel, pd.DataFrame(), scores, verdicts, [])
+    reports = generate_reports(settings, pilot_def, mode, panel, pd.DataFrame(), scores, verdicts, [])
     return reports[0]

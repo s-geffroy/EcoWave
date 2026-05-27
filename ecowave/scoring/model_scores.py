@@ -65,11 +65,13 @@ def _c3_robustness(panel: pd.DataFrame, model: dict) -> tuple[int, str]:
 
 
 def compute_model_scores(panel: pd.DataFrame,
-                         annotations: dict[tuple[str, str], Annotation] | None = None) -> pd.DataFrame:
+                         annotations: dict[tuple[str, str], Annotation] | None = None,
+                         models: dict | None = None) -> pd.DataFrame:
     """Compute C1/C3 from data; fill C2/C4/C5/C6 from analyst annotations when present."""
     annotations = annotations or {}
+    models = models if models is not None else MODELS
     rows = []
-    for model_code, model in MODELS.items():
+    for model_code, model in models.items():
         c1, c1_note = _c1_synchronisation(panel, model)
         c3, c3_note = _c3_robustness(panel, model)
         computed = {"C1": (c1, c1_note), "C3": (c3, c3_note)}
@@ -144,16 +146,17 @@ def model_verdicts(scores: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def champion_challenger(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
-    """Adjudicate B vs A/C only when all models are complete (≥4/6 criteria to dethrone B)."""
+def champion_challenger(scores: pd.DataFrame, verdicts: pd.DataFrame, champion: str = CHAMPION) -> str:
+    """Adjudicate champion vs challengers only when all models are complete (≥4/6 to dethrone)."""
     if not verdicts["complete"].all():
         return ("Champion/challenger non tranché: les annotations qualitatives sont "
                 "incomplètes pour au moins un modèle (verdict provisoire/bloqué).")
     pivot = (scores[scores["status"].isin({"computed", "annotated"})]
              .pivot(index="model_code", columns="criterion_code", values="raw_score"))
+    challengers = [m for m in pivot.index if m != champion]
     lines = []
-    for challenger in ("A", "C"):
-        wins = int((pivot.loc[challenger] > pivot.loc[CHAMPION]).sum())
-        outcome = "détrône B" if wins >= 4 else "ne détrône pas B"
+    for challenger in challengers:
+        wins = int((pivot.loc[challenger] > pivot.loc[champion]).sum())
+        outcome = f"détrône {champion}" if wins >= 4 else f"ne détrône pas {champion}"
         lines.append(f"{challenger} gagne sur {wins}/6 critères → {outcome}.")
-    return "Champion provisoire: B. " + " ".join(lines)
+    return f"Champion provisoire: {champion}. " + " ".join(lines)

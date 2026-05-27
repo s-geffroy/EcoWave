@@ -1,6 +1,6 @@
-# EcoWave — Model comparison (Pilot 2008)
+# EcoWave — Model comparison (Pilot 2008: Global financial crisis + euro sovereign crisis)
 
-Generated: 2026-05-27T18:30:21.335849+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T19:23:48.797533+00:00  ·  Mode: `strict`  ·  Window: 2007-01 .. 2012-12
 
 ## Scores A / B / C
 
