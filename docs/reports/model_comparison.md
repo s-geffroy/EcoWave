@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2008)
 
-Generated: 2026-05-27T18:16:33.995824+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:19:19.413054+00:00  ·  Mode: `strict`
 
 ## Scores A / B / C
 
@@ -20,18 +20,18 @@ Champion provisoire: B. A gagne sur 1/6 critères → ne détrône pas B. C gagn
 
 ## Annotated criteria (analyst judgement)
 
-- A/C2 = 1: [SG 2026-05-27] Ruptures floues: un cycle unique masque la transition 2009/2010
-- A/C4 = 3: [SG 2026-05-27] Tres parcimonieux: un seul cycle
-- A/C5 = 1: [SG 2026-05-27] Apporte peu vs simple chronologie
-- A/C6 = 2: [SG 2026-05-27] Transferable mais grossier
-- B/C2 = 3: [SG 2026-05-27] Ruptures nettes 2009-12 puis 2010 sovereign
-- B/C4 = 2: [SG 2026-05-27] Deux cycles: raisonnable
-- B/C5 = 3: [SG 2026-05-27] Distingue crise bancaire et crise dette
-- B/C6 = 2: [SG 2026-05-27] Grammaire applicable 2011-2016
-- C/C2 = 2: [SG 2026-05-27] Choc aigu bien delimite mais ignore 2010-2012
-- C/C4 = 3: [SG 2026-05-27] Minimaliste
-- C/C5 = 1: [SG 2026-05-27] N explique que 2008
-- C/C6 = 1: [SG 2026-05-27] Peu transferable
+- A/C2 = 1: [SGe 2026-05-27] Ruptures floues: un cycle unique masque la transition 2009/2010
+- A/C4 = 3: [SGe 2026-05-27] Tres parcimonieux: un seul cycle
+- A/C5 = 1: [SGe 2026-05-27] Apporte peu vs simple chronologie
+- A/C6 = 2: [SGe 2026-05-27] Transferable mais grossier
+- B/C2 = 3: [SGe 2026-05-27] Ruptures nettes 2009-12 puis 2010 sovereign
+- B/C4 = 2: [SGe 2026-05-27] Deux cycles: raisonnable
+- B/C5 = 3: [SGe 2026-05-27] Distingue crise bancaire et crise dette
+- B/C6 = 2: [SGe 2026-05-27] Grammaire applicable 2011-2016
+- C/C2 = 2: [SGe 2026-05-27] Choc aigu bien delimite mais ignore 2010-2012
+- C/C4 = 3: [SGe 2026-05-27] Minimaliste
+- C/C5 = 1: [SGe 2026-05-27] N explique que 2008
+- C/C6 = 1: [SGe 2026-05-27] Peu transferable
 
 ## Computation notes
 

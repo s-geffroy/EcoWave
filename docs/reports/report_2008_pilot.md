@@ -1,6 +1,6 @@
 # EcoWave — Pilot 2008
 
-Generated: 2026-05-27T18:16:33.993815+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:19:19.411160+00:00  ·  Mode: `strict`
 
 ## Final verdict: SCORED (analyst-annotated)
 

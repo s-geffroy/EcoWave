@@ -1,13 +1,13 @@
 model_code,criterion_code,criterion_label,raw_score,justification,analyst,date
-A,C2,clarte_des_ruptures,1,Ruptures floues: un cycle unique masque la transition 2009/2010,SG,2026-05-27
-A,C4,parcimonie,3,Tres parcimonieux: un seul cycle,SG,2026-05-27
-A,C5,valeur_ajoutee_vs_chronologie,1,Apporte peu vs simple chronologie,SG,2026-05-27
-A,C6,transferabilite_2011_2016,2,Transferable mais grossier,SG,2026-05-27
-B,C2,clarte_des_ruptures,3,Ruptures nettes 2009-12 puis 2010 sovereign,SG,2026-05-27
-B,C4,parcimonie,2,Deux cycles: raisonnable,SG,2026-05-27
-B,C5,valeur_ajoutee_vs_chronologie,3,Distingue crise bancaire et crise dette,SG,2026-05-27
-B,C6,transferabilite_2011_2016,2,Grammaire applicable 2011-2016,SG,2026-05-27
-C,C2,clarte_des_ruptures,2,Choc aigu bien delimite mais ignore 2010-2012,SG,2026-05-27
-C,C4,parcimonie,3,Minimaliste,SG,2026-05-27
-C,C5,valeur_ajoutee_vs_chronologie,1,N explique que 2008,SG,2026-05-27
-C,C6,transferabilite_2011_2016,1,Peu transferable,SG,2026-05-27
+A,C2,clarte_des_ruptures,1,Ruptures floues: un cycle unique masque la transition 2009/2010,SGe,2026-05-27
+A,C4,parcimonie,3,Tres parcimonieux: un seul cycle,SGe,2026-05-27
+A,C5,valeur_ajoutee_vs_chronologie,1,Apporte peu vs simple chronologie,SGe,2026-05-27
+A,C6,transferabilite_2011_2016,2,Transferable mais grossier,SGe,2026-05-27
+B,C2,clarte_des_ruptures,3,Ruptures nettes 2009-12 puis 2010 sovereign,SGe,2026-05-27
+B,C4,parcimonie,2,Deux cycles: raisonnable,SGe,2026-05-27
+B,C5,valeur_ajoutee_vs_chronologie,3,Distingue crise bancaire et crise dette,SGe,2026-05-27
+B,C6,transferabilite_2011_2016,2,Grammaire applicable 2011-2016,SGe,2026-05-27
+C,C2,clarte_des_ruptures,2,Choc aigu bien delimite mais ignore 2010-2012,SGe,2026-05-27
+C,C4,parcimonie,3,Minimaliste,SGe,2026-05-27
+C,C5,valeur_ajoutee_vs_chronologie,1,N explique que 2008,SGe,2026-05-27
+C,C6,transferabilite_2011_2016,1,Peu transferable,SGe,2026-05-27

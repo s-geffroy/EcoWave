@@ -1,6 +1,6 @@
 # EcoWave — Validation summary (Pilot 2008)
 
-Generated: 2026-05-27T18:16:33.996535+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T18:19:19.413756+00:00  ·  Mode: `strict`
 
 ## Run outcome
 
