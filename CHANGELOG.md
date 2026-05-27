@@ -6,6 +6,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Curve figures**: the pipeline now renders `curve_stress.png` (stress per curve
+  E/D/S/L 2007-2012) and `model_windows.png` (A/B/C candidate windows vs mean stress),
+  published under a new **Curves** section of the site.
 - **Social (S) curve activated**: S1 = Euro Area youth unemployment (ages 15-24,
   FRED `LRHU24TTEZM156S`). The S curve now contributes to multi-curve synchronisation
   (C1), e.g. 4 confirming curves (E/D/L/S) in 2010-2012. S2 (protests) stays `missing`.

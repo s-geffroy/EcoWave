@@ -19,4 +19,12 @@ for f in report_2008_pilot model_comparison validation_summary; do
   fi
 done
 
+# Generated figures
+mkdir -p docs/figures
+for f in curve_stress model_windows; do
+  if [ -f "figures/$f.png" ]; then
+    cp "figures/$f.png" "docs/figures/$f.png"
+  fi
+done
+
 echo "docs/ synchronized."

@@ -44,6 +44,7 @@ nav:
       - Variable dictionary: methodology/variable_dictionary.md
       - Scoring rules: methodology/scoring_rules.md
       - Models A/B/C: methodology/model_comparison.md
+  - Curves: figures.md
   - Reports:
       - Pilot 2008: reports/report_2008_pilot.md
       - Model comparison: reports/model_comparison.md

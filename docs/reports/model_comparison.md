@@ -1,6 +1,6 @@
 # EcoWave — Model comparison (Pilot 2008)
 
-Generated: 2026-05-27T17:49:24.578083+00:00  ·  Mode: `strict`
+Generated: 2026-05-27T17:55:32.314920+00:00  ·  Mode: `strict`
 
 ## Scores A / B / C
 

@@ -6,6 +6,8 @@ import pandas as pd
 import typer
 
 from ecowave.config import Settings
+from ecowave.figures.plot_curves import plot_curve_stress
+from ecowave.figures.plot_models import plot_model_windows
 from ecowave.db import (
     add_analyst_note,
     connect,
@@ -129,6 +131,15 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
                          f"verdict={v.verdict}; partial_weighted={v.partial_weighted_score}; {v.notes}")
 
     _write_scores(settings, scores, verdicts)
+
+    # Figures
+    settings.figures_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        plot_curve_stress(curves, settings.figures_dir / "curve_stress.png")
+        plot_model_windows(curves, settings.figures_dir / "model_windows.png")
+        typer.echo("Figures written: curve_stress.png, model_windows.png")
+    except Exception as exc:  # noqa: BLE001
+        typer.echo(f"Figure generation skipped: {exc}", err=True)
 
     status = "partial" if failures else "success"
     finish_ingestion_run(con, run_id, status,
