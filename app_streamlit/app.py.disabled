@@ -1,0 +1,4 @@
+import streamlit as st
+
+st.title("GeoWave")
+st.warning("Streamlit is disabled in V1. Use the CLI pipeline as source of truth.")

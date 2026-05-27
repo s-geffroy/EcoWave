@@ -1,0 +1,19 @@
+services:
+  ecowave:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./db:/app/db
+      - ./data_raw:/app/data_raw
+      - ./data_processed:/app/data_processed
+      - ./events:/app/events
+      - ./reports:/app/reports
+      - ./figures:/app/figures
+      - ./methodology:/app/methodology
+      - ./docs:/app/docs
+      - ./scripts:/app/scripts
+      - ./sources_manifest.json:/app/sources_manifest.json
+    ports:
+      - "8000:8000"
+    working_dir: /app

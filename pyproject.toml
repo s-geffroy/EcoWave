@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ecowave"
+version = "0.1.0"
+description = "EcoWave 2008 pilot — containerized crisis wave research skeleton"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+ecowave = "ecowave.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ecowave*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

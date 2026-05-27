@@ -1,0 +1,7 @@
+date,event_name,event_type,affected_curves,phase_candidate,confidence,source,notes
+2007-08-09,BNP Paribas freezes funds,financial_liquidity,E/D,wave_1,B,manual_seed,Seed event; source must be verified.
+2008-03-16,Bear Stearns rescue,financial_institution,E/D,wave_2,B,manual_seed,Seed event; source must be verified.
+2008-09-15,Lehman Brothers bankruptcy,financial_institution,E/D/I,wave_3,A,manual_seed,Seed event; source must be verified.
+2008-10-03,TARP enacted,public_intervention,D,wave_3,A,manual_seed,Seed event; source must be verified.
+2010-05-02,Greek bailout agreed,eurozone_sovereign,D/E,wave_5,B,manual_seed,Seed event; source must be verified.
+2012-07-26,Whatever it takes speech,central_bank,D,correction,B,manual_seed,Seed event; source must be verified.

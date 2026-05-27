@@ -1,0 +1,149 @@
+{
+  "project": "ecowave_2008_pilot",
+  "schema_version": "0.1.0",
+  "reference_windows": {
+    "precrisis": { "start": "1990-01", "end": "2006-12" },
+    "structural": { "start": "1990-01", "end": "2019-12" }
+  },
+  "panel_window": { "start": "2007-01", "end": "2012-12" },
+  "ingestion_plan": [
+    {
+      "variable_code": "E1",
+      "provider": "FRED",
+      "series_id": "VIXCLS",
+      "dataset_name": "CBOE Volatility Index: VIX",
+      "frequency_raw": "daily",
+      "monthly_agg": "avg",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "A",
+      "requires_key": true,
+      "license_notes": "verify before redistribution"
+    },
+    {
+      "variable_code": "E2",
+      "provider": "FRED",
+      "series_id": "TEDRATE",
+      "dataset_name": "TED Spread (discontinued 2022; 2007-2012 history available)",
+      "frequency_raw": "daily",
+      "monthly_agg": "avg",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "A",
+      "requires_key": true,
+      "license_notes": "verify before redistribution"
+    },
+    {
+      "variable_code": "E3",
+      "provider": "FRED",
+      "series_id": "NASDAQCOM",
+      "dataset_name": "NASDAQ Composite Index (broad equity drawdown proxy)",
+      "frequency_raw": "daily",
+      "monthly_agg": "last",
+      "value_transform": "drawdown",
+      "stress_orientation": "drawdown_is_stress",
+      "confidence": "A",
+      "requires_key": true,
+      "license_notes": "verify before redistribution"
+    },
+    {
+      "variable_code": "E4",
+      "provider": "FRED",
+      "series_id": "A191RL1Q225SBEA",
+      "dataset_name": "Real GDP, percent change from preceding period (US, quarterly)",
+      "frequency_raw": "quarterly",
+      "monthly_agg": "last",
+      "value_transform": "level",
+      "stress_orientation": "lower_growth_is_stress",
+      "confidence": "B",
+      "requires_key": true,
+      "license_notes": "US only in V1; Euro Area not integrated"
+    },
+    {
+      "variable_code": "E5",
+      "provider": "FRED",
+      "series_id": "UNRATE",
+      "dataset_name": "US Unemployment Rate (monthly)",
+      "frequency_raw": "monthly",
+      "monthly_agg": "avg",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "B",
+      "requires_key": true,
+      "license_notes": "US only in V1; Euro Area not integrated"
+    },
+    {
+      "variable_code": "E6",
+      "provider": "FRED",
+      "series_id": "CPIAUCSL",
+      "dataset_name": "US CPI all items (monthly); YoY inflation deviation from 2%",
+      "frequency_raw": "monthly",
+      "monthly_agg": "last",
+      "value_transform": "infl_dev",
+      "stress_orientation": "extreme_deviation_is_stress",
+      "confidence": "B",
+      "requires_key": true,
+      "license_notes": "US only in V1; target assumed 2%"
+    },
+    {
+      "variable_code": "D1",
+      "provider": "ECB",
+      "series_key": "CISS/D.U2.Z0Z.4F.EC.SS_CIN.IDX",
+      "dataset_name": "Composite Indicator of Systemic Stress (Euro Area, daily)",
+      "frequency_raw": "daily",
+      "monthly_agg": "avg",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "A",
+      "requires_key": false,
+      "requires_endpoint_config": true,
+      "license_notes": "ECB Data Portal; verify before redistribution"
+    },
+    {
+      "variable_code": "D2",
+      "provider": "FRED_SPREAD",
+      "series_id": "IRLTLT01ITM156N",
+      "minus_series_id": "IRLTLT01DEM156N",
+      "dataset_name": "Italy minus Germany 10Y government bond yield spread (monthly)",
+      "frequency_raw": "monthly",
+      "monthly_agg": "avg",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "B",
+      "requires_key": true,
+      "license_notes": "OECD via FRED; proxy for euro sovereign stress"
+    },
+    {
+      "variable_code": "L1",
+      "provider": "FRED",
+      "series_id": "DCOILBRENTEU",
+      "dataset_name": "Crude Oil Prices: Brent - Europe (daily)",
+      "frequency_raw": "daily",
+      "monthly_agg": "avg",
+      "value_transform": "pct_change",
+      "stress_orientation": "extreme_move_is_stress",
+      "confidence": "A",
+      "requires_key": true,
+      "license_notes": "verify before redistribution"
+    },
+    {
+      "variable_code": "D3",
+      "provider": "EVENTS_DERIVED",
+      "dataset_name": "Public intervention intensity (monthly count of D-curve institutional events)",
+      "frequency_raw": "event",
+      "monthly_agg": "count",
+      "value_transform": "level",
+      "stress_orientation": "higher_is_stress",
+      "confidence": "C",
+      "requires_key": false,
+      "license_notes": "Derived from events_master.csv; no pre-crisis baseline -> partial status"
+    }
+  ],
+  "not_automatable_v1": [
+    { "variable_code": "L2", "reason": "World trade volume: no clean free monthly series covering 1990-2012" },
+    { "variable_code": "S1", "reason": "Euro area youth unemployment: source not integrated in V1" },
+    { "variable_code": "S2", "reason": "Anti-austerity protests: no automatable source (manual curation only)" },
+    { "variable_code": "I1", "reason": "Crisis media volume: GDELT disabled in V1" },
+    { "variable_code": "I2", "reason": "Media tone/negativity: GDELT disabled in V1" }
+  ]
+}

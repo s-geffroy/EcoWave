@@ -1,0 +1,51 @@
+site_name: EcoWave
+site_description: Reproducible pilot adapting Dow Theory and Elliott Wave to the 2007-2012 systemic crisis
+site_url: https://s-geffroy.github.io/EcoWave/
+repo_url: https://github.com/s-geffroy/EcoWave
+repo_name: s-geffroy/EcoWave
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - Home: index.md
+  - Methodology:
+      - Dow / Elliott adaptation: methodology/dow_elliott_adaptation.md
+      - Wave validation rules: methodology/wave_validation_rules.md
+      - Normalization rules: methodology/normalization_rules.md
+      - Reference windows: methodology/reference_windows.md
+      - Anti-pseudoscience rules: methodology/anti_pseudoscience_rules.md
+      - Variable dictionary: methodology/variable_dictionary.md
+      - Scoring rules: methodology/scoring_rules.md
+      - Models A/B/C: methodology/model_comparison.md
+  - Reports:
+      - Pilot 2008: reports/report_2008_pilot.md
+      - Model comparison: reports/model_comparison.md
+      - Validation summary: reports/validation_summary.md
+  - Data: data.md
