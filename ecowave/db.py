@@ -37,6 +37,7 @@ def connect(db_path: Path) -> sqlite3.Connection:
 
 
 def init_db(db_path: Path, schema_path: Path, seed_path: Path) -> None:
+    """Initialize a fresh CPV (0.5.0) database."""
     con = connect(db_path)
     try:
         con.executescript(schema_path.read_text(encoding="utf-8"))
@@ -181,16 +182,16 @@ def replace_model_scores(con: sqlite3.Connection, rows: list[dict]) -> None:
     con.commit()
 
 
-def replace_model_comparisons(con: sqlite3.Connection, rows: list[dict]) -> None:
-    """Persist final verdicts. Only complete models (all six 0-3 scores) are inserted."""
-    con.execute("DELETE FROM model_comparisons")
+def replace_model_verdicts(con: sqlite3.Connection, rows: list[dict]) -> None:
+    """Persist CPV verdicts (one row per model: D/E/F/G/H)."""
+    con.execute("DELETE FROM model_verdicts")
     for r in rows:
         con.execute(
-            """INSERT INTO model_comparisons(model_code, c1_sync, c2_boundaries, c3_robustness,
-                 c4_parsimony, c5_added_value, c6_transferability, weighted_score, verdict, notes)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (r["model_code"], r["C1"], r["C2"], r["C3"], r["C4"], r["C5"], r["C6"],
-             r["weighted_score"], r["verdict"], r.get("notes", "")),
+            """INSERT INTO model_verdicts(model_code, c1_sync, c3_robustness,
+                 weighted_score, verdict, notes)
+               VALUES (?, ?, ?, ?, ?, ?)""",
+            (r["model_code"], int(r["C1"]), int(r["C3"]),
+             float(r["weighted_score"]), r["verdict"], r.get("notes", "")),
         )
     con.commit()
 
@@ -213,17 +214,81 @@ def replace_global_indices(con: sqlite3.Connection, rows: list[dict]) -> None:
     con.commit()
 
 
-def replace_elliott_waves(con: sqlite3.Connection, pilot: str, rows: list[dict]) -> None:
-    """Persist Elliott waves detected on the synthetic intensity for a given pilot."""
-    con.execute("DELETE FROM elliott_waves WHERE pilot=?", (pilot,))
+def migrate_db(db_path: Path) -> None:
+    """No-op for CPV schema 0.5.0 databases; refuses pre-0.5.0 DBs.
+
+    The project no longer supports in-place migration from earlier schemas.
+    If you have an older DB (0.4.0 or earlier), delete `db/ecowave.db` and
+    re-run `ecowave init-db` — CPV is a clean-slate framework.
+    """
+    if not db_path.exists():
+        return
+    con = connect(db_path)
+    try:
+        version_row = con.execute(
+            "SELECT value FROM schema_meta WHERE key='schema_version'"
+        ).fetchone()
+        current = version_row["value"] if version_row else None
+        if current is None:
+            return
+        if current != "0.5.0":
+            raise RuntimeError(
+                f"Schema version {current} is no longer supported. "
+                f"Delete {db_path} and run `ecowave init-db` to start at 0.5.0."
+            )
+    finally:
+        con.close()
+
+
+# --- Cycle (CPV) persistence helpers --------------------------------------
+
+def upsert_cycle_observation(con: sqlite3.Connection, group_code: str, variable_code: str,
+                             year: int, value, source_id: int | None) -> None:
+    con.execute(
+        """INSERT INTO cycle_observations(group_code, variable_code, year, value, source_id)
+           VALUES (?, ?, ?, ?, ?)
+           ON CONFLICT(group_code, variable_code, year) DO UPDATE SET
+             value=excluded.value, source_id=excluded.source_id""",
+        (group_code, variable_code, int(year), _nn(value), _nn(source_id)),
+    )
+
+
+def replace_cycle_positions(con: sqlite3.Connection, as_of_month: str, rows: list[dict]) -> None:
+    con.execute("DELETE FROM cycle_positions WHERE as_of_month=?", (as_of_month,))
     for r in rows:
         con.execute(
-            """INSERT INTO elliott_waves(pilot, weighting, smoothing, label, direction,
-                 start_month, end_month, start_value, end_value, diffusion_at_end, confirmed)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (pilot, r["weighting"], r["smoothing"], r["label"], r["direction"],
-             r["start_month"], r["end_month"], float(r["start_value"]), float(r["end_value"]),
-             int(r["diffusion_at_end"]), 1 if r["confirmed"] else 0),
+            """INSERT INTO cycle_positions(as_of_month, group_code, cycle, phase,
+                 phi_rad, amplitude, ar1_p_value, separable, endpoint_caveat, notes)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (as_of_month, r["group_code"], r["cycle"], r["phase"],
+             _nn(r.get("phi_rad")), _nn(r.get("amplitude")), _nn(r.get("ar1_p_value")),
+             int(r["separable"]), int(r.get("endpoint_caveat", 0)), r.get("notes", "")),
+        )
+    con.commit()
+
+
+def replace_cycle_consensus(con: sqlite3.Connection, as_of_month: str, rows: list[dict]) -> None:
+    con.execute("DELETE FROM cycle_consensus WHERE as_of_month=?", (as_of_month,))
+    for r in rows:
+        con.execute(
+            """INSERT INTO cycle_consensus(as_of_month, group_code, cycle, model_code,
+                 phase, p_value, notes)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (as_of_month, r["group_code"], r["cycle"], r["model_code"],
+             r["phase"], _nn(r.get("p_value")), r.get("notes", "")),
+        )
+    con.commit()
+
+
+def replace_cycle_universality(con: sqlite3.Connection, as_of_month: str, rows: list[dict]) -> None:
+    con.execute("DELETE FROM cycle_universality WHERE as_of_month=?", (as_of_month,))
+    for r in rows:
+        con.execute(
+            """INSERT INTO cycle_universality(as_of_month, cycle, modal_phase,
+                 n_groups_concording, n_groups_total, universal, notes)
+               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+            (as_of_month, r["cycle"], r["modal_phase"], int(r["n_groups_concording"]),
+             int(r["n_groups_total"]), int(r["universal"]), r.get("notes", "")),
         )
     con.commit()
 

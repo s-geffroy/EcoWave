@@ -15,6 +15,7 @@ services:
       - ./docs:/app/docs
       - ./scripts:/app/scripts
       - ./sources_manifest.json:/app/sources_manifest.json
+      - ./cycles_manifest.json:/app/cycles_manifest.json
     ports:
       - "8000:8000"
     working_dir: /app

@@ -1,15 +1,9 @@
-"""Model D — a non-Elliott benchmark whose phases are derived from the data.
+"""Model D — PELT change-point detection on the curve stress matrix.
 
-A/B/C are three hand-drawn Elliott segmentations. Model D removes the analyst
-from the loop: it runs multivariate change-point detection (PELT, Killick et al.
-2012) on the curve-level stress matrix and turns the detected regimes into
-`candidate_phases` in the exact same format as the Elliott models. It is then
-scored by the same pipeline. If D matches or beats the Elliott champion on the
-auto-computed criteria (C1/C3), that is the publishable result: Elliott adds
-nothing over an automatic regime detector.
-
-Alternative (documented, not enabled): Markov-switching on an aggregate stress
-index via statsmodels' MarkovRegression.
+Multivariate change-point detection (Killick et al. 2012, PELT) on the
+per-curve E/D/S/L/I stress panel. Detected regimes are emitted as
+``candidate_phases`` in the format the CPV pipeline expects. One of the four
+CPV votant methods (D/E/F/G).
 """
 from __future__ import annotations
 
@@ -57,9 +51,9 @@ def fit_model_d(panel: pd.DataFrame, min_size: int = MIN_SIZE,
 
     if mat.empty or mat.dropna(how="all").empty or n < 2 * min_size:
         return {
-            "name": "Auto-detected regimes (PELT, non-Elliott)",
+            "name": "PELT auto-detected regimes",
             "hypothesis": "Crisis structure is whatever an automatic change-point "
-                          "detector finds — no Elliott grammar imposed.",
+                          "detector finds on the curve stress matrix.",
             "candidate_phases": single_phase,
             "method": "PELT(l2)", "penalty": None,
         }
@@ -81,9 +75,9 @@ def fit_model_d(panel: pd.DataFrame, min_size: int = MIN_SIZE,
         for i in range(len(bkps))
     ]
     return {
-        "name": f"Auto-detected regimes (PELT, {len(phases)} segments)",
+        "name": f"PELT auto-detected regimes ({len(phases)} segments)",
         "hypothesis": "Crisis structure is whatever an automatic change-point "
-                      "detector finds — no Elliott grammar imposed.",
+                      "detector finds on the curve stress matrix.",
         "candidate_phases": phases,
         "method": "PELT(l2)", "penalty": pen,
     }

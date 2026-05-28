@@ -205,3 +205,5 @@ def test_min_curves_threshold_blocks_intensity():
 
 def test_min_curves_constant_matches_design():
     assert MIN_CURVES_SCORED == 3
+
+

@@ -53,9 +53,38 @@ def run_pilot(
     pilot: str = typer.Argument("2008"),
     mode: str = typer.Option("strict", "--mode"),
 ) -> None:
-    """Run the full pilot pipeline."""
+    """Run the crisis-window CPV pipeline.
+
+    Stack: D (PELT change-point), E (Markov-switching), F (CF Juglar + Hilbert),
+    G (Bry-Boschan). Surrogate AR(1) null applied per method. Same four-method
+    stack as ``position-cycles`` but on a single crisis window.
+    """
     settings = Settings.from_env()
     run_pilot_impl(settings=settings, pilot=pilot, mode=mode)
+
+
+@app.command("position-cycles")
+def position_cycles(
+    as_of: str = typer.Option("2026-05", "--as-of",
+                              help="Target month (YYYY-MM) for the CPV snapshot."),
+    manifest: str = typer.Option("/app/cycles_manifest.json", "--manifest"),
+    groups: str = typer.Option("WLD,OECD,HIC,UMC,LMC,LIC,G7,BRICS", "--groups",
+                                help="Comma-separated group codes."),
+    mode: str = typer.Option("strict", "--mode"),
+    n_surrogates: int = typer.Option(1000, "--n-surrogates"),
+    seed: int = typer.Option(0, "--seed"),
+) -> None:
+    """Position the world (and groups) in Kitchin/Juglar/Kuznets/Kondratieff cycles."""
+    from ecowave.cycles.runner import run_position_cycles
+    from pathlib import Path
+
+    settings = Settings.from_env()
+    group_list = [g.strip() for g in groups.split(",") if g.strip()]
+    out = run_position_cycles(settings=settings, as_of=as_of,
+                              manifest_path=Path(manifest),
+                              groups=group_list, mode=mode,
+                              n_surrogates=n_surrogates, seed=seed)
+    typer.echo(f"position-cycles complete: {out}")
 
 
 @app.command("sources")

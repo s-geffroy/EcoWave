@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 
 from ecowave.scoring.null_test import (
+    all_models_null_report,
     champion_null_report,
     circular_shift_surrogate,
     null_pvalue,
@@ -56,3 +57,23 @@ def test_champion_beats_null_on_structured_panel():
         assert r.real >= r.null_mean
     # Circular shift is the synchronisation test: a real boundary beats it.
     assert not report["flag_shift"]
+
+
+def test_all_models_null_report_runs_per_model():
+    # A: the correct two-cycle champion; B: same but mis-aligned by 6 months.
+    model_a = CHAMPION
+    model_b = {
+        "candidate_phases": [("calm", MONTHS[0], "2010-06"), ("crisis", "2010-07", MONTHS[-1])]
+    }
+    reports = all_models_null_report(_regime_panel(), {"A": model_a, "B": model_b},
+                                     n_draws=50, seed=3)
+    assert set(reports) == {"A", "B"}
+    # Correctly-aligned A should beat circular-shift null; B may not.
+    assert not reports["A"]["flag_shift"]
+    assert "real" in reports["A"] and "real" in reports["B"]
+
+
+def test_all_models_null_report_skips_models_without_phases():
+    reports = all_models_null_report(_regime_panel(), {"A": CHAMPION, "Z": {}}, n_draws=20)
+    assert "A" in reports
+    assert "Z" not in reports

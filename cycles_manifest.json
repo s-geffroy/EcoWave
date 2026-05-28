@@ -1,0 +1,94 @@
+{
+  "project": "ecowave_cycles_2026",
+  "schema_version": "0.4.0",
+  "as_of_month": "2026-05",
+  "start_year": 1960,
+  "note": "Long-horizon multi-cycle decomposition. Eight World Bank indicators covering Kitchin/Juglar/Kuznets/Kondratieff bands across 8 group aggregates (WLD, OECD, HIC, UMC, LMC, LIC, G7, BRICS). Frozen for the May-2026 CPV run.",
+  "ingestion_plan": [
+    {
+      "variable_code": "CY_GDP",
+      "provider": "WORLD_BANK",
+      "series_id": "NY.GDP.MKTP.KD.ZG",
+      "dataset_name": "Real GDP growth (annual %)",
+      "value_transform": "level",
+      "cycle_targets": ["kitchin", "juglar", "kuznets"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data. Verify before redistribution.",
+      "notes": "Canonical business-cycle driver."
+    },
+    {
+      "variable_code": "CY_INV",
+      "provider": "WORLD_BANK",
+      "series_id": "NE.GDI.TOTL.ZS",
+      "dataset_name": "Gross capital formation (% of GDP)",
+      "value_transform": "level",
+      "cycle_targets": ["juglar"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data.",
+      "notes": "Schumpeter 1939 — Juglar as investment cycle."
+    },
+    {
+      "variable_code": "CY_INF",
+      "provider": "WORLD_BANK",
+      "series_id": "FP.CPI.TOTL.ZG",
+      "dataset_name": "Inflation, consumer prices (annual %)",
+      "value_transform": "level",
+      "cycle_targets": ["kitchin", "juglar"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data."
+    },
+    {
+      "variable_code": "CY_UEM",
+      "provider": "WORLD_BANK",
+      "series_id": "SL.UEM.TOTL.ZS",
+      "dataset_name": "Unemployment, total (% of labor force)",
+      "value_transform": "level",
+      "cycle_targets": ["juglar"],
+      "confidence": "B",
+      "license_notes": "World Bank Open Data, ILO modelled estimate."
+    },
+    {
+      "variable_code": "CY_TRD",
+      "provider": "WORLD_BANK",
+      "series_id": "NE.TRD.GNFS.ZS",
+      "dataset_name": "Trade (% of GDP)",
+      "value_transform": "level",
+      "cycle_targets": ["juglar", "kuznets"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data."
+    },
+    {
+      "variable_code": "CY_POP",
+      "provider": "WORLD_BANK",
+      "series_id": "SP.URB.TOTL.IN.ZS",
+      "dataset_name": "Urban population (% of total)",
+      "value_transform": "level",
+      "cycle_targets": ["kuznets"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data.",
+      "notes": "Lewis-Kuznets structural transformation proxy."
+    },
+    {
+      "variable_code": "CY_FIN",
+      "provider": "WORLD_BANK",
+      "series_id": "FS.AST.PRVT.GD.ZS",
+      "dataset_name": "Domestic credit to private sector (% of GDP)",
+      "value_transform": "level",
+      "cycle_targets": ["juglar", "kondratieff"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data / IMF IFS.",
+      "notes": "Reinhart-Rogoff credit super-cycle."
+    },
+    {
+      "variable_code": "CY_PRD",
+      "provider": "WORLD_BANK",
+      "series_id": "NY.GDP.PCAP.KD",
+      "dataset_name": "GDP per capita (constant 2015 USD)",
+      "value_transform": "log_diff",
+      "cycle_targets": ["kondratieff"],
+      "confidence": "A",
+      "license_notes": "World Bank Open Data.",
+      "notes": "Long-wave techno-economic productivity proxy."
+    }
+  ]
+}

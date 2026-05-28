@@ -1,5 +1,5 @@
-site_name: EcoWave
-site_description: Reproducible pilot adapting Dow Theory and Elliott Wave to the 2007-2012 systemic crisis
+site_name: CPV — Cycle Position Vector
+site_description: Reproducible multi-cycle decomposition of macro indicators with three falsifiability gates
 site_url: https://s-geffroy.github.io/EcoWave/
 repo_url: https://github.com/s-geffroy/EcoWave
 repo_name: s-geffroy/EcoWave
@@ -36,22 +36,19 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Methodology:
-      - Dow / Elliott adaptation: methodology/dow_elliott_adaptation.md
-      - Wave validation rules: methodology/wave_validation_rules.md
-      - Normalization rules: methodology/normalization_rules.md
+      - CPV protocol: methodology/multi_cycle_decomposition.md
+      - Cycle validation rules: methodology/cycle_validation_rules.md
+      - Cycle-methods survey: methodology/cycle_methods_survey.md
       - Composite indicator (intensity + diffusion): methodology/composite_indicator.md
-      - Reference windows: methodology/reference_windows.md
+      - Normalization rules: methodology/normalization_rules.md
       - Anti-pseudoscience rules: methodology/anti_pseudoscience_rules.md
-      - Variable dictionary: methodology/variable_dictionary.md
-      - Scoring rules: methodology/scoring_rules.md
-      - Models A/B/C: methodology/model_comparison.md
-  - Figures: figures.md
-  - Reports:
-      - "Pilot 2008 — report": reports/report_2008_pilot.md
-      - "Pilot 2008 — model comparison": reports/model_comparison_2008.md
-      - "Pilot 2008 — validation": reports/validation_summary_2008.md
-      - "Pilot 2011-2016 — report": reports/report_2016_pilot.md
-      - "Pilot 2011-2016 — model comparison": reports/model_comparison_2016.md
-      - "Pilot 2011-2016 — validation": reports/validation_summary_2016.md
-  - Data: data.md
+      - Reference windows: methodology/reference_windows.md
+      - Improvement roadmap: methodology/improvement_roadmap.md
+  - Cycles:
+      - Kitchin (3–5 y): cycles/kitchin.md
+      - Juglar (7–11 y): cycles/juglar.md
+      - Kuznets (15–25 y): cycles/kuznets.md
+      - Kondratieff (40–60 y): cycles/kondratieff.md
+  - Current report: reports/cycle_position_2026_05.md
+  - EWS validation: reports/ews_validation.md
   - Sources: sources.md

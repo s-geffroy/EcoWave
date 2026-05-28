@@ -46,7 +46,6 @@ def test_monthly_signal_and_evaluate_pilot():
     sig = monthly_signal(panel)
     assert set(sig.columns) >= {"month", "mean_stress", "curve_count"}
     pilot = Pilot(code="t", title="t", panel_start="2008-01", panel_end="2008-12",
-                  dow_context="", champion="B", models={},
                   crisis_months=(("2008-07", "2008-12"),))
     result = evaluate_pilot(panel, pilot)
     # Stress is high exactly in the labelled crisis months -> perfect separation.

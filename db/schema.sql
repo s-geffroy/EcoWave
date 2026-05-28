@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS schema_meta (
 );
 
 INSERT OR REPLACE INTO schema_meta(key, value) VALUES
-('schema_version', '0.2.0'),
-('created_for', 'ecowave_2008_pilot');
+('schema_version', '0.5.0'),
+('created_for', 'cpv_2026');
 
 CREATE TABLE IF NOT EXISTS sources (
   id INTEGER PRIMARY KEY,
@@ -115,21 +115,9 @@ CREATE TABLE IF NOT EXISTS curve_scores (
   UNIQUE(month, curve)
 );
 
-CREATE TABLE IF NOT EXISTS wave_candidates (
-  id INTEGER PRIMARY KEY,
-  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C','D')),
-  wave_label TEXT NOT NULL,
-  start_month TEXT NOT NULL,
-  end_month TEXT NOT NULL,
-  supporting_curves TEXT NOT NULL,
-  robustness_score TEXT NOT NULL CHECK(robustness_score IN ('A','B','C','D')),
-  rejection_reason TEXT,
-  notes TEXT
-);
-
 CREATE TABLE IF NOT EXISTS model_scores (
   id INTEGER PRIMARY KEY,
-  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C','D')),
+  model_code TEXT NOT NULL CHECK(model_code IN ('D','E','F','G','H')),
   criterion_code TEXT NOT NULL,
   raw_score INTEGER NOT NULL CHECK(raw_score BETWEEN 0 AND 3),
   weight REAL NOT NULL,
@@ -137,18 +125,15 @@ CREATE TABLE IF NOT EXISTS model_scores (
   notes TEXT
 );
 
-CREATE TABLE IF NOT EXISTS model_comparisons (
+CREATE TABLE IF NOT EXISTS model_verdicts (
   id INTEGER PRIMARY KEY,
-  model_code TEXT NOT NULL CHECK(model_code IN ('A','B','C','D')),
+  model_code TEXT NOT NULL CHECK(model_code IN ('D','E','F','G','H')),
   c1_sync INTEGER NOT NULL CHECK(c1_sync BETWEEN 0 AND 3),
-  c2_boundaries INTEGER NOT NULL CHECK(c2_boundaries BETWEEN 0 AND 3),
   c3_robustness INTEGER NOT NULL CHECK(c3_robustness BETWEEN 0 AND 3),
-  c4_parsimony INTEGER NOT NULL CHECK(c4_parsimony BETWEEN 0 AND 3),
-  c5_added_value INTEGER NOT NULL CHECK(c5_added_value BETWEEN 0 AND 3),
-  c6_transferability INTEGER NOT NULL CHECK(c6_transferability BETWEEN 0 AND 3),
   weighted_score REAL NOT NULL,
-  verdict TEXT NOT NULL CHECK(verdict IN ('strong','usable','fragile','rejected','blocked','provisional')),
-  notes TEXT
+  verdict TEXT NOT NULL CHECK(verdict IN ('strong','usable','fragile','rejected','blocked')),
+  notes TEXT,
+  UNIQUE(model_code)
 );
 
 CREATE TABLE IF NOT EXISTS validation_errors (
@@ -178,21 +163,6 @@ CREATE TABLE IF NOT EXISTS global_indices (
   UNIQUE(month, ref, weighting)
 );
 
-CREATE TABLE IF NOT EXISTS elliott_waves (
-  id INTEGER PRIMARY KEY,
-  pilot TEXT NOT NULL,
-  weighting TEXT NOT NULL CHECK(weighting IN ('equal','pca','favar')),
-  smoothing TEXT NOT NULL CHECK(smoothing IN ('ma3','hp_cycle')),
-  label TEXT NOT NULL,
-  direction TEXT NOT NULL CHECK(direction IN ('up','down')),
-  start_month TEXT NOT NULL,
-  end_month TEXT NOT NULL,
-  start_value REAL NOT NULL,
-  end_value REAL NOT NULL,
-  diffusion_at_end INTEGER NOT NULL,
-  confirmed INTEGER NOT NULL CHECK(confirmed IN (0,1))
-);
-
 CREATE TABLE IF NOT EXISTS external_anchors (
   id INTEGER PRIMARY KEY,
   month TEXT NOT NULL UNIQUE,
@@ -200,4 +170,58 @@ CREATE TABLE IF NOT EXISTS external_anchors (
   source_label TEXT NOT NULL,
   source_id INTEGER,
   FOREIGN KEY(source_id) REFERENCES sources(id)
+);
+
+-- ECPV (EcoWave Cycle Position Vector) — multi-cycle decomposition tables.
+-- Schema 0.4.0. Long-horizon WB annual data per country/group + per-cycle
+-- phase classification + cross-method consensus + cross-group universality.
+
+CREATE TABLE IF NOT EXISTS cycle_observations (
+  id INTEGER PRIMARY KEY,
+  group_code TEXT NOT NULL,
+  variable_code TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  value REAL,
+  source_id INTEGER,
+  UNIQUE(group_code, variable_code, year),
+  FOREIGN KEY(source_id) REFERENCES sources(id)
+);
+
+CREATE TABLE IF NOT EXISTS cycle_positions (
+  id INTEGER PRIMARY KEY,
+  as_of_month TEXT NOT NULL,
+  group_code TEXT NOT NULL,
+  cycle TEXT NOT NULL CHECK(cycle IN ('kitchin','juglar','kuznets','kondratieff')),
+  phase TEXT NOT NULL CHECK(phase IN ('expansion','peak','contraction','trough','rejected','disputed')),
+  phi_rad REAL,
+  amplitude REAL,
+  ar1_p_value REAL,
+  separable INTEGER NOT NULL CHECK(separable IN (0,1)),
+  endpoint_caveat INTEGER NOT NULL DEFAULT 0 CHECK(endpoint_caveat IN (0,1)),
+  notes TEXT,
+  UNIQUE(as_of_month, group_code, cycle)
+);
+
+CREATE TABLE IF NOT EXISTS cycle_consensus (
+  id INTEGER PRIMARY KEY,
+  as_of_month TEXT NOT NULL,
+  group_code TEXT NOT NULL,
+  cycle TEXT NOT NULL CHECK(cycle IN ('kitchin','juglar','kuznets','kondratieff')),
+  model_code TEXT NOT NULL CHECK(model_code IN ('D','E','F','G','H')),
+  phase TEXT NOT NULL,
+  p_value REAL,
+  notes TEXT,
+  UNIQUE(as_of_month, group_code, cycle, model_code)
+);
+
+CREATE TABLE IF NOT EXISTS cycle_universality (
+  id INTEGER PRIMARY KEY,
+  as_of_month TEXT NOT NULL,
+  cycle TEXT NOT NULL CHECK(cycle IN ('kitchin','juglar','kuznets','kondratieff')),
+  modal_phase TEXT NOT NULL,
+  n_groups_concording INTEGER NOT NULL,
+  n_groups_total INTEGER NOT NULL,
+  universal INTEGER NOT NULL CHECK(universal IN (0,1)),
+  notes TEXT,
+  UNIQUE(as_of_month, cycle)
 );

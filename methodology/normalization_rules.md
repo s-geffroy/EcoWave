@@ -18,5 +18,5 @@ Each variable must preserve:
 Per-variable normalisation is the entry point; per-curve averaging
 (`scoring/curve_scores.py`) produces a stress per curve. The synthetic
 global indicator (intensity + diffusion, three weightings — `equal`, `pca`,
-`favar`) is documented in `composite_indicator.md` and is what Elliott
-detection runs on at the composite level.
+`favar`) is documented in `composite_indicator.md` and is what the CPV
+methods D/E/F/G operate on at the composite level.

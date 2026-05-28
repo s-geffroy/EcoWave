@@ -1,3 +1,15 @@
+"""Pilot-report rendering for the CPV stack.
+
+Generates two markdown files per pilot:
+
+  - ``report_<pilot>_pilot.md`` — narrative: source completeness, curve
+    coverage, method summary, known limitations.
+  - ``model_comparison_<pilot>.md`` — per-method results: D/E/F/G sections,
+    the per-model surrogate-null table, the headline-model null test.
+
+The pilot report covers only the CPV stack: no champion adjudication, no
+analyst-graded criteria, no pivot-detection sensitivity tables.
+"""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -34,118 +46,170 @@ def _curve_coverage(panel: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
-def _model_table(scores: pd.DataFrame, verdicts: pd.DataFrame) -> str:
+def _criteria_table(scores: pd.DataFrame) -> str:
+    """C1 / C3 auto-computed criteria for the four CPV votant models."""
+    if scores.empty:
+        return "_No scored models._"
     pivot = scores.pivot_table(index="model_code", columns="criterion_code",
-                               values="raw_score", aggfunc="first")
-    verdict_map = verdicts.set_index("model_code")
-    present = [m for m in ["A", "B", "C", "D"] if m in pivot.index]
-    lines = ["| Model | C1 | C2 | C3 | C4 | C5 | C6 | weighted | verdict |",
-             "|---|---|---|---|---|---|---|---:|---|"]
+                                values="raw_score", aggfunc="first")
+    present = [m for m in ["D", "E", "F", "G", "H"] if m in pivot.index]
+    lines = ["| Model | C1 (synchronisation) | C3 (robustness) |",
+             "|---|---:|---:|"]
     for m in present:
         def cell(c):
             v = pivot.loc[m, c] if c in pivot.columns else None
             return "—" if v is None or pd.isna(v) else str(int(v))
-        if m in verdict_map.index:
-            pw = verdict_map.loc[m, "weighted_score"]
-            vd = verdict_map.loc[m, "verdict"]
-        else:  # Model D: non-Elliott benchmark, computed criteria only
-            pw, vd = "—", "benchmark"
-        lines.append(f"| {m} | {cell('C1')} | {cell('C2')} | {cell('C3')} | {cell('C4')} | "
-                     f"{cell('C5')} | {cell('C6')} | {pw} | **{vd}** |")
-    return "\n".join(lines)
-
-
-def _null_section(null_report: dict | None) -> str:
-    if not null_report:
-        return ("_Null/surrogate test not run (champion unavailable)._")
-    lines = [
-        f"Champion phase-separation: **mean η² = {null_report['real']:.3f}** "
-        f"(share of cross-curve stress variance explained by the champion's phases). "
-        f"Only this auto-computed evidence is falsifiable; C2/C4/C5/C6 are excluded.",
-        "",
-        "| Null | mean η² (null) | percentile of champion | p-value | verdict |",
-        "|---|---:|---:|---:|---|",
-    ]
-    for r in null_report["results"]:
-        beats = "beats chance" if r.p_value < null_report["alpha"] else "**RED FLAG: ≈ chance**"
-        lines.append(f"| {r.method} | {r.null_mean:.3f} | {r.percentile:.1f}% | "
-                     f"{r.p_value:.3f} | {beats} |")
-    if null_report["flag_random"] or null_report["flag_shift"]:
-        lines += ["", "> ⚠️ The champion is **not** distinguishable from a null at "
-                  f"α={null_report['alpha']}: its multi-curve evidence may be coincidental."]
+        lines.append(f"| {m} | {cell('C1')} | {cell('C3')} |")
     return "\n".join(lines)
 
 
 def _model_d_section(model_d: dict | None) -> str:
     if not model_d:
-        return "_Model D (auto-detected regimes) not available._"
-    phases = "; ".join(f"{label} {start}..{end}"
-                       for label, start, end in model_d["candidate_phases"])
+        return "_Model D (PELT) not run._"
+    phases = "\n".join(f"- {label}: {start} → {end}"
+                        for label, start, end in model_d["candidate_phases"])
     pen = model_d.get("penalty")
-    pen_txt = f"penalty={pen:.2f}" if isinstance(pen, (int, float)) else "single regime (fallback)"
-    return (f"**{model_d['name']}** — {model_d.get('method', 'PELT')} ({pen_txt}).\n\n"
-            f"Detected regimes: {phases}.\n\n"
-            "D is scored by the same pipeline as A/B/C on the auto-computed criteria (C1/C3). "
-            "If D matches or beats the Elliott champion there, Elliott adds no measurable "
-            "structure over an automatic change-point detector.")
+    pen_txt = (f"penalty = {pen:.2f}" if isinstance(pen, (int, float))
+               else "single regime (fallback)")
+    return (f"**{model_d.get('name', 'PELT change-point')}** — "
+            f"{model_d.get('method', 'PELT (L2 cost)')}; {pen_txt}.\n\n{phases}")
 
 
-def _models_line(pilot_def: Pilot) -> str:
-    parts = []
-    for code, model in pilot_def.models.items():
-        tag = " (provisional champion)" if code == pilot_def.champion else ""
-        parts.append(f"{code} = {model['name']}{tag}")
-    return "; ".join(parts)
+def _model_e_section(model_e: dict | None) -> str:
+    if not model_e:
+        return "_Model E (Markov-switching) not run._"
+    if model_e.get("fit_status") != "ok":
+        return (f"**Markov-switching fallback** — "
+                f"{model_e.get('fit_status', 'unavailable')}.")
+    phases = "\n".join(f"- {label}: {start} → {end}"
+                        for label, start, end in model_e["candidate_phases"])
+    aic_bic = model_e.get("aic_bic_table", {})
+    aic_bic_md = "; ".join(f"{k}: AIC={v['aic']}, BIC={v['bic']}"
+                            for k, v in aic_bic.items())
+    return (f"**{model_e['name']}** — {model_e['method']}; "
+            f"BIC-selected k={model_e['selected_k']}. {aic_bic_md}.\n\n{phases}")
+
+
+def _model_f_section(model_f: dict | None) -> str:
+    if not model_f:
+        return "_Model F not run._"
+    status = model_f.get("fit_status", "unknown")
+    p = model_f.get("ar1_pvalue")
+    p_txt = f"p = {p:.3f}" if isinstance(p, (int, float)) else "p = —"
+    if status != "ok":
+        return (f"**CF Juglar + Hilbert fallback** — {status}; AR(1) {p_txt}. "
+                "Phase cell published as `rejected_cycle` per Gate 1.")
+    phase_lines = "\n".join(f"- {label}: {start} → {end}"
+                            for label, start, end in model_f["candidate_phases"])
+    return (f"**{model_f['name']}** — {model_f.get('method', 'CF + Hilbert')}; "
+            f"AR(1) null {p_txt} (separable when p < 0.05).\n\n{phase_lines}")
+
+
+def _model_g_section(model_g: dict | None) -> str:
+    if not model_g:
+        return "_Model G not run._"
+    status = model_g.get("fit_status", "unknown")
+    if status != "ok":
+        return (f"**Bry-Boschan fallback** — {status}. No turning point "
+                "survives the Harding-Pagan duration constraints.")
+    phase_lines = "\n".join(f"- {label}: {start} → {end}"
+                            for label, start, end in model_g["candidate_phases"])
+    nP = model_g.get("n_peaks", 0)
+    nT = model_g.get("n_troughs", 0)
+    return (f"**{model_g['name']}** — {model_g.get('method', 'Bry-Boschan')}; "
+            f"{nP} peak(s) / {nT} trough(s).\n\n{phase_lines}")
+
+
+def _models_null_table(null_reports_by_model: dict | None) -> str:
+    if not null_reports_by_model:
+        return "_Per-model null test not run._"
+    lines = [
+        "Per-method η² phase-separation against two surrogate nulls "
+        "(`random_seg` = boundary placement; `circ_shift` = cross-curve alignment). "
+        "✓ beats chance at α=0.05; ⚠ red-flagged.",
+        "",
+        "| Model | real η² | random_seg p | circ_shift p | verdict |",
+        "|---|---:|---:|---:|---|",
+    ]
+    for code in ["D", "E", "F", "G", "H"]:
+        rep = null_reports_by_model.get(code)
+        if rep is None:
+            continue
+        if "error" in rep:
+            lines.append(f"| {code} | — | — | — | error: {rep['error']} |")
+            continue
+        results = {r.method: r for r in rep["results"]}
+        seg = results.get("random_segmentation")
+        shift = results.get("circular_shift")
+        flagged = rep.get("flag_random") or rep.get("flag_shift")
+        verdict = "⚠ ≈ chance" if flagged else "✓ beats chance"
+        seg_p = f"{seg.p_value:.3f}" if seg else "—"
+        shift_p = f"{shift.p_value:.3f}" if shift else "—"
+        lines.append(f"| {code} | {rep['real']:.3f} | {seg_p} | {shift_p} | {verdict} |")
+    return "\n".join(lines)
+
+
+def _null_section(null_report: dict | None) -> str:
+    if not null_report:
+        return "_Headline null test not run._"
+    lines = [
+        f"Headline model (F) phase-separation: **mean η² = {null_report['real']:.3f}** "
+        "(share of cross-curve stress variance explained by the model's phases).",
+        "",
+        "| Null | mean η² (null) | percentile | p-value | verdict |",
+        "|---|---:|---:|---:|---|",
+    ]
+    for r in null_report["results"]:
+        beats = "beats chance" if r.p_value < null_report["alpha"] \
+            else "**RED FLAG: ≈ chance**"
+        lines.append(f"| {r.method} | {r.null_mean:.3f} | {r.percentile:.1f}% | "
+                     f"{r.p_value:.3f} | {beats} |")
+    if null_report["flag_random"] or null_report["flag_shift"]:
+        lines += ["", f"> ⚠️ The headline model is **not** distinguishable from a null "
+                  f"at α={null_report['alpha']}: its multi-curve evidence may be coincidental."]
+    return "\n".join(lines)
 
 
 def generate_reports(settings: Settings, pilot_def: Pilot, mode: str, panel: pd.DataFrame,
                      curves: pd.DataFrame, scores: pd.DataFrame, verdicts: pd.DataFrame,
-                     failures: list[str], champion_text: str = "",
-                     null_report: dict | None = None, model_d: dict | None = None) -> list[Path]:
+                     failures: list[str],
+                     null_report: dict | None = None,
+                     model_d: dict | None = None, model_e: dict | None = None,
+                     model_f: dict | None = None, model_g: dict | None = None,
+                     null_reports_by_model: dict | None = None) -> list[Path]:
     pilot = pilot_def.code
     window = f"{pilot_def.panel_start} .. {pilot_def.panel_end}"
     settings.reports_dir.mkdir(parents=True, exist_ok=True)
     n_available_vars = panel[panel["status"] == "available"]["variable_code"].nunique()
     n_missing_vars = panel[panel["status"] == "missing"]["variable_code"].nunique()
-    blocked_models = int((verdicts["verdict"] == "blocked").sum()) if not verdicts.empty else 0
-    all_complete = (not verdicts.empty) and bool(verdicts["complete"].all())
-
-    if not champion_text:
-        champion_text = (
-            "Champion provisoire: B. Arbitrage non tranché tant que les annotations "
-            "qualitatives (C2/C4/C5/C6) ne sont pas complètes pour les trois modèles."
-        )
-
-    if all_complete:
-        verdict_header = "## Final verdict: SCORED (analyst-annotated)"
-        verdict_para = (
-            "All six criteria are filled for every model (C1/C3 computed, C2/C4/C5/C6 "
-            "analyst-annotated). Verdicts and the champion/challenger adjudication below "
-            "are therefore decisive for this evidence base. Remaining data gaps (I2 media "
-            "tone, S2 protests) are documented as limitations."
-        )
-    else:
-        verdict_header = "## Final verdict: PROVISIONAL / BLOCKED"
-        verdict_para = (
-            f"EcoWave does **not** deliver a final analytical verdict yet. The qualitative "
-            f"criteria (C2, C4, C5, C6) require analyst annotation (see `annotations/`), and "
-            f"{blocked_models} model(s) remain **blocked**. Fill the annotation template to "
-            f"obtain decisive verdicts. This gate is by design (anti-pseudoscience rules)."
-        )
 
     main = settings.reports_dir / f"report_{pilot}_pilot.md"
-    main.write_text(f"""# EcoWave — Pilot {pilot}: {pilot_def.title}
+    main.write_text(f"""# CPV — Pilot {pilot}: {pilot_def.title}
 
 Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 
-{verdict_header}
+## Method
 
-{verdict_para}
+The Cycle Position Vector (CPV) stack runs four methods on the panel's
+composite intensity:
+
+| Model | Method | Source |
+|---|---|---|
+| D | PELT change-point detection | Killick et al. 2012 |
+| E | Markov-switching AR(1) | Hamilton 1989 |
+| F | Christiano-Fitzgerald Juglar band-pass + Hilbert phase | Christiano-Fitzgerald 2003 |
+| G | Bry-Boschan / Harding-Pagan turning-point dating | Harding & Pagan 2002 |
+
+The same four-method stack applies to ``position-cycles``; for a crisis
+pilot the horizon is short, so Model F may fall back (Juglar needs more
+than two cycle lengths of data) while D/E/G still produce phases. Each
+model is independently tested against the AR(1) surrogate null
+(see ``methodology/cycle_validation_rules.md``).
 
 ## Source completeness
 
 - Variables with real data: **{n_available_vars}**
-- Variables missing (no V1 source): **{n_missing_vars}**
+- Variables missing (no source available): **{n_missing_vars}**
 - Ingestion failures this run: **{len(failures)}** {failures if failures else ''}
 
 ### Curve coverage
@@ -154,105 +218,68 @@ Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 ### Per-variable status (months {window})
 {_variable_status_table(panel)}
 
-## Method
-
-- Dow context window: {pilot_def.dow_context}
-- Elliott active window: {window}
-- Competing models: {_models_line(pilot_def)}
-- Dual reference windows: pre-crisis 1990-2006, structural 1990-2019 (Covid/Ukraine excluded)
-
-## Computed criteria (honest, data-driven)
-
-Only C1 (multi-curve synchronisation) and C3 (reference-window robustness) are
-auto-computed from the real panel. See `model_comparison_{pilot}.md`.
-
-## Known structural limitations
+## Known limitations
 
 - E-curve combines US + Euro Area (composite); E4 GDP is quarterly only.
 - D-curve structural window is short (ECB CISS starts 1999) → C3 weak for D.
 - D3 derived from curated events only → no pre-crisis baseline (status `partial`).
-- I1 is a news-based EPU proxy (not GDELT); I2 (tone) and S2 (protests) still missing.
+- I1 is a news-based EPU proxy; I2 (tone) and S2 (protests) remain missing.
+
+See ``methodology/multi_cycle_decomposition.md`` for the full CPV protocol.
 """, encoding="utf-8")
 
     computed_notes = "\n".join(
         f"- {r.model_code}/{r.criterion_code}: {r.notes}"
         for r in scores[scores["status"] == "computed"].itertuples()
-    )
-    annotated_rows = scores[scores["status"] == "annotated"]
-    annotated_notes = "\n".join(
-        f"- {r.model_code}/{r.criterion_code} = {int(r.raw_score)}: {r.notes}"
-        for r in annotated_rows.itertuples()
-    ) or "_No analyst annotations yet — C2/C4/C5/C6 remain blocked._"
+    ) or "_No computed-criterion notes._"
+
     comparison = settings.reports_dir / f"model_comparison_{pilot}.md"
-    comparison.write_text(f"""# EcoWave — Model comparison (Pilot {pilot}: {pilot_def.title})
+    comparison.write_text(f"""# CPV — Model comparison (Pilot {pilot}: {pilot_def.title})
 
 Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
 
-## Scores A / B / C
+## Auto-computed criteria (C1 + C3)
 
-Raw scores 0-3. `—` = blocked (qualitative criterion not auto-scored in V1).
+C1 (multi-curve synchronisation) and C3 (reference-window robustness) are
+the two falsifiable criteria scored by the pipeline. They are evaluated
+against the η² phase-separation null (see ``methodology/cycle_validation_rules.md``).
 
-{_model_table(scores, verdicts)}
+{_criteria_table(scores)}
 
-Weights: C1=0.25, C2=0.20, C3=0.20, C4=0.10, C5=0.15, C6=0.10.
+## CPV stack
 
-## Non-Elliott benchmark (Model D)
+### Model D — PELT change-point detection
 
 {_model_d_section(model_d)}
 
-## Null / surrogate test (falsifiability)
+### Model E — Markov-switching regimes
+
+{_model_e_section(model_e)}
+
+### Model F — CF Juglar band-pass + Hilbert phase (headline)
+
+{_model_f_section(model_f)}
+
+### Model G — Bry-Boschan / Harding-Pagan dating
+
+{_model_g_section(model_g)}
+
+## Surrogate null test (falsifiability)
+
+### Headline (Model F)
 
 {_null_section(null_report)}
 
-## Champion / challenger
+### Per-method panel
 
-{champion_text}
-
-## Annotated criteria (analyst judgement)
-
-{annotated_notes}
+{_models_null_table(null_reports_by_model)}
 
 ## Computation notes
 
 {computed_notes}
 """, encoding="utf-8")
 
-    validation = settings.reports_dir / f"validation_summary_{pilot}.md"
-    validation.write_text(f"""# EcoWave — Validation summary (Pilot {pilot}: {pilot_def.title})
-
-Generated: {_ts()}  ·  Mode: `{mode}`  ·  Window: {window}
-
-## Run outcome
-
-- Mode: `{mode}`
-- Ingestion failures: {len(failures)} {failures if failures else '(none)'}
-- Models blocked: {blocked_models} / 3
-
-## Reference windows used
-
-- Pre-crisis: 1990-2006 (longest available pre-2007 per variable; CISS from 1999)
-- Structural: 1990-2019 (Covid/Ukraine excluded)
-
-## Anti-pseudoscience compliance
-
-- [x] Competing models A/B/C scored on identical criteria
-- [x] Raw values preserved; transforms documented per variable
-- [x] Missing data marked explicitly (`missing` / `partial`), never imputed silently
-- [x] No final verdict while curves are incomplete (verdict = blocked/provisional)
-- [x] Source manifest is the single source of truth for ingestion
-- [x] Qualitative criteria left blocked rather than fabricated
-
-## Confidence grades
-
-Per-variable confidence grades (A-D) are carried in the monthly panel `confidence` column.
-
-## Data sources
-
-Every series is cited with provider, identifier and licence on the
-[Data sources](../sources.md) page (generated from `sources_manifest.json`).
-""", encoding="utf-8")
-
-    return [main, comparison, validation]
+    return [main, comparison]
 
 
 def generate_report(settings: Settings, pilot: str, mode: str) -> Path:
@@ -260,22 +287,24 @@ def generate_report(settings: Settings, pilot: str, mode: str) -> Path:
     pilot_def = get_pilot(pilot)
     stem = f"monthly_panel_{pilot_def.panel_start[:4]}_{pilot_def.panel_end[:4]}"
     panel_path = settings.data_processed_dir / f"{stem}.csv"
-    scores_path = settings.data_processed_dir / f"model_scores_abc_{pilot}.csv"
+    scores_path = settings.data_processed_dir / f"model_scores_{pilot}.csv"
     verdicts_path = settings.data_processed_dir / f"model_verdicts_{pilot}.csv"
     if not panel_path.exists():
         settings.reports_dir.mkdir(parents=True, exist_ok=True)
         path = settings.reports_dir / f"report_{pilot}_pilot.md"
         path.write_text(
-            f"# EcoWave — Pilot {pilot}\n\nMode: `{mode}`\n\n"
+            f"# CPV — Pilot {pilot}\n\nMode: `{mode}`\n\n"
             f"No processed panel found. Run `ecowave run-pilot {pilot}` first.\n",
             encoding="utf-8",
         )
         return path
 
     panel = pd.read_csv(panel_path)
-    scores = pd.read_csv(scores_path)
-    verdicts = pd.read_csv(verdicts_path)
+    scores = pd.read_csv(scores_path) if scores_path.exists() else pd.DataFrame()
+    verdicts = pd.read_csv(verdicts_path) if verdicts_path.exists() else pd.DataFrame()
     if "complete" in verdicts.columns:
-        verdicts["complete"] = verdicts["complete"].astype(str).str.lower().isin({"true", "1"})
-    reports = generate_reports(settings, pilot_def, mode, panel, pd.DataFrame(), scores, verdicts, [])
-    return reports[0]
+        verdicts["complete"] = (verdicts["complete"].astype(str).str.lower()
+                                 .isin({"true", "1"}))
+    reports = generate_reports(settings, pilot_def, mode, panel, pd.DataFrame(),
+                                scores, verdicts, [])
+    return reports[0] if reports else settings.reports_dir / f"report_{pilot}_pilot.md"

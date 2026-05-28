@@ -10,7 +10,7 @@ from ecowave.db import (
 
 
 def test_schema_initialized(initialized_db):
-    assert get_schema_version(initialized_db) == "0.2.0"
+    assert get_schema_version(initialized_db) == "0.5.0"
 
 
 def test_variables_seeded(initialized_db):

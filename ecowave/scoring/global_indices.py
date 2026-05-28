@@ -1,6 +1,6 @@
 """Global synthetic indicators on top of the 5 EcoWave curves (E/D/S/L/I).
 
-Produces an intensity index (continuous, used for Elliott analysis) and a
+Produces an intensity index (continuous, used for CPV decomposition) and a
 diffusion index (count of curves above the 80th percentile, used as a
 confirmation filter). Three weighting variants are computed in parallel:
 
@@ -9,8 +9,12 @@ confirmation filter). Three weighting variants are computed in parallel:
 - favar  : weights from predictive content (R^2) of each curve for a future
            exogenous activity anchor (FAVAR-flavoured anchor regression).
 
-Smoothings exposed for downstream Elliott detection: raw, MA3, and the
+Smoothings exposed for downstream CPV decomposition: raw, MA3, and the
 Hodrick-Prescott cycle/trend pair (lambda=129600 monthly).
+
+Diagnostic overlay: Bollinger %b on the MA3 intensity, parameters pre-registered
+(window=20, k=2.0). Strictly diagnostic — never enters scoring; documented in
+`methodology/composite_indicator.md` and `anti_pseudoscience_rules.md`.
 """
 from __future__ import annotations
 

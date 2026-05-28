@@ -110,3 +110,24 @@ def champion_null_report(panel: pd.DataFrame, model: dict,
         "flag_shift": shift_p >= RED_FLAG_ALPHA,
         "alpha": RED_FLAG_ALPHA,
     }
+
+
+def all_models_null_report(panel: pd.DataFrame, models: dict,
+                           n_draws: int = DEFAULT_DRAWS, seed: int = 0) -> dict[str, dict]:
+    """Run the same null test on every model (A/B/C/D/E) the pipeline produced.
+
+    Returns a dict ``{model_code: champion_null_report-like dict}``. Models whose
+    candidate_phases reduce to a single phase produce p≈1 by construction (no
+    boundary to test); the report renders them as ``insufficient``.
+    """
+    out: dict[str, dict] = {}
+    for code, model in models.items():
+        if not isinstance(model, dict) or not model.get("candidate_phases"):
+            continue
+        try:
+            report = champion_null_report(panel, model, n_draws=n_draws, seed=seed)
+        except Exception as exc:  # noqa: BLE001 — surface as a report-level warning
+            report = {"error": str(exc), "results": [], "real": float("nan"),
+                      "flag_random": True, "flag_shift": True, "alpha": RED_FLAG_ALPHA}
+        out[code] = report
+    return out

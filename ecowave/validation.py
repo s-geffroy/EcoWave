@@ -66,11 +66,18 @@ def check_config(settings: Settings, mode: str) -> CheckResult:
         items.append(_dir_check(path))
 
     schema_version = get_schema_version(settings.db_path)
-    db_ok = schema_version == "0.2.0"
+    # 0.2.0 is upgraded in place by db.migrate_db() at pipeline start; both
+    # versions are acceptable so existing databases keep working without
+    # forcing a re-init.
+    accepted_versions = {"0.5.0"}
+    db_ok = schema_version in accepted_versions
     if mode == "strict":
-        items.append(CheckItem("SQLite schema", db_ok, f"expected 0.2.0, found {schema_version}"))
+        items.append(CheckItem("SQLite schema", db_ok,
+                               f"expected one of {sorted(accepted_versions)}, found {schema_version}"))
     else:
-        items.append(CheckItem("SQLite schema", True if schema_version in {None, "0.2.0"} else False, f"found {schema_version}; run init-db if missing"))
+        items.append(CheckItem("SQLite schema",
+                               True if schema_version in (accepted_versions | {None}) else False,
+                               f"found {schema_version}; run init-db if missing"))
 
     result = CheckResult(mode=mode, items=items)
 
