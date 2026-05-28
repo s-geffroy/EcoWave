@@ -8,7 +8,19 @@
 > méthodes hétérogènes ; universalité cross-groupes). Le code, les données
 > et les figures sont régénérables d'une seule commande Docker.
 
-![Heatmap des phases — panel Banque mondiale, mai 2026](figures/cycle_phase_heatmap_2026_05_wb.png){ width="100%" }
+<figure markdown>
+  ![Heatmap des phases — panel Banque mondiale, mai 2026](figures/cycle_phase_heatmap_2026_05_wb.png){ width="100%" }
+  <figcaption>
+    <strong>Figure 1.</strong> Phase de consensus CPV par agrégat × bande
+    cyclique, panel Banque mondiale (1960-2024), as-of mai 2026. Chaque
+    cellule est colorée par l'étiquette publiée après application des
+    trois portes de falsifiabilité ; <code>rejected</code> indique
+    l'échec de la Porte 1 (le cycle ne se distingue pas d'un bruit AR(1)
+    + scramble de phase), <code>disputed</code> indique l'échec de la
+    Porte 2 (moins de 3 méthodes votantes sur 4 en accord). Run :
+    <code>position-cycles --horizon wb --null dual --n-surrogates 1000</code>.
+  </figcaption>
+</figure>
 
 ## Vue d'ensemble
 
