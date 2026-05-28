@@ -24,7 +24,13 @@ from ecowave.cycles.consensus import compute_phase_consensus
 from ecowave.cycles.decompose import cf_bandpass, morlet_wavelet
 from ecowave.cycles.ingest import build_group_panel
 from ecowave.cycles.manifest import CycleManifest, load_cycle_manifest
-from ecowave.cycles.phase import classify_phase, hilbert_amplitude, hilbert_phase
+from ecowave.cycles.phase import (
+    classify_phase,
+    forecast_next_extremum,
+    hilbert_amplitude,
+    hilbert_phase,
+    trend_from_phase,
+)
 from ecowave.cycles.report import (
     build_position_table,
     plot_cf_trajectories,
@@ -254,6 +260,7 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
                     "ar1_p_value": None if null is None else float(null.p_value),
                     "separable": 0,
                     "endpoint_caveat": _endpoint_caveat(band, last_year, current_year),
+                    "trend": "—", "next_kind": "—", "next_eta_years": None,
                     "notes": "Gate 1: AR(1) null not rejected.",
                 })
                 continue
@@ -278,11 +285,18 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
             phases_by_model = {"F": phase_f, "G": phase_g, "E": phase_e, "D": phase_d}
             consensus_label, votes = compute_phase_consensus(phases_by_model)
 
+            # Trend + next-extremum forecast from the Hilbert phase (Model F).
+            period_years = (lo + hi) / 2.0
+            forecast = forecast_next_extremum(last_phi, period_years)
+            trend = trend_from_phase(last_phi)
+
             positions.append({
                 "group_code": group, "cycle": cycle_name, "phase": consensus_label,
                 "phi_rad": last_phi, "amplitude": last_amp,
                 "ar1_p_value": float(null.p_value), "separable": 1,
                 "endpoint_caveat": _endpoint_caveat(band, last_year, current_year),
+                "trend": trend, "next_kind": forecast["next_kind"],
+                "next_eta_years": forecast["next_eta_years"],
                 "notes": f"votes={votes}",
             })
             for model_code, phase in phases_by_model.items():

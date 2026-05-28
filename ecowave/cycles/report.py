@@ -14,12 +14,25 @@ import pandas as pd
 
 from ecowave.cycles.bands import CYCLE_BANDS, INCOME_GROUPS
 
+GROUP_GLOSSARY = {
+    "WLD": "Monde — agrégat World Bank (population + GDP pondérés)",
+    "OECD": "OECD — 38 pays membres de l'Organisation de Coopération et de Développement Économiques",
+    "HIC": "High-Income Countries — RNB/hab > 14 005 USD (seuil WB 2024-2025)",
+    "UMC": "Upper-Middle-Income — RNB/hab entre 4 516 et 14 005 USD",
+    "LMC": "Lower-Middle-Income — RNB/hab entre 1 146 et 4 515 USD",
+    "LIC": "Low-Income Countries — RNB/hab ≤ 1 145 USD",
+    "G7": "G7 — USA, GBR, FRA, DEU, ITA, JPN, CAN (recompute pondéré PIB)",
+    "G20": "G20 — 19 pays principaux (zone UE traitée par DEU+FRA+ITA)",
+    "BRICS": "BRICS — Brésil, Russie, Inde, Chine, Afrique du Sud",
+}
+
 
 def build_position_table(positions: list[dict]) -> pd.DataFrame:
     """Materialize the cycle_positions rows as a tidy DataFrame for rendering."""
     if not positions:
         return pd.DataFrame(columns=["group_code", "cycle", "phase", "ar1_p_value",
-                                     "separable", "amplitude", "endpoint_caveat"])
+                                     "separable", "amplitude", "endpoint_caveat",
+                                     "trend", "next_kind", "next_eta_years"])
     df = pd.DataFrame(positions)
     df["cycle"] = pd.Categorical(df["cycle"], categories=list(CYCLE_BANDS.keys()),
                                   ordered=True)
@@ -31,6 +44,66 @@ def _matrix_view(table: pd.DataFrame, value_col: str = "phase") -> pd.DataFrame:
         return pd.DataFrame()
     return (table.pivot(index="group_code", columns="cycle", values=value_col)
             .reindex(columns=list(CYCLE_BANDS.keys())))
+
+
+def _format_eta(eta_years) -> str:
+    if eta_years is None or (isinstance(eta_years, float) and pd.isna(eta_years)):
+        return "—"
+    if eta_years < 1.0:
+        return f"{eta_years * 12.0:.0f} mois"
+    if eta_years < 10.0:
+        return f"{eta_years:.1f} ans"
+    return f"{eta_years:.0f} ans"
+
+
+def _format_next(row) -> str:
+    kind = row.get("next_kind", "—")
+    eta = row.get("next_eta_years")
+    if kind in (None, "—") or eta is None:
+        return "—"
+    arrow = "📈 max" if kind == "max" else "📉 min"
+    return f"{arrow} dans {_format_eta(eta)}"
+
+
+def render_recap_table(table: pd.DataFrame) -> str:
+    """Per-group recap: cycle × phase × trend × forecast.
+
+    One block per group. Each block lists the 4 cycles with their current phase,
+    instantaneous trend (rising / falling / post-extremum) and the expected
+    next extremum + ETA. Cycles that failed Gate 1 (`rejected`) appear with
+    em-dashes for the forecast columns.
+    """
+    if table.empty:
+        return "_Aucune donnée à récapituler._"
+    lines: list[str] = []
+    for group in table["group_code"].drop_duplicates():
+        sub = table[table["group_code"] == group].sort_values("cycle")
+        lines.append(f"### {group}")
+        lines.append("")
+        lines.append("| Cycle | Phase | Tendance | Prochain extremum |")
+        lines.append("|---|---|---|---|")
+        for r in sub.itertuples():
+            cycle_lbl = str(r.cycle).capitalize()
+            phase = str(r.phase) if r.phase else "—"
+            trend = getattr(r, "trend", "—") or "—"
+            nxt = _format_next({"next_kind": getattr(r, "next_kind", "—"),
+                                  "next_eta_years": getattr(r, "next_eta_years", None)})
+            caveat = " ⚠️" if int(getattr(r, "endpoint_caveat", 0)) == 1 else ""
+            lines.append(f"| {cycle_lbl}{caveat} | {phase} | {trend} | {nxt} |")
+        lines.append("")
+    lines.append(
+        "_⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont "
+        "moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._"
+    )
+    return "\n".join(lines)
+
+
+def render_group_glossary() -> str:
+    """Markdown glossary of group codes used in the report."""
+    lines = ["| Code | Définition |", "|---|---|"]
+    for code, definition in GROUP_GLOSSARY.items():
+        lines.append(f"| `{code}` | {definition} |")
+    return "\n".join(lines)
 
 
 def render_cycle_position_md(as_of: str, table: pd.DataFrame,
@@ -51,6 +124,22 @@ def render_cycle_position_md(as_of: str, table: pd.DataFrame,
     lines.append("> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus")
     lines.append("> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir")
     lines.append("> `methodology/multi_cycle_decomposition.md` pour la spécification complète.")
+    lines.append("")
+
+    # Group glossary upfront so a first-time reader knows what WLD / HIC / ... mean.
+    lines.append("## Glossaire des agrégats")
+    lines.append("")
+    lines.append(render_group_glossary())
+    lines.append("")
+
+    # ---------- Headline recap: per-group cycle position + trend + next extremum.
+    lines.append("## Récapitulatif par agrégat (position, tendance, prochain extremum)")
+    lines.append("")
+    lines.append("Pour chaque groupe, position du cycle, tendance instantanée et")
+    lines.append("ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :")
+    lines.append("Δt = ((φ_cible − φ) mod 2π) / ω, où ω = 2π / période centrale de la bande).")
+    lines.append("")
+    lines.append(render_recap_table(table))
     lines.append("")
 
     # Gate 1 + 2 output: position table.
