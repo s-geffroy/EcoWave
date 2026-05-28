@@ -107,6 +107,36 @@
         "ITA": {"src": "FRED",     "series": "QITPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — Italy (FRED mirror)"}
       },
       "notes": "Total credit to private non-financial sector (BIS, all lenders). Annualised quarterly log-growth. Borio-Drehmann financial cycle (Juglar/Kuznets) and Reinhart-Rogoff credit super-cycle (Kondratieff). Parallels LH_CREDIT in the long-history manifest."
+    },
+    {
+      "variable_code": "Q_INV",
+      "transform": "log_diff_q",
+      "cycle_targets": ["juglar"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "NAEXKP04USQ652S",     "note": "Gross fixed capital formation, volume index, SA — US (OECD MEI mirror on FRED)"},
+        "EA":  {"src": "FRED",     "series": "NAEXKP04EZQ652S",     "note": "Gross fixed capital formation — Euro Area (OECD MEI mirror on FRED)"},
+        "GBR": {"src": "FRED",     "series": "NAEXKP04GBQ652S",     "note": "Gross fixed capital formation — UK (OECD MEI mirror on FRED)"},
+        "DEU": {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "DE", "na_item": "P51G", "unit": "CLV10_MEUR", "s_adj": "SCA"},
+        "FRA": {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "FR", "na_item": "P51G", "unit": "CLV10_MEUR", "s_adj": "SCA"},
+        "ITA": {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "IT", "na_item": "P51G", "unit": "CLV10_MEUR", "s_adj": "SCA"}
+      },
+      "notes": "Real gross fixed capital formation (volume, SA). Schumpeter (1939) — Juglar as investment cycle. Annualised quarterly log-growth. Parallels CY_INV in the WB manifest. JPN/CAN not mirrored on FRED with the OECD MEI NAEXKP04 code; they would need a separate OECD SDMX wiring in a follow-up."
+    },
+    {
+      "variable_code": "Q_HPI",
+      "transform": "log_diff_q",
+      "cycle_targets": ["kuznets"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "QUSR628BIS",          "note": "BIS Real Residential Property Prices — US (FRED mirror)"},
+        "EA":  {"src": "FRED",     "series": "QXMR628BIS",          "note": "BIS Real Residential Property Prices — Euro Area (FRED mirror)"},
+        "JPN": {"src": "FRED",     "series": "QJPR628BIS",          "note": "BIS Real Residential Property Prices — Japan (FRED mirror)"},
+        "GBR": {"src": "FRED",     "series": "QGBR628BIS",          "note": "BIS Real Residential Property Prices — UK (FRED mirror)"},
+        "CAN": {"src": "FRED",     "series": "QCAR628BIS",          "note": "BIS Real Residential Property Prices — Canada (FRED mirror)"},
+        "DEU": {"src": "FRED",     "series": "QDER628BIS",          "note": "BIS Real Residential Property Prices — Germany (FRED mirror)"},
+        "FRA": {"src": "FRED",     "series": "QFRR628BIS",          "note": "BIS Real Residential Property Prices — France (FRED mirror)"},
+        "ITA": {"src": "FRED",     "series": "QITR628BIS",          "note": "BIS Real Residential Property Prices — Italy (FRED mirror)"}
+      },
+      "notes": "BIS real residential property price index (deflated by CPI). Lewis-Kuznets construction swing — house prices are the canonical Kuznets driver. Annualised quarterly log-growth. Parallels LH_HPI in the long-history manifest."
     }
   ],
   "groups": ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"]
