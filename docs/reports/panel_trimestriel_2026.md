@@ -8,20 +8,22 @@
 > Kitchin du panel Banque mondiale à `rejected`. Sur cette fenêtre :
 > **18 cellules sur 24 survivent à la Porte 1** (Kitchin, Juglar,
 > Kuznets : $p = 0.001$ sur les 6 agrégats ; Kondratieff : $p \in
-> [0.11, 0.67]$ — la fenêtre 66 ans ne couvre que 1.1-1.65 K-cycles,
+> [0.12, 0.67]$ — la fenêtre 66 ans ne couvre que 1.1-1.65 K-cycles,
 > rejection statistique attendue cf. [comparaison long-history](histoire_longue_2026.md)).
-> Quatre cellules atteignent la Porte 2 : **EA Kitchin = `peak`**,
-> **JPN Kitchin = `peak`**, **G7Q Juglar = `contraction`**,
-> **OECDQ Juglar = `contraction`**. Le `disputed` résiduel sur les
-> autres cellules Kitchin/Juglar reflète une oscillation F/E (CF+Hilbert
-> et Markov-switching) proche d'un point de retournement.
+> Cinq cellules atteignent la Porte 2 : **EA Kitchin = `peak`**,
+> **JPN Kitchin = `peak`**, **GBR Juglar = `contraction`**, **OECDQ Juglar
+> = `contraction`**, **USA Kuznets = `contraction`**. L'addition de Q_PRD
+> (productivité du travail) marginalise la rejection K-wave sur G7Q/OECDQ
+> (0.16 → 0.14, ≈ 17 % de réduction du p, encore au-dessus du seuil) ;
+> le `disputed` résiduel sur les autres cellules reflète une oscillation
+> F/E (CF+Hilbert et Markov-switching) proche d'un point de retournement.
 
 ## Notation et paramètres
 
 | Symbole / paramètre | Valeur |
 |---|---|
-| Fenêtre | 1960Q1 – 2026Q1 (USA, JPN, GBR : 265-266 trimestres ; EA : 225 trimestres ; G7Q/OECDQ : 266 trimestres pondérés PIB) |
-| Indicateurs | 7 séries trimestrielles (manifest `quarterly_manifest.json`) : Q_GDP (FRED+Eurostat), Q_CPI, Q_UNRATE, Q_YIELD, Q_CREDIT, Q_INV, Q_HPI |
+| Fenêtre | 1960Q1 – 2026Q1 (USA : 266 ; JPN/GBR : 285 ; EA : 225 ; G7Q/OECDQ : 266 trimestres pondérés PIB) |
+| Indicateurs | 8 séries trimestrielles (manifest `quarterly_manifest.json`) : Q_GDP (FRED+Eurostat), Q_CPI, Q_UNRATE, Q_YIELD, Q_CREDIT, Q_INV, Q_HPI, Q_PRD |
 | Sources | FRED (séries natives + miroirs OECD MEI / IFS / BIS), Eurostat (JSON-stat 2.0 pour la zone euro et DE/FR/IT) |
 | Agrégats | USA, EA (EA20), JPN, GBR, G7Q (USA, GBR, CAN, JPN, DEU, FRA, ITA), OECDQ (G7Q + 11 économies avancées supplémentaires) |
 | Méthode passe-bande | Christiano-Fitzgerald asymétrique, $f_s = 4$ trimestres/an |
@@ -95,30 +97,32 @@
 | Agrégat | Kitchin | Juglar | Kuznets | Kondratieff |
 |---|---|---|---|---|
 | EA | **peak** | disputed | disputed | rejected |
-| G7Q | disputed | **contraction** | disputed | rejected |
-| GBR | disputed | disputed | disputed | rejected |
+| G7Q | disputed | disputed | disputed | rejected |
+| GBR | disputed | **contraction** | disputed | rejected |
 | JPN | **peak** | disputed | disputed | rejected |
 | OECDQ | disputed | **contraction** | disputed | rejected |
-| USA | disputed | disputed | disputed | rejected |
+| USA | disputed | disputed | **contraction** | rejected |
 
-Quatre cellules atteignent la Porte 2. Les `disputed` Kitchin/Juglar
+Cinq cellules atteignent la Porte 2. Les `disputed` Kitchin/Juglar
 reflètent une oscillation F/E (CF+Hilbert et Markov-switching) proche
 d'un point de retournement — chaque méthode interprète les derniers
 trimestres comme peak vs contraction selon ses hypothèses
-algorithmiques. EA et JPN passent à `peak` sur Kitchin, G7Q et OECDQ
-à `contraction` sur Juglar (signe de fin de cycle court / pic Juglar
-suivi d'une phase descendante).
+algorithmiques. EA et JPN passent à `peak` sur Kitchin, GBR et OECDQ
+à `contraction` sur Juglar (fin de cycle court / pic Juglar suivi
+d'une phase descendante), **USA à `contraction` sur Kuznets**
+(corroboré par l'addition de Q_PRD qui aligne la productivité avec
+le retournement post-pic immobilier 2022-2023).
 
 ## p-values AR(1) (Porte 1)
 
 | Agrégat | Kitchin | Juglar | Kuznets | Kondratieff |
 |---|---:|---:|---:|---:|
-| EA | **0.001** | **0.001** | **0.001** | 0.369 |
-| G7Q | **0.001** | **0.001** | **0.001** | 0.164 |
-| GBR | **0.001** | **0.001** | **0.001** | 0.112 |
+| EA | **0.001** | **0.001** | **0.001** | 0.444 |
+| G7Q | **0.001** | **0.001** | **0.001** | 0.137 |
+| GBR | **0.001** | **0.001** | **0.001** | 0.123 |
 | JPN | **0.001** | **0.001** | **0.001** | 0.671 |
-| OECDQ | **0.001** | **0.001** | **0.001** | 0.164 |
-| USA | **0.001** | **0.001** | **0.001** | 0.151 |
+| OECDQ | **0.001** | **0.001** | **0.001** | 0.137 |
+| USA | **0.001** | **0.001** | **0.001** | 0.158 |
 
 **Kitchin, Juglar, Kuznets : séparables partout** ($p = 0.001$).
 Kondratieff non-séparable sur 5 des 6 agrégats. La rejection
@@ -147,12 +151,13 @@ bruit rouge sur une fenêtre de 66 ans qui ne couvre qu'un seul cycle.
 |---|---|---:|---|
 | Kitchin | peak | 2 / 6 | regional |
 | Juglar | contraction | 2 / 6 | regional |
-| Kuznets | rejected | 0 / 6 | regional |
+| Kuznets | contraction | 1 / 6 | regional |
 | Kondratieff | rejected | 0 / 6 | regional |
 
 **Aucun cycle n'est qualifié `universal` sur le panel trimestriel.**
-Kitchin peak (EA, JPN) et Juglar contraction (G7Q, OECDQ) concordent
-sur 2 agrégats chacun — bien en-deçà du seuil 4/5.
+Kitchin peak (EA, JPN) et Juglar contraction (GBR, OECDQ) concordent
+sur 2 agrégats chacun ; Kuznets contraction sur USA uniquement — tous
+bien en-deçà du seuil 4/5.
 
 ## Trajectoires CF par bande
 
@@ -227,9 +232,10 @@ sur 2 agrégats chacun — bien en-deçà du seuil 4/5.
 - **Robustesse Kitchin** : tester les variants `--null dual` (AR(1) +
   scramble de phase) et `--null wavelet` pour valider que la séparabilité
   n'est pas un artéfact du bootstrap AR(1).
-- **Kondratieff** : pour augmenter la puissance, ajouter Q_PRD
-  (productivité du travail, OECD) qui porte l'amplitude techno-économique
-  Schumpeter-Kondratieff dans la bande 50-60 ans.
+- **Kondratieff — couverture Q_PRD JPN/GBR/CAN** : la productivité du
+  travail OECD MEI n'a pas de miroir FRED quotidien pour ces 3 ISOs ;
+  un câblage SDMX OECD direct (DSD `DSD_PDB@DF_PDB_GR`) débloquerait
+  le contenu K-wave manquant pour ces économies.
 - **Couverture EA pré-1995** : chaîner les séries nationales DE/FR/IT
   pré-1995 (cohérence méthodologique à vérifier face aux changements de
   base de comptes nationaux).
