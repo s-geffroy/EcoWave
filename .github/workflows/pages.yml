@@ -30,10 +30,8 @@ jobs:
         run: pip install mkdocs-material==9.5.30
       - name: Sync methodology into docs
         run: |
+          mkdir -p docs/methodology
           cp methodology/*.md docs/methodology/
-          cp variable_dictionary.md docs/methodology/variable_dictionary.md
-          cp scoring_rules.md docs/methodology/scoring_rules.md
-          cp model_comparison.md docs/methodology/model_comparison.md
       - name: Build site
         run: mkdocs build --strict
       - uses: actions/upload-pages-artifact@v3
