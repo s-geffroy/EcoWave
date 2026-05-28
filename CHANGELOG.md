@@ -73,6 +73,20 @@ DB schema is rebuilt from scratch. Tables:
 - `methodology/normalization_rules.md`.
 - `methodology/reference_windows.md`.
 
+### Reports & analyses (2026-05)
+
+- `reports/cycle_position_2026_05_wb.md` — World Bank panel run
+  (9 groups, 1000 surrogates, dual null).
+- `reports/cycle_position_2026_05_long.md` — long-history run
+  (Maddison Project 2023 + Jordà-Schularick-Taylor R6, 1870-2022,
+  ADV18 / G7 / USA / EU4 / ANGLO / NORDIC).
+- `reports/juglar_us_anglo_nordic_2026.md` — signed deep-dive on the
+  Juglar divergence between USA/ANGLO (expansion, peak ~2024) and
+  NORDIC (contraction, trough late-2023, peak ~mid-2026).
+- `reports/kondratieff_adv18_eu4_2026.md` — signed deep-dive on the
+  K5 peak in 2018-2022, K3/K4 historical retrieval at ±5 years,
+  amplitude (~0.85) at half of K3/K4 (~1.55/1.28).
+
 ### Dependencies
 
 `typer`, `click`, `pydantic`, `pandas`, `numpy`, `scipy`, `ruptures`,
