@@ -195,6 +195,51 @@ def replace_model_comparisons(con: sqlite3.Connection, rows: list[dict]) -> None
     con.commit()
 
 
+def replace_global_indices(con: sqlite3.Connection, rows: list[dict]) -> None:
+    """Persist the synthetic intensity + diffusion indices for every (month, ref, weighting)."""
+    con.execute("DELETE FROM global_indices")
+    for r in rows:
+        con.execute(
+            """INSERT INTO global_indices(month, ref, weighting, weighting_actual, intensity,
+                 intensity_ma3, intensity_hp_cycle, intensity_hp_trend, diffusion,
+                 curves_scored, weights_json, status)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (r["month"], r["ref"], r["weighting"], r["weighting_actual"],
+             _nn(r["intensity"]), _nn(r["intensity_ma3"]),
+             _nn(r["intensity_hp_cycle"]), _nn(r["intensity_hp_trend"]),
+             int(r["diffusion"]), int(r["curves_scored"]),
+             r["weights_json"], r["status"]),
+        )
+    con.commit()
+
+
+def replace_elliott_waves(con: sqlite3.Connection, pilot: str, rows: list[dict]) -> None:
+    """Persist Elliott waves detected on the synthetic intensity for a given pilot."""
+    con.execute("DELETE FROM elliott_waves WHERE pilot=?", (pilot,))
+    for r in rows:
+        con.execute(
+            """INSERT INTO elliott_waves(pilot, weighting, smoothing, label, direction,
+                 start_month, end_month, start_value, end_value, diffusion_at_end, confirmed)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            (pilot, r["weighting"], r["smoothing"], r["label"], r["direction"],
+             r["start_month"], r["end_month"], float(r["start_value"]), float(r["end_value"]),
+             int(r["diffusion_at_end"]), 1 if r["confirmed"] else 0),
+        )
+    con.commit()
+
+
+def replace_external_anchor(con: sqlite3.Connection, series: dict[str, float],
+                            source_label: str, source_id: int | None) -> None:
+    """Persist the FAVAR external anchor (one row per month)."""
+    con.execute("DELETE FROM external_anchors")
+    for month, value in series.items():
+        con.execute(
+            "INSERT INTO external_anchors(month, value, source_label, source_id) VALUES (?, ?, ?, ?)",
+            (month, float(value), source_label, _nn(source_id)),
+        )
+    con.commit()
+
+
 def add_analyst_note(con: sqlite3.Connection, object_type: str, object_id: str, note: str,
                      author: str = "ecowave-pipeline") -> None:
     con.execute(

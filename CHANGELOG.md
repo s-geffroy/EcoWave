@@ -6,6 +6,40 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
+- **Synthetic global indicators on top of the 5 curves** — `scoring/global_indices.py`
+  computes two cross-curve indices: **I_intensity** (weighted mean of the 5 stress
+  percentiles, [0,100]) and **I_diffusion** (count of curves above the 80th percentile,
+  0..5). Three weighting variants are calculated in parallel:
+  - `equal` (0.20 each — reference, published default),
+  - `pca` (loadings on PC1, rolling 60M window; `numpy.linalg.eigh`),
+  - `favar` (predictive R² for an exogenous activity anchor; FAVAR-flavoured
+    anchor regression à la Hatzius et al. 2010, h=6 months, K=2 lags).
+  Fallback cascade `favar → pca → equal` is traced in `weighting_actual`.
+  See `methodology/composite_indicator.md`.
+- **Exogenous FAVAR anchor** (`ingest/anchors.py`) with a 3-step priority cascade:
+  FRED `OECDLOLITONOSTSAM` (OECD+6NME CLI), then a GDP-weighted G4 industrial
+  production composite (US/EA/JP/UK), then Kilian REA (`IGREA`).
+- **Elliott waves on the synthetic composite** (`scoring/elliott_on_composite.py`):
+  canonical 5-wave impulse + optional 3-wave correction detected on MA3-smoothed
+  intensity and on the HP-filtered cycle (`λ=129 600` monthly). Each wave is
+  marked `confirmed=True` only if `I_diffusion ≥ 3` at its terminal pivot —
+  literal quantification of "a wave exists only if independent curves confirm".
+- **Pipeline integration**: pilot runs now persist `global_indices`, `elliott_waves`
+  and `external_anchors` tables, and render `figures/global_indices_{pilot}.png`
+  with the three weighting variants superposed plus diffusion histogram.
+- **Tests** (`tests/test_global_indices.py`, `tests/test_elliott_on_composite.py`)
+  covering weight estimators, intensity/diffusion primitives, HP filter
+  decomposition, FAVAR identification of a predictive curve, canonical Elliott
+  constraints (wave 3 shortest, wave 4 overlap), and diffusion gating.
+
+### Changed
+- **DB schema bumped to 0.2.0** (`db/schema.sql`): three new tables — `global_indices`,
+  `elliott_waves`, `external_anchors`. **The local SQLite DB must be recreated** when
+  upgrading.
+- New runtime dependency: `scipy.sparse` / `spsolve` for the HP filter (already
+  available; `scipy==1.14.0` was already pinned).
+
+
 - **Null-calibrated C1/C3** (`ecowave/scoring/segmentation.py`): C1/C3 are redefined
   from raw high-stress counts to **phase-separation (eta-squared) calibrated against a
   surrogate null** — a curve confirms only when its phase-structure beats random

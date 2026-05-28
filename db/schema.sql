@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS schema_meta (
 );
 
 INSERT OR REPLACE INTO schema_meta(key, value) VALUES
-('schema_version', '0.1.0'),
+('schema_version', '0.2.0'),
 ('created_for', 'ecowave_2008_pilot');
 
 CREATE TABLE IF NOT EXISTS sources (
@@ -159,4 +159,45 @@ CREATE TABLE IF NOT EXISTS validation_errors (
   variable_code TEXT,
   message TEXT NOT NULL,
   mode_effect TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS global_indices (
+  id INTEGER PRIMARY KEY,
+  month TEXT NOT NULL,
+  ref TEXT NOT NULL CHECK(ref IN ('precrisis','structural')),
+  weighting TEXT NOT NULL CHECK(weighting IN ('equal','pca','favar')),
+  weighting_actual TEXT NOT NULL,
+  intensity REAL,
+  intensity_ma3 REAL,
+  intensity_hp_cycle REAL,
+  intensity_hp_trend REAL,
+  diffusion INTEGER NOT NULL,
+  curves_scored INTEGER NOT NULL,
+  weights_json TEXT NOT NULL,
+  status TEXT NOT NULL CHECK(status IN ('scored','blocked')),
+  UNIQUE(month, ref, weighting)
+);
+
+CREATE TABLE IF NOT EXISTS elliott_waves (
+  id INTEGER PRIMARY KEY,
+  pilot TEXT NOT NULL,
+  weighting TEXT NOT NULL CHECK(weighting IN ('equal','pca','favar')),
+  smoothing TEXT NOT NULL CHECK(smoothing IN ('ma3','hp_cycle')),
+  label TEXT NOT NULL,
+  direction TEXT NOT NULL CHECK(direction IN ('up','down')),
+  start_month TEXT NOT NULL,
+  end_month TEXT NOT NULL,
+  start_value REAL NOT NULL,
+  end_value REAL NOT NULL,
+  diffusion_at_end INTEGER NOT NULL,
+  confirmed INTEGER NOT NULL CHECK(confirmed IN (0,1))
+);
+
+CREATE TABLE IF NOT EXISTS external_anchors (
+  id INTEGER PRIMARY KEY,
+  month TEXT NOT NULL UNIQUE,
+  value REAL NOT NULL,
+  source_label TEXT NOT NULL,
+  source_id INTEGER,
+  FOREIGN KEY(source_id) REFERENCES sources(id)
 );

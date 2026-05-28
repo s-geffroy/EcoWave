@@ -9,6 +9,7 @@ import typer
 from ecowave.config import Settings
 from ecowave.pilots import Pilot, get_pilot
 from ecowave.figures.plot_curves import plot_curve_stress
+from ecowave.figures.plot_global import plot_global_indices
 from ecowave.figures.plot_models import plot_model_windows
 from ecowave.db import (
     add_analyst_note,
@@ -17,11 +18,15 @@ from ecowave.db import (
     init_db,
     log_validation,
     replace_curve_scores,
+    replace_elliott_waves,
+    replace_external_anchor,
+    replace_global_indices,
     replace_model_comparisons,
     replace_model_scores,
     start_ingestion_run,
     upsert_monthly_observation,
 )
+from ecowave.ingest.anchors import fetch_anchor
 from ecowave.ingest.ecb import ingest_ecb_variable
 from ecowave.ingest.fred import ingest_fred_components, ingest_fred_variable
 from ecowave.ingest.manifest import ReferenceWindow, load_manifest
@@ -36,6 +41,8 @@ from ecowave.normalize.panel import (
 from ecowave.reports.render_report import generate_reports
 from ecowave.scoring.annotations import load_annotations
 from ecowave.scoring.curve_scores import aggregate_curve_scores
+from ecowave.scoring.elliott_on_composite import detect_elliott_waves, waves_to_frame
+from ecowave.scoring.global_indices import compute_global_indices
 from ecowave.scoring.model_scores import (
     CRITERIA,
     champion_challenger,
@@ -149,6 +156,52 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     curves = aggregate_curve_scores(panel)
     replace_curve_scores(con, curves.to_dict("records"))
 
+    # Synthetic global indicators (intensity + diffusion) across 3 weightings.
+    anchor_series: pd.Series | None = None
+    try:
+        anchor_result = fetch_anchor(settings.fred_api_key, settings.data_raw_dir, con, run_id)
+        if anchor_result is not None:
+            anchor_series = anchor_result.series
+            anchor_series.index = anchor_series.index.astype(str)
+            replace_external_anchor(
+                con, {m: float(v) for m, v in anchor_series.dropna().items()},
+                anchor_result.label, anchor_result.source_id,
+            )
+            typer.echo(f"  FAVAR anchor ({anchor_result.label}) loaded: "
+                       f"{anchor_series.dropna().shape[0]} months.")
+        else:
+            typer.echo("  FAVAR anchor unavailable -> intensity_favar falls back to PCA/equal.")
+    except Exception as exc:  # noqa: BLE001
+        typer.echo(f"  FAVAR anchor fetch failed: {exc}", err=True)
+
+    global_indices = compute_global_indices(curves, anchor=anchor_series)
+    replace_global_indices(con, global_indices.to_dict("records"))
+    global_indices.to_csv(settings.data_processed_dir / f"global_indices_{pilot}.csv", index=False)
+    global_indices.to_parquet(settings.data_processed_dir / f"global_indices_{pilot}.parquet", index=False)
+
+    wave_rows: list[dict] = []
+    for weighting in ("equal", "pca", "favar"):
+        gsub = global_indices[(global_indices["ref"] == "precrisis")
+                              & (global_indices["weighting"] == weighting)]
+        if gsub.empty:
+            continue
+        intensity_ma3 = gsub.set_index("month")["intensity_ma3"]
+        intensity_hp = gsub.set_index("month")["intensity_hp_cycle"]
+        diffusion = gsub.set_index("month")["diffusion"]
+        for smoothing, series in (("ma3", intensity_ma3), ("hp_cycle", intensity_hp)):
+            for w in detect_elliott_waves(series, diffusion):
+                wave_rows.append({**w.to_dict(), "weighting": weighting, "smoothing": smoothing})
+    replace_elliott_waves(con, pilot, wave_rows)
+    if wave_rows:
+        waves_df = pd.DataFrame(wave_rows)
+        waves_df.to_csv(settings.data_processed_dir / f"elliott_waves_composite_{pilot}.csv", index=False)
+        typer.echo(f"  Elliott on composite: detected {len(wave_rows)} wave leg(s) "
+                   f"({waves_df['confirmed'].sum()} confirmed by diffusion).")
+    else:
+        waves_df = None
+        typer.echo("  Elliott on composite: no impulse passes canonical constraints.")
+
+
     annotations = load_annotations(settings.annotations_dir / f"model_scores_qualitative_{pilot}.csv")
     if annotations:
         typer.echo(f"Loaded {len(annotations)} analyst annotation(s) for C2/C4/C5/C6.")
@@ -194,7 +247,10 @@ def run_pilot(settings: Settings, pilot: str, mode: str) -> None:
     try:
         plot_curve_stress(curves, settings.figures_dir / f"curve_stress_{pilot}.png")
         plot_model_windows(curves, settings.figures_dir / f"model_windows_{pilot}.png", pilot_def.models)
-        typer.echo(f"Figures written: curve_stress_{pilot}.png, model_windows_{pilot}.png")
+        plot_global_indices(global_indices, settings.figures_dir / f"global_indices_{pilot}.png",
+                            pilot=pilot, ref="precrisis", waves=waves_df)
+        typer.echo(f"Figures written: curve_stress_{pilot}.png, model_windows_{pilot}.png, "
+                   f"global_indices_{pilot}.png")
     except Exception as exc:  # noqa: BLE001
         typer.echo(f"Figure generation skipped: {exc}", err=True)
 

@@ -87,6 +87,24 @@ champion/challenger adjudication — it is a yardstick. If D matches or beats th
 Elliott champion on C1/C3, Elliott adds no measurable structure over an automatic
 detector. See `methodology/improvement_roadmap.md` (#2).
 
+## Cross-curve aggregation (synthetic global indicator)
+
+Beyond per-curve scoring, the pipeline computes two synthetic indices used by
+Elliott detection on the global view (`scoring/global_indices.py`).
+
+- **I_intensity** = weighted mean of the 5 stress percentiles (E/D/S/L/I),
+  with three weighting variants computed in parallel: `equal` (0.20 each,
+  reference), `pca` (loadings on PC1, rolling 60M), `favar` (predictive R²
+  for an exogenous OECD/IP activity anchor, h=6 months).
+- **I_diffusion** = `#{d : stress_d > 80}`, range 0..5.
+- **Minimum 3 curves scored** to publish an intensity value; otherwise the
+  row is `blocked`.
+- Cascade fallback when a variant is unavailable: `favar → pca → equal`.
+
+The detection algorithm (`scoring/elliott_on_composite.py`) marks a wave
+`confirmed` only when `I_diffusion ≥ 3` at its terminal pivot. See
+`methodology/composite_indicator.md` for the full rationale.
+
 ## Null / surrogate test (falsifiability gate)
 
 After scoring, the champion's auto-computed evidence (C1+C3) is compared against

@@ -39,6 +39,7 @@ nav:
       - Dow / Elliott adaptation: methodology/dow_elliott_adaptation.md
       - Wave validation rules: methodology/wave_validation_rules.md
       - Normalization rules: methodology/normalization_rules.md
+      - Composite indicator (intensity + diffusion): methodology/composite_indicator.md
       - Reference windows: methodology/reference_windows.md
       - Anti-pseudoscience rules: methodology/anti_pseudoscience_rules.md
       - Variable dictionary: methodology/variable_dictionary.md
