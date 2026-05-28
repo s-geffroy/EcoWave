@@ -6,27 +6,38 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-# Cited data-sources page (generated from the manifest)
-ecowave sources --output docs/sources.md --manifest sources_manifest.json
+# docs/sources.md is now maintained manually in French (cf. plan).
+# To regenerate from the manifest (English template), uncomment:
+#   ecowave sources --output docs/sources.md --manifest sources_manifest.json
 
-# Methodology (static canonical docs)
+# Methodology (static canonical docs, French slugs)
 mkdir -p docs/methodology
 cp methodology/*.md docs/methodology/
 
-# Generated CPV report + EWS validation
+# Generated CPV reports + EWS validation (French slugs)
 mkdir -p docs/reports
 shopt -s nullglob
-for f in reports/cycle_position_*.md reports/ews_validation.md; do
-  cp "$f" "docs/reports/$(basename "$f")"
+for f in reports/panel_banque_mondiale_2026.md \
+         reports/histoire_longue_2026.md \
+         reports/juglar_us_anglo_nordic_2026.md \
+         reports/kondratieff_adv18_eu4_2026.md \
+         reports/validation_ews.md; do
+  [[ -f "$f" ]] && cp "$f" "docs/reports/$(basename "$f")"
 done
 
-# Generated figures (cycle heatmap + CF trajectories + wavelet power + curve stress + intensities)
+# Generated figures: CPV cycle outputs + legacy pilot curves
 mkdir -p docs/figures
 for f in figures/cycle_phase_heatmap_*.png \
+         figures/cycle_amplitude_heatmap_*.png \
+         figures/cycle_pvalue_heatmap_*.png \
+         figures/cycle_next_extremum_timeline_*.png \
+         figures/cycle_phase_polar_*.png \
          figures/cycle_cf_trajectories_*.png \
          figures/cycle_wavelet_power_*.png \
          figures/curve_stress_*.png \
-         figures/global_indices_*.png; do
+         figures/global_indices_*.png \
+         figures/juglar_us_anglo_nordic_*.png \
+         figures/kondratieff_adv18_eu4_*.png; do
   cp "$f" "docs/figures/$(basename "$f")"
 done
 shopt -u nullglob

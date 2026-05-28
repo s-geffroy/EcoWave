@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
       - name: Install MkDocs Material
         run: pip install mkdocs-material==9.5.30
-      - name: Sync methodology into docs
+      - name: Sync methodology into docs (French slugs)
         run: |
           mkdir -p docs/methodology
           cp methodology/*.md docs/methodology/
