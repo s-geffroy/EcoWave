@@ -33,7 +33,11 @@ GROUPS = MappingProxyType({
     "LMC":   ["LMC"],
     "LIC":   ["LIC"],
     "G7":    ["USA", "GBR", "FRA", "DEU", "ITA", "JPN", "CAN"],
-    "BRICS": ["BRA", "RUS", "IND", "CHN", "ZAF"],
+    # BRICS+ as of January 2025: original 5 + Egypt, UAE, Ethiopia, Iran
+    # (joined Jan 2024) + Indonesia (joined Jan 2025). Saudi Arabia was
+    # invited but has not finalised membership; excluded.
+    "BRICS": ["BRA", "RUS", "IND", "CHN", "ZAF",
+              "EGY", "ARE", "ETH", "IRN", "IDN"],
     # G20 minus the EU bloc (avoid double-counting DEU/FRA/ITA already in
     # the country list). 19 countries.
     "G20": [

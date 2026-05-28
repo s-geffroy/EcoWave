@@ -23,7 +23,7 @@ GROUP_GLOSSARY = {
     "LIC": "Low-Income Countries — RNB/hab ≤ 1 145 USD",
     "G7": "G7 — USA, GBR, FRA, DEU, ITA, JPN, CAN (recompute pondéré PIB)",
     "G20": "G20 — 19 pays principaux (zone UE traitée par DEU+FRA+ITA)",
-    "BRICS": "BRICS — Brésil, Russie, Inde, Chine, Afrique du Sud",
+    "BRICS": "BRICS+ — Brésil, Russie, Inde, Chine, Afrique du Sud, Égypte, Émirats arabes unis, Éthiopie, Iran, Indonésie (10 pays, expansion Jan-2024 + Jan-2025)",
 }
 
 

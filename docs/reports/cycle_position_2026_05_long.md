@@ -18,7 +18,7 @@
 | `LIC` | Low-Income Countries — RNB/hab ≤ 1 145 USD |
 | `G7` | G7 — USA, GBR, FRA, DEU, ITA, JPN, CAN (recompute pondéré PIB) |
 | `G20` | G20 — 19 pays principaux (zone UE traitée par DEU+FRA+ITA) |
-| `BRICS` | BRICS — Brésil, Russie, Inde, Chine, Afrique du Sud |
+| `BRICS` | BRICS+ — Brésil, Russie, Inde, Chine, Afrique du Sud, Égypte, Émirats arabes unis, Éthiopie, Iran, Indonésie (10 pays, expansion Jan-2024 + Jan-2025) |
 
 ## Récapitulatif par agrégat (position, tendance, prochain extremum)
 
@@ -97,12 +97,12 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| ADV18        |     0.255 |    0.078 |     0.132 |         0.002 |
-| ANGLO        |     0.762 |    0.002 |     0.204 |         0.846 |
-| EU4          |     0.453 |    0.553 |     0.064 |         0.012 |
-| G7           |     0.186 |    0.004 |     0.186 |         0.297 |
-| NORDIC       |     0.17  |    0.036 |     0.152 |         0.685 |
-| USA          |     0.086 |    0.002 |     0.287 |         0.786 |
+| ADV18        |     0.259 |    0.086 |     0.152 |         0.002 |
+| ANGLO        |     0.76  |    0.001 |     0.202 |         0.854 |
+| EU4          |     0.471 |    0.527 |     0.065 |         0.018 |
+| G7           |     0.207 |    0.003 |     0.187 |         0.314 |
+| NORDIC       |     0.161 |    0.028 |     0.154 |         0.678 |
+| USA          |     0.098 |    0.001 |     0.306 |         0.774 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
@@ -117,19 +117,19 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ### Juglar
 
-| group_code   | D           | E           | F           | G           |
-|:-------------|:------------|:------------|:------------|:------------|
-| ANGLO        | contraction | expansion   | expansion   | expansion   |
-| G7           | peak        | peak        | contraction | contraction |
-| NORDIC       | contraction | contraction | contraction | contraction |
-| USA          | peak        | expansion   | expansion   | expansion   |
+| group_code   | D           | E         | F           | G           |
+|:-------------|:------------|:----------|:------------|:------------|
+| ANGLO        | contraction | expansion | expansion   | expansion   |
+| G7           | peak        | peak      | contraction | contraction |
+| NORDIC       | contraction | peak      | contraction | contraction |
+| USA          | peak        | expansion | expansion   | expansion   |
 
 ### Kondratieff
 
-| group_code   | D    | E    | F         | G           |
-|:-------------|:-----|:-----|:----------|:------------|
-| ADV18        | peak | peak | expansion | contraction |
-| EU4          | peak | peak | expansion | contraction |
+| group_code   | D    | E           | F         | G           |
+|:-------------|:-----|:------------|:----------|:------------|
+| ADV18        | peak | contraction | expansion | contraction |
+| EU4          | peak | peak        | expansion | contraction |
 
 ## Figures
 
@@ -163,7 +163,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-28T14:01:02+00:00
+- Date de la note : 2026-05-28T14:13:21+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.0`
 - Pipeline : `ecowave position-cycles`

@@ -30,7 +30,7 @@ share the same modal phase. See
 | `OECD` (`OED`) | OECD members | 38 countries; official WB aggregate |
 | `G7` | G7 | USA, GBR, FRA, DEU, ITA, JPN, CAN — recomputed GDP-weighted |
 | `G20` | G20 sample | 19 countries (EU represented by DEU+FRA+ITA to avoid double-counting) |
-| `BRICS` | BRICS | BRA, RUS, IND, CHN, ZAF — recomputed GDP-weighted |
+| `BRICS` | BRICS+ | BRA, RUS, IND, CHN, ZAF + EGY, ARE, ETH, IRN, IDN (post-2025 membership, 10 countries) — recomputed GDP-weighted |
 
 OECD and the income classes use the official WB aggregate (one series per
 indicator); G7, G20 and BRICS are recomputed by the pipeline using current-USD

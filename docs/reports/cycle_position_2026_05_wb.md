@@ -18,7 +18,7 @@
 | `LIC` | Low-Income Countries — RNB/hab ≤ 1 145 USD |
 | `G7` | G7 — USA, GBR, FRA, DEU, ITA, JPN, CAN (recompute pondéré PIB) |
 | `G20` | G20 — 19 pays principaux (zone UE traitée par DEU+FRA+ITA) |
-| `BRICS` | BRICS — Brésil, Russie, Inde, Chine, Afrique du Sud |
+| `BRICS` | BRICS+ — Brésil, Russie, Inde, Chine, Afrique du Sud, Égypte, Émirats arabes unis, Éthiopie, Iran, Indonésie (10 pays, expansion Jan-2024 + Jan-2025) |
 
 ## Récapitulatif par agrégat (position, tendance, prochain extremum)
 
@@ -66,7 +66,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | disputed | rising (post-trough) | 📈 max dans 1.5 ans |
+| Kitchin ⚠️ | contraction | rising (post-trough) | 📈 max dans 1.5 ans |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -76,7 +76,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin ⚠️ | rejected | — | — |
-| Juglar ⚠️ | contraction | falling | 📈 max dans 4.2 ans |
+| Juglar ⚠️ | disputed | falling | 📈 max dans 4.2 ans |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -111,38 +111,38 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Matrice de phase (Gate 2 — consensus inter-méthode)
 
-| group_code   | kitchin   | juglar      | kuznets   | kondratieff   |
-|:-------------|:----------|:------------|:----------|:--------------|
-| BRICS        | rejected  | rejected    | rejected  | rejected      |
-| G20          | rejected  | rejected    | rejected  | rejected      |
-| G7           | rejected  | rejected    | rejected  | rejected      |
-| HIC          | rejected  | rejected    | rejected  | disputed      |
-| LIC          | disputed  | rejected    | rejected  | rejected      |
-| LMC          | rejected  | contraction | rejected  | rejected      |
-| OECD         | rejected  | rejected    | rejected  | disputed      |
-| UMC          | rejected  | contraction | rejected  | rejected      |
-| WLD          | rejected  | contraction | rejected  | disputed      |
+| group_code   | kitchin     | juglar      | kuznets   | kondratieff   |
+|:-------------|:------------|:------------|:----------|:--------------|
+| BRICS        | rejected    | rejected    | rejected  | rejected      |
+| G20          | rejected    | rejected    | rejected  | rejected      |
+| G7           | rejected    | rejected    | rejected  | rejected      |
+| HIC          | rejected    | rejected    | rejected  | disputed      |
+| LIC          | contraction | rejected    | rejected  | rejected      |
+| LMC          | rejected    | disputed    | rejected  | rejected      |
+| OECD         | rejected    | rejected    | rejected  | disputed      |
+| UMC          | rejected    | contraction | rejected  | rejected      |
+| WLD          | rejected    | contraction | rejected  | disputed      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| BRICS        |     0.09  |    0.184 |     0.002 |         1     |
-| G20          |     0.142 |    0.469 |     0.086 |         0.85  |
-| G7           |     0.575 |    0.397 |     0.357 |         0.052 |
-| HIC          |     0.465 |    0.673 |     0.01  |         0.002 |
-| LIC          |     0.002 |    0.226 |     0.319 |         0.531 |
-| LMC          |     0.549 |    0.03  |     0.507 |         0.07  |
-| OECD         |     0.673 |    0.469 |     0.004 |         0.002 |
-| UMC          |     0.764 |    0.002 |     0.036 |         0.401 |
-| WLD          |     0.89  |    0.002 |     0.028 |         0.002 |
+| BRICS        |     0.078 |    0.019 |     0.001 |         0.999 |
+| G20          |     0.128 |    0.453 |     0.086 |         0.845 |
+| G7           |     0.578 |    0.388 |     0.359 |         0.055 |
+| HIC          |     0.472 |    0.66  |     0.005 |         0.001 |
+| LIC          |     0.001 |    0.234 |     0.32  |         0.506 |
+| LMC          |     0.554 |    0.027 |     0.507 |         0.063 |
+| OECD         |     0.675 |    0.461 |     0.002 |         0.001 |
+| UMC          |     0.778 |    0.001 |     0.031 |         0.38  |
+| WLD          |     0.892 |    0.001 |     0.02  |         0.001 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
 | cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
 |:------------|:--------------|----------------------:|-----------------:|:---------|
-| kitchin     | rejected      |                     0 |                5 | regional |
-| juglar      | contraction   |                     3 |                5 | regional |
+| kitchin     | contraction   |                     1 |                5 | regional |
+| juglar      | contraction   |                     2 |                5 | regional |
 | kuznets     | rejected      |                     0 |                5 | regional |
 | kondratieff | rejected      |                     0 |                5 | regional |
 
@@ -150,17 +150,18 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ### Kitchin
 
-| group_code   | D           | E    | F      | G           |
-|:-------------|:------------|:-----|:-------|:------------|
-| LIC          | contraction | peak | trough | contraction |
+| group_code   | D           | E           | F      | G           |
+|:-------------|:------------|:------------|:-------|:------------|
+| LIC          | contraction | contraction | trough | contraction |
 
 ### Juglar
 
-| group_code   | D           | E           | F           | G           |
-|:-------------|:------------|:------------|:------------|:------------|
-| LMC          | peak        | contraction | contraction | contraction |
-| UMC          | contraction | contraction | contraction | contraction |
-| WLD          | contraction | contraction | contraction | contraction |
+| group_code   | D           | E        | F           | G           |
+|:-------------|:------------|:---------|:------------|:------------|
+| BRICS        | rejected    | rejected | rejected    | rejected    |
+| LMC          | peak        | peak     | contraction | contraction |
+| UMC          | contraction | peak     | contraction | contraction |
+| WLD          | contraction | peak     | contraction | contraction |
 
 ### Kuznets
 
@@ -174,11 +175,11 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ### Kondratieff
 
-| group_code   | D    | E           | F         | G           |
-|:-------------|:-----|:------------|:----------|:------------|
-| HIC          | peak | peak        | expansion | contraction |
-| OECD         | peak | peak        | expansion | contraction |
-| WLD          | peak | contraction | expansion | contraction |
+| group_code   | D    | E    | F         | G           |
+|:-------------|:-----|:-----|:----------|:------------|
+| HIC          | peak | peak | expansion | contraction |
+| OECD         | peak | peak | expansion | contraction |
+| WLD          | peak | peak | expansion | contraction |
 
 ## Figures
 
@@ -212,7 +213,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-28T13:48:05+00:00
+- Date de la note : 2026-05-28T14:11:46+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.0`
 - Pipeline : `ecowave position-cycles`
