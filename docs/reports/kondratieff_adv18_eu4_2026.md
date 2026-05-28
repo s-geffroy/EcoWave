@@ -70,7 +70,21 @@ base de l'historique des prix mondiaux et de l'innovation technologique :
 **Les peaks K3 (1920), K4 (1973) et les troughs 1945/1990 sont retrouvés
 à ±5 ans près** — l'horloge théorique K-wave de ~50-55 ans tient.
 
-![Kondratieff 40-60y band-filtered composite — ADV18 vs EU4 vs USA vs NORDIC, 1870-2022](../figures/kondratieff_adv18_eu4_2026_05.png)
+<figure markdown>
+  ![Kondratieff 40-60y band-filtered composite — ADV18 vs EU4 vs USA vs NORDIC, 1870-2022](../figures/kondratieff_adv18_eu4_2026_05.png)
+  <figcaption>
+    <strong>Figure 1.</strong> Composite z-normalisé filtré CF dans la
+    bande Kondratieff (40-60 ans), 1870-2022, pour ADV18, EU4, USA et
+    NORDIC. Les lignes verticales en pointillé marquent les pics K1-K5
+    attendus selon la datation
+    <a href="../bibliographie.md#korotayev-tsirel-2010">Korotayev & Tsirel (2010)</a>.
+    K3 (~1920) et K4 (~1973) sont retrouvés à ±5 ans ; le pic K5
+    apparaît vers 2018-2020 avec une amplitude (~0.85) environ moitié
+    moindre que K3/K4 — cohérent avec la thèse de stagnation séculaire
+    (<a href="../bibliographie.md#summers-2014">Summers, 2014</a> ;
+    <a href="../bibliographie.md#gordon-2016">Gordon, 2016</a>).
+  </figcaption>
+</figure>
 
 ## La signature 2018-2022 : K5 atteint son sommet
 

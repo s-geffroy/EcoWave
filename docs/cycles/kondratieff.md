@@ -11,13 +11,18 @@
 
 ## Diagramme de phase polaire — panel d'histoire longue (1870-2022)
 
-![Diagramme polaire Kondratieff — panel long-history mai 2026](../figures/cycle_phase_polar_kondratieff_2026_05_long.png){ width="90%" }
-
-Sur le panel ADV18 et EU4 (153 années), la K-wave émerge avec
-$\varphi \approx 0$ (cellule `disputed` au pic du cycle K5), amplitude
-~0.85 — soit environ la moitié des pics K3 (~1.55 vers 1920) et K4
-(~1.28 vers 1973). L'analyse complète :
-[Kondratieff K5 — ADV18 / EU4](../reports/kondratieff_adv18_eu4_2026.md).
+<figure markdown>
+  ![Diagramme polaire Kondratieff — panel long-history mai 2026](../figures/cycle_phase_polar_kondratieff_2026_05_long.png){ width="90%" }
+  <figcaption>
+    <strong>Figure 1.</strong> Diagramme polaire de la bande Kondratieff
+    (40-60 ans), panel d'histoire longue (Maddison + JST, 1870-2022).
+    Seuls ADV18 et EU4 passent la Porte 1 ; tous deux émergent avec
+    <em>φ</em> ≈ 0 (cellule <code>disputed</code> au pic du cycle K5),
+    amplitude ~0.85 — soit environ la moitié des pics K3 (~1.55 vers
+    1920) et K4 (~1.28 vers 1973). Analyse complète :
+    <a href="../reports/kondratieff_adv18_eu4_2026.md">Kondratieff K5 — ADV18 / EU4</a>.
+  </figcaption>
+</figure>
 
 ## Ce que mesure CPV
 

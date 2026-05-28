@@ -30,26 +30,59 @@ réunit les 18 économies avancées couvertes par JST.
 
 ## Heatmap des phases (Porte 2 — consensus inter-méthode)
 
-![Heatmap des phases — panel long-history mai 2026](../figures/cycle_phase_heatmap_2026_05_long.png){ width="95%" }
+<figure markdown>
+  ![Heatmap des phases — panel long-history mai 2026](../figures/cycle_phase_heatmap_2026_05_long.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 1.</strong> Phase publiée par cellule (agrégat × bande)
+    après application des Portes 1 et 2, panel d'histoire longue
+    (Maddison + JST, 1870-2022). Sur cette fenêtre, Juglar fait
+    apparaître expansion (USA), contraction (NORDIC) et deux disputes
+    (ANGLO, G7) ; Kondratieff fait apparaître deux disputes au pic K5
+    (ADV18, EU4).
+  </figcaption>
+</figure>
 
 ## Heatmap des amplitudes Hilbert
 
-![Heatmap des amplitudes — panel long-history mai 2026](../figures/cycle_amplitude_heatmap_2026_05_long.png){ width="95%" }
+<figure markdown>
+  ![Heatmap des amplitudes — panel long-history mai 2026](../figures/cycle_amplitude_heatmap_2026_05_long.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 2.</strong> Amplitude de Hilbert au dernier point
+    d'observation, panel long-history. Les amplitudes Juglar (~0.2-0.4)
+    sont du même ordre que sur le panel WB ; les amplitudes Kondratieff
+    K5 (~0.85 pour ADV18 et EU4) sont environ la moitié des amplitudes
+    K3 (~1.55) et K4 (~1.28) historiques — voir
+    <a href="kondratieff_adv18_eu4_2026.md">Kondratieff K5</a>.
+  </figcaption>
+</figure>
 
 ## Heatmap des p-values dual-null (Porte 1)
 
-![Heatmap des p-values dual — panel long-history mai 2026](../figures/cycle_pvalue_heatmap_2026_05_long.png){ width="95%" }
-
-Sur 24 cellules, 8 sortent vertes (Juglar 4/6, Kondratieff 2/6).
+<figure markdown>
+  ![Heatmap des p-values dual — panel long-history mai 2026](../figures/cycle_pvalue_heatmap_2026_05_long.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 3.</strong> p-values du null dual (AR(1) + scramble
+    de phase, <em>B</em> = 1000), panel long-history. Sur 24 cellules,
+    <strong>8 sortent vertes</strong> (Porte 1 satisfaite) : Juglar
+    4/6 (ANGLO, G7, NORDIC, USA), Kondratieff 2/6 (ADV18, EU4).
+    L'amélioration vs panel WB (4/36) est attendue : 153 années
+    permettent d'observer 2-3 K-waves et 13-22 Juglars.
+  </figcaption>
+</figure>
 
 ## Frise des prochains extrema
 
-![Frise des prochains extrema — panel long-history mai 2026](../figures/cycle_next_extremum_timeline_2026_05_long.png){ width="95%" }
-
-Lecture rapide : USA et ANGLO convergent vers un pic Juglar à
-~2 ans d'horizon (~2028) ; NORDIC est encore en contraction profonde
-et projette son prochain pic vers 2030 ; EU4 projette un pic K5 vers
-2030 également mais avec un caveat endpoint sévère.
+<figure markdown>
+  ![Frise des prochains extrema — panel long-history mai 2026](../figures/cycle_next_extremum_timeline_2026_05_long.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 4.</strong> Forecast canonique des prochains extrema,
+    panel long-history. USA et ANGLO convergent vers un pic Juglar à
+    ~2 ans d'horizon (~2028) ; NORDIC est encore en contraction
+    profonde et projette son prochain pic vers 2030 ; EU4 projette un
+    pic K5 vers 2030 également mais avec un caveat endpoint sévère
+    (zone non fiable du filtre CF post-1992).
+  </figcaption>
+</figure>
 
 ## Matrice de phase (Porte 2)
 
@@ -99,22 +132,53 @@ retournements) anticipe la contraction. Voir
 
 ## Trajectoires CF par bande
 
-![CF band-pass — panel long-history mai 2026](../figures/cycle_cf_trajectories_2026_05_long.png){ width="95%" }
+<figure markdown>
+  ![CF band-pass — panel long-history mai 2026](../figures/cycle_cf_trajectories_2026_05_long.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 5.</strong> Composantes Christiano-Fitzgerald
+    asymétriques par bande, panel long-history 1870-2022, une trace
+    par agrégat. La trace Kondratieff (sous-graphique 4) fait
+    apparaître les deux maxima K3 (~1920) et K4 (~1973) caractéristiques
+    de la datation Korotayev-Tsirel.
+  </figcaption>
+</figure>
 
 ## Spectre wavelet (ADV18)
 
-![Puissance wavelet ADV18 — panel long-history mai 2026](../figures/cycle_wavelet_power_2026_05_long.png){ width="80%" }
-
-Trois bandes ressortent visuellement : Juglar (7-11 ans, persistant
-sur toute la fenêtre), Kuznets (15-25 ans, intermittent et de plus
-faible amplitude), Kondratieff (40-60 ans, deux maxima vers 1920 et
-1973, atténuation post-1990).
+<figure markdown>
+  ![Puissance wavelet ADV18 — panel long-history mai 2026](../figures/cycle_wavelet_power_2026_05_long.png){ width="80%" }
+  <figcaption>
+    <strong>Figure 6.</strong> Scaleogramme Morlet (<em>ω₀</em> = 6,
+    <em>Δj</em> = 0.125) sur ADV18, panel long-history 1870-2022.
+    Trois bandes ressortent visuellement : Juglar (7-11 ans, persistant
+    sur toute la fenêtre), Kuznets (15-25 ans, intermittent et de plus
+    faible amplitude), Kondratieff (40-60 ans, deux maxima vers 1920
+    et 1973, atténuation post-1990).
+  </figcaption>
+</figure>
 
 ## Diagrammes de phase polaires
 
-![Diagramme polaire Juglar — panel long-history mai 2026](../figures/cycle_phase_polar_juglar_2026_05_long.png){ width="90%" }
+<figure markdown>
+  ![Diagramme polaire Juglar — panel long-history mai 2026](../figures/cycle_phase_polar_juglar_2026_05_long.png){ width="90%" }
+  <figcaption>
+    <strong>Figure 7.</strong> Diagramme polaire Juglar, panel
+    long-history. USA et ANGLO dans le quadrant expansion
+    (<em>φ</em> ≈ −1.5 rad), NORDIC isolé en contraction profonde
+    (<em>φ</em> ≈ −2.6 rad). Analyse :
+    <a href="juglar_us_anglo_nordic_2026.md">Juglar US/ANGLO vs NORDIC</a>.
+  </figcaption>
+</figure>
 
-![Diagramme polaire Kondratieff — panel long-history mai 2026](../figures/cycle_phase_polar_kondratieff_2026_05_long.png){ width="90%" }
+<figure markdown>
+  ![Diagramme polaire Kondratieff — panel long-history mai 2026](../figures/cycle_phase_polar_kondratieff_2026_05_long.png){ width="90%" }
+  <figcaption>
+    <strong>Figure 8.</strong> Diagramme polaire Kondratieff, panel
+    long-history. ADV18 (<em>φ</em> ≈ −0.03 rad) et EU4
+    (<em>φ</em> ≈ −0.48 rad) au sommet K5, amplitude ~0.85 (cf.
+    <a href="kondratieff_adv18_eu4_2026.md">analyse K5</a>).
+  </figcaption>
+</figure>
 
 ## Observations
 

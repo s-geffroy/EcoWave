@@ -72,7 +72,18 @@ Trois faits saillants :
    est encore en pleine descente (z = −0.84) et atteint son trough seulement
    fin 2022 / début 2023 (φ = −2.59, deep-trough zone).
 
-![Juglar 7-11y band-filtered composite — USA / ANGLO / NORDIC, 1870-2022](../figures/juglar_us_anglo_nordic_2026_05.png)
+<figure markdown>
+  ![Juglar 7-11y band-filtered composite — USA / ANGLO / NORDIC, 1870-2022](../figures/juglar_us_anglo_nordic_2026_05.png)
+  <figcaption>
+    <strong>Figure 1.</strong> Composite z-normalisé filtré CF dans la
+    bande Juglar (7-11 ans), 1870-2022, pour USA, ANGLO et NORDIC. Les
+    trois traces sont synchronisées de 1870 à 2010 (cycle global
+    d'investissement) ; à partir de 2014-2017 NORDIC se décale (boom
+    immobilier suédois et reprise pétrolière norvégienne), et la
+    divergence devient franche en 2020-2022 (φ_NORDIC ≈ −2.6 rad,
+    φ_USA ≈ −1.5 rad, soit ~1.6 ans d'écart de phase).
+  </figcaption>
+</figure>
 
 ## Pourquoi cette divergence
 

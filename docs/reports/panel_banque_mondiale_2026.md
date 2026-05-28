@@ -26,38 +26,61 @@
 
 ## Heatmap des phases (Porte 2 — consensus inter-méthode)
 
-![Heatmap des phases — panel WB mai 2026](../figures/cycle_phase_heatmap_2026_05_wb.png){ width="95%" }
-
-Lecture : chaque cellule (agrégat, bande) est colorée par la phase
-publiée après consensus 3/4. `rejected` = la Porte 1 a rejeté
-l'existence du cycle ; `disputed` = la Porte 2 n'a pas trouvé d'accord
-3/4 ; `expansion / peak / contraction / trough` = phase publiée.
+<figure markdown>
+  ![Heatmap des phases — panel WB mai 2026](../figures/cycle_phase_heatmap_2026_05_wb.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 1.</strong> Phase publiée par cellule (agrégat × bande)
+    après application des Portes 1 et 2, panel Banque mondiale mai 2026.
+    <code>rejected</code> = la Porte 1 a rejeté l'existence du cycle ;
+    <code>disputed</code> = la Porte 2 n'a pas trouvé d'accord à 3/4
+    entre méthodes D / E / F / G ;
+    <code>expansion / peak / contraction / trough</code> = phase publiée.
+  </figcaption>
+</figure>
 
 ## Heatmap des amplitudes Hilbert
 
-![Heatmap des amplitudes — panel WB mai 2026](../figures/cycle_amplitude_heatmap_2026_05_wb.png){ width="95%" }
-
-L'amplitude est calculée comme $A(t) = |z(t) + i \mathcal{H}\{z\}(t)|$ au
-dernier point d'observation, avec $z$ la composite z-normalisée par
-bande. Les cellules grisées ont échoué la Porte 1 et n'ont pas
-d'amplitude publiée.
+<figure markdown>
+  ![Heatmap des amplitudes — panel WB mai 2026](../figures/cycle_amplitude_heatmap_2026_05_wb.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 2.</strong> Amplitude de Hilbert au dernier point
+    d'observation, calculée comme
+    <em>A(t) = |z(t) + i ℋ{z}(t)|</em>, où <em>z</em> est la composite
+    z-normalisée par bande. Les cellules grisées ont échoué à la Porte 1
+    et n'ont pas d'amplitude publiée. Lecture : une amplitude élevée
+    indique un cycle actif (signal cohérent dans la bande), une
+    amplitude faible un cycle dormant.
+  </figcaption>
+</figure>
 
 ## Heatmap des p-values dual-null (Porte 1)
 
-![Heatmap des p-values dual — panel WB mai 2026](../figures/cycle_pvalue_heatmap_2026_05_wb.png){ width="95%" }
-
-Vert = $p \leq \alpha$ (rejet du null, cycle existant) ; rouge = $p > \alpha$
-(non-rejet, cycle absorbé dans le bruit AR(1) ou non distinguable d'un
-scramble de phase).
+<figure markdown>
+  ![Heatmap des p-values dual — panel WB mai 2026](../figures/cycle_pvalue_heatmap_2026_05_wb.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 3.</strong> p-values du null dual (AR(1) bootstrap
+    + scramble de phase, <em>B</em> = 1000 surrogates) par cellule.
+    Vert = <em>p</em> ≤ <em>α</em> = 0.05 (rejet du null, cycle existant) ;
+    rouge = <em>p</em> &gt; <em>α</em> (non-rejet, cycle absorbé dans le
+    bruit AR(1) ou non distinguable d'un scramble de phase). Le seuil
+    α est marqué d'un trait noir sur la colorbar.
+  </figcaption>
+</figure>
 
 ## Frise des prochains extrema
 
-![Frise des prochains extrema — panel WB mai 2026](../figures/cycle_next_extremum_timeline_2026_05_wb.png){ width="95%" }
-
-Pour chaque cellule survivant aux Portes 1 et 2, projection canonique
-du prochain extremum à partir de la phase Hilbert et de la période
-centrale de la bande : $\Delta t = ((\varphi_{\text{cible}} - \varphi)
-\bmod 2\pi) / \omega$.
+<figure markdown>
+  ![Frise des prochains extrema — panel WB mai 2026](../figures/cycle_next_extremum_timeline_2026_05_wb.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 4.</strong> Projection canonique du prochain extremum
+    pour chaque cellule survivant aux Portes 1 et 2, calculée à partir
+    de la phase de Hilbert et de la période centrale de la bande :
+    <em>Δt = ((φ<sub>cible</sub> − φ) mod 2π) / ω</em>. ▲ = pic projeté,
+    ▼ = creux projeté. La barre d'erreur ± 1 an indique un ordre de
+    grandeur, <strong>pas</strong> un intervalle de confiance bayésien.
+    La ligne verticale en pointillé marque la date as-of (mai 2026).
+  </figcaption>
+</figure>
 
 ## Matrice de phase (Porte 2)
 
@@ -102,11 +125,30 @@ long-history.
 
 ## Trajectoires CF par bande
 
-![CF band-pass — panel WB mai 2026](../figures/cycle_cf_trajectories_2026_05_wb.png){ width="95%" }
+<figure markdown>
+  ![CF band-pass — panel WB mai 2026](../figures/cycle_cf_trajectories_2026_05_wb.png){ width="95%" }
+  <figcaption>
+    <strong>Figure 5.</strong> Composantes Christiano-Fitzgerald
+    asymétriques par bande cyclique (Kitchin, Juglar, Kuznets,
+    Kondratieff), une trace par agrégat. Les amplitudes sont
+    z-normalisées par bande pour faciliter la comparaison cross-bande.
+    Les dernières <em>hi_years / 2</em> années (zone d'endpoint CF)
+    sont à interpréter avec précaution.
+  </figcaption>
+</figure>
 
 ## Spectre wavelet (WLD)
 
-![Puissance wavelet WLD — panel WB mai 2026](../figures/cycle_wavelet_power_2026_05_wb.png){ width="80%" }
+<figure markdown>
+  ![Puissance wavelet WLD — panel WB mai 2026](../figures/cycle_wavelet_power_2026_05_wb.png){ width="80%" }
+  <figcaption>
+    <strong>Figure 6.</strong> Scaleogramme Morlet (<em>ω₀</em> = 6,
+    <em>Δj</em> = 0.125) sur l'agrégat WLD, axe vertical en années
+    (log), couleur en log(1 + puissance). Permet d'inspecter
+    visuellement quelles bandes portent réellement de la puissance
+    cyclique, en complément du verdict Porte 1.
+  </figcaption>
+</figure>
 
 ## Observations
 

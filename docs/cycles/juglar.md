@@ -11,17 +11,31 @@
 
 ## Diagramme de phase polaire — panel Banque mondiale 2026
 
-![Diagramme polaire Juglar — panel WB mai 2026](../figures/cycle_phase_polar_juglar_2026_05_wb.png){ width="90%" }
+<figure markdown>
+  ![Diagramme polaire Juglar — panel WB mai 2026](../figures/cycle_phase_polar_juglar_2026_05_wb.png){ width="90%" }
+  <figcaption>
+    <strong>Figure 1.</strong> Diagramme polaire de la bande Juglar
+    (7-11 ans), panel Banque mondiale mai 2026. UMC et WLD ressortent
+    en contraction profonde (quadrant gauche), seuls agrégats à passer
+    les portes 1 et 2 sur ce run.
+  </figcaption>
+</figure>
 
 ## Diagramme de phase polaire — panel d'histoire longue (1870-2022)
 
-![Diagramme polaire Juglar — panel long-history mai 2026](../figures/cycle_phase_polar_juglar_2026_05_long.png){ width="90%" }
-
-Sur le panel long-history (153 années, 18 économies avancées), USA et
-ANGLO se positionnent dans le quadrant expansion (φ ≈ −1.5 rad, amplitude
-~0.3) ; NORDIC est isolé dans le quadrant contraction profonde
-(φ ≈ −2.6 rad, amplitude ~0.4). L'analyse économique détaillée :
-[Juglar US/ANGLO vs NORDIC 2022-2026](../reports/juglar_us_anglo_nordic_2026.md).
+<figure markdown>
+  ![Diagramme polaire Juglar — panel long-history mai 2026](../figures/cycle_phase_polar_juglar_2026_05_long.png){ width="90%" }
+  <figcaption>
+    <strong>Figure 2.</strong> Diagramme polaire de la bande Juglar
+    sur le panel d'histoire longue (Maddison + JST, 1870-2022, 18
+    économies avancées). USA et ANGLO se positionnent dans le quadrant
+    expansion (<em>φ</em> ≈ −1.5 rad, amplitude ~0.3) ; NORDIC est
+    isolé dans le quadrant contraction profonde (<em>φ</em> ≈ −2.6 rad,
+    amplitude ~0.4), avec un décalage d'environ 1.6 années de phase par
+    rapport à USA — analyse économique :
+    <a href="../reports/juglar_us_anglo_nordic_2026.md">Juglar US/ANGLO vs NORDIC 2022-2026</a>.
+  </figcaption>
+</figure>
 
 ## Ce que mesure CPV
 

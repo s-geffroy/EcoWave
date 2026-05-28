@@ -10,14 +10,19 @@
 
 ## Diagramme de phase polaire — panel Banque mondiale 2026
 
-![Diagramme polaire Kitchin — panel WB mai 2026](../figures/cycle_phase_polar_kitchin_2026_05_wb.png){ width="90%" }
-
-Chaque point représente un agrégat positionné par sa phase $\varphi$
-(angle) et son amplitude (rayon). Les cellules échouant à la Porte 1
-(rejet par bruit AR(1) + scramble) ne sont pas tracées. Sur le run mai
-2026, la quasi-totalité des cellules Kitchin sont `rejected` à
-fréquence annuelle, d'où la rareté des points : c'est la conséquence
-attendue du plafond de Nyquist annuel.
+<figure markdown>
+  ![Diagramme polaire Kitchin — panel WB mai 2026](../figures/cycle_phase_polar_kitchin_2026_05_wb.png){ width="90%" }
+  <figcaption>
+    <strong>Figure 1.</strong> Diagramme polaire de la bande Kitchin
+    (3-5 ans), panel Banque mondiale mai 2026. Chaque point représente
+    un agrégat positionné par sa phase de Hilbert <em>φ</em> (angle) et
+    son amplitude (rayon). Les quatre quadrants correspondent aux
+    étiquettes canoniques expansion / peak / contraction / trough. Les
+    cellules échouant à la Porte 1 (null AR(1) + scramble) ne sont pas
+    tracées ; sur ce run, presque toutes les cellules Kitchin sont
+    rejetées, conséquence attendue du plafond de Nyquist annuel.
+  </figcaption>
+</figure>
 
 ## Ce que mesure CPV
 
