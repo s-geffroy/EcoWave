@@ -35,6 +35,15 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
+### G20
+
+| Cycle | Phase | Tendance | Prochain extremum |
+|---|---|---|---|
+| Kitchin ⚠️ | rejected | — | — |
+| Juglar ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | rejected | — | — |
+| Kondratieff ⚠️ | rejected | — | — |
+
 ### G7
 
 | Cycle | Phase | Tendance | Prochain extremum |
@@ -77,7 +86,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 |---|---|---|---|
 | Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | disputed | falling | 📉 min dans 1.1 ans |
 | Kondratieff ⚠️ | disputed | rising | 📈 max dans 1.2 ans |
 
 ### UMC
@@ -105,11 +114,12 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | group_code   | kitchin   | juglar   | kuznets   | kondratieff   |
 |:-------------|:----------|:---------|:----------|:--------------|
 | BRICS        | rejected  | rejected | rejected  | rejected      |
+| G20          | rejected  | rejected | rejected  | rejected      |
 | G7           | rejected  | rejected | rejected  | rejected      |
 | HIC          | rejected  | rejected | rejected  | disputed      |
 | LIC          | rejected  | rejected | rejected  | rejected      |
 | LMC          | rejected  | rejected | rejected  | rejected      |
-| OECD         | rejected  | rejected | rejected  | disputed      |
+| OECD         | rejected  | rejected | disputed  | disputed      |
 | UMC          | rejected  | rejected | rejected  | rejected      |
 | WLD          | rejected  | rejected | rejected  | disputed      |
 
@@ -117,14 +127,15 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| BRICS        |     0.035 |    0.95  |     0.697 |         0.98  |
-| G7           |     0.562 |    0.443 |     0.771 |         0.055 |
-| HIC          |     0.831 |    0.373 |     0.075 |         0.005 |
-| LIC          |     0.388 |    0.617 |     0.587 |         0.239 |
-| LMC          |     0.756 |    0.796 |     0.91  |         0.095 |
-| OECD         |     0.866 |    0.299 |     0.055 |         0.005 |
-| UMC          |     0.677 |    0.736 |     0.886 |         0.239 |
-| WLD          |     0.896 |    0.617 |     0.368 |         0.005 |
+| BRICS        |     0.047 |    0.962 |     0.679 |         0.965 |
+| G20          |     0.411 |    0.944 |     0.898 |         0.705 |
+| G7           |     0.607 |    0.433 |     0.768 |         0.05  |
+| HIC          |     0.882 |    0.326 |     0.063 |         0.001 |
+| LIC          |     0.446 |    0.58  |     0.579 |         0.198 |
+| LMC          |     0.807 |    0.772 |     0.899 |         0.063 |
+| OECD         |     0.913 |    0.252 |     0.04  |         0.001 |
+| UMC          |     0.715 |    0.728 |     0.87  |         0.203 |
+| WLD          |     0.931 |    0.593 |     0.35  |         0.001 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
@@ -143,13 +154,20 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |:-------------|:---------|:---------|:---------|:---------|
 | BRICS        | rejected | rejected | rejected | rejected |
 
+### Kuznets
+
+| group_code   | D         | E    | F           | G           |
+|:-------------|:----------|:-----|:------------|:------------|
+| OECD         | expansion | peak | contraction | contraction |
+
 ### Kondratieff
 
-| group_code   | D    | E           | F         | G           |
-|:-------------|:-----|:------------|:----------|:------------|
-| HIC          | peak | peak        | expansion | contraction |
-| OECD         | peak | contraction | expansion | contraction |
-| WLD          | peak | peak        | expansion | contraction |
+| group_code   | D        | E           | F         | G           |
+|:-------------|:---------|:------------|:----------|:------------|
+| G7           | rejected | rejected    | rejected  | rejected    |
+| HIC          | peak     | contraction | expansion | contraction |
+| OECD         | peak     | peak        | expansion | contraction |
+| WLD          | peak     | contraction | expansion | contraction |
 
 ## Figures
 
@@ -183,7 +201,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-28T13:14:00+00:00
+- Date de la note : 2026-05-28T13:28:10+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.0`
 - Pipeline : `ecowave position-cycles`
