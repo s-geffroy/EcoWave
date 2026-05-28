@@ -52,5 +52,7 @@ nav:
   - Groups (WLD, HIC, OECD…): groups.md
   - Current report (World Bank): reports/cycle_position_2026_05_wb.md
   - Current report (Long history): reports/cycle_position_2026_05_long.md
+  - Analyses:
+      - Juglar US/ANGLO vs NORDIC 2022-2026: reports/juglar_us_anglo_nordic_2026.md
   - EWS validation: reports/ews_validation.md
   - Sources: sources.md
