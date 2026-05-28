@@ -1,42 +1,68 @@
-# Juglar (7–11 years)
+# Juglar (7–11 ans)
 
-The classical "business cycle". Identified by Clément Juglar (1862) on French
-banking and trade data, popularised by Schumpeter (1939) as the cycle of
-fixed investment expenditure and credit.
+> **Résumé.** Le « cycle des affaires » classique.
+> [Juglar (1862)](../bibliographie.md#juglar-1862) l'identifie sur les
+> données bancaires et commerciales françaises ;
+> [Schumpeter (1939)](../bibliographie.md#schumpeter-1939) le popularise
+> comme cycle d'investissement fixe et de crédit. C'est la bande sur
+> laquelle CPV produit ses verdicts les plus solides en mai 2026, avec
+> une divergence économique observée entre USA/ANGLO (expansion) et
+> NORDIC (contraction profonde).
 
-## What CPV measures
+## Diagramme de phase polaire — panel Banque mondiale 2026
 
-The CPV pipeline runs the four votant methods (D, E, F, G) on the Juglar
-band [7, 11] years. This band is the headline of the crisis-pilot mode:
-Model F (CF band-pass + Hilbert) on the Juglar band is the primary CPV
-output and its instantaneous phase classifies the endpoint as
-expansion / peak / contraction / trough.
+![Diagramme polaire Juglar — panel WB mai 2026](../figures/cycle_phase_polar_juglar_2026_05_wb.png){ width="90%" }
 
-On annual WB data the 7–11 year band is fully resolvable; on monthly
-pilot panels (5–7 year crisis windows) Model F **typically falls back**
-because two complete Juglar cycles do not fit the window. Models D, E,
-G still produce phases in that case.
+## Diagramme de phase polaire — panel d'histoire longue (1870-2022)
 
-## Driver indicators
+![Diagramme polaire Juglar — panel long-history mai 2026](../figures/cycle_phase_polar_juglar_2026_05_long.png){ width="90%" }
 
-- `NE.GDI.TOTL.ZS` (gross capital formation, % GDP) — Juglar is the
-  investment cycle by definition.
-- `SL.UEM.TOTL.ZS` (unemployment).
-- `NE.TRD.GNFS.ZS` (trade % GDP).
-- `FS.AST.PRVT.GD.ZS` (domestic credit / GDP) — Juglar credit cycle.
+Sur le panel long-history (153 années, 18 économies avancées), USA et
+ANGLO se positionnent dans le quadrant expansion (φ ≈ −1.5 rad, amplitude
+~0.3) ; NORDIC est isolé dans le quadrant contraction profonde
+(φ ≈ −2.6 rad, amplitude ~0.4). L'analyse économique détaillée :
+[Juglar US/ANGLO vs NORDIC 2022-2026](../reports/juglar_us_anglo_nordic_2026.md).
 
-## References
+## Ce que mesure CPV
 
-- Juglar, C. (1862). *Des crises commerciales et de leur retour périodique
-  en France, en Angleterre et aux États-Unis*.
-- Schumpeter, J. A. (1939). *Business cycles*. McGraw-Hill.
-- Harding, D., & Pagan, A. (2002). *Dissecting the cycle: a methodological
-  investigation*. Journal of Monetary Economics, 49(2), 365–381.
-- Hamilton, J. D. (1989). *A new approach to the economic analysis of
-  nonstationary time series and the business cycle*. Econometrica, 57(2),
-  357–384.
+Le pipeline applique les quatre méthodes votantes (D, E, F, G) sur la
+bande Juglar $[7, 11]$ années. Cette bande est la **tête de file** du
+mode crisis-pilot : la méthode F (CF band-pass + Hilbert) sur la bande
+Juglar est la sortie CPV principale, et sa phase instantanée classe
+l'endpoint en expansion / peak / contraction / trough.
 
-## See also
+Sur le panel WB annuel, la bande 7–11 ans est complètement résolue ; sur
+les panels mensuels pilotes (fenêtres de crise de 5–7 ans), la méthode F
+**retombe typiquement** parce que deux cycles Juglar complets ne tiennent
+pas dans la fenêtre. Les méthodes D, E, G produisent encore des phases
+dans ce cas.
 
-- [CPV protocol](../methodology/multi_cycle_decomposition.md)
-- [Current report](../reports/cycle_position_2026_05_wb.md)
+## Indicateurs moteurs
+
+- `NE.GDI.TOTL.ZS` (formation brute de capital fixe, % PIB) — Juglar
+  est par définition le cycle d'investissement.
+- `SL.UEM.TOTL.ZS` (taux de chômage).
+- `NE.TRD.GNFS.ZS` (commerce extérieur, % PIB).
+- `FS.AST.PRVT.GD.ZS` (crédit domestique / PIB) — cycle de crédit
+  Juglar.
+
+## Caveats
+
+- **Fenêtre pilote** : sur 5–7 ans, méthode F instable ; consensus 2/4
+  fréquent → `disputed`.
+- **Endpoint CF** : les 5–6 dernières années sont marquées
+  `endpoint_caveat = 1`.
+
+## Références
+
+- [Juglar (1862)](../bibliographie.md#juglar-1862)
+- [Schumpeter (1939)](../bibliographie.md#schumpeter-1939)
+- [Harding & Pagan (2002)](../bibliographie.md#harding-pagan-2002)
+- [Hamilton (1989)](../bibliographie.md#hamilton-1989)
+- [Stock & Watson (2005)](../bibliographie.md#stock-watson-2005)
+
+## Voir aussi
+
+- [Protocole CPV](../methodology/protocole_cpv.md)
+- [Analyse approfondie Juglar US/ANGLO vs NORDIC](../reports/juglar_us_anglo_nordic_2026.md)
+- [Résultats panel Banque mondiale 2026-05](../reports/panel_banque_mondiale_2026.md)

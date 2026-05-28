@@ -1,46 +1,83 @@
-# Kondratieff (40–60 years)
+# Kondratieff (40–60 ans)
 
-The long wave. Identified by Nikolai Kondratieff in 1925 from price-level and
-interest-rate series; later linked to clusters of techno-economic innovation
-(Schumpeter, Mensch) and to commodity-price super-cycles.
+> **Résumé.** L'onde longue. [Kondratieff (1925)](../bibliographie.md#kondratieff-1925)
+> l'identifie à partir de séries de niveau de prix et de taux d'intérêt ;
+> elle est ensuite associée à des clusters d'innovation techno-économique
+> ([Schumpeter, 1939](../bibliographie.md#schumpeter-1939) ;
+> [Mensch, 1979](../bibliographie.md#mensch-1979)) et à des super-cycles de
+> prix de matières premières. C'est la bande où le verrou du *small-N* est
+> le plus aigu sur le panel WB ; le panel d'histoire longue
+> (Maddison + JST, 1870-2022) permet de la trancher proprement.
 
-## What CPV measures
+## Diagramme de phase polaire — panel d'histoire longue (1870-2022)
 
-The CPV pipeline runs the four votant methods (D, E, F, G) on the Kondratieff
-band [40, 60] years. This is **the band where the small-N caveat is most
-acute**: World Bank series start in 1960, providing about 65 years of data —
-roughly 1.0–1.5 K-waves of history.
+![Diagramme polaire Kondratieff — panel long-history mai 2026](../figures/cycle_phase_polar_kondratieff_2026_05_long.png){ width="90%" }
 
-The AR(1) null (Gate 1) frequently rejects Kondratieff separability for
-several income groups. **This is honest, not a failure**: short samples
-cannot reliably distinguish a single multi-decade swing from red noise.
-The CPV protocol publishes `separable = 0` rather than fabricating a phase.
+Sur le panel ADV18 et EU4 (153 années), la K-wave émerge avec
+$\varphi \approx 0$ (cellule `disputed` au pic du cycle K5), amplitude
+~0.85 — soit environ la moitié des pics K3 (~1.55 vers 1920) et K4
+(~1.28 vers 1973). L'analyse complète :
+[Kondratieff K5 — ADV18 / EU4](../reports/kondratieff_adv18_eu4_2026.md).
 
-Endpoint caveats are severe: the CF filter is unreliable on the last
-`hi_years / 2` = 30 years for Kondratieff. The current report flags this
-explicitly.
+## Ce que mesure CPV
 
-## Driver indicators
+Le pipeline applique les quatre méthodes votantes (D, E, F, G) sur la
+bande Kondratieff $[40, 60]$ années. C'est **la bande où le caveat
+small-N est le plus aigu** : les séries Banque mondiale démarrent en
+1960, fournissant environ 65 ans de données — soit grossièrement
+1.0–1.5 K-wave d'historique. Sur le panel d'histoire longue (1870-2022,
+153 années), $\geq 2.5$ K-waves sont disponibles, ce qui permet à la
+Porte 1 de rejeter le null sur ADV18 et EU4.
 
-- `NY.GDP.PCAP.KD` (real GDP per capita, log-difference) — long-wave
-  productivity proxy.
-- `FS.AST.PRVT.GD.ZS` (domestic credit / GDP) — Reinhart-Rogoff credit
-  super-cycle.
+Le null AR(1) + scramble (Porte 1) **rejette fréquemment la séparabilité
+de Kondratieff** sur le panel WB, pour plusieurs agrégats de revenu.
+**C'est honnête, pas un échec** : des échantillons courts ne peuvent pas
+distinguer de façon fiable une oscillation multi-décennale unique d'un
+bruit auto-corrélé. Le protocole CPV publie `separable = 0` plutôt que
+de fabriquer une phase.
 
-## References
+Les caveats d'endpoint sont sévères : le filtre CF est instable sur les
+$\lfloor 60 / 2 \rfloor = 30$ dernières années pour Kondratieff. Le
+rapport courant signale ce drapeau explicitement.
 
-- Kondratieff, N. D. (1925). *The major economic cycles* (English translation:
-  *The long waves in economic life*, Review of Economic Statistics, 1935).
-- Schumpeter, J. A. (1939). *Business cycles*.
-- Mensch, G. (1979). *Stalemate in technology: Innovations overcome the
-  depression*.
-- Modelski, G. (1996). *Leading sectors and world powers*.
-- Korotayev, A. V., & Tsirel, S. V. (2010). *A spectral analysis of world
-  GDP dynamics*.
-- Reinhart, C. M., & Rogoff, K. S. (2009). *This time is different: Eight
-  centuries of financial folly*.
+## Indicateurs moteurs
 
-## See also
+- `NY.GDP.PCAP.KD` (PIB réel par habitant, log-différence) — proxy de
+  productivité onde-longue.
+- `FS.AST.PRVT.GD.ZS` (crédit domestique / PIB) — super-cycle de crédit
+  Reinhart-Rogoff.
+- (Histoire longue) `LH_GDP` (Maddison) + `LH_CREDIT` (JST) sur 153 ans.
 
-- [CPV protocol](../methodology/multi_cycle_decomposition.md)
-- [Current report](../reports/cycle_position_2026_05_wb.md)
+## Caveats
+
+- **Small-N WB** : 65 ans $\approx 1.0$–$1.5$ K-wave → Porte 1
+  systématiquement rejetée pour la plupart des agrégats WB.
+- **Endpoint CF sévère** : 30 dernières années instables sur la bande
+  haute. `endpoint_caveat = 1` systématique sur les cellules
+  Kondratieff.
+- **Disputed au pic** : sur ADV18 et EU4 en mai 2026,
+  $\varphi \approx 0$ (pic) ; trois méthodes votent peak / expansion /
+  contraction sans consensus à 3/4, d'où `phase = disputed`. Voir
+  [K5 ADV18/EU4](../reports/kondratieff_adv18_eu4_2026.md).
+- **Recouvrement avec le cycle financier** : la K-wave et le cycle
+  financier Borio-Drehmann (~15–20 ans) coexistent ; la décomposition
+  CF sépare les deux mais la séparation est imparfaite sur les fenêtres
+  courtes.
+
+## Références
+
+- [Kondratieff (1925)](../bibliographie.md#kondratieff-1925)
+- [Schumpeter (1939)](../bibliographie.md#schumpeter-1939)
+- [Mensch (1979)](../bibliographie.md#mensch-1979)
+- [Modelski (1987)](../bibliographie.md#modelski-1987)
+- [Korotayev & Tsirel (2010)](../bibliographie.md#korotayev-tsirel-2010)
+- [Reinhart & Rogoff (2009)](../bibliographie.md#reinhart-rogoff-2009)
+- [Gordon (2016)](../bibliographie.md#gordon-2016)
+- [Summers (2014)](../bibliographie.md#summers-2014)
+- [Perez (2002)](../bibliographie.md#perez-2002)
+
+## Voir aussi
+
+- [Protocole CPV](../methodology/protocole_cpv.md)
+- [Analyse K5 ADV18/EU4](../reports/kondratieff_adv18_eu4_2026.md)
+- [Résultats panel d'histoire longue 2026-05](../reports/histoire_longue_2026.md)
