@@ -321,3 +321,214 @@ def plot_wavelet_power(power_by_group: dict[str, dict],
     fig.savefig(out_path, dpi=120)
     plt.close(fig)
     return out_path
+
+
+def plot_amplitude_heatmap(table: pd.DataFrame, out_path: Path) -> Path:
+    """Heatmap of Hilbert amplitudes: rows=group, cols=cycle.
+
+    Rejected cells are masked grey. Surviving cells are coloured on a viridis
+    scale and annotated with the numeric amplitude. Reading: a higher amplitude
+    means a stronger band-passed signal at the endpoint, i.e. a cycle that is
+    currently active rather than dormant.
+    """
+    import matplotlib.pyplot as plt
+    from matplotlib import colors as mcolors
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if table.empty:
+        return out_path
+    matrix = _matrix_view(table, "amplitude")
+    if matrix.empty:
+        return out_path
+    arr = matrix.to_numpy(dtype=float)
+    masked = np.ma.masked_invalid(arr)
+
+    cmap = plt.get_cmap("viridis").copy()
+    cmap.set_bad(color="#d0d0d0")
+
+    fig, ax = plt.subplots(figsize=(8, max(3, 0.6 * matrix.shape[0])))
+    finite = arr[np.isfinite(arr)]
+    vmax = float(finite.max()) if finite.size else 1.0
+    im = ax.imshow(masked, cmap=cmap, aspect="auto", vmin=0.0, vmax=vmax)
+    ax.set_xticks(range(matrix.shape[1]), [c.capitalize() for c in matrix.columns])
+    ax.set_yticks(range(matrix.shape[0]), list(matrix.index))
+    for i in range(matrix.shape[0]):
+        for j in range(matrix.shape[1]):
+            v = matrix.iat[i, j]
+            if pd.isna(v):
+                ax.text(j, i, "—", ha="center", va="center",
+                        color="#404040", fontsize=8)
+                continue
+            text_colour = "white" if v < 0.55 * vmax else "black"
+            ax.text(j, i, f"{v:.2f}", ha="center", va="center",
+                    color=text_colour, fontsize=8)
+    fig.colorbar(im, ax=ax, label="Amplitude Hilbert (z-score CF)")
+    ax.set_title("CPV — amplitude des cycles (groupes × bandes)")
+    fig.tight_layout()
+    fig.savefig(out_path, dpi=120)
+    plt.close(fig)
+    return out_path
+
+
+def plot_pvalue_heatmap(table: pd.DataFrame, out_path: Path,
+                        alpha: float = 0.05) -> Path:
+    """Heatmap of Gate 1 p-values: rows=group, cols=cycle.
+
+    Cells with p ≤ ``alpha`` are coloured green (the null is rejected — the
+    cycle survives Gate 1) ; cells with p > ``alpha`` are red. The fixed scale
+    [0, 1] makes the threshold visually obvious. Annotations show the p-value.
+    """
+    import matplotlib.pyplot as plt
+    from matplotlib import colors as mcolors
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if table.empty:
+        return out_path
+    matrix = _matrix_view(table, "ar1_p_value")
+    if matrix.empty:
+        return out_path
+    arr = matrix.to_numpy(dtype=float)
+    masked = np.ma.masked_invalid(arr)
+
+    cmap = mcolors.LinearSegmentedColormap.from_list(
+        "pdual", [(0.0, "#1b7837"), (alpha, "#a6dba0"),
+                  (alpha + 1e-6, "#f4a582"), (1.0, "#b2182b")])
+    cmap.set_bad(color="#d0d0d0")
+
+    fig, ax = plt.subplots(figsize=(8, max(3, 0.6 * matrix.shape[0])))
+    im = ax.imshow(masked, cmap=cmap, aspect="auto", vmin=0.0, vmax=1.0)
+    ax.set_xticks(range(matrix.shape[1]), [c.capitalize() for c in matrix.columns])
+    ax.set_yticks(range(matrix.shape[0]), list(matrix.index))
+    for i in range(matrix.shape[0]):
+        for j in range(matrix.shape[1]):
+            v = matrix.iat[i, j]
+            if pd.isna(v):
+                ax.text(j, i, "—", ha="center", va="center",
+                        color="#404040", fontsize=8)
+                continue
+            text_colour = "white" if v <= alpha or v >= 0.7 else "black"
+            ax.text(j, i, f"{v:.3f}", ha="center", va="center",
+                    color=text_colour, fontsize=8)
+    cbar = fig.colorbar(im, ax=ax, label="p-value dual-null")
+    cbar.ax.axhline(alpha, color="black", linewidth=1.2)
+    ax.set_title(f"CPV — p-values Gate 1 (seuil α = {alpha:.2f})")
+    fig.tight_layout()
+    fig.savefig(out_path, dpi=120)
+    plt.close(fig)
+    return out_path
+
+
+def plot_phase_polar_diagram(table: pd.DataFrame, cycle: str,
+                             out_path: Path) -> Path:
+    """Polar phase diagram for a single cycle band.
+
+    Each group is plotted at angular position φ (Hilbert phase) and radius
+    equal to its Hilbert amplitude. The four cardinal quadrants are annotated
+    with the Bry-Boschan-equivalent labels (expansion / peak / contraction /
+    trough). Cells that failed Gate 1 are dropped.
+    """
+    import matplotlib.pyplot as plt
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if table.empty:
+        return out_path
+    sub = table[(table["cycle"] == cycle) & (table["phase"] != "rejected")].copy()
+    if sub.empty:
+        return out_path
+    sub = sub.dropna(subset=["phi_rad", "amplitude"])
+    if sub.empty:
+        return out_path
+
+    fig, ax = plt.subplots(subplot_kw={"projection": "polar"}, figsize=(7, 7))
+    ax.set_theta_zero_location("E")
+    ax.set_theta_direction(1)
+
+    amp_max = float(sub["amplitude"].max()) if sub["amplitude"].size else 1.0
+    cmap = plt.get_cmap("tab10")
+    groups = list(sub["group_code"])
+    for idx, row in enumerate(sub.itertuples()):
+        ax.scatter(float(row.phi_rad), float(row.amplitude),
+                   color=cmap(idx % 10), s=130, zorder=5,
+                   edgecolor="black", linewidth=0.6, label=row.group_code)
+        ax.annotate(row.group_code,
+                    xy=(float(row.phi_rad), float(row.amplitude)),
+                    xytext=(8, 8), textcoords="offset points",
+                    fontsize=8)
+
+    # Quadrant labels at mid-angle and outside the data ring.
+    label_r = amp_max * 1.15 if amp_max > 0 else 1.0
+    ax.text(np.pi / 2, label_r, "Pic", ha="center", va="bottom", fontsize=10,
+            color="#1b7837", weight="bold")
+    ax.text(np.pi, label_r, "Contraction", ha="right", va="center", fontsize=10,
+            color="#b2182b", weight="bold")
+    ax.text(-np.pi / 2, label_r, "Creux", ha="center", va="top", fontsize=10,
+            color="#762a83", weight="bold")
+    ax.text(0.0, label_r, "Expansion", ha="left", va="center", fontsize=10,
+            color="#1f77b4", weight="bold")
+
+    # Quadrant separators.
+    for angle in (0.0, np.pi / 2, np.pi, -np.pi / 2):
+        ax.plot([angle, angle], [0, label_r * 1.05], color="grey",
+                linewidth=0.6, linestyle="--", zorder=1)
+
+    ax.set_rlim(0.0, label_r * 1.2 if amp_max > 0 else 1.5)
+    ax.set_rlabel_position(135)
+    ax.set_title(f"Diagramme de phase polaire — {cycle.capitalize()} "
+                 f"({CYCLE_BANDS[cycle]['lo_years']}-"
+                 f"{CYCLE_BANDS[cycle]['hi_years']} ans)", pad=20)
+    fig.tight_layout()
+    fig.savefig(out_path, dpi=120)
+    plt.close(fig)
+    return out_path
+
+
+def plot_next_extremum_timeline(table: pd.DataFrame, as_of: str,
+                                out_path: Path) -> Path:
+    """Horizontal timeline of the next predicted extremum per group, per cycle.
+
+    Four rows (one per cycle band). Each surviving cell is plotted at its
+    forecast ETA from ``as_of``, as ▲ (peak) or ▼ (trough). A ±1 year span
+    illustrates that this is an order of magnitude, not a Bayesian CI.
+    """
+    import matplotlib.pyplot as plt
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    if table.empty:
+        return out_path
+    sub = table[(table["phase"] != "rejected")].dropna(
+        subset=["next_eta_years"]).copy()
+    if sub.empty:
+        return out_path
+
+    base_year = float(as_of[:4])
+    if "-" in as_of and len(as_of) >= 7:
+        base_year += (int(as_of[5:7]) - 1) / 12.0
+    sub["target_year"] = base_year + sub["next_eta_years"].astype(float)
+
+    cycles = list(CYCLE_BANDS.keys())
+    fig, ax = plt.subplots(figsize=(10, 1.0 * len(cycles) + 2.0))
+
+    group_to_colour: dict[str, tuple] = {}
+    cmap = plt.get_cmap("tab10")
+    for idx, g in enumerate(sorted(sub["group_code"].drop_duplicates())):
+        group_to_colour[g] = cmap(idx % 10)
+
+    for row_idx, cycle in enumerate(cycles):
+        ax.axhline(row_idx, color="lightgrey", linewidth=0.5, zorder=1)
+        for r in sub[sub["cycle"] == cycle].itertuples():
+            marker = "^" if r.next_kind == "max" else "v"
+            colour = group_to_colour.get(r.group_code, "black")
+            ax.errorbar(r.target_year, row_idx, xerr=1.0, fmt=marker,
+                        color=colour, markersize=10, ecolor=colour,
+                        elinewidth=1.0, capsize=3, zorder=5)
+            ax.annotate(r.group_code, xy=(r.target_year, row_idx),
+                        xytext=(0, 8), textcoords="offset points",
+                        ha="center", fontsize=7, color=colour)
+
+    ax.axvline(base_year, color="black", linewidth=0.8, linestyle=":",
+               label=f"as-of {as_of}")
+    ax.set_yticks(range(len(cycles)))
+    ax.set_yticklabels([c.capitalize() for c in cycles])
+    ax.set_xlabel("Année calendaire (forecast ± 1 an)")
+    ax.set_title("Prochains extrema prévus par cycle (▲ pic / ▼ creux)")
+    ax.legend(loc="upper right", fontsize=8)
+    fig.tight_layout()
+    fig.savefig(out_path, dpi=120)
+    plt.close(fig)
+    return out_path

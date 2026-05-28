@@ -38,8 +38,12 @@ from ecowave.cycles.phase import (
 )
 from ecowave.cycles.report import (
     build_position_table,
+    plot_amplitude_heatmap,
     plot_cf_trajectories,
+    plot_next_extremum_timeline,
     plot_phase_heatmap,
+    plot_phase_polar_diagram,
+    plot_pvalue_heatmap,
     plot_wavelet_power,
     render_cycle_position_md,
 )
@@ -452,6 +456,9 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
     fig_heatmap = settings.figures_dir / f"cycle_phase_heatmap_{stem}.png"
     fig_cf = settings.figures_dir / f"cycle_cf_trajectories_{stem}.png"
     fig_wavelet = settings.figures_dir / f"cycle_wavelet_power_{stem}.png"
+    fig_amplitude = settings.figures_dir / f"cycle_amplitude_heatmap_{stem}.png"
+    fig_pvalue = settings.figures_dir / f"cycle_pvalue_heatmap_{stem}.png"
+    fig_timeline = settings.figures_dir / f"cycle_next_extremum_timeline_{stem}.png"
 
     table = build_position_table(positions)
     try:
@@ -466,13 +473,46 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
         plot_wavelet_power(wavelet_power_by_group, fig_wavelet)
     except Exception as exc:  # noqa: BLE001
         typer.echo(f"  Wavelet figure failed: {exc}", err=True)
+    try:
+        plot_amplitude_heatmap(table, fig_amplitude)
+    except Exception as exc:  # noqa: BLE001
+        typer.echo(f"  Amplitude heatmap failed: {exc}", err=True)
+    try:
+        plot_pvalue_heatmap(table, fig_pvalue)
+    except Exception as exc:  # noqa: BLE001
+        typer.echo(f"  p-value heatmap failed: {exc}", err=True)
+    try:
+        plot_next_extremum_timeline(table, as_of, fig_timeline)
+    except Exception as exc:  # noqa: BLE001
+        typer.echo(f"  Timeline figure failed: {exc}", err=True)
+
+    fig_polar_per_cycle: dict[str, Path] = {}
+    for cycle_name in CYCLE_BANDS.keys():
+        fig_polar = settings.figures_dir / (
+            f"cycle_phase_polar_{cycle_name}_{stem}.png")
+        try:
+            plot_phase_polar_diagram(table, cycle_name, fig_polar)
+            fig_polar_per_cycle[cycle_name] = fig_polar
+        except Exception as exc:  # noqa: BLE001
+            typer.echo(f"  Polar figure ({cycle_name}) failed: {exc}", err=True)
 
     figures = {
-        "Heatmap des phases": str(Path("../figures") / fig_heatmap.name),
-        "CF band-pass par cycle": str(Path("../figures") / fig_cf.name),
+        "Heatmap des phases (consensus)":
+            str(Path("../figures") / fig_heatmap.name),
+        "Heatmap des amplitudes":
+            str(Path("../figures") / fig_amplitude.name),
+        "Heatmap des p-values (Gate 1)":
+            str(Path("../figures") / fig_pvalue.name),
+        "Frise des prochains extrema":
+            str(Path("../figures") / fig_timeline.name),
+        "CF band-pass par cycle":
+            str(Path("../figures") / fig_cf.name),
         f"Spectre wavelet ({wavelet_group})":
             str(Path("../figures") / fig_wavelet.name),
     }
+    for cycle_name, fig_polar in fig_polar_per_cycle.items():
+        figures[f"Diagramme polaire — {cycle_name.capitalize()}"] = str(
+            Path("../figures") / fig_polar.name)
     out_path = settings.reports_dir / f"cycle_position_{stem}.md"
     schema_version = get_schema_version(settings.db_path) or "unknown"
     render_cycle_position_md(as_of=as_of, table=table,
