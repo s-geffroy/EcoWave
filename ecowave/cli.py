@@ -67,23 +67,49 @@ def run_pilot(
 def position_cycles(
     as_of: str = typer.Option("2026-05", "--as-of",
                               help="Target month (YYYY-MM) for the CPV snapshot."),
-    manifest: str = typer.Option("/app/cycles_manifest.json", "--manifest"),
-    groups: str = typer.Option("WLD,OECD,HIC,UMC,LMC,LIC,G7,BRICS", "--groups",
-                                help="Comma-separated group codes."),
+    manifest: str = typer.Option("", "--manifest",
+                                  help="Manifest path. Defaults depend on --horizon."),
+    groups: str = typer.Option("", "--groups",
+                                help="Comma-separated group codes. Defaults depend on --horizon."),
     mode: str = typer.Option("strict", "--mode"),
     n_surrogates: int = typer.Option(1000, "--n-surrogates"),
     seed: int = typer.Option(0, "--seed"),
+    horizon: str = typer.Option(
+        "wb", "--horizon",
+        help="Data horizon: 'wb' (World Bank, 1960-present) or 'long' "
+             "(Maddison + Jordà-Schularick-Taylor, 1870-2020).",
+    ),
+    null: str = typer.Option(
+        "ar1", "--null",
+        help="Gate-1 null: 'ar1' (red-noise bootstrap on CF band-power, "
+             "default), 'phase' (Theiler 1992 phase-scrambling), "
+             "'wavelet' (AR(1) on Morlet wavelet band-power) or "
+             "'dual' (require failure on BOTH ar1 AND phase).",
+    ),
 ) -> None:
     """Position the world (and groups) in Kitchin/Juglar/Kuznets/Kondratieff cycles."""
     from ecowave.cycles.runner import run_position_cycles
     from pathlib import Path
+
+    if horizon not in {"wb", "long"}:
+        raise typer.BadParameter("--horizon must be 'wb' or 'long'.")
+    if null not in {"ar1", "phase", "wavelet", "dual"}:
+        raise typer.BadParameter("--null must be ar1, phase, wavelet, or dual.")
+
+    if not manifest:
+        manifest = ("/app/long_history_manifest.json" if horizon == "long"
+                    else "/app/cycles_manifest.json")
+    if not groups:
+        groups = ("ADV18,G7,USA,EU4,ANGLO,NORDIC" if horizon == "long"
+                  else "WLD,OECD,HIC,UMC,LMC,LIC,G7,BRICS")
 
     settings = Settings.from_env()
     group_list = [g.strip() for g in groups.split(",") if g.strip()]
     out = run_position_cycles(settings=settings, as_of=as_of,
                               manifest_path=Path(manifest),
                               groups=group_list, mode=mode,
-                              n_surrogates=n_surrogates, seed=seed)
+                              n_surrogates=n_surrogates, seed=seed,
+                              horizon=horizon, null=null)
     typer.echo(f"position-cycles complete: {out}")
 
 

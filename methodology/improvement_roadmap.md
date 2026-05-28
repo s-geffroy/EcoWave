@@ -58,7 +58,68 @@ pipeline are listed below.
 - **Code.** `ecowave/pilots.py`; `ecowave/evaluation.py` (EWS AUROC pooled
   + per-pilot, including holdouts).
 
-## #5 — Missing variables (coverage)
+## #5 — Long-history extension (Maddison + Jordà-Schularick-Taylor) — IMPLEMENTED
+
+- **Problem.** 65 years of WB data ≈ 1.0–1.5 Kondratieff cycles. Gate 1
+  (AR(1) bootstrap) cannot distinguish a real K-wave from a smooth red-noise
+  excursion on so few cycles.
+- **Method.** Add a second ingestion path that reads Maddison Project 2023
+  (real GDP per capita 1820–2022) and Jordà-Schularick-Taylor R6 (credit,
+  house prices, equity, sovereign yield, CPI, money for 18 advanced
+  economies 1870–2020). 154 years × 18 countries gives ≥ 3 K-waves,
+  ≥ 8 Kuznets, ≥ 17 Juglar.
+- **Code.** `ecowave/cycles/long_history.py`; new
+  `long_history_manifest.json`; CLI option `position-cycles --horizon long`.
+- **Acceptance.** Long-horizon panel on the synthetic fixture shows the
+  Juglar signal emerging cleanly at the expected 9-year period.
+
+## #6 — Composite par-bande — IMPLEMENTED
+
+- **Problem.** The original composite z-scored each indicator over its full
+  history then averaged across indicators. Cyclical content at any one
+  frequency is diluted by indicators not cyclical at that frequency.
+- **Method.** For each cycle band, first CF-band-pass each indicator into
+  the band, then z-score and average. The composite is now band-specific
+  and concentrates cyclical power in the target band.
+- **Code.** `ecowave/cycles/runner.py:_composite_panel(panel, band=...)`.
+- **Acceptance.** On the WB panel with `--null dual`, the number of cells
+  surviving Gate 1 increased from 4 to 7, with concrete phase labels
+  (contraction / expansion) instead of just `disputed`.
+
+## #7 — Dual null (AR(1) + phase-scrambling) — IMPLEMENTED
+
+- **Problem.** AR(1) bootstrap absorbs cyclical content into the persistence
+  parameter φ (Vyushin & Kushner 2009). Phase-scrambling (Theiler 1992)
+  preserves the spectrum exactly; both are complementary.
+- **Method.** Compute both nulls; a cell passes Gate 1 only when **both**
+  reject. The conservative dual gate is closer to a "real cycle" test.
+- **Code.** `ecowave/cycles/surrogate.py:phase_scramble_null` + `dual_null`.
+  CLI option `--null dual`.
+- **Acceptance.** Dual gate is by definition ≥ either single gate; it
+  catches false positives from each null individually.
+
+## #8 — Wavelet band-power as alternative test statistic — IMPLEMENTED
+
+- **Problem.** CF band-power is endpoint-sensitive on the last `hi_years/2`
+  samples — exactly where the most policy-relevant phase is.
+- **Method.** Use Morlet wavelet scaleogram |W(s,t)|² integrated in-band
+  as the test statistic; AR(1) bootstrap as the null distribution. Less
+  edge-sensitive than CF.
+- **Code.** `ecowave/cycles/surrogate.py:wavelet_bandpower_null`. CLI
+  option `--null wavelet`.
+
+## #9 — Quarterly extension for Kitchin — TODO
+
+- **Problem.** Annual data caps Kitchin at the 4-5y upper edge (Nyquist).
+- **Method (planned).** Add FRED quarterly real GDP (US: GDPC1) + Eurostat
+  QNA + OECD QNA ingest paths for the major economies. Produces a 1947–
+  present quarterly panel for HIC/OECD, allowing CF on the full Kitchin
+  3-5y band.
+- **Status.** Not implemented. Would require a new ingest module
+  (`ecowave/cycles/quarterly.py`) and a new manifest. Estimated 1-day
+  effort.
+
+## #10 — Missing variables (coverage) — TODO
 
 - The `S` curve protest indicator (S2, Mass Mobilization / ACLED post-2020)
   and the `I` curve narrative-tone indicator (I2, GDELT tone) remain to

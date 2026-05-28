@@ -1,0 +1,41 @@
+{
+  "project": "cpv_long_history_2026",
+  "schema_version": "0.5.0",
+  "as_of_month": "2026-05",
+  "start_year": 1870,
+  "horizon": "long",
+  "note": "Maddison Project (1820-2022) + Jordà-Schularick-Taylor R6 (1870-2020) on the 18 advanced economies. Used by `position-cycles --horizon long`. Substantially more cycles per band than the 65-year World Bank sample.",
+  "datasets": [
+    {
+      "name": "Maddison Project Database 2023",
+      "file": "data_raw/macrohistory/mpd2023.xlsx",
+      "license": "CC BY 4.0",
+      "url": "https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2023",
+      "variables_provided": ["LH_GDP (real GDP per capita)"]
+    },
+    {
+      "name": "Jordà-Schularick-Taylor Macrohistory Database R6",
+      "file": "data_raw/macrohistory/jst_r6.xlsx",
+      "license": "CC BY 4.0",
+      "url": "https://www.macrohistory.net/database/",
+      "variables_provided": [
+        "LH_GDP (rgdpmad)",
+        "LH_CREDIT (tloans)",
+        "LH_HPI (hpnom)",
+        "LH_EQUITY (eq_capgain)",
+        "LH_YIELD (ltrate)",
+        "LH_CPI (cpi)",
+        "LH_MONEY (money)"
+      ]
+    }
+  ],
+  "variable_codes": [
+    {"variable_code": "LH_GDP",    "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "GDP per capita — Maddison-style. Long-wave productivity proxy."},
+    {"variable_code": "LH_CREDIT", "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Total loans. Borio/Drehmann financial cycle driver."},
+    {"variable_code": "LH_HPI",    "cycle_targets": ["kuznets"],                         "notes": "House price index. Construction / Kuznets swing."},
+    {"variable_code": "LH_EQUITY", "cycle_targets": ["juglar"],                          "notes": "Equity capital gains. Short cycle."},
+    {"variable_code": "LH_YIELD",  "cycle_targets": ["kondratieff"],                     "notes": "Long-term bond yield. Kondratieff price-level proxy."},
+    {"variable_code": "LH_CPI",    "cycle_targets": ["kondratieff"],                     "notes": "Consumer prices. Long-wave inflation proxy."}
+  ],
+  "groups": ["ADV18", "G7", "USA", "EU4", "ANGLO", "NORDIC"]
+}

@@ -23,6 +23,11 @@ from ecowave.cycles.bands import CYCLE_BANDS, GROUPS, INCOME_GROUPS
 from ecowave.cycles.consensus import compute_phase_consensus
 from ecowave.cycles.decompose import cf_bandpass, morlet_wavelet
 from ecowave.cycles.ingest import build_group_panel
+from ecowave.cycles.long_history import (
+    LONG_GROUPS,
+    LongHistoryDataset,
+    build_long_history_panel,
+)
 from ecowave.cycles.manifest import CycleManifest, load_cycle_manifest
 from ecowave.cycles.phase import (
     classify_phase,
@@ -38,7 +43,12 @@ from ecowave.cycles.report import (
     plot_wavelet_power,
     render_cycle_position_md,
 )
-from ecowave.cycles.surrogate import ar1_bootstrap_null
+from ecowave.cycles.surrogate import (
+    ar1_bootstrap_null,
+    dual_null,
+    phase_scramble_null,
+    wavelet_bandpower_null,
+)
 from ecowave.cycles.universality import compute_cross_group_concordance
 from ecowave.db import (
     connect,
@@ -58,15 +68,41 @@ SEED_PATH = Path("/app/db/seed_variables.sql")
 CYCLES_MANIFEST_PATH = Path("/app/cycles_manifest.json")
 
 
-def _composite_panel(panel: pd.DataFrame) -> pd.Series:
+def _composite_panel(panel: pd.DataFrame,
+                     band: tuple[float, float] | None = None) -> pd.Series:
     """Equal-weighted standardized composite across all indicators in the panel.
 
-    Each column is z-scored against its own history, then averaged. NaN-tolerant.
+    When ``band`` is None, each column is z-scored against its own history then
+    averaged (the default cross-band aggregate).
+
+    When ``band = (lo_years, hi_years)`` is provided, each column is FIRST
+    band-passed (CF) into the band of interest, then z-scored and averaged.
+    This concentrates cyclical power in the target band and substantially
+    improves the SNR for Gate 1 — at the cost of the result being band-specific
+    (the composite must be recomputed per cycle band).
     """
     if panel.empty:
         return pd.Series(dtype=float)
-    standardized = (panel - panel.mean(axis=0)) / panel.std(axis=0).replace(0, np.nan)
-    return standardized.mean(axis=1, skipna=True)
+    if band is None:
+        standardized = (panel - panel.mean(axis=0)) / panel.std(axis=0).replace(0, np.nan)
+        return standardized.mean(axis=1, skipna=True)
+
+    lo, hi = band
+    filtered_cols: dict[str, pd.Series] = {}
+    for col in panel.columns:
+        series = panel[col].dropna()
+        if series.size < int(2 * hi):
+            continue
+        try:
+            cycle = cf_bandpass(series, lo_years=lo, hi_years=hi, samples_per_year=1.0)
+        except Exception:  # noqa: BLE001
+            continue
+        filtered_cols[col] = cycle.reindex(panel.index)
+    if not filtered_cols:
+        return pd.Series(dtype=float, index=panel.index)
+    df = pd.DataFrame(filtered_cols)
+    z = (df - df.mean(axis=0)) / df.std(axis=0).replace(0, np.nan)
+    return z.mean(axis=1, skipna=True)
 
 
 def _bryboschan_phase_for_endpoint(cycle: pd.Series) -> str:
@@ -172,21 +208,36 @@ def _endpoint_caveat(cycle_band: dict, last_year: int, current_year: int) -> int
 
 def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
                         groups: list[str], mode: str = "strict",
-                        n_surrogates: int = 1000, seed: int = 0) -> Path:
-    """Top-level entry. Returns the path to the rendered note."""
+                        n_surrogates: int = 1000, seed: int = 0,
+                        horizon: str = "wb", null: str = "ar1") -> Path:
+    """Top-level entry. Returns the path to the rendered note.
+
+    ``horizon`` selects the data source:
+    - ``"wb"``  — World Bank 1960-present panel (default). Manifest from
+      ``manifest_path`` (typically ``cycles_manifest.json``).
+    - ``"long"`` — Maddison Project + Jordà-Schularick-Taylor 1870-2020
+      on the 18 advanced economies. Manifest from
+      ``long_history_manifest.json``. See ``ecowave/cycles/long_history.py``.
+    """
     if not settings.db_path.exists():
         init_db(settings.db_path, SCHEMA_PATH, SEED_PATH)
     migrate_db(settings.db_path)
+
+    con = connect(settings.db_path)
+    run_id = start_ingestion_run(con, mode=mode,
+                                  notes=f"position-cycles {as_of} horizon={horizon}")
+
+    panels_by_group: dict[str, pd.DataFrame] = {}
+    composite_by_group: dict[str, pd.Series] = {}
+
+    if horizon == "long":
+        return _run_long_history(settings, as_of, manifest_path, groups, mode,
+                                  n_surrogates, seed, con, run_id, null)
 
     manifest = load_cycle_manifest(manifest_path)
     typer.echo(f"CPV — manifest {manifest.project} (as-of {manifest.as_of_month}); "
                f"{len(manifest.specs)} variables; {len(groups)} groups.")
 
-    con = connect(settings.db_path)
-    run_id = start_ingestion_run(con, mode=mode, notes=f"position-cycles {as_of}")
-
-    panels_by_group: dict[str, pd.DataFrame] = {}
-    composite_by_group: dict[str, pd.Series] = {}
     for group in groups:
         if group not in GROUPS:
             typer.echo(f"  Group {group} unknown — skipped.", err=True)
@@ -207,6 +258,52 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         composite_by_group[group] = _composite_panel(panel)
         typer.echo(f"  {group}: {panel.shape[0]} years × {panel.shape[1]} vars.")
 
+    return _analyse_and_render(
+        settings=settings, as_of=as_of, con=con, run_id=run_id, mode=mode,
+        groups=list(composite_by_group.keys()),
+        composite_by_group=composite_by_group,
+        panels_by_group=panels_by_group,
+        n_surrogates=n_surrogates, seed=seed, null=null,
+        horizon_label="World Bank (1960-present)",
+        wavelet_group="WLD",
+    )
+
+
+def _run_gate1(series: pd.Series, lo: float, hi: float, null: str,
+                n_surrogates: int, seed: int):
+    """Dispatch to the Gate 1 null requested by ``null``.
+
+    Returns either a NullResult (for ar1 / phase / wavelet) or a dict (for
+    dual). The caller treats both uniformly via the ``reject_cycle`` and
+    ``p_value`` attributes/keys.
+    """
+    if null == "phase":
+        return phase_scramble_null(series, lo_years=lo, hi_years=hi,
+                                    samples_per_year=1.0,
+                                    n_surrogates=n_surrogates, seed=seed)
+    if null == "wavelet":
+        return wavelet_bandpower_null(series, lo_years=lo, hi_years=hi,
+                                       samples_per_year=1.0,
+                                       n_surrogates=min(n_surrogates, 500),
+                                       seed=seed)
+    if null == "dual":
+        return dual_null(series, lo_years=lo, hi_years=hi,
+                          samples_per_year=1.0,
+                          n_surrogates=n_surrogates, seed=seed)
+    return ar1_bootstrap_null(series, lo_years=lo, hi_years=hi,
+                               samples_per_year=1.0,
+                               n_surrogates=n_surrogates, seed=seed)
+
+
+def _analyse_and_render(*, settings: Settings, as_of: str,
+                        con: "sqlite3.Connection", run_id: int, mode: str,
+                        groups: list[str],
+                        composite_by_group: dict[str, pd.Series],
+                        panels_by_group: dict[str, pd.DataFrame],
+                        n_surrogates: int, seed: int, null: str,
+                        horizon_label: str, wavelet_group: str) -> Path:
+    """Common back-end: surrogate test, phase classification, Gate 2/3,
+    persistence, figures, and Markdown rendering. Shared by both horizons."""
     positions: list[dict] = []
     consensus_rows: list[dict] = []
     cycles_by_group: dict[str, dict[str, pd.Series]] = {}
@@ -218,7 +315,7 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         cycles_by_group[group] = {}
         if composite.dropna().empty:
             continue
-        if group == "WLD":  # only one wavelet figure to keep the report light
+        if group == wavelet_group:  # one wavelet figure per run for readability
             try:
                 # Use the broadest band possible for the scaleogram.
                 wavelet_power_by_group[group] = morlet_wavelet(
@@ -229,6 +326,8 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
 
         last_year = int(composite.dropna().index.max())
 
+        panel = panels_by_group.get(group)
+
         for cycle_name, band in CYCLE_BANDS.items():
             if cycle_name == "kitchin":
                 # Annual data: 3-5y Kitchin is below Nyquist usefulness.
@@ -238,30 +337,48 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
             else:
                 lo, hi = band["lo_years"], band["hi_years"]
 
+            # Per-band composite: band-pass each indicator first, then average.
+            # Falls back to the cross-band composite if the panel is missing
+            # (e.g. when called from a test path that only provides composites).
+            if panel is not None and not panel.empty:
+                band_composite = _composite_panel(panel, band=(lo, hi))
+                if band_composite.dropna().empty:
+                    band_composite = composite
+            else:
+                band_composite = composite
+
             try:
-                cycle = cf_bandpass(composite, lo_years=lo, hi_years=hi,
+                cycle = cf_bandpass(band_composite, lo_years=lo, hi_years=hi,
                                     samples_per_year=1.0)
             except Exception:  # noqa: BLE001
                 cycle = pd.Series(dtype=float)
             cycles_by_group[group][cycle_name] = cycle
 
             try:
-                null = ar1_bootstrap_null(composite, lo_years=lo, hi_years=hi,
-                                          samples_per_year=1.0,
-                                          n_surrogates=n_surrogates, seed=seed)
+                null_res = _run_gate1(band_composite, lo, hi, null,
+                                       n_surrogates=n_surrogates, seed=seed)
             except Exception:  # noqa: BLE001
-                null = None
+                null_res = None
+
+            def _null_props(r):
+                if r is None:
+                    return True, None
+                if isinstance(r, dict):  # dual_null returns a dict
+                    return bool(r["reject_cycle"]), float(r["p_value"])
+                return bool(r.reject_cycle), float(r.p_value)
+
+            reject, p_value = _null_props(null_res)
 
             # If cycle doesn't survive Gate 1, publish rejected and skip Gate 2.
-            if null is None or null.reject_cycle:
+            if reject:
                 positions.append({
                     "group_code": group, "cycle": cycle_name, "phase": "rejected",
                     "phi_rad": None, "amplitude": None,
-                    "ar1_p_value": None if null is None else float(null.p_value),
+                    "ar1_p_value": p_value,
                     "separable": 0,
                     "endpoint_caveat": _endpoint_caveat(band, last_year, current_year),
                     "trend": "—", "next_kind": "—", "next_eta_years": None,
-                    "notes": "Gate 1: AR(1) null not rejected.",
+                    "notes": f"Gate 1 ({null}) rejected.",
                 })
                 continue
 
@@ -293,27 +410,30 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
             positions.append({
                 "group_code": group, "cycle": cycle_name, "phase": consensus_label,
                 "phi_rad": last_phi, "amplitude": last_amp,
-                "ar1_p_value": float(null.p_value), "separable": 1,
+                "ar1_p_value": p_value, "separable": 1,
                 "endpoint_caveat": _endpoint_caveat(band, last_year, current_year),
                 "trend": trend, "next_kind": forecast["next_kind"],
                 "next_eta_years": forecast["next_eta_years"],
-                "notes": f"votes={votes}",
+                "notes": f"votes={votes}; null={null}",
             })
             for model_code, phase in phases_by_model.items():
                 consensus_rows.append({
                     "group_code": group, "cycle": cycle_name,
                     "model_code": model_code, "phase": phase,
-                    "p_value": float(null.p_value) if model_code == "F" else None,
+                    "p_value": p_value if model_code == "F" else None,
                     "notes": "",
                 })
 
-    # Gate 3 — universality across income groups (WLD + 4 income groups).
+    # Gate 3 — universality across the available groups.
     universality_rows: list[dict] = []
     pos_df = pd.DataFrame(positions)
     if not pos_df.empty:
         for cycle_name in CYCLE_BANDS.keys():
             sub = pos_df[pos_df["cycle"] == cycle_name].set_index("group_code")["phase"]
-            verdict = compute_cross_group_concordance(sub.to_dict())
+            # For the long horizon there are no income classes; use all groups.
+            income_only = any(k in sub.index for k in INCOME_GROUPS)
+            verdict = compute_cross_group_concordance(sub.to_dict(),
+                                                      income_only=income_only)
             universality_rows.append({"cycle": cycle_name, **verdict, "notes": ""})
 
     # Persist.
@@ -321,14 +441,17 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
     replace_cycle_consensus(con, as_of, consensus_rows)
     replace_cycle_universality(con, as_of, universality_rows)
     finish_ingestion_run(con, run_id, "success",
-                         notes=f"{len(positions)} cells; {len(groups)} groups; CPV")
+                         notes=f"{len(positions)} cells; {len(groups)} groups; "
+                                f"{horizon_label}")
     con.close()
 
     # Figures + note.
     settings.figures_dir.mkdir(parents=True, exist_ok=True)
-    fig_heatmap = settings.figures_dir / f"cycle_phase_heatmap_{as_of.replace('-', '_')}.png"
-    fig_cf = settings.figures_dir / f"cycle_cf_trajectories_{as_of.replace('-', '_')}.png"
-    fig_wavelet = settings.figures_dir / f"cycle_wavelet_power_{as_of.replace('-', '_')}.png"
+    suffix = "long" if "1870" in horizon_label or "Maddison" in horizon_label else "wb"
+    stem = f"{as_of.replace('-', '_')}_{suffix}"
+    fig_heatmap = settings.figures_dir / f"cycle_phase_heatmap_{stem}.png"
+    fig_cf = settings.figures_dir / f"cycle_cf_trajectories_{stem}.png"
+    fig_wavelet = settings.figures_dir / f"cycle_wavelet_power_{stem}.png"
 
     table = build_position_table(positions)
     try:
@@ -347,14 +470,80 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
     figures = {
         "Heatmap des phases": str(Path("../figures") / fig_heatmap.name),
         "CF band-pass par cycle": str(Path("../figures") / fig_cf.name),
-        "Spectre wavelet (WLD)": str(Path("../figures") / fig_wavelet.name),
+        f"Spectre wavelet ({wavelet_group})":
+            str(Path("../figures") / fig_wavelet.name),
     }
-    out_path = settings.reports_dir / f"cycle_position_{as_of.replace('-', '_')}.md"
+    out_path = settings.reports_dir / f"cycle_position_{stem}.md"
     schema_version = get_schema_version(settings.db_path) or "unknown"
     render_cycle_position_md(as_of=as_of, table=table,
                              consensus_rows=consensus_rows,
                              universality_rows=universality_rows,
                              figures=figures, schema_version=schema_version,
                              out_path=out_path)
-    typer.echo(f"CPV report written: {out_path}")
+    typer.echo(f"CPV report written ({horizon_label}): {out_path}")
     return out_path
+
+
+def _run_long_history(settings: Settings, as_of: str, manifest_path: Path,
+                      groups: list[str], mode: str,
+                      n_surrogates: int, seed: int,
+                      con: "sqlite3.Connection", run_id: int,
+                      null: str = "ar1") -> Path:
+    """Long-horizon (Maddison + JST) variant of ``run_position_cycles``."""
+    import json as _json
+
+    dataset = LongHistoryDataset.default(settings.data_raw_dir)
+    try:
+        dataset.assert_exists()
+    except FileNotFoundError as exc:
+        typer.echo(str(exc), err=True)
+        finish_ingestion_run(con, run_id, "failed", notes="missing long-history files")
+        con.close()
+        raise typer.Exit(code=1)
+
+    spec = _json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    variable_codes = [v["variable_code"] for v in spec.get("variable_codes", [])]
+    start_year = int(spec.get("start_year", 1870))
+    typer.echo(f"CPV (long horizon) — {spec.get('project','cpv_long_history')}; "
+               f"{len(variable_codes)} variables; {len(groups)} groups; "
+               f"start_year={start_year}.")
+
+    composite_by_group: dict[str, pd.Series] = {}
+    panels_by_group: dict[str, pd.DataFrame] = {}
+    for group in groups:
+        if group not in LONG_GROUPS:
+            typer.echo(f"  Long-history group {group} unknown — skipped.", err=True)
+            continue
+        try:
+            panel = build_long_history_panel(group, variable_codes, dataset,
+                                              start_year=start_year,
+                                              persist={"con": con})
+        except Exception as exc:  # noqa: BLE001
+            typer.echo(f"  Group {group}: long ingestion failed: {exc}", err=True)
+            if mode == "strict":
+                finish_ingestion_run(con, run_id, "failed", notes=str(exc))
+                con.close()
+                raise typer.Exit(code=1)
+            continue
+        if panel.empty:
+            typer.echo(f"  Group {group}: empty panel — skipped.")
+            continue
+        panels_by_group[group] = panel
+        composite_by_group[group] = _composite_panel(panel)
+        typer.echo(f"  {group}: {panel.shape[0]} years × {panel.shape[1]} vars.")
+
+    if not composite_by_group:
+        typer.echo("No long-history group produced data; aborting.", err=True)
+        finish_ingestion_run(con, run_id, "failed", notes="empty panels")
+        con.close()
+        raise typer.Exit(code=1)
+
+    return _analyse_and_render(
+        settings=settings, as_of=as_of, con=con, run_id=run_id, mode=mode,
+        groups=list(composite_by_group.keys()),
+        composite_by_group=composite_by_group,
+        panels_by_group=panels_by_group,
+        n_surrogates=n_surrogates, seed=seed, null=null,
+        horizon_label="Maddison + Jordà-Schularick-Taylor (1870-2020)",
+        wavelet_group="ADV18",
+    )

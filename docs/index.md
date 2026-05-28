@@ -49,7 +49,7 @@ Full survey: [Cycle-methods survey](methodology/cycle_methods_survey.md).
 
 ## Current snapshot
 
-[**May 2026 cycle position report**](reports/cycle_position_2026_05.md) —
+[**May 2026 cycle position report**](reports/cycle_position_2026_05_wb.md) —
 per-group × per-cycle phase matrix with AR(1) p-values, per-method consensus
 votes, and the cross-group universality verdict.
 

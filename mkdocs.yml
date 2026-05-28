@@ -50,6 +50,7 @@ nav:
       - Kuznets (15–25 y): cycles/kuznets.md
       - Kondratieff (40–60 y): cycles/kondratieff.md
   - Groups (WLD, HIC, OECD…): groups.md
-  - Current report: reports/cycle_position_2026_05.md
+  - Current report (World Bank): reports/cycle_position_2026_05_wb.md
+  - Current report (Long history): reports/cycle_position_2026_05_long.md
   - EWS validation: reports/ews_validation.md
   - Sources: sources.md

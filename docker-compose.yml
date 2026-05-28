@@ -16,6 +16,8 @@ services:
       - ./scripts:/app/scripts
       - ./sources_manifest.json:/app/sources_manifest.json
       - ./cycles_manifest.json:/app/cycles_manifest.json
+      - ./long_history_manifest.json:/app/long_history_manifest.json
+      - ./mkdocs.yml:/app/mkdocs.yml
     ports:
       - "8000:8000"
     working_dir: /app

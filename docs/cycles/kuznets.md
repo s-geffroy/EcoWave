@@ -33,4 +33,4 @@ when sufficient credit + property data is available.
 ## See also
 
 - [CPV protocol](../methodology/multi_cycle_decomposition.md)
-- [Current report](../reports/cycle_position_2026_05.md)
+- [Current report](../reports/cycle_position_2026_05_wb.md)

@@ -39,4 +39,4 @@ G still produce phases in that case.
 ## See also
 
 - [CPV protocol](../methodology/multi_cycle_decomposition.md)
-- [Current report](../reports/cycle_position_2026_05.md)
+- [Current report](../reports/cycle_position_2026_05_wb.md)
