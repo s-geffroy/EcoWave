@@ -10,6 +10,42 @@ four canonical economic cycles (Kitchin / Juglar / Kuznets / Kondratieff) and
 publishes per-group phase labels under three falsifiability gates
 (existence / consensus / universality).
 
+### Site rewrite — French academic edition (2026-05)
+
+The published documentation site is rewritten in French with an academic
+template (Résumé / Notation / Méthode / Résultats / Caveats / Références)
+and a figures-forward layout. The code, commit messages, and this
+CHANGELOG remain in English by design.
+
+- **mkdocs.yml**: `language: fr`, indigo palette, MathJax via
+  `pymdownx.arithmatex`, footnotes, navigation tabs + indexes. Nav restructured
+  to Accueil / Protocole CPV / Cycles canoniques / Groupes / Résultats /
+  Analyses approfondies / Validation EWS / Sources / Bibliographie.
+- **New consolidated bibliography** (`docs/bibliographie.md`) with stable
+  author-year anchors. All site pages cite into this single file.
+- **Four new figure functions** in `ecowave/cycles/report.py`:
+  `plot_amplitude_heatmap`, `plot_pvalue_heatmap`, `plot_phase_polar_diagram`,
+  `plot_next_extremum_timeline`. Wired into `runner.py:_analyse_and_render`
+  so they ship with every `position-cycles` run on both horizons.
+- **Methodology renamed + translated**: 8 pages (`protocole_cpv`,
+  `trois_portes`, `methodes_decomposition`, `indicateur_composite`,
+  `normalisation`, `garde_fous`, `fenetres_reference`, `feuille_de_route`).
+- **Result reports rewritten** in academic French with figures-forward
+  layout: `panel_banque_mondiale_2026.md`, `histoire_longue_2026.md`,
+  `validation_ews.md`.
+- **Deep-dive analyses academised**: Résumé / Notation / Références
+  sections added to `juglar_us_anglo_nordic_2026.md` and
+  `kondratieff_adv18_eu4_2026.md`.
+- **Cycles pages** (Kitchin / Juglar / Kuznets / Kondratieff) translated
+  and each lead with the polar phase diagram for its band.
+- **Sync + CI**: `scripts/sync_docs.sh` updated for the new figure
+  patterns and French slugs; `.github/workflows/pages.yml` description
+  updated.
+
+`mkdocs build --strict` passes cleanly. Site name stays *CPV — Cycle
+Position Vector* with the French subtitle « Décomposition multi-cycles
+falsifiable des indicateurs macroéconomiques ».
+
 ### Schema version: 0.5.0
 
 DB schema is rebuilt from scratch. Tables:
