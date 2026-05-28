@@ -5,6 +5,43 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Per-band method weighting (Roadmap #11)
+
+The Path 5 v1 run surfaced that two of the four Gate-2 methods —
+**D (PELT)** and **G (Bry-Boschan)** — vote nearly constant phases on
+some bands due to a mismatch between the method's design horizon and
+the cycle period:
+
+- D on Kitchin (3-5 y) → constant `expansion` (PELT segments span
+  multiple Kitchin cycles, endpoint phase = trend, not cycle).
+- G on Kitchin → constant `contraction` (B-B endpoint dating is
+  borderline at 3-5 y on quarterly grids).
+- D on Kondratieff (40-60 y) → uninformative (only 1.1-1.65 cycles
+  fit a 66 y panel; PELT collapses to a single segment).
+
+`bands.py` now pre-registers per-band `methods` allowlists and
+`min_agreement` thresholds; `consensus.py` accepts an
+`allowed_methods` kwarg; `runner.py` reads both from `CYCLE_BANDS`:
+
+- Kitchin: `(F, E)`, min 2 (unanimity of the admitted panel).
+- Juglar: `(D, E, F, G)`, min 3 (3/4 — unchanged).
+- Kuznets: `(D, E, F, G)`, min 3 (unchanged).
+- Kondratieff: `(E, F, G)`, min 2 (majority of admitted panel).
+
+Excluded methods' votes are still persisted in `cycle_consensus` for
+transparency — they simply do not influence Gate 2. Tests
+(`test_consensus_per_band.py`, 7 cases) pin both the new
+allowlist-filtered consensus and the legacy 4-method path.
+
+Gate 2 gains on the 2026-05 quarterly run:
+- **GBR Kitchin**: disputed → **`peak`** (F + E concord).
+- **G7Q Juglar**: disputed → **`contraction`** (3/4 under full panel).
+- **OECDQ Juglar**: disputed → **`contraction`** (3/4).
+- **GBR Kondratieff**: disputed → **`expansion`** (E + G majority,
+  D excluded).
+- USA Kitchin = `contraction` and EA Kuznets = `expansion` remain
+  stable.
+
 ### Path 5 v2 — Q_YIELD + Q_CREDIT for the long bands
 
 Extends the quarterly manifest with two BIS/OECD-MEI variables hosted
