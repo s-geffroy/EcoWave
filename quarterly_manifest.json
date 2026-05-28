@@ -75,6 +75,38 @@
         "GBR": {"src": "FRED",     "series": "LRUN64TTGBQ156S",     "note": "UK harmonised UR 15-64 (OECD mirror on FRED, quarterly native)"}
       },
       "notes": "Total unemployment rate. Already stationary; level passes through. Primary Juglar signal, kept here for consistency with the WB Q_UEM."
+    },
+    {
+      "variable_code": "Q_YIELD",
+      "transform": "level",
+      "cycle_targets": ["kondratieff"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "IRLTLT01USQ156N",     "note": "US 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "EA":  {"src": "FRED",     "series": "IRLTLT01EZQ156N",     "note": "EA 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "JPN": {"src": "FRED",     "series": "IRLTLT01JPQ156N",     "note": "Japan 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "GBR": {"src": "FRED",     "series": "IRLTLT01GBQ156N",     "note": "UK 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "CAN": {"src": "FRED",     "series": "IRLTLT01CAQ156N",     "note": "Canada 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "DEU": {"src": "FRED",     "series": "IRLTLT01DEQ156N",     "note": "Germany 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "FRA": {"src": "FRED",     "series": "IRLTLT01FRQ156N",     "note": "France 10-year government bond yield (OECD MEI mirror on FRED)"},
+        "ITA": {"src": "FRED",     "series": "IRLTLT01ITQ156N",     "note": "Italy 10-year government bond yield (OECD MEI mirror on FRED)"}
+      },
+      "notes": "Long-term government bond yield (10-year). Stationary in level; level pass-through. Primary Kondratieff signal — long-wave price-level proxy per Korotayev & Tsirel (2010), parallels LH_YIELD in the long-history manifest."
+    },
+    {
+      "variable_code": "Q_CREDIT",
+      "transform": "log_diff_q",
+      "cycle_targets": ["juglar", "kuznets", "kondratieff"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "QUSPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — US, all lenders, total (FRED mirror)"},
+        "EA":  {"src": "FRED",     "series": "QXMPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — Euro Area, all lenders (FRED mirror)"},
+        "JPN": {"src": "FRED",     "series": "QJPPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — Japan (FRED mirror)"},
+        "GBR": {"src": "FRED",     "series": "QGBPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — UK (FRED mirror)"},
+        "CAN": {"src": "FRED",     "series": "QCAPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — Canada (FRED mirror)"},
+        "DEU": {"src": "FRED",     "series": "QDEPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — Germany (FRED mirror)"},
+        "FRA": {"src": "FRED",     "series": "QFRPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — France (FRED mirror)"},
+        "ITA": {"src": "FRED",     "series": "QITPAM770A",          "note": "BIS Credit to Private Non-Financial Sector — Italy (FRED mirror)"}
+      },
+      "notes": "Total credit to private non-financial sector (BIS, all lenders). Annualised quarterly log-growth. Borio-Drehmann financial cycle (Juglar/Kuznets) and Reinhart-Rogoff credit super-cycle (Kondratieff). Parallels LH_CREDIT in the long-history manifest."
     }
   ],
   "groups": ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"]

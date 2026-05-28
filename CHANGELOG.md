@@ -5,6 +5,36 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Path 5 v2 — Q_YIELD + Q_CREDIT for the long bands
+
+Extends the quarterly manifest with two BIS/OECD-MEI variables hosted
+on FRED to unblock the long-band cells that Path 5 v1 (GDP + CPI +
+UNRATE) couldn't separate:
+
+- **Q_YIELD** — 10-year government bond yield, OECD MEI mirror on
+  FRED (`IRLTLT01<ISO>Q156N` for US, EA, JPN, GBR, CAN, DEU, FRA,
+  ITA). Level transform, Kondratieff target. Parallels `LH_YIELD` in
+  the long-history manifest.
+- **Q_CREDIT** — total credit to private non-financial sector, BIS
+  data hosted on FRED (`Q<ISO>PAM770A`). Annualised quarterly
+  log-growth. Targets Juglar + Kuznets + Kondratieff. Carries the
+  Borio-Drehmann financial cycle and the Reinhart-Rogoff credit
+  super-cycle.
+
+Gate 1 improvements on the 2026-05 run:
+- **EA Kuznets**: p = 0.922 → 0.001 (rejected → separable + Gate 2
+  consensus `expansion`).
+- **JPN Kondratieff**: p = 0.706 → 0.144 (≈5× reduction).
+- **EA Kondratieff**: p = 0.976 → 0.237.
+- **USA Kondratieff**: p = 0.121 → 0.081 (approaches the 0.05
+  threshold).
+- All Kitchin/Juglar/Kuznets Gate 1 values stay at p = 0.001 (no
+  regression).
+
+Gate 2 (consensus) stays mostly `disputed` for Kitchin/Kuznets — the
+methodological bias of D (PELT) and G (Bry-Boschan) on short cycles
+documented in the Path 5 v1 commit is unaffected by adding variables.
+
 ### Path 5 — Quarterly Kitchin extension (Roadmap #9 — IMPLÉMENTÉ)
 
 Adds a third data horizon `position-cycles --horizon quarterly` that
