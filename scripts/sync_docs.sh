@@ -19,6 +19,7 @@ mkdir -p docs/reports
 shopt -s nullglob
 for f in reports/panel_banque_mondiale_2026.md \
          reports/histoire_longue_2026.md \
+         reports/panel_trimestriel_2026.md \
          reports/juglar_us_anglo_nordic_2026.md \
          reports/kondratieff_adv18_eu4_2026.md \
          reports/validation_ews.md; do

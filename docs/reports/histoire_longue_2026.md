@@ -1,14 +1,17 @@
 # Position cyclique mondiale, mai 2026 — panel d'histoire longue (Maddison + JST)
 
 > **Résumé.** Run CPV sur le panel d'histoire longue 1870-2022 (6 variables,
-> 6 agrégats × 4 bandes, $B = 1\,000$ surrogates, null dual AR(1) + scramble).
-> **8 cellules sur 24 survivent à la Porte 1** ; signaux principaux :
-> Juglar USA / ANGLO / NORDIC ($p \leq 0.028$) ; Kondratieff ADV18 / EU4
-> ($p = 0.002$ et $p = 0.018$, `disputed` au pic K5). Aucun cycle n'est
-> qualifié `universal` au sens cross-revenu (le panel ne contient pas de
-> stratification de revenu) ; le drapeau Porte 3 est calculé sur les
-> 6 agrégats long-history disponibles. K3 et K4 historiques sont retrouvés
-> à $\pm 5$ ans de la datation [Korotayev & Tsirel (2010)](../bibliographie.md#korotayev-tsirel-2010).
+> 6 agrégats × 4 bandes, $B = 1\,000$ surrogates, null dual AR(1) + scramble,
+> seed = 0). Mise à jour méthodologique 2026-05 (per-band weighting + filtre
+> `cycle_targets`, Roadmap #11) : **9 cellules sur 24 survivent à la Porte 1** ;
+> signaux principaux Juglar ANGLO / G7 / USA ($p \leq 0.005$) avec consensus
+> `contraction` sur ADV18 et G7, et Kondratieff G7 ($p = 0.001$, consensus
+> `contraction`). Kuznets séparable sur ADV18 / EU4 / G7 mais en `disputed`
+> sur la Porte 2 (zone de pic). Aucun cycle n'est qualifié `universal` au
+> sens cross-revenu (le panel ne contient pas de stratification de revenu) ;
+> le drapeau Porte 3 est calculé sur les 6 agrégats long-history disponibles.
+> K3 et K4 historiques restent retrouvés à $\pm 5$ ans de la datation
+> [Korotayev & Tsirel (2010)](../bibliographie.md#korotayev-tsirel-2010).
 
 ## Notation et paramètres
 
@@ -88,23 +91,23 @@ réunit les 18 économies avancées couvertes par JST.
 
 | Agrégat | Kitchin | Juglar | Kuznets | Kondratieff |
 |---|---|---|---|---|
-| ADV18 | rejected | rejected | rejected | **disputed** |
+| ADV18 | rejected | **contraction** | disputed | rejected |
 | ANGLO | rejected | disputed | rejected | rejected |
-| EU4 | rejected | rejected | rejected | **disputed** |
-| G7 | rejected | disputed | rejected | rejected |
-| NORDIC | rejected | **contraction** | rejected | rejected |
-| USA | rejected | **expansion** | rejected | rejected |
+| EU4 | rejected | rejected | disputed | rejected |
+| G7 | rejected | **contraction** | disputed | **contraction** |
+| NORDIC | rejected | rejected | rejected | rejected |
+| USA | rejected | disputed | rejected | rejected |
 
 ## p-values dual-null (Porte 1)
 
 | Agrégat | Kitchin | Juglar | Kuznets | Kondratieff |
 |---|---:|---:|---:|---:|
-| ADV18 | 0.259 | 0.086 | 0.152 | **0.002** |
-| ANGLO | 0.760 | **0.001** | 0.202 | 0.854 |
-| EU4 | 0.471 | 0.527 | 0.065 | **0.018** |
-| G7 | 0.207 | **0.003** | 0.187 | 0.314 |
-| NORDIC | 0.161 | **0.028** | 0.154 | 0.678 |
-| USA | 0.098 | **0.001** | 0.306 | 0.774 |
+| ADV18 | 0.259 | **0.02** | **0.017** | 0.3 |
+| ANGLO | 0.76 | **0.001** | 0.26 | 0.946 |
+| EU4 | 0.471 | 0.411 | **0.01** | 0.142 |
+| G7 | 0.207 | **0.005** | **0.008** | **0.001** |
+| NORDIC | 0.161 | 0.089 | 0.367 | 0.608 |
+| USA | 0.098 | **0.001** | 0.073 | 0.808 |
 
 ## Votes par modèle (Porte 2, détail)
 

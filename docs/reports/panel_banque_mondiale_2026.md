@@ -1,13 +1,17 @@
 # Position cyclique mondiale, mai 2026 — panel Banque mondiale
 
 > **Résumé.** Run CPV sur le panel Banque mondiale 1960-2024 (8 indicateurs,
-> 9 agrégats × 4 bandes, $B = 1\,000$ surrogates, null dual AR(1) + scramble
-> de phase). **4 cellules sur 36 survivent à la Porte 1** ; la phase modale
-> Juglar pour les agrégats $\{UMC, WLD\}$ est `contraction`. Aucun cycle
-> n'est qualifié `universal` (Porte 3) sur cette fenêtre. Le diagnostic
-> principal est un déficit de longueur d'historique (65 ans), particulièrement
-> sévère pour Kuznets et Kondratieff (1.0–1.5 cycle disponible). Le run
-> long-history (Maddison + JST, 1870-2022) traite ce déficit séparément.
+> 8 agrégats × 4 bandes, $B = 1\,000$ surrogates, null dual AR(1) + scramble
+> de phase, seed = 0). Mise à jour méthodologique 2026-05 (per-band weighting,
+> Roadmap #11) : **12 cellules sur 32 survivent à la Porte 1** (vs 4
+> auparavant), avec 5 cellules à consensus Porte 2 : **Kitchin BRICS /
+> G7 / LMC** = `contraction`, **Juglar UMC** = `contraction`,
+> **Kondratieff HIC / OECD** = `contraction`. Aucun cycle n'est qualifié
+> `universal` (Porte 3) sur cette fenêtre. Le déficit de longueur
+> d'historique (65 ans) reste sévère pour Kondratieff (1.0–1.5 cycle
+> disponible) ; le run long-history (Maddison + JST, 1870-2022) et le
+> [panel trimestriel Path 5](panel_trimestriel_2026.md) traitent ce
+> déficit séparément.
 
 ## Notation et paramètres
 
@@ -86,27 +90,41 @@
 
 | Agrégat | Kitchin | Juglar | Kuznets | Kondratieff |
 |---|---|---|---|---|
-| BRICS | rejected | rejected | rejected | rejected |
-| G7 | rejected | rejected | rejected | rejected |
-| HIC | rejected | rejected | rejected | disputed |
+| BRICS | **contraction** | rejected | rejected | rejected |
+| G7 | **contraction** | rejected | rejected | rejected |
+| HIC | disputed | rejected | rejected | **contraction** |
 | LIC | disputed | rejected | rejected | rejected |
-| LMC | rejected | disputed | rejected | rejected |
-| OECD | rejected | rejected | rejected | disputed |
-| UMC | rejected | **contraction** | rejected | rejected |
-| WLD | rejected | **contraction** | rejected | disputed |
+| LMC | **contraction** | rejected | rejected | rejected |
+| OECD | disputed | rejected | rejected | **contraction** |
+| UMC | disputed | **contraction** | rejected | rejected |
+| WLD | disputed | rejected | rejected | disputed |
+
+Mise à jour 2026-05 (per-band weighting, Roadmap #11) : le panel admis
+pour Kitchin est restreint à (F, E) avec seuil 2 — D et G votaient
+systématiquement `expansion`/`contraction` sans contenu informatif sur
+la bande 3-5 ans. Conséquence : 3 cellules Kitchin (BRICS, G7, LMC)
+atteignent `contraction` (vs `rejected` sous l'ancienne règle 3/4 sur
+4 méthodes). Kondratieff HIC et OECD passent à `contraction` sous le
+même mécanisme (panel (E, F, G), seuil 2).
 
 ## p-values dual-null (Porte 1)
 
 | Agrégat | Kitchin | Juglar | Kuznets | Kondratieff |
 |---|---:|---:|---:|---:|
-| BRICS | 0.078 | 0.019 | 0.001 | 0.999 |
-| G7 | 0.578 | 0.388 | 0.359 | 0.055 |
-| HIC | 0.472 | 0.660 | 0.005 | 0.001 |
-| LIC | **0.001** | 0.234 | 0.320 | 0.506 |
-| LMC | 0.554 | 0.027 | 0.507 | 0.063 |
-| OECD | 0.675 | 0.461 | 0.002 | 0.001 |
-| UMC | 0.778 | **0.001** | 0.031 | 0.380 |
-| WLD | 0.892 | **0.001** | 0.020 | **0.001** |
+| BRICS | **0.001** | 0.15 | 0.463 | 0.999 |
+| G7 | **0.029** | 0.267 | 0.714 | 0.055 |
+| HIC | **0.01** | 0.589 | 0.351 | **0.001** |
+| LIC | **0.025** | 0.85 | 0.299 | 0.506 |
+| LMC | **0.014** | 0.54 | 0.746 | 0.063 |
+| OECD | **0.01** | 0.498 | 0.577 | **0.001** |
+| UMC | **0.001** | **0.041** | 0.214 | 0.38 |
+| WLD | **0.002** | 0.444 | 0.054 | **0.001** |
+
+**12 cellules sur 32 survivent à la Porte 1** (vs 4 sous l'ancienne
+méthodologie sans filtrage par `cycle_targets`) — gain principalement
+sur Kitchin (8 agrégats $\leq 0.05$), grâce au filtre qui restreint
+la composite K-bande aux variables qui ciblent réellement Kitchin
+dans le manifest (`Q_GDP`, `Q_CPI`).
 
 ## Universalité (Porte 3, cross-groupe WLD + HIC/UMC/LMC/LIC)
 
