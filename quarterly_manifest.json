@@ -137,6 +137,19 @@
         "ITA": {"src": "FRED",     "series": "QITR628BIS",          "note": "BIS Real Residential Property Prices — Italy (FRED mirror)"}
       },
       "notes": "BIS real residential property price index (deflated by CPI). Lewis-Kuznets construction swing — house prices are the canonical Kuznets driver. Annualised quarterly log-growth. Parallels LH_HPI in the long-history manifest."
+    },
+    {
+      "variable_code": "Q_PRD",
+      "transform": "log_diff_q",
+      "cycle_targets": ["kondratieff"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "OPHNFB",              "note": "US Nonfarm Business Sector: Labor Productivity (Output per Hour), quarterly SA, 1947Q1+ (FRED native, BLS)"},
+        "EA":  {"src": "EUROSTAT", "dataset": "namq_10_lp_ulc", "geo": "EA20", "na_item": "RLPR_HW", "unit": "I20", "s_adj": "SCA"},
+        "DEU": {"src": "EUROSTAT", "dataset": "namq_10_lp_ulc", "geo": "DE", "na_item": "RLPR_HW", "unit": "I20", "s_adj": "SCA"},
+        "FRA": {"src": "EUROSTAT", "dataset": "namq_10_lp_ulc", "geo": "FR", "na_item": "RLPR_HW", "unit": "I20", "s_adj": "SCA"},
+        "ITA": {"src": "EUROSTAT", "dataset": "namq_10_lp_ulc", "geo": "IT", "na_item": "RLPR_HW", "unit": "I20", "s_adj": "SCA"}
+      },
+      "notes": "Real labour productivity per hour worked. Schumpeter-Kondratieff techno-economic paradigm proxy — long-wave productivity surges underpin K-wave upswings (steam, electricity, chemistry, ICT, AI). USA: BLS nonfarm productivity hosted natively on FRED (1947Q1+). EA / DE / FR / IT: Eurostat namq_10_lp_ulc with na_item=RLPR_HW (real productivity per hour worked), index 2020=100, calendar-and-seasonally adjusted. JPN / GBR / CAN deferred — OECD MEI productivity mirror not consistently available on FRED across these ISOs."
     }
   ],
   "groups": ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"]
