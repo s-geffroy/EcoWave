@@ -1,59 +1,74 @@
 site_name: CPV — Cycle Position Vector
-site_description: Reproducible multi-cycle decomposition of macro indicators with three falsifiability gates
+site_description: Décomposition multi-cycles falsifiable des indicateurs macroéconomiques
 site_url: https://s-geffroy.github.io/EcoWave/
 repo_url: https://github.com/s-geffroy/EcoWave
 repo_name: s-geffroy/EcoWave
 
 theme:
   name: material
+  language: fr
   palette:
     - scheme: default
-      primary: teal
-      accent: teal
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-night
-        name: Switch to dark mode
+        name: Mode sombre
     - scheme: slate
-      primary: teal
-      accent: teal
+      primary: indigo
+      accent: indigo
       toggle:
         icon: material/weather-sunny
-        name: Switch to light mode
+        name: Mode clair
   features:
     - navigation.sections
+    - navigation.tabs
     - navigation.top
+    - navigation.indexes
+    - toc.follow
     - content.code.copy
     - search.suggest
 
 markdown_extensions:
   - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
   - tables
   - toc:
       permalink: true
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 nav:
-  - Home: index.md
-  - Methodology:
-      - CPV protocol: methodology/multi_cycle_decomposition.md
-      - Cycle validation rules: methodology/cycle_validation_rules.md
-      - Cycle-methods survey: methodology/cycle_methods_survey.md
-      - Composite indicator (intensity + diffusion): methodology/composite_indicator.md
-      - Normalization rules: methodology/normalization_rules.md
-      - Anti-pseudoscience rules: methodology/anti_pseudoscience_rules.md
-      - Reference windows: methodology/reference_windows.md
-      - Improvement roadmap: methodology/improvement_roadmap.md
-  - Cycles:
-      - Kitchin (3–5 y): cycles/kitchin.md
-      - Juglar (7–11 y): cycles/juglar.md
-      - Kuznets (15–25 y): cycles/kuznets.md
-      - Kondratieff (40–60 y): cycles/kondratieff.md
-  - Groups (WLD, HIC, OECD…): groups.md
-  - Current report (World Bank): reports/cycle_position_2026_05_wb.md
-  - Current report (Long history): reports/cycle_position_2026_05_long.md
-  - Analyses:
-      - Juglar US/ANGLO vs NORDIC 2022-2026: reports/juglar_us_anglo_nordic_2026.md
-      - Kondratieff K5 peak — ADV18 / EU4: reports/kondratieff_adv18_eu4_2026.md
-  - EWS validation: reports/ews_validation.md
-  - Sources: sources.md
+  - Accueil: index.md
+  - Protocole CPV:
+      - Vue d'ensemble: methodology/protocole_cpv.md
+      - Trois portes de falsifiabilité: methodology/trois_portes.md
+      - Méthodes de décomposition: methodology/methodes_decomposition.md
+      - Indicateur composite: methodology/indicateur_composite.md
+      - Normalisation: methodology/normalisation.md
+      - Garde-fous anti-pseudoscience: methodology/garde_fous.md
+      - Fenêtres de référence: methodology/fenetres_reference.md
+      - Feuille de route: methodology/feuille_de_route.md
+  - Cycles canoniques:
+      - Kitchin (3–5 ans): cycles/kitchin.md
+      - Juglar (7–11 ans): cycles/juglar.md
+      - Kuznets (15–25 ans): cycles/kuznets.md
+      - Kondratieff (40–60 ans): cycles/kondratieff.md
+  - Groupes: groupes.md
+  - Résultats 2026-05:
+      - Panel Banque mondiale: reports/panel_banque_mondiale_2026.md
+      - Histoire longue (Maddison + JST): reports/histoire_longue_2026.md
+  - Analyses approfondies:
+      - Juglar — US/ANGLO vs NORDIC: reports/juglar_us_anglo_nordic_2026.md
+      - Kondratieff K5 — ADV18/EU4: reports/kondratieff_adv18_eu4_2026.md
+  - Validation EWS: reports/validation_ews.md
+  - Sources & données: sources.md
+  - Bibliographie: bibliographie.md
