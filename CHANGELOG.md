@@ -5,6 +5,55 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Extended quarterly coverage + per-band variable filter + long-horizon comparison
+
+Two new quarterly variables on top of GDP / CPI / UNRATE / YIELD /
+CREDIT:
+
+- **Q_INV** (`NAEXKP04<ISO>Q652S` on FRED for USA/EA/GBR;
+  `namq_10_gdp na_item=P51G` on Eurostat for DEU/FRA/ITA) — real
+  gross fixed capital formation, volume index, SA. Schumpeter's
+  canonical Juglar driver. Annualised quarterly log-growth.
+- **Q_HPI** (BIS `Q<ISO>R628BIS` on FRED for the 8 country
+  providers) — real residential property prices. Lewis-Kuznets
+  construction swing. Annualised quarterly log-growth.
+
+JPN/CAN Q_INV not yet wired (NAEXKP04 mirror absent on FRED for
+these ISOs; OECD SDMX direct path remains experimental — would need
+a dedicated dim mapping).
+
+#### Per-band variable filter
+
+The runner now restricts each band composite to manifest variables
+that pre-register the band in their `cycle_targets` — feeding the
+K-band composite with strictly-Juglar columns would z-score their
+near-zero K-band content to unit variance and dilute the K-wave SNR
+of genuine K-targeting columns. `_analyse_and_render` takes a new
+`targets_by_var` kwarg; all three `_run_*` dispatchers (wb, long,
+quarterly) build it from their manifest and pass it through.
+Backwards-compatible: when omitted, every band sees the full panel
+(legacy behaviour, used by the smoke tests).
+
+Tests: `test_targets_by_var_filter.py` (3 cases) pin the filter +
+the no-targets fallback + the legacy no-filter path.
+
+#### Long-horizon comparison
+
+Side-by-side 2026-05 matrices show Kondratieff Gate 1 separable on
+EVERY long-horizon group (p=0.001 across ADV18, ANGLO, EU4, G7,
+NORDIC, USA) where the quarterly horizon rejects on 5 of 6 groups
+(p ∈ [0.11, 0.67]). On 150y panels the AR(1) bootstrap sees
+2.5-3.75 K-cycles vs 1.1-1.65 on the quarterly's 66y window —
+direct confirmation that the quarterly K-wave rejection is a
+statistical-power constraint, not absence of cycle.
+
+Long-horizon phases published 2026-05: USA Kondratieff `expansion`,
+ANGLO Kondratieff `expansion`, G7 Kondratieff `contraction`, ADV18
+Kondratieff `contraction`, NORDIC Kondratieff `expansion`. ADV18
+reaches separable Gate 1 on all four bands simultaneously
+(Kitchin/Juglar/Kuznets/Kondratieff = `contraction`, `contraction`,
+`disputed`, `contraction`).
+
 ### Per-band method weighting (Roadmap #11)
 
 The Path 5 v1 run surfaced that two of the four Gate-2 methods —

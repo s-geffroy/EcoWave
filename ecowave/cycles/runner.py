@@ -290,6 +290,8 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         wavelet_group="WLD",
         samples_per_year=1.0,
         report_suffix="wb",
+        targets_by_var={s.variable_code: tuple(s.cycle_targets)
+                         for s in manifest.specs},
     )
 
 
@@ -330,7 +332,9 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
                         n_surrogates: int, seed: int, null: str,
                         horizon_label: str, wavelet_group: str,
                         samples_per_year: float = 1.0,
-                        report_suffix: str = "wb") -> Path:
+                        report_suffix: str = "wb",
+                        targets_by_var: dict[str, tuple[str, ...]] | None = None,
+                        ) -> Path:
     """Common back-end: surrogate test, phase classification, Gate 2/3,
     persistence, figures, and Markdown rendering. Shared by both horizons."""
     positions: list[dict] = []
@@ -374,9 +378,23 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
             # Per-band composite: band-pass each indicator first, then average.
             # Falls back to the cross-band composite if the panel is missing
             # (e.g. when called from a test path that only provides composites).
+            # When ``targets_by_var`` is available we restrict the panel to
+            # variables whose pre-registered ``cycle_targets`` include this
+            # band — feeding the K-band composite with strictly-Kitchin vars
+            # would dilute the K-wave SNR with unit-variance noise (any
+            # column with zero band content is z-scored to noise then
+            # averaged in). Falls back to the full panel when no targeting
+            # info is supplied.
             if panel is not None and not panel.empty:
+                if targets_by_var:
+                    band_cols = [c for c in panel.columns
+                                  if cycle_name in (targets_by_var.get(c) or ())]
+                    band_panel = panel[band_cols] if band_cols else panel
+                else:
+                    band_panel = panel
                 band_composite = _composite_panel(
-                    panel, band=(lo, hi), samples_per_year=samples_per_year)
+                    band_panel, band=(lo, hi),
+                    samples_per_year=samples_per_year)
                 if band_composite.dropna().empty:
                     band_composite = composite
             else:
@@ -623,6 +641,8 @@ def _run_long_history(settings: Settings, as_of: str, manifest_path: Path,
         wavelet_group="ADV18",
         samples_per_year=1.0,
         report_suffix="long",
+        targets_by_var={v["variable_code"]: tuple(v.get("cycle_targets", []))
+                         for v in spec.get("variable_codes", [])},
     )
 
 
@@ -693,4 +713,6 @@ def _run_quarterly(settings: Settings, as_of: str, manifest_path: Path,
         wavelet_group="USA",
         samples_per_year=samples_per_year,
         report_suffix="q",
+        targets_by_var={v["variable_code"]: tuple(v.get("cycle_targets", []))
+                         for v in variable_specs},
     )
