@@ -160,6 +160,49 @@
     - Non-régression sur `--horizon wb` : aucun changement de phase
       Juglar/Kuznets/Kondratieff par rapport au run pré-Path-5.
 
+## #11 — Pondération des méthodes par bande — IMPLÉMENTÉ
+
+- **Problème.** Le run trimestriel 2026-05 a montré que **D** (PELT) et
+  **G** (Bry-Boschan) se calibrent mal sur certaines bandes :
+    - **D sur Kitchin (3-5 ans)** : la longueur typique d'un segment
+      PELT (5-10 ans sur des séries macro) dépasse la période du
+      cycle, ce qui fait que le dernier segment moyenne plusieurs
+      cycles et que la phase de fin est dominée par la tendance, non
+      par le cycle. Vote constant sur Kitchin : `expansion`.
+    - **G sur Kitchin** : la datation Bry-Boschan / Harding-Pagan
+      requiert un cycle complet pour déclarer un pic/creux ; sur
+      Kitchin à résolution trimestrielle, l'incertitude sur les 1-2
+      derniers trimestres rend la classification systématiquement
+      "post-pic descendant". Vote constant : `contraction`.
+    - **D sur Kondratieff (40-60 ans)** : sur 66 ans de panel, il n'y
+      a que 1.1 à 1.65 K-cycles. PELT collapse à un segment unique →
+      classification non-informative.
+- **Méthode.** Pré-enregistrer une **liste de méthodes admises par
+  bande** dans `CYCLE_BANDS[band]["methods"]`, avec un seuil
+  d'accord ad-hoc `min_agreement` :
+    - Kitchin : `(F, E)`, seuil 2 (unanimité du panel admis).
+    - Juglar : `(D, E, F, G)`, seuil 3 (3/4 — règle historique
+      conservée).
+    - Kuznets : `(D, E, F, G)`, seuil 3 (idem).
+    - Kondratieff : `(E, F, G)`, seuil 2 (majorité du panel admis).
+  Les votes des méthodes écartées restent **persistés** dans
+  `cycle_consensus` pour la transparence ; ils ne pèsent simplement
+  pas dans la Porte 2.
+- **Code.** `ecowave/cycles/bands.py` (champs `methods` +
+  `min_agreement`) ; `ecowave/cycles/consensus.py` (kwarg
+  `allowed_methods` + `min_agreement`) ; `ecowave/cycles/runner.py`
+  (passage des deux depuis la bande). Test :
+  `tests/test_consensus_per_band.py` (7 cas).
+- **Acceptance.** Sur le run quarterly 2026-05, gain net de 4
+  cellules à consensus :
+    - **GBR Kitchin** : disputed → **`peak`** (F+E concordent).
+    - **G7Q Juglar** : disputed → **`contraction`** (3/4).
+    - **OECDQ Juglar** : disputed → **`contraction`** (3/4).
+    - **GBR Kondratieff** : disputed → **`expansion`** (E+G majoritaires).
+  Les cellules USA Kitchin = `contraction`, EA Kuznets = `expansion`
+  restent stables. Aucune cellule n'a régressé hors variabilité
+  stochastique de Markov-switching d'une exécution à l'autre.
+
 ## #10 — Variables manquantes (couverture) — TODO
 
 - L'indicateur de protestations `S` (S2, Mass Mobilization / ACLED

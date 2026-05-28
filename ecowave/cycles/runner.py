@@ -436,7 +436,11 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
             phase_d = _pelt_phase_for_endpoint(cycle)
 
             phases_by_model = {"F": phase_f, "G": phase_g, "E": phase_e, "D": phase_d}
-            consensus_label, votes = compute_phase_consensus(phases_by_model)
+            consensus_label, votes = compute_phase_consensus(
+                phases_by_model,
+                allowed_methods=band.get("methods"),
+                min_agreement=band.get("min_agreement", 3),
+            )
 
             # Trend + next-extremum forecast from the Hilbert phase (Model F).
             period_years = (lo + hi) / 2.0
