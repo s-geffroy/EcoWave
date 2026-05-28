@@ -121,17 +121,44 @@
 - **Code.** `ecowave/cycles/surrogate.py:wavelet_bandpower_null`.
   Option CLI `--null wavelet`.
 
-## #9 — Extension trimestrielle pour Kitchin — TODO
+## #9 — Extension trimestrielle pour Kitchin — IMPLÉMENTÉ
 
 - **Problème.** La fréquence annuelle plafonne Kitchin à la bande haute
   4-5 ans (Nyquist).
-- **Méthode (planifiée).** Ajouter des chemins d'ingestion FRED PIB réel
-  trimestriel US (GDPC1) + Eurostat QNA + OECD QNA pour les grandes
-  économies. Produit un panel trimestriel 1947-présent pour HIC/OECD,
-  permettant CF sur la bande Kitchin 3-5 ans complète.
-- **Statut.** Non implémenté. Requiert un nouveau module d'ingestion
-  (`ecowave/cycles/quarterly.py`) et un nouveau manifest. Effort estimé
-  : 1 jour.
+- **Méthode.** Chemin d'ingestion trimestriel : FRED `GDPC1` /
+  `CPIAUCSL` / `UNRATE` pour les États-Unis, Eurostat
+  `namq_10_gdp` / `prc_hicp_mmor` / `une_rt_q` pour l'agrégat Euro Area
+  (EA20, 1995-présent) et pour DE/FR/IT, séries miroir OECD/IFS
+  hébergées sur FRED (`JPNRGDPEXP`, `NGDPRSAXDCGBQ`, `NGDPRSAXDCCAQ`,
+  `JPNCPIALLMINMEI`, `GBRCPIALLMINMEI`, `LRUNTTTTJPM156S`,
+  `LRUN64TTGBQ156S`) pour JPN/GBR/CAN. La connexion SDMX 2.1 directe à
+  `sdmx.oecd.org` reste expérimentale — le registre de structure
+  retourne payload vide sur les chemins standards `/datastructure` et
+  `/dataflow?references=descendants`, rendant l'introspection du DSD
+  impossible sans hardcoding par dataflow. Trois variables au
+  v1 : `Q_GDP` (log-différence annualisée), `Q_CPI` (log-différence
+  annualisée), `Q_UNRATE` (niveau). Six groupes : USA, EA, JPN, GBR,
+  G7Q, OECDQ. Le runner threade `samples_per_year=4` dans CF + Morlet +
+  surrogates ; la conditionnelle Kitchin du runner libère la bande
+  complète 3-5 ans (le chemin annuel `--horizon wb` continue à narrower
+  4-5 ans comme diagnostic). Période EA = 1995-présent (124 trimestres,
+  $\geq$ 25 cycles Kitchin) ; flag noté dans le rapport.
+- **Code.** `ecowave/cycles/quarterly.py` ;
+  `quarterly_manifest.json` ; nouvelle table SQLite
+  `cycle_observations_quarterly` (schéma 0.5.1) ; option CLI
+  `position-cycles --horizon quarterly`. Tests :
+  `tests/test_quarterly_panel.py`,
+  `tests/test_samples_per_year_thread.py`,
+  `tests/test_kitchin_gate_conditional.py`,
+  `tests/test_runner_quarterly_smoke.py`.
+- **Acceptance.** Sur le run `2026-05` :
+    - Kitchin **séparable** ($p = 0.001$) sur les 6 groupes
+      (USA, EA, JPN, GBR, G7Q, OECDQ) là où le rapport `_wb` annuel
+      affiche `rejected` partout.
+    - USA Kitchin = `contraction` (Gate 2 consensus), GBR Juglar +
+      Kuznets = `contraction`, OECDQ Juglar = `contraction`.
+    - Non-régression sur `--horizon wb` : aucun changement de phase
+      Juglar/Kuznets/Kondratieff par rapport au run pré-Path-5.
 
 ## #10 — Variables manquantes (couverture) — TODO
 

@@ -5,6 +5,68 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Path 5 — Quarterly Kitchin extension (Roadmap #9 — IMPLÉMENTÉ)
+
+Adds a third data horizon `position-cycles --horizon quarterly` that
+lifts Kitchin (3-5 y) above the practical Nyquist threshold, the
+limitation that was forcing every Kitchin cell in the 2026-05 World
+Bank run to publish as `rejected`. The annual `--horizon wb` path keeps
+its narrow 4-5 y diagnostic attempt unchanged (non-regression).
+
+- **New module** `ecowave/cycles/quarterly.py` — fetchers for FRED
+  (JSON observations), Eurostat (JSON-stat 2.0 via
+  `statistics/1.0/data`), and OECD (SDMX 2.1 REST at `sdmx.oecd.org`
+  with DSD introspection that probes three structure-endpoint
+  variants). GDP-weighted multi-country aggregation;
+  `PeriodIndex(freq="Q")`-aware panel construction. Tagged silent
+  fetch failures bubble up as a stderr summary per group.
+- **OECD path is experimental** — `sdmx.oecd.org`'s compound DSD refs
+  (`DSD_X@DF_Y`) return empty payloads under the standard
+  `/datastructure/{agency}/{id}/{version}` and `/dataflow/.../?references=descendants`
+  endpoints, blocking automatic dimension-order discovery. The v1
+  manifest uses FRED-hosted OECD/IFS mirror series for JPN/GBR/CAN
+  (`JPNRGDPEXP`, `NGDPRSAXDCGBQ`, `NGDPRSAXDCCAQ`,
+  `JPNCPIALLMINMEI`, `GBRCPIALLMINMEI`,
+  `LRUNTTTTJPM156S`, `LRUN64TTGBQ156S`) — same underlying source data,
+  one API surface to maintain. The native OECD fetcher remains
+  callable for users with known dim mappings.
+- **CF bandpass NaN robustness** — `ecowave/cycles/decompose.cf_bandpass`
+  now drops NaN before calling `cffilter`, then reindexes to the
+  original index. `statsmodels.cffilter` propagates any single NaN
+  to all outputs; the previous behaviour broke Gate 2 on multi-country
+  composites that picked up a 1-quarter alignment hole. Surfaced by
+  Path 5 testing on G7Q.
+- **New manifest** `quarterly_manifest.json` — three variables
+  (`Q_GDP`, `Q_CPI`, `Q_UNRATE`), six groups (USA, EA, JPN, GBR, G7Q,
+  OECDQ). EA aggregate starts 1995 (Eurostat `EA20` native).
+- **Runner threading** — `samples_per_year` plumbed through
+  `_composite_panel`, `_run_gate1`, `_analyse_and_render`. Kitchin
+  band gate is now conditional: `samples_per_year <= 1.0` → narrow
+  (4, 5); `samples_per_year > 1.0` → full (3, 5). New
+  `report_suffix` kwarg replaces the substring-based horizon sniff so
+  the quarterly report lands at
+  `reports/cycle_position_<as_of>_q.md`.
+- **DB schema 0.5.0 → 0.5.1** — new table
+  `cycle_observations_quarterly(group_code, variable_code, year,
+  quarter, value, source_id)` with `UNIQUE(group, var, year, quarter)`
+  and `CHECK(quarter BETWEEN 1 AND 4)`. The annual
+  `cycle_observations` table is unchanged. `migrate_db` is now
+  idempotent and handles in-place 0.5.0 → 0.5.1 upgrades. New helper
+  `upsert_cycle_observation_quarterly`.
+- **CLI** — `--horizon` accepts `wb | long | quarterly`; per-horizon
+  defaults for `--manifest` and `--groups`.
+- **Tests** — `tests/test_quarterly_panel.py`,
+  `tests/test_samples_per_year_thread.py`,
+  `tests/test_kitchin_gate_conditional.py`,
+  `tests/test_runner_quarterly_smoke.py`.
+- **Docs** — `methodology/feuille_de_route.md` Item #9 flipped to
+  IMPLÉMENTÉ; `docs/cycles/kitchin.md` adds a "Chemin trimestriel
+  natif" subsection.
+
+### Schema version: 0.5.1 (was 0.5.0)
+
+
+
 The project's active framework. Decomposes macroeconomic time-series into the
 four canonical economic cycles (Kitchin / Juglar / Kuznets / Kondratieff) and
 publishes per-group phase labels under three falsifiability gates
@@ -46,7 +108,7 @@ CHANGELOG remain in English by design.
 Position Vector* with the French subtitle « Décomposition multi-cycles
 falsifiable des indicateurs macroéconomiques ».
 
-### Schema version: 0.5.0
+### Schema version: 0.5.0 (initial CPV schema)
 
 DB schema is rebuilt from scratch. Tables:
 

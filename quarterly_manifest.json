@@ -1,0 +1,81 @@
+{
+  "project": "cpv_quarterly_2026",
+  "schema_version": "0.5.1",
+  "as_of_month": "2026-05",
+  "start_year": 1960,
+  "horizon": "quarterly",
+  "samples_per_year": 4,
+  "note": "Quarterly extension for the Kitchin band (Roadmap #9). FRED + Eurostat across USA, EA20, JPN, GBR, CAN, DEU, FRA, ITA. JPN/GBR/CAN use OECD-source mirror series hosted on FRED — the OECD SDMX REST endpoint at sdmx.oecd.org has compound DSD references (DSD_X@DF_Y) whose structure registry returns empty payloads, making positional key construction impractical without per-dataflow hardcoding. The native OECD path remains available in ecowave/cycles/quarterly.fetch_oecd_qna for users who want to wire up custom dim mappings. EA aggregate starts 1995; all others available continuously since 1960. Used by `position-cycles --horizon quarterly`.",
+  "datasets": [
+    {
+      "name": "FRED (Federal Reserve Bank of St. Louis)",
+      "license": "Public domain (US Federal Government work)",
+      "url": "https://fred.stlouisfed.org/",
+      "variables_provided": ["Q_GDP (GDPC1)", "Q_CPI (CPIAUCSL)", "Q_UNRATE (UNRATE)"]
+    },
+    {
+      "name": "Eurostat Quarterly National Accounts",
+      "license": "CC BY 4.0",
+      "url": "https://ec.europa.eu/eurostat/web/main/data/database",
+      "variables_provided": [
+        "Q_GDP (namq_10_gdp, B1GQ, CLV10_MEUR, SCA)",
+        "Q_CPI (prc_hicp_mmor, CP00, I15)",
+        "Q_UNRATE (une_rt_q, T/TOTAL, PC_ACT, SA)"
+      ]
+    },
+    {
+      "name": "OECD Quarterly National Accounts (QNA)",
+      "license": "OECD Terms (free for research)",
+      "url": "https://data-explorer.oecd.org/",
+      "endpoint": "https://sdmx.oecd.org/public/rest/data",
+      "variables_provided": [
+        "Q_GDP (B1_GE / VOBARSA)",
+        "Q_CPI (CPI_T / IXOB)",
+        "Q_UNRATE (LRHUTTTT / STSA)"
+      ]
+    }
+  ],
+  "variable_codes": [
+    {
+      "variable_code": "Q_GDP",
+      "transform": "log_diff_q",
+      "cycle_targets": ["kitchin", "juglar"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "GDPC1"},
+        "EA":  {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "EA20", "na_item": "B1GQ", "unit": "CLV10_MEUR", "s_adj": "SCA"},
+        "JPN": {"src": "FRED",     "series": "JPNRGDPEXP",          "note": "Real GDP for Japan (OECD-source mirror on FRED)"},
+        "GBR": {"src": "FRED",     "series": "NGDPRSAXDCGBQ",       "note": "Real GDP for UK, SA (IMF IFS mirror on FRED)"},
+        "CAN": {"src": "FRED",     "series": "NGDPRSAXDCCAQ",       "note": "Real GDP for Canada, SA (IMF IFS mirror on FRED)"},
+        "DEU": {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "DE", "na_item": "B1GQ", "unit": "CLV10_MEUR", "s_adj": "SCA"},
+        "FRA": {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "FR", "na_item": "B1GQ", "unit": "CLV10_MEUR", "s_adj": "SCA"},
+        "ITA": {"src": "EUROSTAT", "dataset": "namq_10_gdp", "geo": "IT", "na_item": "B1GQ", "unit": "CLV10_MEUR", "s_adj": "SCA"}
+      },
+      "notes": "Real GDP. Annualised quarterly log-difference: stationary, harmonises across providers (different reference years), and matches NBER chronology conventions."
+    },
+    {
+      "variable_code": "Q_CPI",
+      "transform": "log_diff_q",
+      "cycle_targets": ["kitchin"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "CPIAUCSL"},
+        "EA":  {"src": "EUROSTAT", "dataset": "prc_hicp_mmor", "geo": "EA20", "coicop": "CP00", "unit": "I15"},
+        "JPN": {"src": "FRED",     "series": "JPNCPIALLMINMEI",     "note": "Japan CPI all items (OECD mirror on FRED, monthly → Q mean)"},
+        "GBR": {"src": "FRED",     "series": "GBRCPIALLMINMEI",     "note": "UK CPI all items (OECD mirror on FRED, monthly → Q mean)"}
+      },
+      "notes": "Headline CPI. Monthly FRED series resampled to quarterly mean by the loader. Inflation cycles are a co-canonical Kitchin signal."
+    },
+    {
+      "variable_code": "Q_UNRATE",
+      "transform": "level",
+      "cycle_targets": ["juglar"],
+      "providers": {
+        "USA": {"src": "FRED",     "series": "UNRATE"},
+        "EA":  {"src": "EUROSTAT", "dataset": "une_rt_q", "geo": "EA20", "sex": "T", "age": "TOTAL", "unit": "PC_ACT", "s_adj": "SA"},
+        "JPN": {"src": "FRED",     "series": "LRUNTTTTJPM156S",     "note": "Japan harmonised UR (OECD mirror on FRED, monthly → Q mean)"},
+        "GBR": {"src": "FRED",     "series": "LRUN64TTGBQ156S",     "note": "UK harmonised UR 15-64 (OECD mirror on FRED, quarterly native)"}
+      },
+      "notes": "Total unemployment rate. Already stationary; level passes through. Primary Juglar signal, kept here for consistency with the WB Q_UEM."
+    }
+  ],
+  "groups": ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"]
+}

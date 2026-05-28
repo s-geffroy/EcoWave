@@ -28,6 +28,12 @@ from ecowave.cycles.long_history import (
     LongHistoryDataset,
     build_long_history_panel,
 )
+from ecowave.cycles.quarterly import (
+    QUARTERLY_GROUPS,
+    QuarterlyDataset,
+    build_quarterly_panel,
+    load_quarterly_manifest,
+)
 from ecowave.cycles.manifest import CycleManifest, load_cycle_manifest
 from ecowave.cycles.phase import (
     classify_phase,
@@ -73,7 +79,8 @@ CYCLES_MANIFEST_PATH = Path("/app/cycles_manifest.json")
 
 
 def _composite_panel(panel: pd.DataFrame,
-                     band: tuple[float, float] | None = None) -> pd.Series:
+                     band: tuple[float, float] | None = None,
+                     samples_per_year: float = 1.0) -> pd.Series:
     """Equal-weighted standardized composite across all indicators in the panel.
 
     When ``band`` is None, each column is z-scored against its own history then
@@ -84,6 +91,11 @@ def _composite_panel(panel: pd.DataFrame,
     This concentrates cyclical power in the target band and substantially
     improves the SNR for Gate 1 — at the cost of the result being band-specific
     (the composite must be recomputed per cycle band).
+
+    ``samples_per_year`` is 1 for the annual horizons (wb / long) and 4 for
+    the quarterly horizon; it scales the minimum-length guard and is passed
+    through to the CF filter so the cutoffs are computed against the right
+    sample frequency.
     """
     if panel.empty:
         return pd.Series(dtype=float)
@@ -92,13 +104,15 @@ def _composite_panel(panel: pd.DataFrame,
         return standardized.mean(axis=1, skipna=True)
 
     lo, hi = band
+    min_samples = int(2 * hi * samples_per_year)
     filtered_cols: dict[str, pd.Series] = {}
     for col in panel.columns:
         series = panel[col].dropna()
-        if series.size < int(2 * hi):
+        if series.size < min_samples:
             continue
         try:
-            cycle = cf_bandpass(series, lo_years=lo, hi_years=hi, samples_per_year=1.0)
+            cycle = cf_bandpass(series, lo_years=lo, hi_years=hi,
+                                samples_per_year=samples_per_year)
         except Exception:  # noqa: BLE001
             continue
         filtered_cols[col] = cycle.reindex(panel.index)
@@ -238,6 +252,10 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         return _run_long_history(settings, as_of, manifest_path, groups, mode,
                                   n_surrogates, seed, con, run_id, null)
 
+    if horizon == "quarterly":
+        return _run_quarterly(settings, as_of, manifest_path, groups, mode,
+                              n_surrogates, seed, con, run_id, null)
+
     manifest = load_cycle_manifest(manifest_path)
     typer.echo(f"CPV — manifest {manifest.project} (as-of {manifest.as_of_month}); "
                f"{len(manifest.specs)} variables; {len(groups)} groups.")
@@ -270,32 +288,37 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         n_surrogates=n_surrogates, seed=seed, null=null,
         horizon_label="World Bank (1960-present)",
         wavelet_group="WLD",
+        samples_per_year=1.0,
+        report_suffix="wb",
     )
 
 
 def _run_gate1(series: pd.Series, lo: float, hi: float, null: str,
-                n_surrogates: int, seed: int):
+                n_surrogates: int, seed: int,
+                samples_per_year: float = 1.0):
     """Dispatch to the Gate 1 null requested by ``null``.
 
     Returns either a NullResult (for ar1 / phase / wavelet) or a dict (for
     dual). The caller treats both uniformly via the ``reject_cycle`` and
-    ``p_value`` attributes/keys.
+    ``p_value`` attributes/keys. ``samples_per_year`` is threaded through to
+    the surrogate generators so the band cutoffs are correct on quarterly
+    grids.
     """
     if null == "phase":
         return phase_scramble_null(series, lo_years=lo, hi_years=hi,
-                                    samples_per_year=1.0,
+                                    samples_per_year=samples_per_year,
                                     n_surrogates=n_surrogates, seed=seed)
     if null == "wavelet":
         return wavelet_bandpower_null(series, lo_years=lo, hi_years=hi,
-                                       samples_per_year=1.0,
+                                       samples_per_year=samples_per_year,
                                        n_surrogates=min(n_surrogates, 500),
                                        seed=seed)
     if null == "dual":
         return dual_null(series, lo_years=lo, hi_years=hi,
-                          samples_per_year=1.0,
+                          samples_per_year=samples_per_year,
                           n_surrogates=n_surrogates, seed=seed)
     return ar1_bootstrap_null(series, lo_years=lo, hi_years=hi,
-                               samples_per_year=1.0,
+                               samples_per_year=samples_per_year,
                                n_surrogates=n_surrogates, seed=seed)
 
 
@@ -305,7 +328,9 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
                         composite_by_group: dict[str, pd.Series],
                         panels_by_group: dict[str, pd.DataFrame],
                         n_surrogates: int, seed: int, null: str,
-                        horizon_label: str, wavelet_group: str) -> Path:
+                        horizon_label: str, wavelet_group: str,
+                        samples_per_year: float = 1.0,
+                        report_suffix: str = "wb") -> Path:
     """Common back-end: surrogate test, phase classification, Gate 2/3,
     persistence, figures, and Markdown rendering. Shared by both horizons."""
     positions: list[dict] = []
@@ -323,20 +348,25 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
             try:
                 # Use the broadest band possible for the scaleogram.
                 wavelet_power_by_group[group] = morlet_wavelet(
-                    composite, lo_years=3, hi_years=60, samples_per_year=1.0)
+                    composite, lo_years=3, hi_years=60,
+                    samples_per_year=samples_per_year)
             except Exception:  # noqa: BLE001
                 wavelet_power_by_group[group] = {"power": np.zeros((0, 0)),
                                                   "periods": np.array([])}
 
-        last_year = int(composite.dropna().index.max())
+        last_index = composite.dropna().index.max()
+        last_year = (last_index.year if hasattr(last_index, "year")
+                     else int(last_index))
 
         panel = panels_by_group.get(group)
 
         for cycle_name, band in CYCLE_BANDS.items():
-            if cycle_name == "kitchin":
+            if cycle_name == "kitchin" and samples_per_year <= 1.0:
                 # Annual data: 3-5y Kitchin is below Nyquist usefulness.
                 # We attempt only the upper edge (4-5y) and rely on the null
-                # to reject it cleanly if it doesn't survive.
+                # to reject it cleanly if it doesn't survive. The quarterly
+                # horizon (samples_per_year=4) gets the full 3-5y band —
+                # Roadmap #9.
                 lo, hi = 4, 5
             else:
                 lo, hi = band["lo_years"], band["hi_years"]
@@ -345,7 +375,8 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
             # Falls back to the cross-band composite if the panel is missing
             # (e.g. when called from a test path that only provides composites).
             if panel is not None and not panel.empty:
-                band_composite = _composite_panel(panel, band=(lo, hi))
+                band_composite = _composite_panel(
+                    panel, band=(lo, hi), samples_per_year=samples_per_year)
                 if band_composite.dropna().empty:
                     band_composite = composite
             else:
@@ -353,14 +384,15 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
 
             try:
                 cycle = cf_bandpass(band_composite, lo_years=lo, hi_years=hi,
-                                    samples_per_year=1.0)
+                                    samples_per_year=samples_per_year)
             except Exception:  # noqa: BLE001
                 cycle = pd.Series(dtype=float)
             cycles_by_group[group][cycle_name] = cycle
 
             try:
                 null_res = _run_gate1(band_composite, lo, hi, null,
-                                       n_surrogates=n_surrogates, seed=seed)
+                                       n_surrogates=n_surrogates, seed=seed,
+                                       samples_per_year=samples_per_year)
             except Exception:  # noqa: BLE001
                 null_res = None
 
@@ -451,8 +483,7 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
 
     # Figures + note.
     settings.figures_dir.mkdir(parents=True, exist_ok=True)
-    suffix = "long" if "1870" in horizon_label or "Maddison" in horizon_label else "wb"
-    stem = f"{as_of.replace('-', '_')}_{suffix}"
+    stem = f"{as_of.replace('-', '_')}_{report_suffix}"
     fig_heatmap = settings.figures_dir / f"cycle_phase_heatmap_{stem}.png"
     fig_cf = settings.figures_dir / f"cycle_cf_trajectories_{stem}.png"
     fig_wavelet = settings.figures_dir / f"cycle_wavelet_power_{stem}.png"
@@ -586,4 +617,76 @@ def _run_long_history(settings: Settings, as_of: str, manifest_path: Path,
         n_surrogates=n_surrogates, seed=seed, null=null,
         horizon_label="Maddison + Jordà-Schularick-Taylor (1870-2020)",
         wavelet_group="ADV18",
+        samples_per_year=1.0,
+        report_suffix="long",
+    )
+
+
+def _run_quarterly(settings: Settings, as_of: str, manifest_path: Path,
+                   groups: list[str], mode: str,
+                   n_surrogates: int, seed: int,
+                   con: "sqlite3.Connection", run_id: int,
+                   null: str = "ar1") -> Path:
+    """Quarterly (FRED + Eurostat + OECD QNA) variant of ``run_position_cycles``.
+
+    This is the Kitchin-targeted extension (Roadmap #9): all four bands are
+    re-evaluated at ``samples_per_year=4`` so the full 3-5 y Kitchin band is
+    above the Nyquist threshold.
+    """
+    spec = load_quarterly_manifest(Path(manifest_path))
+    samples_per_year = float(spec.get("samples_per_year", 4))
+    variable_specs = spec.get("variable_codes", [])
+    start_year = int(spec.get("start_year", 1960))
+    typer.echo(
+        f"CPV (quarterly horizon) — {spec.get('project','cpv_quarterly')}; "
+        f"{len(variable_specs)} variables; {len(groups)} groups; "
+        f"start_year={start_year}; samples_per_year={int(samples_per_year)}."
+    )
+
+    dataset = QuarterlyDataset.default(settings.data_raw_dir)
+
+    composite_by_group: dict[str, pd.Series] = {}
+    panels_by_group: dict[str, pd.DataFrame] = {}
+    for group in groups:
+        if group not in QUARTERLY_GROUPS:
+            typer.echo(f"  Quarterly group {group} unknown — skipped.", err=True)
+            continue
+        try:
+            panel = build_quarterly_panel(
+                group, variable_specs, dataset,
+                fred_api_key=settings.fred_api_key,
+                start_year=start_year, run_id=run_id,
+                persist={"con": con},
+            )
+        except Exception as exc:  # noqa: BLE001
+            typer.echo(f"  Group {group}: quarterly ingestion failed: {exc}",
+                       err=True)
+            if mode == "strict":
+                finish_ingestion_run(con, run_id, "failed", notes=str(exc))
+                con.close()
+                raise typer.Exit(code=1)
+            continue
+        if panel.empty:
+            typer.echo(f"  Group {group}: empty panel — skipped.")
+            continue
+        panels_by_group[group] = panel
+        composite_by_group[group] = _composite_panel(panel)
+        typer.echo(f"  {group}: {panel.shape[0]} quarters × {panel.shape[1]} vars.")
+
+    if not composite_by_group:
+        typer.echo("No quarterly group produced data; aborting.", err=True)
+        finish_ingestion_run(con, run_id, "failed", notes="empty panels")
+        con.close()
+        raise typer.Exit(code=1)
+
+    return _analyse_and_render(
+        settings=settings, as_of=as_of, con=con, run_id=run_id, mode=mode,
+        groups=list(composite_by_group.keys()),
+        composite_by_group=composite_by_group,
+        panels_by_group=panels_by_group,
+        n_surrogates=n_surrogates, seed=seed, null=null,
+        horizon_label="Quarterly FRED+Eurostat+OECD (1960-present, EA from 1995)",
+        wavelet_group="USA",
+        samples_per_year=samples_per_year,
+        report_suffix="q",
     )

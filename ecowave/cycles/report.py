@@ -281,7 +281,12 @@ def plot_cf_trajectories(cycles_by_group: dict[str, dict[str, pd.Series]],
             series = by_cycle.get(cycle)
             if series is None or series.dropna().empty:
                 continue
-            ax.plot(series.index, series.values, label=group, linewidth=1.0)
+            # Quarterly horizons publish PeriodIndex; matplotlib can't cast
+            # Period directly to float, so convert to Timestamp first.
+            index = series.index
+            if isinstance(index, pd.PeriodIndex):
+                index = index.to_timestamp()
+            ax.plot(index, series.values, label=group, linewidth=1.0)
         ax.axhline(0.0, color="black", linewidth=0.4)
         ax.set_title(f"CF band-pass — {cycle.capitalize()} "
                      f"({CYCLE_BANDS[cycle]['lo_years']}–{CYCLE_BANDS[cycle]['hi_years']} ans)")

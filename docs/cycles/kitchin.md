@@ -37,6 +37,18 @@ L'upsample trimestriel (spline cubique) est documenté comme variante de
 sensibilité, jamais le défaut — voir
 [Trois portes](../methodology/trois_portes.md) pour la règle anti-HARKing.
 
+### Chemin trimestriel natif (Roadmap #9 — implémenté)
+
+L'option `position-cycles --horizon quarterly` active un second chemin
+d'ingestion fondé sur des séries trimestrielles natives (FRED `GDPC1`,
+Eurostat `namq_10_gdp`, OECD QNA `B1_GE/VOBARSA`). À
+`samples_per_year = 4`, le filtre CF couvre la bande complète 3-5 ans
+(12-20 échantillons par période) — bien au-dessus du seuil de Nyquist
+pratique. Le rapport `cycle_position_<as_of>_q.md` publie alors des
+phases concrètes pour Kitchin, là où le chemin annuel WB continue à
+publier `rejected` (valeur diagnostique conservée). Voir
+[Feuille de route #9](../methodology/feuille_de_route.md).
+
 ## Indicateurs moteurs (`cycles_manifest.json`)
 
 - `NY.GDP.MKTP.KD.ZG` (croissance du PIB réel) — moteur principal.
@@ -49,9 +61,10 @@ sensibilité, jamais le défaut — voir
   produire 1–2 cycles complets, ce qui est statistiquement borderline.
   La méthode F y est souvent rejetée tandis que G (Bry-Boschan) date
   encore des retournements.
-- **Extension trimestrielle** : prévue en feuille de route #9
-  ([Feuille de route](../methodology/feuille_de_route.md)). FRED GDPC1
-  trimestriel permettrait CF sur la bande complète 3–5 ans.
+- **Extension trimestrielle** : implémentée (feuille de route #9). Activable
+  via `position-cycles --horizon quarterly` — FRED GDPC1 + Eurostat `namq_10_gdp`
+  + OECD QNA sur USA / EA / JPN / GBR / G7Q / OECDQ, permettant le filtre CF
+  sur la bande complète 3–5 ans.
 
 ## Références
 

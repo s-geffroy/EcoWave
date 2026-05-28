@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS schema_meta (
 );
 
 INSERT OR REPLACE INTO schema_meta(key, value) VALUES
-('schema_version', '0.5.0'),
+('schema_version', '0.5.1'),
 ('created_for', 'cpv_2026');
 
 CREATE TABLE IF NOT EXISTS sources (
@@ -224,4 +224,20 @@ CREATE TABLE IF NOT EXISTS cycle_universality (
   universal INTEGER NOT NULL CHECK(universal IN (0,1)),
   notes TEXT,
   UNIQUE(as_of_month, cycle)
+);
+
+-- Quarterly cycle observations (FRED + Eurostat + OECD QNA) for the
+-- `--horizon quarterly` path. Sibling of `cycle_observations`; kept
+-- separate so the annual UNIQUE(group, var, year) constraint stays intact
+-- and the WB / long horizons need no migration.
+CREATE TABLE IF NOT EXISTS cycle_observations_quarterly (
+  id INTEGER PRIMARY KEY,
+  group_code TEXT NOT NULL,
+  variable_code TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  quarter INTEGER NOT NULL CHECK(quarter BETWEEN 1 AND 4),
+  value REAL,
+  source_id INTEGER,
+  UNIQUE(group_code, variable_code, year, quarter),
+  FOREIGN KEY(source_id) REFERENCES sources(id)
 );
