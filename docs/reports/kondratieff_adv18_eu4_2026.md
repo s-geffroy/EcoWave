@@ -1,8 +1,29 @@
 # La Kondratieff K5 atteint son sommet — lecture économique ADV18 / EU4
 
-> Note d'analyse construite sur le run CPV long-history (Maddison + JST R6,
-> 1870-2022, dual null, 1000 surrogates, composite par-bande, Kondratieff
-> 40-60 ans). Pour la méthode : `methodology/multi_cycle_decomposition.md`.
+> **Résumé.** Sur le run CPV long-history (Maddison + Jordà-Schularick-Taylor R6,
+> 1870-2022, dual null, $B = 1\,000$ surrogates, composite par bande,
+> bande Kondratieff $[40, 60]$ ans), seulement deux agrégats sur six
+> passent la Porte 1 — ADV18 ($p_{\text{dual}} = 0.002$) et EU4
+> ($p_{\text{dual}} = 0.018$) — et tous deux sortent `disputed` à la
+> Porte 2 par configuration de votes typique d'un sommet de cycle. La phase
+> $\varphi \approx 0$ (ADV18) et $\varphi \approx -0.48$ (EU4) place les
+> deux agrégats au pic K5. L'amplitude (~0.85) est environ la **moitié**
+> des pics K3 (~1.55 vers 1920) et K4 (~1.28 vers 1973), ce qui est cohérent
+> avec la thèse de la stagnation séculaire. K3 et K4 sont retrouvés à
+> $\pm 5$ ans de la datation [Korotayev & Tsirel (2010)](../bibliographie.md#korotayev-tsirel-2010).
+
+## Notation
+
+| Symbole | Sens |
+|---|---|
+| $\varphi$ | Phase Hilbert instantanée, convention cosinus ($\varphi = 0$ au pic) |
+| $A$ | Amplitude Hilbert au dernier point |
+| $p_{\text{dual}}$ | $p$-value combinée AR(1) + scramble de phase |
+| Bande | Kondratieff $[40, 60]$ ans |
+| Période moyenne | $T = 50$ ans |
+| $\omega$ | Pulsation centrale, $2\pi / 50 \approx 0.126$ rad / an |
+
+Méthode complète : [Protocole CPV](../methodology/protocole_cpv.md).
 
 ## La trouvaille
 
@@ -203,11 +224,27 @@ amorcée ; sinon, secular stagnation. Les deux scénarios sont consistants
 avec une K-wave réelle ; ils diffèrent uniquement sur l'amplitude de la
 K6 à venir.
 
-## Sign-off
+## Références
 
-- As-of : 2026-05
-- Source data : Maddison Project 2023, Jordà-Schularick-Taylor R6
-- Schema EcoWave : 0.5.0
-- Pipeline : `position-cycles --horizon long --null dual --n-surrogates 1000`
-- Filter band : Kondratieff 40-60y, CF asymmetric + Morlet cross-check
-- ⚠️ Endpoint caveat : forecast post-1995 dans la zone non-fiable du filtre
+- [Diebolt & Doliger (2008)](../bibliographie.md#diebolt-doliger-2008)
+- [Goldstein (1988)](../bibliographie.md#goldstein-1988)
+- [Gordon (2016)](../bibliographie.md#gordon-2016)
+- [Jordà, Schularick & Taylor (2017)](../bibliographie.md#jorda-schularick-taylor-2017)
+- [Kondratieff (1925)](../bibliographie.md#kondratieff-1925)
+- [Korotayev & Tsirel (2010)](../bibliographie.md#korotayev-tsirel-2010)
+- [Maddison Project Database (2023)](../bibliographie.md#maddison-2023)
+- [Mensch (1979)](../bibliographie.md#mensch-1979)
+- [Modelski (1987)](../bibliographie.md#modelski-1987)
+- [Perez (2002)](../bibliographie.md#perez-2002)
+- [Reinhart & Rogoff (2009)](../bibliographie.md#reinhart-rogoff-2009)
+- [Schumpeter (1939)](../bibliographie.md#schumpeter-1939)
+- [Summers (2014)](../bibliographie.md#summers-2014)
+- [Theiler *et al.* (1992)](../bibliographie.md#theiler-et-al-1992)
+- [Torrence & Compo (1998)](../bibliographie.md#torrence-compo-1998)
+
+---
+*As-of : 2026-05. Sources : Maddison Project 2023 ; Jordà-Schularick-Taylor R6.
+Schéma DB : 0.5.0. Pipeline : `position-cycles --horizon long --null dual
+--n-surrogates 1000`. Bande filtrée : Kondratieff 40-60 ans, CF asymétrique
++ cross-check Morlet. ⚠️ Caveat d'endpoint : prévision post-1995 dans la
+zone non-fiable du filtre.*

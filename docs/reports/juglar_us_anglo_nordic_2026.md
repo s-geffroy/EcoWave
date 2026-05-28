@@ -1,8 +1,27 @@
-# Le cycle Juglar diverge entre US/ANGLO et NORDIC en 2022-2026 — lecture économique
+# Le cycle Juglar diverge entre USA / ANGLO et NORDIC en 2022-2026 — lecture économique
 
-> Note d'analyse construite sur le run CPV long-history (Maddison + JST R6,
-> 1870-2022, dual null, 1000 surrogates, composite par-bande). Pour la
-> méthode : `methodology/multi_cycle_decomposition.md`.
+> **Résumé.** Sur le run CPV long-history (Maddison + Jordà-Schularick-Taylor R6,
+> 1870-2022, dual null, $B = 1\,000$ surrogates, composite par bande), trois
+> agrégats sortent des phases concrètes sur la bande Juglar : USA et ANGLO
+> en expansion (φ ≈ −1.5 rad), NORDIC en contraction profonde (φ ≈ −2.6 rad).
+> La divergence d'$\approx 1.6$ années de phase entre NORDIC et USA s'explique
+> par la conjonction de trois chocs régionaux concomitants en 2022-2023
+> (immobilier suédois piloté Riksbank, énergie norvégienne, choc commercial
+> finlandais avec la Russie). Le forecast canonique implique un pic Juglar
+> US / ANGLO début 2024 et un pic NORDIC ~mi-2026.
+
+## Notation
+
+| Symbole | Sens | Valeur |
+|---|---|---|
+| $\varphi$ | Phase Hilbert au dernier point (rad) | (cf. tableau) |
+| $A$ | Amplitude Hilbert au dernier point | (cf. tableau) |
+| $p_{\text{dual}}$ | $p$-value dual-null (AR(1) + scramble) | (cf. tableau) |
+| $\omega$ | Pulsation Juglar centrale | $2\pi / 9 \approx 0.70$ rad / an |
+| Bande | Juglar | $[7, 11]$ ans |
+| Période moyenne | $T = (7 + 11)/2$ | $9$ ans |
+
+Méthode complète : [Protocole CPV](../methodology/protocole_cpv.md).
 
 ## La trouvaille
 
@@ -160,10 +179,21 @@ Pour valider proprement, il faudrait :
 3. Tester le mode `--null wavelet` qui réduit l'effet endpoint CF —
    pourrait débloquer plus de cellules sur les dernières années.
 
-## Sign-off
+## Références
 
-- As-of : 2026-05
-- Source data : Maddison Project 2023, Jordà-Schularick-Taylor R6
-- Schema EcoWave : 0.5.0
-- Pipeline : `position-cycles --horizon long --null dual --n-surrogates 1000`
-- Filter band : Juglar 7-11y, CF asymmetric + Morlet wavelet cross-check
+- [Borio & Drehmann (2009)](../bibliographie.md#borio-drehmann-2009)
+- [Christiano & Fitzgerald (2003)](../bibliographie.md#christiano-fitzgerald-2003)
+- [Hamilton (1989)](../bibliographie.md#hamilton-1989)
+- [Harding & Pagan (2002)](../bibliographie.md#harding-pagan-2002)
+- [Jordà, Schularick & Taylor (2017)](../bibliographie.md#jorda-schularick-taylor-2017)
+- [Korotayev & Tsirel (2010)](../bibliographie.md#korotayev-tsirel-2010)
+- [Kose, Otrok & Whiteman (2003)](../bibliographie.md#kose-otrok-whiteman-2003)
+- [Stock & Watson (2005)](../bibliographie.md#stock-watson-2005)
+- [Theiler *et al.* (1992)](../bibliographie.md#theiler-et-al-1992)
+- [Torrence & Compo (1998)](../bibliographie.md#torrence-compo-1998)
+
+---
+*As-of : 2026-05. Sources : Maddison Project 2023 ; Jordà-Schularick-Taylor R6.
+Schéma DB : 0.5.0. Pipeline : `position-cycles --horizon long --null dual
+--n-surrogates 1000`. Bande filtrée : Juglar 7-11 ans, CF asymétrique +
+cross-check Morlet.*
