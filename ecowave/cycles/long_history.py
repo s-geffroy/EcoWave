@@ -97,22 +97,49 @@ def load_maddison_gdp(path: Path) -> pd.DataFrame:
     df.columns = [c.lower() for c in df.columns]
     if "countrycode" not in df.columns or "year" not in df.columns:
         raise ValueError(f"Unexpected Maddison schema: columns={list(df.columns)}")
-    return (df[["countrycode", "year", MADDISON_GDP_COL]]
+    out = (df[["countrycode", "year", MADDISON_GDP_COL]]
             .rename(columns={"countrycode": "country"})
             .dropna(subset=["country", "year"]))
+    # MPD 2023 has some country-year duplicates (historical-imputation overlaps);
+    # we keep the last value per (country, year) deterministically.
+    return (out.sort_values(["country", "year"])
+              .drop_duplicates(subset=["country", "year"], keep="last")
+              .reset_index(drop=True))
 
 
 # --- JST loader ---------------------------------------------------------
 
 def load_jst(path: Path) -> pd.DataFrame:
-    """Return the long-format JST panel: country, year, then JST variables."""
-    df = pd.read_excel(path, sheet_name="Data", engine="openpyxl")
+    """Return the long-format JST panel: country, year, then JST variables.
+
+    The JST R6 Excel file ships a single sheet ('Sheet1') with 2 718 rows ×
+    59 columns. ISO3 codes are in the ``iso`` column; we rename it to
+    ``country`` for parity with the Maddison loader.
+    """
+    sheet_names = ("Sheet1", "Data", "JSTdatasetR6")  # be defensive across releases
+    last_err: Exception | None = None
+    df: pd.DataFrame | None = None
+    for sheet in sheet_names:
+        try:
+            df = pd.read_excel(path, sheet_name=sheet, engine="openpyxl")
+            break
+        except (ValueError, KeyError) as exc:
+            last_err = exc
+    if df is None:
+        raise ValueError(f"JST sheet not found (tried {sheet_names}): {last_err}")
     df.columns = [c.lower() for c in df.columns]
-    # JST uses ISO3 country codes in the 'iso' column.
     if "iso" not in df.columns:
-        # Some releases use 'country' as a name and need lookup. We require iso.
         raise ValueError(f"JST file must expose an 'iso' column. Got {list(df.columns)}")
-    return df.rename(columns={"iso": "country"})
+    # JST ships a 'country' column with the long name (e.g. 'Australia'); we
+    # rename it out of the way so the ISO3 code becomes our 'country' join key.
+    if "country" in df.columns:
+        df = df.rename(columns={"country": "country_name"})
+    out = df.rename(columns={"iso": "country"})
+    # JST has occasional (country, year) duplicates from data revisions; we
+    # keep the last row per (country, year) so the panel is well-formed.
+    return (out.sort_values(["country", "year"])
+              .drop_duplicates(subset=["country", "year"], keep="last")
+              .reset_index(drop=True))
 
 
 # --- Long-history group panel ------------------------------------------

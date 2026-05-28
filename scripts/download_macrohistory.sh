@@ -20,7 +20,7 @@ DST="$ROOT/data_raw/macrohistory"
 mkdir -p "$DST"
 
 MADDISON_URL="${MADDISON_URL:-https://dataverse.nl/api/access/datafile/421302}"
-JST_URL="${JST_URL:-https://www.macrohistory.net/app/download/9758414469/JSTdatasetR6.xlsx}"
+JST_URL="${JST_URL:-https://www.macrohistory.net/app/download/9834512569/JSTdatasetR6.xlsx?t=1763503850}"
 
 echo "Downloading Maddison Project Database 2023 -> $DST/mpd2023.xlsx"
 curl -fsSL -o "$DST/mpd2023.xlsx" "$MADDISON_URL" \
