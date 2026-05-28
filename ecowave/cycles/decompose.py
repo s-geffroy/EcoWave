@@ -38,13 +38,18 @@ def cf_bandpass(series: pd.Series, lo_years: float, hi_years: float,
     """
     from statsmodels.tsa.filters.cf_filter import cffilter
 
-    if series.dropna().shape[0] < 4:
+    clean = series.astype(float).dropna()
+    if clean.shape[0] < 4:
         return pd.Series(np.nan, index=series.index)
 
     lo = max(int(round(lo_years * samples_per_year)), 2)
     hi = max(int(round(hi_years * samples_per_year)), lo + 1)
-    cycle, _trend = cffilter(series.astype(float).to_numpy(), low=lo, high=hi, drift=True)
-    return pd.Series(cycle, index=series.index, name=f"cf_{int(lo_years)}_{int(hi_years)}")
+    # cffilter propagates any NaN in the input to ALL outputs — strip them
+    # first, filter the clean span, then reindex to the original index so
+    # downstream alignment (Hilbert, surrogates) still works.
+    cycle, _trend = cffilter(clean.to_numpy(), low=lo, high=hi, drift=True)
+    return pd.Series(cycle, index=clean.index,
+                      name=f"cf_{int(lo_years)}_{int(hi_years)}").reindex(series.index)
 
 
 def morlet_wavelet(series: pd.Series, lo_years: float, hi_years: float,

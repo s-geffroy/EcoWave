@@ -66,10 +66,11 @@ def check_config(settings: Settings, mode: str) -> CheckResult:
         items.append(_dir_check(path))
 
     schema_version = get_schema_version(settings.db_path)
-    # 0.2.0 is upgraded in place by db.migrate_db() at pipeline start; both
+    # 0.5.0 is upgraded in place to 0.5.1 by db.migrate_db() at pipeline
+    # start (Roadmap #9 added the cycle_observations_quarterly table); both
     # versions are acceptable so existing databases keep working without
     # forcing a re-init.
-    accepted_versions = {"0.5.0"}
+    accepted_versions = {"0.5.0", "0.5.1"}
     db_ok = schema_version in accepted_versions
     if mode == "strict":
         items.append(CheckItem("SQLite schema", db_ok,

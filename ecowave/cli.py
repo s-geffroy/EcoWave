@@ -76,8 +76,10 @@ def position_cycles(
     seed: int = typer.Option(0, "--seed"),
     horizon: str = typer.Option(
         "wb", "--horizon",
-        help="Data horizon: 'wb' (World Bank, 1960-present) or 'long' "
-             "(Maddison + Jordà-Schularick-Taylor, 1870-2020).",
+        help="Data horizon: 'wb' (World Bank, 1960-present), 'long' "
+             "(Maddison + Jordà-Schularick-Taylor, 1870-2020) or "
+             "'quarterly' (FRED + Eurostat + OECD QNA, samples_per_year=4 — "
+             "unlocks the full 3-5 y Kitchin band; Roadmap #9).",
     ),
     null: str = typer.Option(
         "ar1", "--null",
@@ -91,17 +93,27 @@ def position_cycles(
     from ecowave.cycles.runner import run_position_cycles
     from pathlib import Path
 
-    if horizon not in {"wb", "long"}:
-        raise typer.BadParameter("--horizon must be 'wb' or 'long'.")
+    if horizon not in {"wb", "long", "quarterly"}:
+        raise typer.BadParameter(
+            "--horizon must be 'wb', 'long', or 'quarterly'."
+        )
     if null not in {"ar1", "phase", "wavelet", "dual"}:
         raise typer.BadParameter("--null must be ar1, phase, wavelet, or dual.")
 
+    _DEFAULT_MANIFEST = {
+        "wb":        "/app/cycles_manifest.json",
+        "long":      "/app/long_history_manifest.json",
+        "quarterly": "/app/quarterly_manifest.json",
+    }
+    _DEFAULT_GROUPS = {
+        "wb":        "WLD,OECD,HIC,UMC,LMC,LIC,G7,BRICS",
+        "long":      "ADV18,G7,USA,EU4,ANGLO,NORDIC",
+        "quarterly": "USA,EA,JPN,GBR,G7Q,OECDQ",
+    }
     if not manifest:
-        manifest = ("/app/long_history_manifest.json" if horizon == "long"
-                    else "/app/cycles_manifest.json")
+        manifest = _DEFAULT_MANIFEST[horizon]
     if not groups:
-        groups = ("ADV18,G7,USA,EU4,ANGLO,NORDIC" if horizon == "long"
-                  else "WLD,OECD,HIC,UMC,LMC,LIC,G7,BRICS")
+        groups = _DEFAULT_GROUPS[horizon]
 
     settings = Settings.from_env()
     group_list = [g.strip() for g in groups.split(",") if g.strip()]

@@ -37,7 +37,7 @@ def connect(db_path: Path) -> sqlite3.Connection:
 
 
 def init_db(db_path: Path, schema_path: Path, seed_path: Path) -> None:
-    """Initialize a fresh CPV (0.5.0) database."""
+    """Initialize a fresh CPV (0.5.1) database."""
     con = connect(db_path)
     try:
         con.executescript(schema_path.read_text(encoding="utf-8"))
@@ -214,12 +214,18 @@ def replace_global_indices(con: sqlite3.Connection, rows: list[dict]) -> None:
     con.commit()
 
 
-def migrate_db(db_path: Path) -> None:
-    """No-op for CPV schema 0.5.0 databases; refuses pre-0.5.0 DBs.
+CURRENT_SCHEMA_VERSION = "0.5.1"
 
-    The project no longer supports in-place migration from earlier schemas.
-    If you have an older DB (0.4.0 or earlier), delete `db/ecowave.db` and
-    re-run `ecowave init-db` — CPV is a clean-slate framework.
+
+def migrate_db(db_path: Path) -> None:
+    """Idempotent in-place migration to the current schema version.
+
+    Supported paths:
+      - 0.5.0 → 0.5.1: add `cycle_observations_quarterly` for the new
+        `--horizon quarterly` Kitchin extension (Roadmap #9).
+      - 0.5.1 → 0.5.1: no-op.
+
+    Refuses pre-0.5.0 databases (clean-slate; delete and re-init).
     """
     if not db_path.exists():
         return
@@ -231,11 +237,31 @@ def migrate_db(db_path: Path) -> None:
         current = version_row["value"] if version_row else None
         if current is None:
             return
-        if current != "0.5.0":
+        if current not in {"0.5.0", "0.5.1"}:
             raise RuntimeError(
                 f"Schema version {current} is no longer supported. "
-                f"Delete {db_path} and run `ecowave init-db` to start at 0.5.0."
+                f"Delete {db_path} and run `ecowave init-db` to start at "
+                f"{CURRENT_SCHEMA_VERSION}."
             )
+        if current == "0.5.0":
+            con.executescript("""
+                CREATE TABLE IF NOT EXISTS cycle_observations_quarterly (
+                  id INTEGER PRIMARY KEY,
+                  group_code TEXT NOT NULL,
+                  variable_code TEXT NOT NULL,
+                  year INTEGER NOT NULL,
+                  quarter INTEGER NOT NULL CHECK(quarter BETWEEN 1 AND 4),
+                  value REAL,
+                  source_id INTEGER,
+                  UNIQUE(group_code, variable_code, year, quarter),
+                  FOREIGN KEY(source_id) REFERENCES sources(id)
+                );
+            """)
+            con.execute(
+                "UPDATE schema_meta SET value=? WHERE key='schema_version'",
+                (CURRENT_SCHEMA_VERSION,),
+            )
+            con.commit()
     finally:
         con.close()
 
@@ -250,6 +276,25 @@ def upsert_cycle_observation(con: sqlite3.Connection, group_code: str, variable_
            ON CONFLICT(group_code, variable_code, year) DO UPDATE SET
              value=excluded.value, source_id=excluded.source_id""",
         (group_code, variable_code, int(year), _nn(value), _nn(source_id)),
+    )
+
+
+def upsert_cycle_observation_quarterly(con: sqlite3.Connection, group_code: str,
+                                       variable_code: str, year: int, quarter: int,
+                                       value, source_id: int | None) -> None:
+    """Quarterly sibling of ``upsert_cycle_observation``.
+
+    Writes into ``cycle_observations_quarterly`` (added in schema 0.5.1).
+    Quarter is 1-4; the (group, var, year, quarter) tuple is unique.
+    """
+    con.execute(
+        """INSERT INTO cycle_observations_quarterly
+             (group_code, variable_code, year, quarter, value, source_id)
+           VALUES (?, ?, ?, ?, ?, ?)
+           ON CONFLICT(group_code, variable_code, year, quarter) DO UPDATE SET
+             value=excluded.value, source_id=excluded.source_id""",
+        (group_code, variable_code, int(year), int(quarter),
+         _nn(value), _nn(source_id)),
     )
 
 
