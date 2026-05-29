@@ -12,9 +12,9 @@
 
 | Cycle | Source canonique | Agrégat | Phase | Tendance | Prochain extremum |
 |---|---|---|---|---|---|
-| Kitchin ⚠️ | Panel Banque mondiale (1960-2024) | `WLD` | disputed | falling | 📉 min dans 5 mois |
-| Juglar ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | contraction | falling | 📈 max dans 3.6 ans |
-| Kuznets ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | expansion | rising | 📈 max dans 2.4 ans |
+| Kitchin ⚠️ | Panel Banque mondiale (1960-2024) | `WLD` | rejected | — | — |
+| Juglar ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | rejected | — | — |
+| Kuznets ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | rejected | — | — |
 | Kondratieff ⚠️ | Panel Banque mondiale (1960-2024) | `WLD` | rejected | — | — |
 
 _⚠️ = effet endpoint CF dominant sur les dernières `hi_years/2` années ; la prévision donne l'ordre de grandeur, pas la date exacte._
@@ -23,9 +23,9 @@ Détails par agrégat : [Panel Banque mondiale](cycle_position_2026_05_wb.md) ·
 
 ## Lecture par cycle
 
-- **Kitchin** (WLD, source `wb`) — phase `disputed`, tendance `falling`, 📉 min dans 5 mois.
-- **Juglar** (G7, source `long`) — phase `contraction`, tendance `falling`, 📈 max dans 3.6 ans.
-- **Kuznets** (G7, source `long`) — phase `expansion`, tendance `rising`, 📈 max dans 2.4 ans.
+- **Kitchin** (WLD, source `wb`) — phase `rejected`, tendance `—`, —.
+- **Juglar** (G7, source `long`) — phase `rejected`, tendance `—`, —.
+- **Kuznets** (G7, source `long`) — phase `rejected`, tendance `—`, —.
 - **Kondratieff** (WLD, source `wb`) — phase `rejected`, tendance `—`, —.
 
 ## Panels étendus par horizon
@@ -36,7 +36,7 @@ Détails par agrégat : [Panel Banque mondiale](cycle_position_2026_05_wb.md) ·
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | contraction | falling | 📉 min dans 7 mois |
+| Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -45,7 +45,7 @@ Détails par agrégat : [Panel Banque mondiale](cycle_position_2026_05_wb.md) ·
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | contraction | falling | 📉 min dans 6 mois |
+| Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -54,7 +54,7 @@ Détails par agrégat : [Panel Banque mondiale](cycle_position_2026_05_wb.md) ·
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | disputed | falling | 📉 min dans 5 mois |
+| Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -63,7 +63,7 @@ Détails par agrégat : [Panel Banque mondiale](cycle_position_2026_05_wb.md) ·
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | disputed | falling | 📉 min dans 5 mois |
+| Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -94,9 +94,9 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | peak | rising (post-peak) | 📉 min dans 1.3 ans |
+| Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | disputed | rising (post-peak) | 📉 min dans 6.8 ans |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
 ### USA
@@ -105,7 +105,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |---|---|---|---|
 | Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | disputed | falling | 📉 min dans 1.7 ans |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
 _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._
@@ -117,8 +117,8 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | rising (post-trough) | 📈 max dans 3.3 ans |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 2.5 ans |
+| Juglar ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
 ### ANGLO
@@ -136,7 +136,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |---|---|---|---|
 | Kitchin | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | expansion | rising | 📈 max dans 4.1 ans |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | contraction | falling | 📈 max dans 22 ans |
 
 ### G7
@@ -144,18 +144,18 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | contraction | falling | 📈 max dans 3.6 ans |
-| Kuznets ⚠️ | expansion | rising | 📈 max dans 2.4 ans |
+| Juglar ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | expansion | rising | 📈 max dans 7.2 ans |
 
 ### NORDIC
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin | disputed | rising (post-peak) | 📉 min dans 2.2 ans |
-| Juglar ⚠️ | disputed | falling | 📈 max dans 3.9 ans |
+| Kitchin | rejected | — | — |
+| Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
-| Kondratieff ⚠️ | contraction | rising (post-peak) | 📉 min dans 13 ans |
+| Kondratieff ⚠️ | peak | rising (post-peak) | 📉 min dans 13 ans |
 
 _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._
 
@@ -169,7 +169,7 @@ _Aucun agrégat canonique disponible pour cet horizon._
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T11:04:10+00:00
+- Date de la note : 2026-05-29T12:25:53+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave home-synthesis`

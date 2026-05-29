@@ -31,8 +31,8 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | rising (post-trough) | 📈 max dans 3.3 ans |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 2.5 ans |
+| Juglar ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
 ### ANGLO
@@ -50,7 +50,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 |---|---|---|---|
 | Kitchin | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | expansion | rising | 📈 max dans 4.1 ans |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | contraction | falling | 📈 max dans 22 ans |
 
 ### G7
@@ -58,25 +58,25 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | contraction | falling | 📈 max dans 3.6 ans |
-| Kuznets ⚠️ | expansion | rising | 📈 max dans 2.4 ans |
+| Juglar ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | expansion | rising | 📈 max dans 7.2 ans |
 
 ### NORDIC
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin | disputed | rising (post-peak) | 📉 min dans 2.2 ans |
-| Juglar ⚠️ | disputed | falling | 📈 max dans 3.9 ans |
+| Kitchin | rejected | — | — |
+| Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
-| Kondratieff ⚠️ | contraction | rising (post-peak) | 📉 min dans 13 ans |
+| Kondratieff ⚠️ | peak | rising (post-peak) | 📉 min dans 13 ans |
 
 ### USA
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | rising | 📈 max dans 7 mois |
+| Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -84,14 +84,14 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Matrice de phase (Gate 2 — consensus inter-méthode)
 
-| group_code   | kitchin   | juglar      | kuznets   | kondratieff   |
-|:-------------|:----------|:------------|:----------|:--------------|
-| ADV18        | rejected  | disputed    | disputed  | rejected      |
-| ANGLO        | rejected  | rejected    | rejected  | rejected      |
-| EU4          | rejected  | rejected    | expansion | contraction   |
-| G7           | rejected  | contraction | expansion | expansion     |
-| NORDIC       | disputed  | disputed    | rejected  | contraction   |
-| USA          | rejected  | disputed    | rejected  | rejected      |
+| group_code   | kitchin   | juglar   | kuznets   | kondratieff   |
+|:-------------|:----------|:---------|:----------|:--------------|
+| ADV18        | rejected  | rejected | rejected  | rejected      |
+| ANGLO        | rejected  | rejected | rejected  | rejected      |
+| EU4          | rejected  | rejected | rejected  | contraction   |
+| G7           | rejected  | rejected | rejected  | expansion     |
+| NORDIC       | rejected  | rejected | rejected  | peak          |
+| USA          | rejected  | rejected | rejected  | rejected      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
@@ -109,42 +109,19 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
 |:------------|:--------------|----------------------:|-----------------:|:---------|
 | kitchin     | rejected      |                     0 |                6 | regional |
-| juglar      | contraction   |                     1 |                6 | regional |
-| kuznets     | expansion     |                     2 |                6 | regional |
-| kondratieff | contraction   |                     2 |                6 | regional |
+| juglar      | rejected      |                     0 |                6 | regional |
+| kuznets     | rejected      |                     0 |                6 | regional |
+| kondratieff | expansion     |                     1 |                6 | regional |
 
 ## Votes par modèle (D/E/F/G) — détail Gate 2
 
-### Kitchin
-
-| group_code   | D         | E         | F    | G         |
-|:-------------|:----------|:----------|:-----|:----------|
-| NORDIC       | expansion | expansion | peak | expansion |
-
-### Juglar
-
-| group_code   | D           | E      | F           | G           |
-|:-------------|:------------|:-------|:------------|:------------|
-| ADV18        | contraction | trough | trough      | contraction |
-| G7           | contraction | peak   | contraction | contraction |
-| NORDIC       | peak        | peak   | contraction | contraction |
-| USA          | peak        | trough | expansion   | expansion   |
-
-### Kuznets
-
-| group_code   | D           | E         | F         | G         |
-|:-------------|:------------|:----------|:----------|:----------|
-| ADV18        | contraction | trough    | expansion | expansion |
-| EU4          | trough      | expansion | expansion | expansion |
-| G7           | trough      | expansion | expansion | expansion |
-
 ### Kondratieff
 
-| group_code   | D      | E           | F           | G           |
-|:-------------|:-------|:------------|:------------|:------------|
-| EU4          | peak   | contraction | contraction | contraction |
-| G7           | trough | trough      | expansion   | expansion   |
-| NORDIC       | peak   | contraction | peak        | contraction |
+| group_code   | D      | E      | F           | G           |
+|:-------------|:-------|:-------|:------------|:------------|
+| EU4          | peak   | peak   | contraction | contraction |
+| G7           | trough | trough | expansion   | expansion   |
+| NORDIC       | peak   | peak   | peak        | contraction |
 
 ## Figures
 
@@ -192,7 +169,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T11:00:36+00:00
+- Date de la note : 2026-05-29T12:18:07+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`
