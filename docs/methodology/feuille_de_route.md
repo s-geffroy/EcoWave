@@ -213,6 +213,80 @@
   partielle ; ECB CISS démarre en 1999, ce qui affaiblit C3 (robustesse
   bi-fenêtre) sur D.
 
+## #12 — Évidence par variable (test Gate 1 sans compositing) — IMPLÉMENTÉ
+
+- **Problème.** Le composite z-scoré dilue les cycles sectoriels :
+  Kitchin (1923) découvert sur chargements ferroviaires devient
+  invisible sur le composite GDP+inflation+chômage+crédit, parce que
+  les séries sans contenu Kitchin sont z-scorées à variance unitaire et
+  moyennées comme du bruit. Cf. [Wen (2005)](../bibliographie.md#wen-2005)
+  qui démontre que le cycle d'inventaire **existe** sur les séries
+  sectorielles mais pas sur le PIB.
+- **Méthode.** Pour chaque (horizon, agrégat, variable, cycle), z-scorer
+  la **série individuelle** (pas le composite) et lancer Gate 1 avec le
+  même null dual et le même nombre de surrogates que sur le composite.
+  Publie la matrice de p-values brute et le **taux de survie par
+  variable** (combien d'agrégats voient le cycle survivre quand on isole
+  cette variable).
+- **Code.** `ecowave/cycles/evidence.py` (calcul + rendu) ;
+  commande `ecowave evidence-per-variable --as-of YYYY-MM`. Sorties :
+  `reports/cycle_position_per_variable_*.json` (sidecars par horizon)
+  et `docs/evidence_per_variable.md` (page publique de la section 1
+  de la nav).
+- **Acceptance.** La page démontre la thèse centrale du projet : les
+  rejets composites sont cohérents avec la littérature critique
+  empirique moderne ([Wen 2005](../bibliographie.md#wen-2005) pour
+  Kitchin, [Solomou 1987](../bibliographie.md#solomou-1987) pour
+  Kuznets/Kondratieff, etc.).
+
+## #13 — Allongement des séries temporelles — TODO
+
+- **Problème.** L'inférence statistique sur les cycles longs souffre
+  d'un manque de répétitions dans l'échantillon. Le panel WB
+  (1960-2024) capture ~1.3 cycles Kondratieff — quasiment impossible
+  à distinguer d'un AR(1). L'horizon long (Maddison + JST, 1870-2022)
+  porte à ~3 K-waves, encore marginal pour la puissance statistique.
+  Plus de cycles dans l'échantillon = plus de puissance pour battre
+  les nulls et reproduire (ou réfuter) les observations originales
+  des découvreurs.
+- **Méthode.** Quatre voies complémentaires d'extension envisagées :
+
+    1. **Bank of England — A Millennium of Macroeconomic Data for the
+       UK (1086-2024).** ~940 ans de prix, taux d'intérêt, PIB, masse
+       monétaire, dette publique sur l'Angleterre/UK. Open access (CC0).
+       Permet ~16 K-waves complets sur un seul pays, ce qui rend la
+       statistique du cycle long enfin **possible**. Référence :
+       BoE Working Paper 845 (Thomas & Dimsdale, 2017, mises à jour
+       annuelles).
+    2. **Mitchell — International Historical Statistics (1750-2010).**
+       Trois volumes Cambridge UP (Europe, Americas, Africa-Asia-Oceania)
+       couvrant ~260 ans, 100+ pays, séries sectorielles (charbon,
+       fonte, wagons, agriculture). Crucial parce que **ces variables
+       sectorielles matchent ce que Kitchin / Juglar / Kuznets ont
+       analysé à l'origine** — directement adressable par l'Option A
+       (#12) sur les séries originales des découvreurs.
+    3. **JST extensions + BIS macroprudential database (1880-2024).**
+       Approfondir les séries crédit/HPI Schularick-Taylor et ingérer
+       les séries BIS long-term sur ratios crédit/PIB, dette des
+       ménages, prix immobiliers. Précis sur cycles financiers
+       (Borio-Drehmann) mais peu de variables réelles. Existing JST R6
+       à étendre.
+    4. **Toutain / INSEE — séries historiques françaises (1789-1990).**
+       Reconstruction Toutain (1987-1997) du PIB français + séries
+       sectorielles ; INSEE rebases pour les périodes post-1949.
+       Spécialisé France mais ~235 ans, complémentaire à Maddison
+       (qui est plus généraliste mais moins détaillé).
+
+- **Code.** À écrire dans `ecowave/cycles/` :
+    - `boe_millennium.py` (loader BoE)
+    - `mitchell_ihs.py` (loader Mitchell volumes)
+    - extension de `cycles/long_history.py` pour les sources additionnelles
+- **Acceptance.** Le panel "histoire longue" couvre ≥ 200 ans pour
+  ≥ 5 agrégats avec ≥ 10 variables ; Gate 1 dual-null sur Kondratieff
+  doit avoir suffisamment de puissance pour distinguer le cycle d'un
+  AR(1) — c'est-à-dire un p-value ≤ 0.05 sur au moins l'agrégat
+  Banque Mondiale ou ADV18-étendu.
+
 ## Références
 
 - Bailey, D. H., & López de Prado, M. (2014). The deflated Sharpe ratio.
