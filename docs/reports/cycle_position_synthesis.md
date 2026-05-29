@@ -13,8 +13,8 @@
 | Cycle | Source canonique | Agrégat | Phase | Tendance | Prochain extremum |
 |---|---|---|---|---|---|
 | Kitchin ⚠️ | Panel Banque mondiale (1960-2024) | `WLD` | contraction | falling | 📉 min dans 5 mois |
-| Juglar ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | disputed | falling | 📈 max dans 3.8 ans |
-| Kuznets ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | disputed | rising | 📈 max dans 1.4 ans |
+| Juglar ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | contraction | falling | 📈 max dans 3.6 ans |
+| Kuznets ⚠️ | Histoire longue G7 (Maddison + JST, 1870-2022) | `G7` | disputed | rising | 📈 max dans 2.4 ans |
 | Kondratieff ⚠️ | Panel Banque mondiale (1960-2024) | `WLD` | contraction | rising | 📈 max dans 7.3 ans |
 
 _⚠️ = effet endpoint CF dominant sur les dernières `hi_years/2` années ; la prévision donne l'ordre de grandeur, pas la date exacte._
@@ -24,8 +24,8 @@ Détails par agrégat : [Panel Banque mondiale](cycle_position_2026_05_wb.md) ·
 ## Lecture par cycle
 
 - **Kitchin** (WLD, source `wb`) — phase `contraction`, tendance `falling`, 📉 min dans 5 mois.
-- **Juglar** (G7, source `long`) — phase `disputed`, tendance `falling`, 📈 max dans 3.8 ans.
-- **Kuznets** (G7, source `long`) — phase `disputed`, tendance `rising`, 📈 max dans 1.4 ans.
+- **Juglar** (G7, source `long`) — phase `contraction`, tendance `falling`, 📈 max dans 3.6 ans.
+- **Kuznets** (G7, source `long`) — phase `disputed`, tendance `rising`, 📈 max dans 2.4 ans.
 - **Kondratieff** (WLD, source `wb`) — phase `contraction`, tendance `rising`, 📈 max dans 7.3 ans.
 
 ## Panels étendus par horizon
@@ -117,8 +117,8 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | contraction | falling | 📈 max dans 3.5 ans |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 1.8 ans |
+| Juglar ⚠️ | disputed | rising (post-trough) | 📈 max dans 3.3 ans |
+| Kuznets ⚠️ | disputed | rising | 📈 max dans 2.5 ans |
 | Kondratieff ⚠️ | rejected | — | — |
 
 ### ANGLO
@@ -126,7 +126,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | rising | 📈 max dans 1.5 ans |
+| Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -136,32 +136,36 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |---|---|---|---|
 | Kitchin | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 4.0 ans |
-| Kondratieff ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | expansion | rising | 📈 max dans 4.1 ans |
+| Kondratieff ⚠️ | contraction | rising | 📈 max dans 5 mois |
 
 ### G7
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | falling | 📈 max dans 3.8 ans |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 1.4 ans |
-| Kondratieff ⚠️ | disputed | rising (post-trough) | 📈 max dans 16 ans |
+| Juglar ⚠️ | contraction | falling | 📈 max dans 3.6 ans |
+| Kuznets ⚠️ | disputed | rising | 📈 max dans 2.4 ans |
+| Kondratieff ⚠️ | rejected | — | — |
 
 ### NORDIC
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin | rejected | — | — |
-| Juglar ⚠️ | rejected | — | — |
+| Kitchin | disputed | rising (post-peak) | 📉 min dans 2.2 ans |
+| Juglar ⚠️ | contraction | falling | 📈 max dans 3.9 ans |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
 _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._
 
+### Bank of England Millennium (1700-2016)
+
+_Aucun agrégat canonique disponible pour cet horizon._
+
 ## Sign-off
 
-- Date de la note : 2026-05-29T08:13:15+00:00
+- Date de la note : 2026-05-29T09:42:59+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave home-synthesis`

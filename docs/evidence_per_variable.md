@@ -222,7 +222,7 @@ Pour chaque cycle, on isole l'agrégat avec le plus de variables survivantes —
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T09:10:37+00:00
+- Date de la note : 2026-05-29T09:42:28+00:00
 - As-of : 2026-05
 - Pipeline : `ecowave evidence-per-variable`
 - Null : dual (AR(1) + phase-scramble), 1000 surrogates, α=0.05

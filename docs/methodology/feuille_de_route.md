@@ -239,53 +239,97 @@
   Kitchin, [Solomou 1987](../bibliographie.md#solomou-1987) pour
   Kuznets/Kondratieff, etc.).
 
-## #13 — Allongement des séries temporelles — TODO
+## #13 — Allongement des séries temporelles — EN COURS (phasé)
 
 - **Problème.** L'inférence statistique sur les cycles longs souffre
   d'un manque de répétitions dans l'échantillon. Le panel WB
   (1960-2024) capture ~1.3 cycles Kondratieff — quasiment impossible
-  à distinguer d'un AR(1). L'horizon long (Maddison + JST, 1870-2022)
-  porte à ~3 K-waves, encore marginal pour la puissance statistique.
-  Plus de cycles dans l'échantillon = plus de puissance pour battre
-  les nulls et reproduire (ou réfuter) les observations originales
-  des découvreurs.
-- **Méthode.** Quatre voies complémentaires d'extension envisagées :
+  à distinguer d'un AR(1). L'horizon long (Maddison + JST R6,
+  1870-2020) porte à ~3 K-waves, encore marginal. Plus de cycles
+  dans l'échantillon = plus de puissance pour battre les nulls et
+  reproduire (ou réfuter) les observations originales des découvreurs.
 
-    1. **Bank of England — A Millennium of Macroeconomic Data for the
-       UK (1086-2024).** ~940 ans de prix, taux d'intérêt, PIB, masse
-       monétaire, dette publique sur l'Angleterre/UK. Open access (CC0).
-       Permet ~16 K-waves complets sur un seul pays, ce qui rend la
-       statistique du cycle long enfin **possible**. Référence :
-       BoE Working Paper 845 (Thomas & Dimsdale, 2017, mises à jour
-       annuelles).
-    2. **Mitchell — International Historical Statistics (1750-2010).**
-       Trois volumes Cambridge UP (Europe, Americas, Africa-Asia-Oceania)
-       couvrant ~260 ans, 100+ pays, séries sectorielles (charbon,
-       fonte, wagons, agriculture). Crucial parce que **ces variables
-       sectorielles matchent ce que Kitchin / Juglar / Kuznets ont
-       analysé à l'origine** — directement adressable par l'Option A
-       (#12) sur les séries originales des découvreurs.
-    3. **JST extensions + BIS macroprudential database (1880-2024).**
-       Approfondir les séries crédit/HPI Schularick-Taylor et ingérer
-       les séries BIS long-term sur ratios crédit/PIB, dette des
-       ménages, prix immobiliers. Précis sur cycles financiers
-       (Borio-Drehmann) mais peu de variables réelles. Existing JST R6
-       à étendre.
-    4. **Toutain / INSEE — séries historiques françaises (1789-1990).**
-       Reconstruction Toutain (1987-1997) du PIB français + séries
-       sectorielles ; INSEE rebases pour les périodes post-1949.
-       Spécialisé France mais ~235 ans, complémentaire à Maddison
-       (qui est plus généraliste mais moins détaillé).
+- **Méthode.** Quatre voies d'extension explorées (mai 2026). Les
+  hypothèses initiales ont été corrigées par une étude bibliographique :
 
-- **Code.** À écrire dans `ecowave/cycles/` :
-    - `boe_millennium.py` (loader BoE)
-    - `mitchell_ihs.py` (loader Mitchell volumes)
-    - extension de `cycles/long_history.py` pour les sources additionnelles
-- **Acceptance.** Le panel "histoire longue" couvre ≥ 200 ans pour
-  ≥ 5 agrégats avec ≥ 10 variables ; Gate 1 dual-null sur Kondratieff
-  doit avoir suffisamment de puissance pour distinguer le cycle d'un
-  AR(1) — c'est-à-dire un p-value ≤ 0.05 sur au moins l'agrégat
-  Banque Mondiale ou ADV18-étendu.
+    | Voie | Source canonique | Couverture utile | Effort | Verdict |
+    |---|---|---|---|---|
+    | **BoE Millennium** | XLSX 28 Mo + miroir CSV `datahub.io/economic-history/millennium-macroeconomic-data-uk` (OGL-UK-3.0) | UK 1086+ annuel · 1700+ trimestriel · ~130 séries | ~1 jour | ✅ priorité |
+    | **JST R6 (élargie)** | `macrohistory.net/app/download/9834512469/JSTdatasetR6.dta` (CC BY-NC-SA) | 18 AE × 1870-2020 × **45 variables** (on n'en utilise que 6) | trivial | ✅ **gain immédiat** |
+    | **BIS bulk** | `data.bis.org/bulkdownload` + `pysdmx` officiel | 44 économies × trimestriel × 1960-2026 · credit-gap Borio, RPP, DSR | ~1 jour | ✅ priorité |
+    | **Mitchell IHS** | Springer Palgrave online (accès institutionnel requis) · pas de bulk public | 1750-2010 · ~600-900 séries sectorielles (charbon, fonte, wagons…) · 200 pays | 1-2 j scraping + 1 sem nettoyage | ⏸ dépend accès Springer |
+    | ~~Toutain France~~ | ISMEA imprimé · pas de digital | 1789-1819 sur France seule | 2-4 sem OCR | ❌ skip (proxy CEPII Villa si besoin) |
+
+  **Trois corrections importantes** vs la première rédaction de cet
+  item :
+
+    1. **JST R7 n'existe pas** (vérifié mai 2026). R6 (juillet 2022)
+       reste canonique. Mais R6 publie **45 variables**, le manifest
+       CPV n'en utilise que 6 → Phase 0 ci-dessous.
+    2. **BIS RPP long ne remonte pas à 1870** mais à 1970-71 sur le
+       panel AE. BIS apporte donc trimestriel + couverture EM (Brésil,
+       Chine, Inde, Mexique, Corée, Turquie absents de CPV) + le
+       Borio credit-gap prêt à l'emploi — pas de profondeur historique
+       supplémentaire.
+    3. **Toutain n'est pas digitalisé**. Le segment unique de Toutain
+       (1789-1819 sur France) est aussi la partie la plus contestée
+       de sa propre reconstruction (frontières Empire/Restauration).
+       Gain CPV : <1% du panel multi-pays — à skipper sauf besoin
+       spécifique, auquel cas CEPII Villa
+       (`cepii.fr/CEPII/fr/bdd_modele/bdd_modele_item.asp?id=31`,
+       1820+, déjà digital) est le proxy.
+
+- **Plan d'exécution priorisé** (ratio gain/effort) :
+
+    - **Phase 0 — JST R6 élargi** (1 jour, IMMÉDIAT). Étendre
+      `long_history_manifest.json` aux 39 variables JST R6 non
+      utilisées (RORE, mortgages, dette publique, current account,
+      total credit, debt service, etc.). Aucune nouvelle source —
+      même Stata file, même 18 pays, même 1870-2020. **Gain énorme
+      pour la thèse Wen** : on pourra tester Gate 1 individuellement
+      sur séries crédit/équity/foncier séparées au lieu d'un composite.
+    - **Phase 1 — BoE Millennium** (1 jour). Nouveau module
+      `ecowave/cycles/boe_millennium.py`, loader CSV depuis miroir
+      datahub.io (pas xlsx pour éviter le 403 Cloudflare BoE), nouveau
+      group `UK_BOE_1086` (annuel) + `UK_BOE_Q` (trimestriel),
+      nouveau manifest `boe_millennium_manifest.json`. Extension de
+      `position-cycles --horizon boe`. **Gain Kondratieff** :
+      1086-2024 = ~16-23 K-waves théoriques, 1700+ = 5-8 K-waves
+      avec qualité de données fiable.
+    - **Phase 2 — BIS bulk** (1 jour). Nouveau module
+      `ecowave/cycles/bis_bulk.py` via `pysdmx` officiel ou
+      `pandas.read_csv` après unzip. Nouveaux groupes EM. Ingest
+      `WS_CREDIT_GAP` + `WS_SPP` long + `WS_DSR`. **Gain Kuznets** :
+      2-3 cycles supplémentaires par pays + 20+ pays nouveaux.
+    - **Phase 3 — Mitchell IHS** (1-2 sem, conditionnelle). Si accès
+      Springer Palgrave disponible : scraper poli (1 req/s) ~50
+      tables sectorielles prioritaires (coal UK 1700+, pig iron UK
+      1720+, US pig iron 1810+, etc.). **Gain Wen 2005 direct** :
+      on aurait les séries originales des découvreurs. License
+      restrictive (raw tables non-redistribuables, indicateurs
+      dérivés OK).
+    - **Phase 4 — Toutain** : skippé.
+
+- **Code.** À écrire :
+    - `ecowave/cycles/boe_millennium.py` (Phase 1)
+    - `ecowave/cycles/bis_bulk.py` (Phase 2)
+    - `ecowave/cycles/mitchell_ihs.py` (Phase 3, conditionnel)
+    - Extensions de `long_history.py` pour Phase 0 (variables
+      additionnelles JST R6) + de `cli.py position-cycles` pour
+      nouveaux `--horizon` values (`boe`, `bis`).
+
+- **Acceptance.** Le panel "histoire longue étendu" couvre :
+    - ≥ 200 ans pour ≥ 5 agrégats (UK_BOE pousse à 300+ ans),
+    - ≥ 30 variables (Phase 0 seule porte à 45),
+    - Gate 1 dual-null sur Kondratieff a un `p ≤ 0.05` sur
+      au moins UK_BOE_1700 + l'agrégat ADV18-étendu.
+
+- **Références sources** (validées via web search mai 2026) :
+    - BoE Millennium : `bankofengland.co.uk/statistics/research-datasets` ·
+      mirror `datahub.io/economic-history/millennium-macroeconomic-data-uk`
+    - JST R6 : `macrohistory.net/database/` · doc `JST_RORE_Documentation_R6.pdf`
+    - BIS bulk : `data.bis.org/bulkdownload` · lib `github.com/bis-med-it/pysdmx`
+    - Mitchell IHS online : `link.springer.com/referencework/10.1057/978-1-137-30568-8`
 
 ## Références
 

@@ -4,14 +4,14 @@
   "as_of_month": "2026-05",
   "start_year": 1870,
   "horizon": "long",
-  "note": "Maddison Project (1820-2022) + Jordà-Schularick-Taylor R6 (1870-2020) on the 18 advanced economies. Used by `position-cycles --horizon long`. Substantially more cycles per band than the 65-year World Bank sample.",
+  "note": "Maddison Project (1820-2022) + Jordà-Schularick-Taylor R6 (1870-2020) on the 18 advanced economies. Roadmap #13 Phase 0 (2026-05): manifest extended from 7 to 35 variables to expose the full JST R6 RORE + credit decomposition + fiscal channels. Same source file, same 18 countries, same 1870-2020 window — zero extra ingestion cost, ~5x more channels for per-variable Gate 1 evidence (cf. evidence_per_variable.md). Used by `position-cycles --horizon long`.",
   "datasets": [
     {
       "name": "Maddison Project Database 2023",
       "file": "data_raw/macrohistory/mpd2023.xlsx",
       "license": "CC BY 4.0",
       "url": "https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2023",
-      "variables_provided": ["LH_GDP (real GDP per capita)"]
+      "variables_provided": ["LH_GDP (real GDP per capita, used as Maddison-aligned splice when JST rgdpmad is missing)"]
     },
     {
       "name": "Jordà-Schularick-Taylor Macrohistory Database R6",
@@ -19,23 +19,51 @@
       "license": "CC BY 4.0",
       "url": "https://www.macrohistory.net/database/",
       "variables_provided": [
-        "LH_GDP (rgdpmad)",
-        "LH_CREDIT (tloans)",
-        "LH_HPI (hpnom)",
-        "LH_EQUITY (eq_capgain)",
-        "LH_YIELD (ltrate)",
-        "LH_CPI (cpi)",
-        "LH_MONEY (money)"
+        "Real activity: LH_GDP (rgdpmad), LH_RGDP_BARRO (rgdpbarro), LH_RCONS (rconsbarro), LH_GDPNOM (gdp), LH_POP (pop), LH_INV (iy), LH_UNRATE (unemp), LH_WAGE (wage)",
+        "Money & prices: LH_CPI (cpi), LH_MONEY (money), LH_NARROW (narrowm)",
+        "Interest rates: LH_STIR (stir), LH_BILLRATE (bill_rate), LH_YIELD (ltrate), LH_BONDRATE (bond_rate)",
+        "Asset returns: LH_EQUITY (eq_capgain), LH_EQTR (eq_tr), LH_EQDIVP (eq_dp), LH_BONDTR (bond_tr), LH_HPI (hpnom), LH_HOUSINGTR (housing_tr), LH_HOUSECG (housing_capgain)",
+        "Credit decomposition: LH_CREDIT (tloans), LH_MORT (tmort), LH_HHCREDIT (thh), LH_BUSCREDIT (tbus), LH_BANKDEBT (bdebt), LH_LEV (lev)",
+        "External & fiscal: LH_IMPORTS (imports), LH_EXPORTS (exports), LH_CA (ca), LH_XRUSD (xrusd), LH_DEBTGDP (debtgdp), LH_REV (revenue), LH_EXP (expenditure)"
       ]
     }
   ],
   "variable_codes": [
-    {"variable_code": "LH_GDP",    "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "GDP per capita — Maddison-style. Long-wave productivity proxy."},
-    {"variable_code": "LH_CREDIT", "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Total loans. Borio/Drehmann financial cycle driver."},
-    {"variable_code": "LH_HPI",    "cycle_targets": ["kuznets"],                         "notes": "House price index. Construction / Kuznets swing."},
-    {"variable_code": "LH_EQUITY", "cycle_targets": ["juglar"],                          "notes": "Equity capital gains. Short cycle."},
-    {"variable_code": "LH_YIELD",  "cycle_targets": ["kondratieff"],                     "notes": "Long-term bond yield. Kondratieff price-level proxy."},
-    {"variable_code": "LH_CPI",    "cycle_targets": ["kondratieff"],                     "notes": "Consumer prices. Long-wave inflation proxy."}
+    {"variable_code": "LH_GDP",        "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "GDP per capita — Maddison-aligned. Long-wave productivity proxy."},
+    {"variable_code": "LH_RGDP_BARRO", "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Real GDP per capita (Barro splice) — robustness alternative to Maddison."},
+    {"variable_code": "LH_RCONS",      "cycle_targets": ["kitchin", "juglar"],                "notes": "Real consumption per capita — RBC-style short-cycle driver."},
+    {"variable_code": "LH_GDPNOM",     "cycle_targets": ["juglar", "kondratieff"],            "notes": "Nominal GDP — combined with CPI gives a price-deflator check."},
+    {"variable_code": "LH_POP",        "cycle_targets": ["kuznets", "kondratieff"],           "notes": "Population — Kuznets demographic swing + Kondratieff secular trend."},
+    {"variable_code": "LH_INV",        "cycle_targets": ["juglar"],                            "notes": "Investment-to-GDP — Schumpeter's canonical Juglar driver."},
+    {"variable_code": "LH_UNRATE",     "cycle_targets": ["juglar"],                            "notes": "Unemployment — Phillips/business cycle anchor."},
+    {"variable_code": "LH_WAGE",       "cycle_targets": ["juglar", "kitchin"],                "notes": "Nominal wages — labour-market cycle."},
+    {"variable_code": "LH_CPI",        "cycle_targets": ["kondratieff"],                       "notes": "Consumer prices — long-wave inflation proxy (Kondratieff's original)."},
+    {"variable_code": "LH_MONEY",      "cycle_targets": ["juglar", "kondratieff"],            "notes": "Broad money — monetarist cycle channel."},
+    {"variable_code": "LH_NARROW",     "cycle_targets": ["juglar"],                            "notes": "Narrow money (M1) — Friedman monetary cycle."},
+    {"variable_code": "LH_STIR",       "cycle_targets": ["kitchin"],                            "notes": "Short-term rate — Kitchin/business inventory cycle."},
+    {"variable_code": "LH_BILLRATE",   "cycle_targets": ["kitchin"],                            "notes": "T-bill rate — short-rate alternative."},
+    {"variable_code": "LH_YIELD",      "cycle_targets": ["kondratieff"],                       "notes": "Long-term bond yield — Kondratieff price-level proxy."},
+    {"variable_code": "LH_BONDRATE",   "cycle_targets": ["kondratieff"],                       "notes": "RORE bond rate — JST refinement of long yields."},
+    {"variable_code": "LH_EQUITY",     "cycle_targets": ["juglar"],                            "notes": "Equity capital gains — short cycle on asset markets."},
+    {"variable_code": "LH_EQTR",       "cycle_targets": ["juglar"],                            "notes": "Equity total return (RORE) — includes dividends."},
+    {"variable_code": "LH_EQDIVP",     "cycle_targets": ["juglar", "kondratieff"],            "notes": "Dividend-price ratio — Campbell-Shiller cycle indicator."},
+    {"variable_code": "LH_BONDTR",     "cycle_targets": ["kondratieff"],                       "notes": "Bond total return (RORE) — Kondratieff price proxy refined."},
+    {"variable_code": "LH_HPI",        "cycle_targets": ["kuznets"],                            "notes": "House price index — Kuznets construction swing."},
+    {"variable_code": "LH_HOUSINGTR",  "cycle_targets": ["kuznets"],                            "notes": "Housing total return (RORE)."},
+    {"variable_code": "LH_HOUSECG",    "cycle_targets": ["kuznets"],                            "notes": "Housing capital gains."},
+    {"variable_code": "LH_CREDIT",     "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Total bank loans — Borio/Drehmann financial cycle."},
+    {"variable_code": "LH_MORT",       "cycle_targets": ["kuznets"],                            "notes": "Mortgage credit — Kuznets construction financing channel."},
+    {"variable_code": "LH_HHCREDIT",   "cycle_targets": ["juglar"],                            "notes": "Household credit — consumption-cycle financing."},
+    {"variable_code": "LH_BUSCREDIT",  "cycle_targets": ["juglar"],                            "notes": "Business credit — Schumpeter Juglar investment financing."},
+    {"variable_code": "LH_BANKDEBT",   "cycle_targets": ["kuznets", "kondratieff"],            "notes": "Bank debt — leverage cycle."},
+    {"variable_code": "LH_LEV",        "cycle_targets": ["juglar", "kuznets"],                "notes": "Bank leverage ratio — Minsky financial cycle."},
+    {"variable_code": "LH_IMPORTS",    "cycle_targets": ["kitchin", "juglar"],                "notes": "Imports — trade-cycle short-frequency driver."},
+    {"variable_code": "LH_EXPORTS",    "cycle_targets": ["kitchin", "juglar"],                "notes": "Exports — trade-cycle alternative."},
+    {"variable_code": "LH_CA",         "cycle_targets": ["juglar", "kuznets"],                "notes": "Current account — external balance cycle."},
+    {"variable_code": "LH_XRUSD",      "cycle_targets": ["juglar"],                            "notes": "USD exchange rate — Mundell-Fleming cycle channel."},
+    {"variable_code": "LH_DEBTGDP",    "cycle_targets": ["kondratieff"],                       "notes": "Public debt/GDP — Reinhart-Rogoff long-cycle debt thesis."},
+    {"variable_code": "LH_REV",        "cycle_targets": ["juglar"],                            "notes": "Government revenue — fiscal cycle."},
+    {"variable_code": "LH_EXP",        "cycle_targets": ["juglar"],                            "notes": "Government expenditure — fiscal cycle."}
   ],
   "groups": ["ADV18", "G7", "USA", "EU4", "ANGLO", "NORDIC"]
 }

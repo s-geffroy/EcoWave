@@ -48,15 +48,55 @@ LONG_GROUPS = {
 }
 
 # Default columns we expose from each dataset.
+# Roadmap #13 Phase 0 (2026-05) — JST R6 publishes 55 numeric variables on the
+# 18 advanced economies (1870-2020); we expose the 32 that map cleanly onto
+# the four canonical-cycle bands. Adding the 25 new codes below relative to
+# the original 7 is zero-effort (same Stata file, same 18 countries, same
+# 1870-2020 window) but multiplies the per-variable evidence channels for
+# Wen-2005-style tests by ~5x — directly addressing the central CPV thesis.
 MADDISON_GDP_COL = "gdppc"
 JST_VARS = {
-    "LH_GDP":     ("rgdpmad",       "Real GDP per capita (Maddison-aligned, JST series)"),
-    "LH_CREDIT":  ("tloans",        "Total loans to households + non-financial corporates"),
-    "LH_HPI":     ("hpnom",         "House price index (nominal)"),
-    "LH_EQUITY":  ("eq_capgain",    "Equity capital gains return"),
-    "LH_YIELD":   ("ltrate",        "Long-term government bond yield"),
-    "LH_CPI":     ("cpi",           "Consumer price index"),
-    "LH_MONEY":   ("money",         "Broad money stock"),
+    # Real activity ---------------------------------------------------------
+    "LH_GDP":        ("rgdpmad",     "Real GDP per capita (Maddison-aligned)"),
+    "LH_RGDP_BARRO": ("rgdpbarro",   "Real GDP per capita (Barro splice — robustness)"),
+    "LH_RCONS":      ("rconsbarro",  "Real consumption per capita (Barro splice)"),
+    "LH_GDPNOM":     ("gdp",         "Nominal GDP per capita"),
+    "LH_POP":        ("pop",         "Total population (Kuznets demographic swing)"),
+    "LH_INV":        ("iy",          "Investment-to-GDP ratio (Schumpeter Juglar)"),
+    "LH_UNRATE":     ("unemp",       "Unemployment rate"),
+    "LH_WAGE":       ("wage",        "Nominal wage index"),
+    # Money & prices --------------------------------------------------------
+    "LH_CPI":        ("cpi",         "Consumer price index"),
+    "LH_MONEY":      ("money",       "Broad money stock"),
+    "LH_NARROW":     ("narrowm",     "Narrow money (M1)"),
+    # Interest rates --------------------------------------------------------
+    "LH_STIR":       ("stir",        "Short-term interest rate"),
+    "LH_BILLRATE":   ("bill_rate",   "Treasury bill rate"),
+    "LH_YIELD":      ("ltrate",      "Long-term government bond yield"),
+    "LH_BONDRATE":   ("bond_rate",   "Bond rate (JST RORE)"),
+    # Asset returns ---------------------------------------------------------
+    "LH_EQUITY":     ("eq_capgain",  "Equity capital gains return"),
+    "LH_EQTR":       ("eq_tr",       "Equity total return (RORE)"),
+    "LH_EQDIVP":     ("eq_dp",       "Equity dividend-price ratio"),
+    "LH_BONDTR":     ("bond_tr",     "Bond total return (RORE)"),
+    "LH_HPI":        ("hpnom",       "House price index (nominal)"),
+    "LH_HOUSINGTR":  ("housing_tr",  "Housing total return (RORE)"),
+    "LH_HOUSECG":    ("housing_capgain", "Housing capital gains"),
+    # Credit decomposition --------------------------------------------------
+    "LH_CREDIT":     ("tloans",      "Total bank loans to non-financial sector"),
+    "LH_MORT":       ("tmort",       "Total mortgage credit (Kuznets construction)"),
+    "LH_HHCREDIT":   ("thh",         "Household credit"),
+    "LH_BUSCREDIT":  ("tbus",        "Business credit (Schumpeter Juglar driver)"),
+    "LH_BANKDEBT":   ("bdebt",       "Bank debt"),
+    "LH_LEV":        ("lev",         "Bank leverage ratio"),
+    # External & fiscal -----------------------------------------------------
+    "LH_IMPORTS":    ("imports",     "Imports (current USD)"),
+    "LH_EXPORTS":    ("exports",     "Exports (current USD)"),
+    "LH_CA":         ("ca",          "Current account balance"),
+    "LH_XRUSD":      ("xrusd",       "Bilateral exchange rate vs USD"),
+    "LH_DEBTGDP":    ("debtgdp",     "Public debt / GDP (Reinhart-Rogoff)"),
+    "LH_REV":        ("revenue",     "Government revenue"),
+    "LH_EXP":        ("expenditure", "Government expenditure"),
 }
 
 
