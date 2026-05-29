@@ -5,6 +5,66 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Au-delà des cycles — extension à 21 familles + composante transversale de réflexivité
+
+Extension du panorama initial (15 → 21 familles) pour combler trois
+angles morts identifiés :
+
+1. **Mécanisme générateur** vs description : la famille **B
+   (multifractalité)** observe la signature ; la nouvelle **famille
+   P — cascades multi-échelle (Kolmogorov K41)** propose le
+   mécanisme physique qui la génère ([Frisch 1995](docs/bibliographie.md#frisch-1995),
+   [Ghashghaie et al. 1996](docs/bibliographie.md#ghashghaie-1996)
+   sur la turbulence des taux de change).
+2. **Méta-cadre du choix de modèle** : ajout de la nouvelle
+   **famille Q — universalité statistique et MaxEnt** (groupe de
+   renormalisation de [Wilson (1971)](docs/bibliographie.md#wilson-1971),
+   maximum d'entropie de [Jaynes (1957)](docs/bibliographie.md#jaynes-1957))
+   comme cadre pour arbitrer entre les 20 autres familles.
+3. **Caractérisation temporelle de la diffusion** : nouvelle
+   **famille R — diffusion anormale** ([Metzler & Klafter (2000)](docs/bibliographie.md#metzler-klafter-2000)),
+   complétant les familles C (autocorrélation) et J (queues) avec
+   un troisième angle (MSD scaling).
+4. **Statistique unifiée** : nouvelle **famille T — Tsallis
+   non-extensive** ([Tsallis (1988)](docs/bibliographie.md#tsallis-1988))
+   comme cadre généralisé englobant SOC, multifractalité, longue
+   mémoire et Lévy sous une même formulation.
+5. **Hétérogénéité spatiale** : nouvelle **famille U — chimera
+   states** ([Kuramoto & Battogtokh (2002)](docs/bibliographie.md#kuramoto-battogtokh-2002),
+   [Abrams & Strogatz (2004)](docs/bibliographie.md#abrams-strogatz-2004))
+   pour expliquer la coexistence stable de zones synchronisées et
+   désordonnées sur le même substrat — analogie directe pour les
+   patterns d'agrégats CPV.
+
+**Famille S — réflexivité et anticipation des agents** est
+introduite avec un **double statut** :
+- **Famille à part entière** : Soros ([1987 / 2008](docs/bibliographie.md#soros-1987)),
+  Friston ([2010](docs/bibliographie.md#friston-2010)) free energy
+  principle, Akerlof & Shiller ([2009](docs/bibliographie.md#akerlof-shiller-2009))
+  animal spirits.
+- **Composante transversale obligatoire** des 20 autres familles.
+  Une nouvelle section *"La réflexivité reshape les 20 familles"*
+  publie un tableau de **21 lignes × 1 colonne** précisant pour
+  chaque famille comment l'anticipation des agents modifie le
+  contenu (endogeneité de la criticité pour A, mémoire cognitive
+  pour C, Goodhart spectral pour G, etc.). Tout cadre physique
+  appliqué à des séries macro doit soit modéliser explicitement la
+  réflexivité (couche bayésienne Friston-like), soit afficher sa
+  limite de validité.
+
+**Roadmap item #15 mis à jour** : le toolkit de diagnostics passe de
+7 à **11 diagnostics Tier 1** (ajout : exposants ζ(p) K41 pour
+cascades, MSD scaling pour diffusion anormale, fit q-Gaussien
+Tsallis, regroupement universalité par classe Q). La composante
+réflexivité est obligatoire en clause de validité.
+
+**Bibliographie** enrichie de 13 nouvelles références (Abrams-Strogatz,
+Akerlof-Shiller, Frisch, Friston, Ghashghaie, Jaynes, Kolmogorov,
+Kuramoto-Battogtokh, Metzler-Klafter, Soros, Tsallis, Wilson) + une
+nouvelle section ## F (Frisch, Friston) précédemment manquante.
+Section thématique *"Au-delà des cycles — références par famille"*
+étendue aux familles P à U.
+
 ### Au-delà des cycles — panorama de 15 cadres physiques alternatifs
 
 Suite à la chaîne d'audits (PRs #15-20) qui a démontré l'absence de
