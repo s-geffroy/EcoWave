@@ -258,6 +258,10 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         return _run_quarterly(settings, as_of, manifest_path, groups, mode,
                               n_surrogates, seed, con, run_id, null)
 
+    if horizon == "boe":
+        return _run_boe(settings, as_of, manifest_path, groups, mode,
+                        n_surrogates, seed, con, run_id, null)
+
     manifest = load_cycle_manifest(manifest_path)
     typer.echo(f"CPV — manifest {manifest.project} (as-of {manifest.as_of_month}); "
                f"{len(manifest.specs)} variables; {len(groups)} groups.")
@@ -723,6 +727,80 @@ def _run_quarterly(settings: Settings, as_of: str, manifest_path: Path,
         wavelet_group="USA",
         samples_per_year=samples_per_year,
         report_suffix="q",
+        targets_by_var={v["variable_code"]: tuple(v.get("cycle_targets", []))
+                         for v in variable_specs},
+    )
+
+
+def _run_boe(settings: Settings, as_of: str, manifest_path: Path,
+             groups: list[str], mode: str,
+             n_surrogates: int, seed: int,
+             con: "sqlite3.Connection", run_id: int,
+             null: str = "ar1") -> Path:
+    """Bank of England — Millennium dataset variant of ``run_position_cycles``.
+
+    Roadmap #13 Phase 1. UK 1700-2016 (~316 years, ~5-8 Kondratieff cycles).
+    Single aggregate ``UK_BOE``. ~14 variables sourced from the BoE
+    Millennium dataset v3.1, ingested from the datahub.io long-format CSV
+    mirror.
+    """
+    from ecowave.cycles.boe_millennium import (
+        BOE_GROUPS,
+        BoeMillenniumDataset,
+        build_boe_panel,
+        load_boe_manifest,
+    )
+
+    spec = load_boe_manifest(Path(manifest_path))
+    variable_specs = spec.get("variable_codes", [])
+    start_year = int(spec.get("start_year", 1700))
+    typer.echo(
+        f"CPV (BoE Millennium) — {spec.get('project','cpv_boe_millennium')}; "
+        f"{len(variable_specs)} variables; {len(groups)} groups; "
+        f"start_year={start_year}."
+    )
+
+    dataset = BoeMillenniumDataset.default(settings.data_raw_dir)
+    composite_by_group: dict[str, pd.Series] = {}
+    panels_by_group: dict[str, pd.DataFrame] = {}
+    for group in groups:
+        if group not in BOE_GROUPS:
+            typer.echo(f"  BoE group {group} unknown — skipped.", err=True)
+            continue
+        try:
+            panel = build_boe_panel(group, variable_specs, dataset,
+                                     start_year=start_year,
+                                     persist={"con": con})
+        except Exception as exc:  # noqa: BLE001
+            typer.echo(f"  Group {group}: BoE ingestion failed: {exc}", err=True)
+            if mode == "strict":
+                finish_ingestion_run(con, run_id, "failed", notes=str(exc))
+                con.close()
+                raise typer.Exit(code=1)
+            continue
+        if panel.empty:
+            typer.echo(f"  Group {group}: empty BoE panel — skipped.")
+            continue
+        panels_by_group[group] = panel
+        composite_by_group[group] = _composite_panel(panel)
+        typer.echo(f"  {group}: {panel.shape[0]} years × {panel.shape[1]} vars.")
+
+    if not composite_by_group:
+        typer.echo("No BoE group produced data; aborting.", err=True)
+        finish_ingestion_run(con, run_id, "failed", notes="empty panels")
+        con.close()
+        raise typer.Exit(code=1)
+
+    return _analyse_and_render(
+        settings=settings, as_of=as_of, con=con, run_id=run_id, mode=mode,
+        groups=list(composite_by_group.keys()),
+        composite_by_group=composite_by_group,
+        panels_by_group=panels_by_group,
+        n_surrogates=n_surrogates, seed=seed, null=null,
+        horizon_label=f"Bank of England Millennium ({start_year}-2016)",
+        wavelet_group="UK_BOE",
+        samples_per_year=1.0,
+        report_suffix="boe",
         targets_by_var={v["variable_code"]: tuple(v.get("cycle_targets", []))
                          for v in variable_specs},
     )

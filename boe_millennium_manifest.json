@@ -1,0 +1,38 @@
+{
+  "project": "cpv_boe_millennium_2026",
+  "schema_version": "0.5.0",
+  "as_of_month": "2026-05",
+  "start_year": 1700,
+  "horizon": "boe",
+  "note": "Bank of England — A Millennium of Macroeconomic Data for the UK (Thomas & Dimsdale, BoE WP 845, v3.1, 2017, data to 2016). Roadmap #13 Phase 1 (2026-05). Annual UK series 1700-2016 (~316 years = 5-8 Kondratieff cycles, vs 1.3 on WB and 3 on JST). Some series go back further (CPI 1209, Bank Rate 1694, etc.) but pre-1700 data is benchmark-interpolated; we truncate at 1700 for continuous reliability. Ingested via the long-format CSV mirror on datahub.io.",
+  "datasets": [
+    {
+      "name": "Bank of England Millennium dataset v3.1",
+      "file": "data_raw/boe/annual.csv",
+      "license": "OGL-UK-3.0 (UK Open Government Licence)",
+      "url": "https://datahub.io/economic-history/millennium-macroeconomic-data-uk",
+      "upstream_url": "https://www.bankofengland.co.uk/statistics/research-datasets",
+      "format": "long-format CSV: year, variable_id, variable, section, unit, value",
+      "ingestion_path": "https://datahub.io/economic-history/millennium-macroeconomic-data-uk/_r/-/data/annual.csv (2.7 MB, 22487 rows, 65 variables, 1086-2016)"
+    }
+  ],
+  "variable_codes": [
+    {"variable_code": "BOE_GDP",      "boe_id": "real-uk-gdp-at-market-prices-geographically-consistent",        "start_year": 1700, "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Real UK GDP at market prices, geographically consistent — 316y span."},
+    {"variable_code": "BOE_GDP_LONG", "boe_id": "composite-estimate-of-english-and-geographically-consistent",   "start_year": 1700, "cycle_targets": ["kondratieff"],                       "notes": "Composite England+UK real GDP (Broadberry et al.) — 730y available, truncated at 1700 here. Killer Kondratieff series."},
+    {"variable_code": "BOE_CPI",      "boe_id": "consumer-price-index",                                          "start_year": 1700, "cycle_targets": ["kondratieff"],                       "notes": "CPI — 807y series available (1209+). Kondratieff's canonical price-level variable."},
+    {"variable_code": "BOE_WPI",      "boe_id": "wholesale-producer-price-index",                                "start_year": 1700, "cycle_targets": ["kondratieff", "juglar"],            "notes": "Wholesale producer price index — Juglar's original variable in 1862 ('Des crises commerciales')."},
+    {"variable_code": "BOE_STIR",     "boe_id": "bank-rate",                                                     "start_year": 1700, "cycle_targets": ["kitchin"],                            "notes": "Bank of England base rate — 322y span, available from 1694."},
+    {"variable_code": "BOE_YIELD",    "boe_id": "consols-long-term-government-bond-yields",                      "start_year": 1703, "cycle_targets": ["kondratieff"],                       "notes": "Consols (perpetual) yield — 313y span, the longest continuous long-rate series."},
+    {"variable_code": "BOE_DEBTGDP",  "boe_id": "uk-public-sector-debt",                                          "start_year": 1700, "cycle_targets": ["kondratieff"],                       "notes": "UK public sector debt — Reinhart-Rogoff long-debt thesis."},
+    {"variable_code": "BOE_EQUITY",   "boe_id": "share-prices",                                                  "start_year": 1700, "cycle_targets": ["juglar"],                            "notes": "Share prices — 316y series."},
+    {"variable_code": "BOE_POP",      "boe_id": "population-gb-ni",                                              "start_year": 1700, "cycle_targets": ["kuznets", "kondratieff"],            "notes": "UK population — Kuznets demographic swing."},
+    {"variable_code": "BOE_MONEY",    "boe_id": "broad-money",                                                   "start_year": 1844, "cycle_targets": ["juglar", "kondratieff"],            "notes": "Broad money — 172y span."},
+    {"variable_code": "BOE_CREDIT",   "boe_id": "credit",                                                        "start_year": 1880, "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Aggregate credit — Borio financial cycle."},
+    {"variable_code": "BOE_HPI",      "boe_id": "house-price-index",                                             "start_year": 1845, "cycle_targets": ["kuznets"],                            "notes": "House price index — Kuznets construction swing."},
+    {"variable_code": "BOE_INV",      "boe_id": "real-investment",                                               "start_year": 1830, "cycle_targets": ["juglar"],                            "notes": "Real investment — Schumpeter Juglar driver."},
+    {"variable_code": "BOE_UNRATE",   "boe_id": "unemployment-rate",                                             "start_year": 1760, "cycle_targets": ["juglar"],                            "notes": "Unemployment rate — 256y span."},
+    {"variable_code": "BOE_RCONS",    "boe_id": "real-consumption",                                              "start_year": 1830, "cycle_targets": ["kitchin", "juglar"],                "notes": "Real consumption — RBC cycle driver."},
+    {"variable_code": "BOE_PRD",      "boe_id": "labour-productivity",                                           "start_year": 1856, "cycle_targets": ["kondratieff"],                       "notes": "Labour productivity — Gordon (2016) technology-cycle driver."}
+  ],
+  "groups": ["UK_BOE"]
+}

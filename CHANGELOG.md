@@ -5,6 +5,50 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #13 Phases 0 + 1 : JST R6 élargi + Bank of England Millennium
+
+**Phase 0 — JST R6 élargi** (gain immédiat, zéro coût d'ingestion) :
+le manifest `long_history_manifest.json` passe de **7 à 35 variables**
+en exposant les colonnes JST R6 jusqu'ici non utilisées (RORE returns,
+mortgages, dette publique, current account, total credit, debt service,
+investment-to-GDP, unemployment, wages, etc.). Même fichier Stata, mêmes
+18 pays, même 1870-2020. Conformément à la thèse centrale (cf.
+[[cpv-central-thesis]]), cela enrichit massivement le périmètre du test
+Gate 1 par variable (`evidence-per-variable`) — on peut désormais tester
+le crédit business séparément du crédit ménages séparément des
+mortgages, l'investissement séparément de la consommation, etc.
+
+**Phase 1 — Bank of England Millennium dataset** : nouveau module
+`ecowave/cycles/boe_millennium.py`, nouveau manifest
+`boe_millennium_manifest.json`, nouvel horizon `boe` dans
+`position-cycles`. Source : BoE WP 845 v3.1 (Thomas & Dimsdale 2017,
+data jusqu'à 2016), miroir CSV propre sur `datahub.io` (le xlsx BoE
+direct retourne 403 Cloudflare). License OGL-UK-3.0 (open).
+
+- **316 ans** de données annuelles UK (1700-2016), **16 variables**
+  couvrant GDP, CPI, WPI, Bank Rate (1694+), Consols yield (1703+),
+  broad money, credit, HPI, equity, investment, unemployment,
+  productivity, debt-to-GDP, population, real consumption.
+- **Résultat scientifique fort** : sur 316 ans = ~5-8 K-waves
+  théoriques, **UK_BOE Kondratieff reste rejeté à p=0.892** sur le
+  composite — confirmation empirique massive de
+  [Maddison (1991)](docs/bibliographie.md#maddison-1991) et
+  [Solomou (1987)](docs/bibliographie.md#solomou-1987). Le seul cycle
+  survivant est Kuznets : `p=0.024 (🟡)`, phase contraction,
+  trajectoire vers un pic dans ~7.8 ans.
+
+Intégration site :
+- `UK_BOE` ajouté au dashboard home (21e ligne) et à la matrice
+  p-values.
+- Note signée `cycle_position_2026_05_boe.md` publiée sous section 1
+  de la nav.
+- `position-cycles --horizon boe` dans la CLI.
+- `home-synthesis` lit désormais aussi le sidecar `boe`.
+
+Téléchargement : `mkdir -p data_raw/boe && curl -sL
+"https://datahub.io/economic-history/millennium-macroeconomic-data-uk/_r/-/data/annual.csv"
+-o data_raw/boe/annual.csv`.
+
 ### Évidence par variable + bibliographie critique : thèse centrale du papier
 
 **Résultat empirique central** : sur **548 cellules** (variable × agrégat

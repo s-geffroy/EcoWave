@@ -31,8 +31,8 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | contraction | falling | 📈 max dans 3.5 ans |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 1.8 ans |
+| Juglar ⚠️ | disputed | rising (post-trough) | 📈 max dans 3.3 ans |
+| Kuznets ⚠️ | disputed | rising | 📈 max dans 2.5 ans |
 | Kondratieff ⚠️ | rejected | — | — |
 
 ### ANGLO
@@ -40,7 +40,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | rising | 📈 max dans 1.5 ans |
+| Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -50,24 +50,24 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 |---|---|---|---|
 | Kitchin | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 4.0 ans |
-| Kondratieff ⚠️ | rejected | — | — |
+| Kuznets ⚠️ | expansion | rising | 📈 max dans 4.1 ans |
+| Kondratieff ⚠️ | contraction | rising | 📈 max dans 5 mois |
 
 ### G7
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | falling | 📈 max dans 3.8 ans |
-| Kuznets ⚠️ | disputed | rising | 📈 max dans 1.4 ans |
-| Kondratieff ⚠️ | disputed | rising (post-trough) | 📈 max dans 16 ans |
+| Juglar ⚠️ | contraction | falling | 📈 max dans 3.6 ans |
+| Kuznets ⚠️ | disputed | rising | 📈 max dans 2.4 ans |
+| Kondratieff ⚠️ | rejected | — | — |
 
 ### NORDIC
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin | rejected | — | — |
-| Juglar ⚠️ | rejected | — | — |
+| Kitchin | disputed | rising (post-peak) | 📉 min dans 2.2 ans |
+| Juglar ⚠️ | contraction | falling | 📈 max dans 3.9 ans |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -76,7 +76,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | disputed | rising (post-trough) | 📈 max dans 2.3 ans |
+| Juglar ⚠️ | expansion | rising | 📈 max dans 7 mois |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -86,57 +86,63 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | group_code   | kitchin   | juglar      | kuznets   | kondratieff   |
 |:-------------|:----------|:------------|:----------|:--------------|
-| ADV18        | rejected  | contraction | disputed  | rejected      |
-| ANGLO        | rejected  | disputed    | rejected  | rejected      |
-| EU4          | rejected  | rejected    | disputed  | rejected      |
-| G7           | rejected  | disputed    | disputed  | disputed      |
-| NORDIC       | rejected  | rejected    | rejected  | rejected      |
-| USA          | rejected  | disputed    | rejected  | rejected      |
+| ADV18        | rejected  | disputed    | disputed  | rejected      |
+| ANGLO        | rejected  | rejected    | rejected  | rejected      |
+| EU4          | rejected  | rejected    | expansion | contraction   |
+| G7           | rejected  | contraction | disputed  | rejected      |
+| NORDIC       | disputed  | contraction | rejected  | rejected      |
+| USA          | rejected  | expansion   | rejected  | rejected      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| ADV18        |     0.259 |    0.02  |     0.017 |         0.3   |
-| ANGLO        |     0.76  |    0.001 |     0.26  |         0.946 |
-| EU4          |     0.471 |    0.411 |     0.01  |         0.142 |
-| G7           |     0.207 |    0.005 |     0.008 |         0.001 |
-| NORDIC       |     0.161 |    0.089 |     0.367 |         0.608 |
-| USA          |     0.098 |    0.001 |     0.073 |         0.808 |
+| ADV18        |     0.86  |    0.001 |     0.001 |         0.684 |
+| ANGLO        |     0.994 |    0.953 |     0.408 |         0.758 |
+| EU4          |     0.238 |    0.596 |     0.001 |         0.001 |
+| G7           |     0.706 |    0.041 |     0.001 |         0.13  |
+| NORDIC       |     0.003 |    0.009 |     0.363 |         0.247 |
+| USA          |     0.566 |    0.015 |     0.888 |         0.996 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
 | cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
 |:------------|:--------------|----------------------:|-----------------:|:---------|
 | kitchin     | rejected      |                     0 |                6 | regional |
-| juglar      | contraction   |                     1 |                6 | regional |
-| kuznets     | rejected      |                     0 |                6 | regional |
-| kondratieff | rejected      |                     0 |                6 | regional |
+| juglar      | contraction   |                     2 |                6 | regional |
+| kuznets     | expansion     |                     1 |                6 | regional |
+| kondratieff | contraction   |                     1 |                6 | regional |
 
 ## Votes par modèle (D/E/F/G) — détail Gate 2
 
+### Kitchin
+
+| group_code   | D         | E      | F    | G         |
+|:-------------|:----------|:-------|:-----|:----------|
+| NORDIC       | expansion | trough | peak | expansion |
+
 ### Juglar
 
-| group_code   | D           | E         | F           | G           |
-|:-------------|:------------|:----------|:------------|:------------|
-| ADV18        | contraction | peak      | contraction | contraction |
-| ANGLO        | trough      | trough    | expansion   | expansion   |
-| G7           | peak        | peak      | contraction | contraction |
-| USA          | peak        | expansion | trough      | expansion   |
+| group_code   | D           | E           | F           | G           |
+|:-------------|:------------|:------------|:------------|:------------|
+| ADV18        | contraction | trough      | trough      | contraction |
+| G7           | contraction | contraction | contraction | contraction |
+| NORDIC       | peak        | contraction | contraction | contraction |
+| USA          | peak        | expansion   | expansion   | expansion   |
 
 ### Kuznets
 
-| group_code   | D           | E      | F         | G         |
-|:-------------|:------------|:-------|:----------|:----------|
-| ADV18        | contraction | trough | expansion | expansion |
-| EU4          | contraction | trough | expansion | expansion |
-| G7           | contraction | trough | expansion | expansion |
+| group_code   | D           | E         | F         | G         |
+|:-------------|:------------|:----------|:----------|:----------|
+| ADV18        | contraction | trough    | expansion | expansion |
+| EU4          | trough      | expansion | expansion | expansion |
+| G7           | trough      | trough    | expansion | expansion |
 
 ### Kondratieff
 
-| group_code   | D    | E    | F      | G           |
-|:-------------|:-----|:-----|:-------|:------------|
-| G7           | peak | peak | trough | contraction |
+| group_code   | D         | E           | F         | G           |
+|:-------------|:----------|:------------|:----------|:------------|
+| EU4          | expansion | contraction | expansion | contraction |
 
 ## Figures
 
@@ -184,7 +190,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T07:54:41+00:00
+- Date de la note : 2026-05-29T09:27:44+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`
