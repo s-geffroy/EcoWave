@@ -5,6 +5,29 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### GitHub Pages : dashboard agrégats en home (20 × 14)
+
+Le snippet inclus dans `docs/index.md` n'est plus le tableau 4 lignes
+"un cycle = un agrégat canonique" mais un **dashboard 20 lignes ×
+14 colonnes** (Agrégat, Source + 4 cycles × {Phase, Tendance, Next}).
+Vingt agrégats : 8 WB (WLD > G7 > OECD > BRICS > HIC > UMC > LMC >
+LIC), 6 Path 5 trimestriel (G7Q, OECDQ, USA, EA, JPN, GBR), 6 histoire
+longue (ADV18, G7, EU4, ANGLO, NORDIC, USA), dans cet ordre canonique
+figé. Cellules `—` lorsque la Porte 1 dual-null a rejeté le cycle
+sur l'agrégat — fidèle au principe "publier les échecs" mais sans
+saturer visuellement (em-dash plutôt que texte `rejected`).
+
+- Nouvelle fonction `render_home_aggregates_table()` +
+  constantes `AGGREGATE_ROW_ORDER` et `HORIZON_LABEL_SHORT` dans
+  `ecowave/cycles/report.py`.
+- La commande `ecowave home-synthesis` écrit désormais le dashboard
+  dans `docs/_includes/home_synthesis_table.md` (la note signée
+  multi-horizons conserve, elle, le tableau 4 lignes en headline).
+- `docs/index.md` met à jour le paragraphe d'introduction.
+- Tests : 3 cas supplémentaires (`test_aggregate_row_order_covers_3_horizons`,
+  `test_home_aggregates_table_renders_surviving_cells_and_emdashes`,
+  `test_home_aggregates_table_link_prefix_override`).
+
 ### GitHub Pages : refonte du site et tableau de synthèse en home
 
 Refonte complète du site MkDocs (`https://s-geffroy.github.io/EcoWave/`)

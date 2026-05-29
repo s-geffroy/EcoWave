@@ -4,11 +4,13 @@ from __future__ import annotations
 import pandas as pd
 
 from ecowave.cycles.report import (
+    AGGREGATE_ROW_ORDER,
     CANONICAL_HOME_ROWS,
     build_position_table,
     positions_sidecar_path,
     read_positions_sidecar,
     render_cross_horizon_synthesis_md,
+    render_home_aggregates_table,
     render_home_synthesis_table,
     write_positions_sidecar,
 )
@@ -86,6 +88,49 @@ def test_sidecar_handles_empty_table(tmp_path):
     write_positions_sidecar(build_position_table([]), sidecar)
     assert sidecar.read_text(encoding="utf-8") == "[]"
     assert read_positions_sidecar(sidecar).empty
+
+
+def test_aggregate_row_order_covers_3_horizons():
+    horizons = {h for h, _ in AGGREGATE_ROW_ORDER}
+    assert horizons == {"wb", "q", "long"}
+    assert len(AGGREGATE_ROW_ORDER) == 20  # 8 + 6 + 6
+    # Canonical WB ordering pinned by the user.
+    wb_order = [g for h, g in AGGREGATE_ROW_ORDER if h == "wb"]
+    assert wb_order == ["WLD", "G7", "OECD", "BRICS",
+                         "HIC", "UMC", "LMC", "LIC"]
+
+
+def test_home_aggregates_table_renders_surviving_cells_and_emdashes():
+    by_horizon = _three_horizon_fixtures()
+    # Add a Long-G7 Juglar row that should appear in the dashboard.
+    long = by_horizon["long"]
+    by_horizon["long"] = build_position_table(
+        long.to_dict(orient="records") + [
+            _row("ANGLO", "juglar", "expansion", trend="rising",
+                 next_kind="max", next_eta_years=1.5, endpoint_caveat=1),
+        ]
+    )
+    md = render_home_aggregates_table(by_horizon, "2026-05")
+    # Header has Agrégat + Source + 4 × 3 metric columns = 14.
+    header = next(l for l in md.split("\n") if l.startswith("| Agrégat"))
+    assert header.count("|") == 15  # 14 cols → 15 pipes including the outer ones
+    # WB WLD: Kitchin + Kondratieff survive, Juglar + Kuznets are "—".
+    wld_row = next(l for l in md.split("\n") if l.startswith("| `WLD` |"))
+    assert "contraction ⚠️ | falling | 📉 min dans 5 mois" in wld_row
+    assert "contraction ⚠️ | rising | 📈 max dans 7.3 ans" in wld_row
+    # Long ANGLO Juglar survives.
+    anglo_row = next(l for l in md.split("\n") if l.startswith("| `ANGLO` |"))
+    assert "expansion ⚠️ | rising | 📈 max dans 1.5 ans" in anglo_row
+    # WB UMC: no fixture data — every metric column should be em-dashes.
+    umc_row = next(l for l in md.split("\n") if l.startswith("| `UMC` |"))
+    assert umc_row.count("—") == 12  # 4 cycles × 3 metrics
+    # Footer links use the default "reports/" prefix for home consumption.
+    assert "[Banque mondiale](reports/cycle_position_2026_05_wb.md)" in md
+
+
+def test_home_aggregates_table_link_prefix_override():
+    md = render_home_aggregates_table({}, "2026-05", link_prefix="")
+    assert "[Banque mondiale](cycle_position_2026_05_wb.md)" in md
 
 
 def test_cross_horizon_synthesis_md_writes_signed_note(tmp_path):

@@ -48,6 +48,28 @@ HORIZON_LABELS: dict[str, str] = {
     "long": "Histoire longue (1870-2022)",
 }
 
+# Short labels used as the "Source" column of the home dashboard table — kept
+# narrow so the 14-column layout doesn't blow out on desktop.
+HORIZON_LABEL_SHORT: dict[str, str] = {
+    "wb": "WB",
+    "q": "Path 5",
+    "long": "Long",
+}
+
+# Row order for the home dashboard table. Within each horizon block the order
+# is what the user pinned: WB block led by WLD (most global), then G7 / OECD /
+# BRICS / income tiers; quarterly block opens with the composites (G7Q, OECDQ)
+# then the four country series; long-history block opens with the broadest
+# aggregate (ADV18) then narrower subsets.
+AGGREGATE_ROW_ORDER: tuple[tuple[str, str], ...] = (
+    ("wb", "WLD"), ("wb", "G7"), ("wb", "OECD"), ("wb", "BRICS"),
+    ("wb", "HIC"), ("wb", "UMC"), ("wb", "LMC"), ("wb", "LIC"),
+    ("q", "G7Q"), ("q", "OECDQ"), ("q", "USA"), ("q", "EA"),
+    ("q", "JPN"), ("q", "GBR"),
+    ("long", "ADV18"), ("long", "G7"), ("long", "EU4"),
+    ("long", "ANGLO"), ("long", "NORDIC"), ("long", "USA"),
+)
+
 GROUP_GLOSSARY = {
     "WLD": "Monde — agrégat World Bank (population + GDP pondérés)",
     "OECD": "OECD — 38 pays membres de l'Organisation de Coopération et de Développement Économiques",
@@ -197,6 +219,65 @@ def render_home_synthesis_table(by_horizon: dict[str, pd.DataFrame],
         f"[Panel Banque mondiale]({link_prefix}cycle_position_2026_05_wb.md) · "
         f"[Panel trimestriel]({link_prefix}cycle_position_2026_05_q.md) · "
         f"[Histoire longue]({link_prefix}cycle_position_2026_05_long.md)."
+    )
+    return "\n".join(lines)
+
+
+def render_home_aggregates_table(by_horizon: dict[str, pd.DataFrame],
+                                 as_of: str,
+                                 link_prefix: str = "reports/") -> str:
+    """Per-aggregate dashboard for the homepage.
+
+    Twenty rows (8 WB + 6 quarterly + 6 long history) × fourteen columns
+    (Agrégat, Source + 4 cycles × {Phase, Tendance, Next}). Cells where Gate 1
+    rejected the cycle are rendered as ``—`` per the "publish failures"
+    convention. Row order is ``AGGREGATE_ROW_ORDER`` — locked so successive
+    runs produce visually diff-able snippets.
+    """
+    cycles = ("kitchin", "juglar", "kuznets", "kondratieff")
+    lines: list[str] = []
+    lines.append(
+        f"### Tableau de bord — phase, tendance et prochain extremum ({as_of})"
+    )
+    lines.append("")
+    header_cells = ["Agrégat", "Source"]
+    for cycle in cycles:
+        header_cells.extend([cycle.capitalize(), "Tendance", "Next"])
+    lines.append("| " + " | ".join(header_cells) + " |")
+    lines.append("|" + "---|" * len(header_cells))
+
+    any_caveat = False
+    for horizon, group in AGGREGATE_ROW_ORDER:
+        table = by_horizon.get(horizon, build_position_table([]))
+        source_label = HORIZON_LABEL_SHORT.get(horizon, horizon)
+        row_cells = [f"`{group}`", source_label]
+        for cycle in cycles:
+            cell = _select_canonical_row(table, cycle, group)
+            phase_raw = str(cell.get("phase")) if cell else None
+            if cell is None or phase_raw in (None, "rejected"):
+                row_cells.extend(["—", "—", "—"])
+                continue
+            trend = cell.get("trend") or "—"
+            nxt = _format_next({"next_kind": cell.get("next_kind", "—"),
+                                "next_eta_years": cell.get("next_eta_years")})
+            caveat = " ⚠️" if int(cell.get("endpoint_caveat") or 0) == 1 else ""
+            if caveat:
+                any_caveat = True
+            row_cells.extend([phase_raw + caveat, trend, nxt])
+        lines.append("| " + " | ".join(row_cells) + " |")
+    lines.append("")
+    if any_caveat:
+        lines.append(
+            "_⚠️ = effet endpoint CF dominant sur les dernières `hi_years/2` "
+            "années ; la prévision donne l'ordre de grandeur, pas la date exacte._"
+        )
+        lines.append("")
+    lines.append(
+        "Notes signées : "
+        f"[Banque mondiale]({link_prefix}cycle_position_2026_05_wb.md) · "
+        f"[Path 5 trimestriel]({link_prefix}cycle_position_2026_05_q.md) · "
+        f"[Histoire longue]({link_prefix}cycle_position_2026_05_long.md) · "
+        f"[Synthèse multi-horizons]({link_prefix}cycle_position_synthesis.md)."
     )
     return "\n".join(lines)
 
