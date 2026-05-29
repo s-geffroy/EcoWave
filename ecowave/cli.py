@@ -192,6 +192,101 @@ def home_synthesis(
     typer.echo(f"Synthesis note : {note_out}")
 
 
+@app.command("evidence-per-variable")
+def evidence_per_variable(
+    as_of: str = typer.Option("2026-05", "--as-of",
+                              help="Target month (YYYY-MM) for the per-variable run."),
+    null: str = typer.Option(
+        "dual", "--null",
+        help="Gate-1 null: 'ar1', 'phase', 'wavelet' or 'dual'. "
+             "Default 'dual' for consistency with the composite runs.",
+    ),
+    n_surrogates: int = typer.Option(1000, "--n-surrogates"),
+    seed: int = typer.Option(0, "--seed"),
+    out_dir: str = typer.Option(
+        "/app/reports", "--out-dir",
+        help="Directory where per-variable JSON sidecars are written."),
+    page_out: str = typer.Option(
+        "/app/docs/evidence_per_variable.md", "--page-out",
+        help="Path to the generated docs page."),
+) -> None:
+    """Run Gate 1 on **each individual variable** for the 3 horizons.
+
+    Demonstrates the central thesis: cycles canoniques survive on
+    sector-specific series (Kitchin → inventory/investment, Juglar → credit,
+    etc.) but are diluted by the equal-weight composite. Reuses
+    ``cycle_observations`` / ``cycle_observations_quarterly`` from SQLite —
+    no re-ingestion required.
+    """
+    from pathlib import Path
+
+    from ecowave.cycles.evidence import (
+        HORIZON_VARIABLE_SOURCE,
+        _load_annual_panel,
+        _load_quarterly_panel,
+        _load_variable_codes,
+        compute_per_variable_evidence,
+        read_evidence_sidecar,
+        render_evidence_per_variable_md,
+        write_evidence_sidecar,
+    )
+    from ecowave.db import connect
+
+    if null not in {"ar1", "phase", "wavelet", "dual"}:
+        raise typer.BadParameter("--null must be ar1, phase, wavelet, or dual.")
+
+    settings = Settings.from_env()
+    con = connect(settings.db_path)
+
+    horizon_groups = {
+        "wb":   ["WLD", "OECD", "HIC", "UMC", "LMC", "LIC", "G7", "BRICS"],
+        "q":    ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"],
+        "long": ["ADV18", "G7", "USA", "EU4", "ANGLO", "NORDIC"],
+    }
+    out_root = Path(out_dir)
+    evidence_dfs: dict[str, "pd.DataFrame"] = {}  # type: ignore[name-defined]
+
+    for horizon, groups in horizon_groups.items():
+        manifest_path, kind = HORIZON_VARIABLE_SOURCE[horizon]
+        variable_codes = _load_variable_codes(manifest_path)
+        loader = _load_quarterly_panel if kind == "quarterly" else _load_annual_panel
+        samples_per_year = 4.0 if kind == "quarterly" else 1.0
+        panels_by_group: dict[str, "pd.DataFrame"] = {}  # type: ignore[name-defined]
+        for group in groups:
+            panel = loader(con, group, variable_codes)
+            if not panel.empty:
+                panels_by_group[group] = panel
+        if not panels_by_group:
+            typer.echo(
+                f"horizon={horizon}: no observations in DB — skipped. "
+                f"Run `ecowave position-cycles --horizon {horizon}` first.",
+                err=True,
+            )
+            continue
+        typer.echo(
+            f"horizon={horizon}: {len(panels_by_group)} groups × "
+            f"{len(variable_codes)} variables — running Gate 1 per variable…"
+        )
+        records = compute_per_variable_evidence(
+            panels_by_group, samples_per_year=samples_per_year,
+            n_surrogates=n_surrogates, null=null, seed=seed,
+        )
+        sidecar = out_root / f"cycle_position_per_variable_{as_of.replace('-','_')}_{horizon}.json"
+        write_evidence_sidecar(records, sidecar)
+        evidence_dfs[horizon] = read_evidence_sidecar(sidecar)
+        typer.echo(f"  → {sidecar} ({len(records)} cells)")
+
+    con.close()
+
+    render_evidence_per_variable_md(
+        evidence_by_horizon=evidence_dfs,
+        groups_by_horizon=horizon_groups,
+        as_of=as_of,
+        out_path=Path(page_out),
+    )
+    typer.echo(f"Evidence page written: {page_out}")
+
+
 @app.command("sources")
 def sources(
     output: str = typer.Option("/app/docs/sources.md", "--output"),
