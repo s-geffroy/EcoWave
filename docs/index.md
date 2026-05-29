@@ -10,15 +10,16 @@
 
 ## Où en sommes-nous ?
 
-Tableau de synthèse : une ligne par cycle, agrégat canonique sélectionné
-selon la **plus haute fréquence d'échantillonnage compatible** avec la bande
-visée (Kitchin → trimestriel, Juglar/Kuznets → annuel WB, Kondratieff →
-histoire longue). Chaque cellule est traçable à une ligne SQLite
+Tableau de bord par agrégat : 20 lignes (8 WB + 6 Path 5 trimestriel +
+6 histoire longue) × 4 cycles × {phase, tendance, prochain extremum}.
+Cellules `—` lorsque la Porte 1 (dual null, α = 0.05) a rejeté le cycle
+sur l'agrégat correspondant — fidèle au principe **"le protocole publie
+ses échecs"**. Chaque cellule est traçable à une ligne SQLite
 `cycle_positions` ; aucune valeur agrégée artificiellement entre datasets.
 
 --8<-- "_includes/home_synthesis_table.md"
 
-Lecture transversale détaillée et panels étendus :
+Lecture transversale détaillée, commentaire par cycle et panels étendus :
 [Synthèse multi-horizons](reports/cycle_position_synthesis.md).
 
 <figure markdown>

@@ -147,7 +147,7 @@ def home_synthesis(
         positions_sidecar_path,
         read_positions_sidecar,
         render_cross_horizon_synthesis_md,
-        render_home_synthesis_table,
+        render_home_aggregates_table,
     )
     from ecowave.db import get_schema_version
 
@@ -169,7 +169,7 @@ def home_synthesis(
     snippet_path = Path(snippet_out)
     snippet_path.parent.mkdir(parents=True, exist_ok=True)
     snippet_path.write_text(
-        render_home_synthesis_table(by_horizon, as_of) + "\n",
+        render_home_aggregates_table(by_horizon, as_of) + "\n",
         encoding="utf-8",
     )
     schema_version = get_schema_version(settings.db_path) or "unknown"
