@@ -4,7 +4,7 @@
 
 ## Résultat global
 
-Sur **548 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **8 survivent Gate 1** dual-null à α = 0.05 — soit **1.5%**.
+Sur **724 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **15 survivent Gate 1** dual-null à α = 0.05 — soit **2.1%**.
 
 **Comparaison avec les composites** (cf. [home dashboard](index.md#ou-en-sommes-nous)) : Gate 1 sur les agrégats composites laisse passer environ 25-30% des cellules. L'écart s'explique mécaniquement — sommer plusieurs séries z-scorées crée des artefacts de variance autocorrélée qui battent un null AR(1), même quand aucune des séries n'a individuellement de signal cyclique. **C'est exactement le diagnostic posé par [Wen (2005)](bibliographie.md#wen-2005) sur le cycle d'inventaire et par [Solomou (1987)](bibliographie.md#solomou-1987) sur Kuznets/Kondratieff il y a 40 et 20 ans respectivement.**
 
@@ -182,17 +182,14 @@ _Référence critique : [Garvy 1943](bibliographie.md#garvy-1943), [Mansfield 19
 
 Pour chaque cycle, on isole l'agrégat avec le plus de variables survivantes — c'est là que le cycle est le mieux documenté. Les cellules sont les p-values brutes ; vert (`p ≤ 0.05`) marque les variables porteuses.
 
-### Kitchin → LIC (horizon `wb`)
+### Kitchin → MX_BIS (horizon `bis`)
 
 | Variable | p-value Gate 1 | Survit ? | n observations |
 |---|---:|:---:|---:|
-| `CY_INV` | 0.029 | ✅ | 34 |
-| `CY_UEM` | 0.272 | ❌ | 35 |
-| `CY_PRD` | 0.320 | ❌ | 45 |
-| `CY_GDP` | 0.467 | ❌ | 44 |
-| `CY_TRD` | 0.736 | ❌ | 34 |
-| `CY_FIN` | 0.963 | ❌ | 60 |
-| `CY_POP` | 1.000 | ❌ | 65 |
+| `BIS_CRATIO` | 0.050 | ✅ | 180 |
+| `BIS_TCRED` | 0.050 | ✅ | 180 |
+| `BIS_CGAP` | 0.879 | ❌ | 140 |
+| `BIS_RPP` | 0.998 | ❌ | 84 |
 
 ### Kuznets → BRICS (horizon `wb`)
 
@@ -222,7 +219,7 @@ Pour chaque cycle, on isole l'agrégat avec le plus de variables survivantes —
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T09:42:28+00:00
+- Date de la note : 2026-05-29T10:36:57+00:00
 - As-of : 2026-05
 - Pipeline : `ecowave evidence-per-variable`
 - Null : dual (AR(1) + phase-scramble), 1000 surrogates, α=0.05

@@ -5,6 +5,51 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Étude de cas CN_BIS Kondratieff — démasque un artefact d'agrégation
+
+Dive deep sur le seul Kondratieff survivant hors `WLD-WB` :
+`CN_BIS K p=0.025 (peak)`. L'évidence par variable montre que
+**aucune des 4 séries BIS chinoises individuelles** ne porte de
+signal Kondratieff (BIS_CRATIO et BIS_TCRED à `p=1.000`, BIS_RPP
+à `p=0.108`, BIS_CGAP à `p=0.335`). La survie composite était
+**créée par l'agrégation**.
+
+Diagnostic en deux temps :
+1. **Bug de filtre BIS** — `BIS_TCRED` et `BIS_CRATIO` chargeaient
+   la même série ("Credit to Private non-financial sector from
+   All sectors at Market value - % of GDP"). Le composite z-scoré
+   pondérait cette série 50 % du temps, doublant son influence.
+2. **Transition structurelle 1985-2025 chinoise** — crédit-PIB
+   chinois passe de 62 % à 200 % avec CAGR 3.2 %/an, R² log-linéaire
+   = 0.956, ACF=0.998. Sur 40 ans, le filtre band-pass [40-60y]
+   capture la rampe comme un demi-cycle K.
+
+Fix : `load_total_credit` remplace le filtre `TC_BORROWERS='P'`
+(privé tous) par une décomposition Mian-Sufi sectorielle —
+`BIS_HHCRED` (households), `BIS_BUSCRED` (corporates),
+`BIS_GVCRED` (general government). Manifest mis à jour.
+
+Vérification post-fix :
+
+| Cycle | p avant (dupliqué) | p après (décomposé) | Verdict |
+|---|---|---|---|
+| Kitchin | 0.044 🟡 | 0.091 🟠 | survie → marginal |
+| Kondratieff | **0.025 🟡** | **0.051 🟠** | **survie → rejected** |
+
+**Le seul K hors WLD-WB disparaît avec la duplication corrigée**.
+Cohérent avec [Maddison (1991)](docs/bibliographie.md#maddison-1991) :
+les transitions structurelles visibles ne sont pas des K-waves
+endogènes. La résiduelle `p=0.051` (juste sous le seuil) reste
+explicable par la signature de bord du structural break.
+
+Nouvelle page `docs/case_study_cn_bis_kondratieff.md` ajoutée à
+la section 1 de la nav. Documente le diagnostic en 5 étapes
+(coverage / forme / votes inter-méthode / per-variable / mécanisme
+d'artefact) et tire les implications pour le protocole CPV
+(évidence par variable = garde-fou critique ; sample minimum
+N≥2 cycles pour Kondratieff = 120 ans ; hygiène de
+non-duplication dans le compositing).
+
 ### Roadmap #13 Phase 2 : BIS macroprudential — 9 EM + 8 AE quarterly
 
 Nouveau module `ecowave/cycles/bis_bulk.py`, nouveau manifest

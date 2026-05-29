@@ -37,10 +37,12 @@ from ecowave.cycles.bands import CYCLE_BANDS
 
 
 HORIZON_VARIABLE_SOURCE: dict[str, tuple[str, str | None]] = {
-    # (manifest_path, samples_per_year [None for annual])
+    # (manifest_path, frequency_marker — "quarterly" or None for annual)
     "wb":   ("/app/cycles_manifest.json", None),
     "q":    ("/app/quarterly_manifest.json", "quarterly"),
     "long": ("/app/long_history_manifest.json", None),
+    "boe":  ("/app/boe_millennium_manifest.json", None),
+    "bis":  ("/app/bis_manifest.json", "quarterly"),
 }
 
 

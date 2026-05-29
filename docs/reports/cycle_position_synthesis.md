@@ -163,9 +163,13 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 _Aucun agrégat canonique disponible pour cet horizon._
 
+### BIS macroprudential (1970-2025, EM+AE)
+
+_Aucun agrégat canonique disponible pour cet horizon._
+
 ## Sign-off
 
-- Date de la note : 2026-05-29T09:42:59+00:00
+- Date de la note : 2026-05-29T10:41:55+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave home-synthesis`
