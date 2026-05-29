@@ -329,6 +329,58 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
     )
 
 
+def _per_variable_gate1_check(panel: pd.DataFrame, lo: float, hi: float,
+                              null: str, n_surrogates: int, seed: int,
+                              samples_per_year: float = 1.0,
+                              differencing: bool = False) -> tuple[list[str], int]:
+    """Roadmap #14 safeguard — count variables that survive Gate 1 individually.
+
+    Returns ``(survivor_codes, n_tested)``. A composite Gate 1 survival
+    should be backed by at least one individual variable; otherwise the
+    composite is an aggregation artifact (cf. ``case_study_g7_long_uk_boe_kondratieff.md``).
+    Mirrors the differencing applied to the composite for the K band so the
+    safeguard is internally consistent — testing levels here while the
+    composite is on differences would compare apples to oranges.
+
+    Uses a permissive sample-size guard (16 observations minimum, the same
+    threshold as ``evidence.py``) rather than the strict CF-band-pass
+    ``2 * hi_years`` because the surrogate generators degrade gracefully on
+    short samples — we want the safeguard to fire even when the band-pass
+    cannot run cleanly, since that's precisely when artifacts dominate.
+    """
+    if panel is None or panel.empty:
+        return [], 0
+    work_panel = panel.diff().dropna(how="all") if differencing else panel
+    survivors: list[str] = []
+    n_tested = 0
+    for col in work_panel.columns:
+        series = work_panel[col].dropna()
+        if series.size < 16:
+            continue
+        std = series.std()
+        if std == 0 or pd.isna(std):
+            continue
+        z = (series - series.mean()) / std
+        if z.isna().all():
+            continue
+        try:
+            null_res = _run_gate1(z, lo, hi, null,
+                                   n_surrogates=n_surrogates, seed=seed,
+                                   samples_per_year=samples_per_year)
+        except Exception:  # noqa: BLE001
+            continue
+        n_tested += 1
+        if null_res is None:
+            continue
+        if isinstance(null_res, dict):
+            reject = bool(null_res["reject_cycle"])
+        else:
+            reject = bool(null_res.reject_cycle)
+        if not reject:
+            survivors.append(str(col))
+    return survivors, n_tested
+
+
 def _run_gate1(series: pd.Series, lo: float, hi: float, null: str,
                 n_surrogates: int, seed: int,
                 samples_per_year: float = 1.0):
@@ -419,6 +471,8 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
             # column with zero band content is z-scored to noise then
             # averaged in). Falls back to the full panel when no targeting
             # info is supplied.
+            band_panel: pd.DataFrame | None = None
+            differencing = (cycle_name == "kondratieff")
             if panel is not None and not panel.empty:
                 if targets_by_var:
                     band_cols = [c for c in panel.columns
@@ -434,7 +488,6 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
                 # spurious K-cycle signatures on samples too short for genuine K
                 # detection. First-differencing converts levels into growth
                 # rates that are typically mean-reverting and don't leak.
-                differencing = (cycle_name == "kondratieff")
                 band_composite = _composite_panel(
                     band_panel, band=(lo, hi),
                     samples_per_year=samples_per_year,
@@ -467,6 +520,31 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
 
             reject, p_value = _null_props(null_res)
 
+            # Roadmap #14 safeguard — require ≥1 individual variable to also
+            # survive Gate 1 before publishing a composite-surviving cell.
+            # Catches the aggregation artifacts diagnosed in
+            # `case_study_cn_bis_kondratieff.md` (duplicate series),
+            # `case_study_wld_wb_kondratieff.md` (trend-dominated composite)
+            # and `case_study_g7_long_uk_boe_kondratieff.md` (post-differencing
+            # cross-variable phase coherence). The safeguard is only invoked
+            # when the composite says SURVIVES — composite-rejections are
+            # honest by construction and don't need backing.
+            veto_note = ""
+            if not reject:
+                survivors, n_tested = _per_variable_gate1_check(
+                    band_panel, lo, hi, null,
+                    n_surrogates=n_surrogates, seed=seed,
+                    samples_per_year=samples_per_year,
+                    differencing=differencing,
+                )
+                if n_tested > 0 and not survivors:
+                    reject = True
+                    veto_note = (
+                        f"Roadmap #14 veto: composite p={p_value:.3f} but "
+                        f"0/{n_tested} individual variables survive Gate 1 — "
+                        f"likely aggregation artifact."
+                    )
+
             # If cycle doesn't survive Gate 1, publish rejected and skip Gate 2.
             if reject:
                 positions.append({
@@ -476,7 +554,7 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
                     "separable": 0,
                     "endpoint_caveat": _endpoint_caveat(band, last_year, current_year),
                     "trend": "—", "next_kind": "—", "next_eta_years": None,
-                    "notes": f"Gate 1 ({null}) rejected.",
+                    "notes": veto_note or f"Gate 1 ({null}) rejected.",
                 })
                 continue
 

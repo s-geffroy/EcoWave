@@ -86,6 +86,7 @@ nav:
       - Fenêtres de référence: methodology/fenetres_reference.md
       - Feuille de route: methodology/feuille_de_route.md
       - "Différenciation pour Kondratieff (anti-trend-leakage)": methodology_differencing_for_kondratieff.md
+      - "Garde-fou per-variable Roadmap #14 (anti-aggregation)": methodology_safeguard_roadmap_14.md
   - 4. Preuves détaillées:
       - Panel Banque mondiale (note signée): reports/panel_banque_mondiale_2026.md
       - Panel trimestriel (note signée): reports/panel_trimestriel_2026.md

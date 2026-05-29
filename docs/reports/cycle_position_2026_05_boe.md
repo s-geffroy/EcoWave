@@ -32,16 +32,16 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 |---|---|---|---|
 | Kitchin | rejected | — | — |
 | Juglar | rejected | — | — |
-| Kuznets ⚠️ | contraction | falling | 📈 max dans 7.8 ans |
-| Kondratieff ⚠️ | contraction | falling | 📈 max dans 19 ans |
+| Kuznets ⚠️ | rejected | — | — |
+| Kondratieff ⚠️ | rejected | — | — |
 
 _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._
 
 ## Matrice de phase (Gate 2 — consensus inter-méthode)
 
-| group_code   | kitchin   | juglar   | kuznets     | kondratieff   |
-|:-------------|:----------|:---------|:------------|:--------------|
-| UK_BOE       | rejected  | rejected | contraction | contraction   |
+| group_code   | kitchin   | juglar   | kuznets   | kondratieff   |
+|:-------------|:----------|:---------|:----------|:--------------|
+| UK_BOE       | rejected  | rejected | rejected  | rejected      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
@@ -55,22 +55,8 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |:------------|:--------------|----------------------:|-----------------:|:---------|
 | kitchin     | rejected      |                     0 |                1 | regional |
 | juglar      | rejected      |                     0 |                1 | regional |
-| kuznets     | contraction   |                     1 |                1 | regional |
-| kondratieff | contraction   |                     1 |                1 | regional |
-
-## Votes par modèle (D/E/F/G) — détail Gate 2
-
-### Kuznets
-
-| group_code   | D         | E           | F           | G           |
-|:-------------|:----------|:------------|:------------|:------------|
-| UK_BOE       | expansion | contraction | contraction | contraction |
-
-### Kondratieff
-
-| group_code   | D    | E    | F           | G           |
-|:-------------|:-----|:-----|:------------|:------------|
-| UK_BOE       | peak | peak | contraction | contraction |
+| kuznets     | rejected      |                     0 |                1 | regional |
+| kondratieff | rejected      |                     0 |                1 | regional |
 
 ## Figures
 
@@ -114,7 +100,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T11:01:04+00:00
+- Date de la note : 2026-05-29T12:19:49+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`

@@ -2,38 +2,38 @@
 
 | Agrégat | Source | Kitchin | Tendance | Next | Juglar | Tendance | Next | Kuznets | Tendance | Next | Kondratieff | Tendance | Next |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `WLD` | WB | disputed ⚠️ | falling | 📉 min dans 5 mois | — | — | — | — | — | — | — | — | — |
-| `G7` | WB | contraction ⚠️ | falling | 📉 min dans 6 mois | — | — | — | — | — | — | — | — | — |
-| `OECD` | WB | disputed ⚠️ | falling | 📉 min dans 5 mois | — | — | — | — | — | — | — | — | — |
-| `BRICS` | WB | contraction ⚠️ | falling | 📉 min dans 7 mois | — | — | — | — | — | — | — | — | — |
-| `HIC` | WB | disputed ⚠️ | falling | 📉 min dans 5 mois | — | — | — | — | — | — | — | — | — |
-| `UMC` | WB | disputed ⚠️ | falling | 📉 min dans 5 mois | contraction ⚠️ | falling | 📉 min dans 8 mois | — | — | — | — | — | — |
-| `LMC` | WB | contraction ⚠️ | falling | 📉 min dans 7 mois | — | — | — | — | — | — | — | — | — |
-| `LIC` | WB | disputed ⚠️ | falling | 📉 min dans 9 mois | — | — | — | — | — | — | disputed ⚠️ | falling | 📈 max dans 24 ans |
+| `WLD` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `G7` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `OECD` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `BRICS` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `HIC` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `UMC` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `LMC` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
+| `LIC` | WB | — | — | — | — | — | — | — | — | — | — | — | — |
 | `G7Q` | Path 5 | — | — | — | — | — | — | — | — | — | — | — | — |
 | `OECDQ` | Path 5 | — | — | — | — | — | — | — | — | — | — | — | — |
-| `USA` | Path 5 | — | — | — | — | — | — | disputed ⚠️ | falling | 📉 min dans 1.7 ans | — | — | — |
+| `USA` | Path 5 | — | — | — | — | — | — | — | — | — | — | — | — |
 | `EA` | Path 5 | — | — | — | — | — | — | — | — | — | — | — | — |
-| `JPN` | Path 5 | peak ⚠️ | rising (post-peak) | 📉 min dans 1.3 ans | — | — | — | disputed ⚠️ | rising (post-peak) | 📉 min dans 6.8 ans | — | — | — |
-| `GBR` | Path 5 | — | — | — | contraction ⚠️ | falling | 📈 max dans 3.4 ans | disputed ⚠️ | rising (post-trough) | 📈 max dans 6.7 ans | — | — | — |
-| `ADV18` | Long | — | — | — | disputed ⚠️ | rising (post-trough) | 📈 max dans 3.3 ans | disputed ⚠️ | rising | 📈 max dans 2.5 ans | — | — | — |
-| `G7` | Long | — | — | — | contraction ⚠️ | falling | 📈 max dans 3.6 ans | expansion ⚠️ | rising | 📈 max dans 2.4 ans | expansion ⚠️ | rising | 📈 max dans 7.2 ans |
-| `EU4` | Long | — | — | — | — | — | — | expansion ⚠️ | rising | 📈 max dans 4.1 ans | contraction ⚠️ | falling | 📈 max dans 22 ans |
+| `JPN` | Path 5 | — | — | — | — | — | — | — | — | — | — | — | — |
+| `GBR` | Path 5 | — | — | — | — | — | — | — | — | — | — | — | — |
+| `ADV18` | Long | — | — | — | — | — | — | — | — | — | — | — | — |
+| `G7` | Long | — | — | — | — | — | — | — | — | — | expansion ⚠️ | rising | 📈 max dans 7.2 ans |
+| `EU4` | Long | — | — | — | — | — | — | — | — | — | contraction ⚠️ | falling | 📈 max dans 22 ans |
 | `ANGLO` | Long | — | — | — | — | — | — | — | — | — | — | — | — |
-| `NORDIC` | Long | disputed | rising (post-peak) | 📉 min dans 2.2 ans | disputed ⚠️ | falling | 📈 max dans 3.9 ans | — | — | — | contraction ⚠️ | rising (post-peak) | 📉 min dans 13 ans |
-| `USA` | Long | — | — | — | disputed ⚠️ | rising | 📈 max dans 7 mois | — | — | — | — | — | — |
-| `UK_BOE` | BoE | — | — | — | — | — | — | contraction ⚠️ | falling | 📈 max dans 7.8 ans | contraction ⚠️ | falling | 📈 max dans 19 ans |
-| `BIS_EM` | BIS | disputed ⚠️ | falling | 📉 min dans 9 mois | — | — | — | disputed ⚠️ | rising (post-trough) | 📈 max dans 6.3 ans | — | — | — |
+| `NORDIC` | Long | — | — | — | — | — | — | — | — | — | peak ⚠️ | rising (post-peak) | 📉 min dans 13 ans |
+| `USA` | Long | — | — | — | — | — | — | — | — | — | — | — | — |
+| `UK_BOE` | BoE | — | — | — | — | — | — | — | — | — | — | — | — |
+| `BIS_EM` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
 | `BIS_AE` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
 | `BR_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
 | `CN_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
-| `IN_BIS` | BIS | — | — | — | — | — | — | expansion ⚠️ | rising | 📈 max dans 9 mois | — | — | — |
-| `MX_BIS` | BIS | contraction ⚠️ | falling | 📉 min dans 12 mois | disputed ⚠️ | rising (post-peak) | 📉 min dans 3.6 ans | — | — | — | — | — | — |
-| `KR_BIS` | BIS | disputed ⚠️ | rising (post-peak) | 📉 min dans 1.8 ans | — | — | — | — | — | — | — | — | — |
-| `TR_BIS` | BIS | disputed ⚠️ | rising (post-peak) | 📉 min dans 1.2 ans | — | — | — | — | — | — | — | — | — |
-| `ZA_BIS` | BIS | — | — | — | disputed ⚠️ | rising (post-peak) | 📉 min dans 3.3 ans | disputed ⚠️ | falling | 📉 min dans 3.9 ans | — | — | — |
+| `IN_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
+| `MX_BIS` | BIS | contraction ⚠️ | falling | 📉 min dans 12 mois | — | — | — | — | — | — | — | — | — |
+| `KR_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
+| `TR_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
+| `ZA_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
 | `RU_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
-| `ID_BIS` | BIS | peak ⚠️ | rising (post-peak) | 📉 min dans 1.2 ans | contraction ⚠️ | falling | 📉 min dans 4 mois | — | — | — | — | — | — |
+| `ID_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
 
 _⚠️ = effet endpoint CF dominant sur les dernières `hi_years/2` années ; la prévision donne l'ordre de grandeur, pas la date exacte._
 

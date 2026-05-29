@@ -5,6 +5,54 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #14 — garde-fou per-variable systématique
+
+Nouveau garde-fou universel dans `_analyse_and_render` : pour publier
+une cellule `(agrégat, cycle)` comme survivante, exiger qu'**au moins
+une variable individuelle** de `band_panel` survive Gate 1
+dual-null sur la même bande (avec différenciation pour K).
+
+Mécanique :
+- Pour chaque cellule, calculer le composite Gate 1 (inchangé).
+- Si composite REJETTE → publier `rejected` (inchangé).
+- Si composite SURVIT → lancer `_per_variable_gate1_check` sur le
+  sous-ensemble `band_panel` filtré par `cycle_targets`.
+- Si 0 variable testable ne survit individuellement → basculer
+  en `rejected` avec note `Roadmap #14 veto: composite p=X but
+  0/N individual variables survive Gate 1`.
+- Sinon → publier le composite normalement.
+
+**Résultats sur le pipeline complet** (5 horizons, 128 cellules) :
+
+| Horizon | Survivors | Vetoed | Total |
+|---|---:|---:|---:|
+| WB | **0** | 10 | 32 |
+| Q | **0** | 5 | 24 |
+| Long | 3 | 8 | 24 |
+| BoE | **0** | 2 | 4 |
+| BIS | 1 | 10 | 44 |
+| **Total** | **4** | **35** | **128** |
+
+**4 cellules survivent post-safeguard, étayées par variables** :
+- `G7-long K` (LH_GDP + LH_RGDP_BARRO survivent en différencié)
+- `EU4-long K` (LH_DEBTGDP + LH_RGDP_BARRO en diff)
+- `NORDIC-long K` (LH_DEBTGDP en diff)
+- `MX_BIS Kitchin` (1 variable carrying)
+
+**35 cellules composite-survies ont été vetoed** — toutes manquaient
+de support variable individuelle. Inclut TOUTES les Kitchin du
+panel WB (8 agrégats), les artefacts précédemment diagnostiqués
+(WLD-K3, UMC-Juglar, LIC-K), et les composites Q sans porteur.
+
+**Bilan empirique** : aucune cellule survivante n'est désormais un
+artefact d'agrégation au sens des audits CN_BIS/WLD-WB/UK_BOE. Les
+4 survivants restants ont au moins une variable porteuse — la
+publication CPV est désormais doublement falsifiable (composite +
+≥1 variable).
+
+Nouvelle page `docs/methodology_safeguard_roadmap_14.md` sous
+section 3 de la nav.
+
 ### Verdict final K — la différenciation a redistribué l'artefact, pas révélé un K européen
 
 Diagnostic per-variable post-différenciation sur les 4 nouvelles
