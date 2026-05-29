@@ -5,6 +5,49 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Verdict final K — la différenciation a redistribué l'artefact, pas révélé un K européen
+
+Diagnostic per-variable post-différenciation sur les 4 nouvelles
+cellules K composite-survivantes (G7-long, NORDIC-long, EU4-long,
+UK_BOE) confirme :
+
+| Composite K post-diff | p | Variables individuelles survivantes |
+|---|---:|---:|
+| G7-long | 0.001 🟢 | **0/35** |
+| NORDIC-long | 0.001 🟢 | **0/35** |
+| EU4-long | 0.004 🟢 | **0/35** |
+| UK_BOE | 0.001 🟢 | **0/16** |
+
+**Sur ~250 cellules (variable × groupe × K=4) testées par variable
+individuelle, 1 seule survit Gate 1** : `LH_DEBTGDP` sur `ADV18` à
+p=0.028 (marginal). Tous les autres K post-fix sont des **artefacts
+d'agrégation post-différenciation** — la différenciation introduit
+une cohérence de phase artificielle sur les longs samples
+hétérogènes, créant un nouveau type d'artefact qui remplace
+l'ancien (fuite de tendance par effet de bord CF) supprimé.
+
+**Conclusion empirique forte** : aucun Kondratieff endogène n'est
+détectable au niveau variable dans le pipeline CPV — sur 6
+horizons × ~25 groupes × ~80 variables × 316 ans de données UK,
+**zéro K-wave authentique** ne survit Gate 1 dual-null à α=0.05.
+
+C'est la confirmation la plus précise possible de la
+[thèse centrale](docs/bibliographie.md#critiques-et-scepticisme-empirique-par-cycle)
+: les "K-waves" empiriques rapportées dans la littérature
+([Schumpeter 1939](docs/bibliographie.md#schumpeter-1939),
+[Perez 2002](docs/bibliographie.md#perez-2002),
+[Korotayev-Tsirel 2010](docs/bibliographie.md#korotayev-tsirel-2010))
+sont des artefacts de méthode (composites de variables trend-dominées,
+ou cohérences cross-variable post-transformation), pas des cycles
+empiriques distinguables du bruit.
+
+Nouvelle page `docs/case_study_g7_long_uk_boe_kondratieff.md`
+sous section 1 de la nav. Documente le diagnostic per-variable,
+le mécanisme de l'artefact redistribué, et formule la thèse
+centrale en sa forme la plus complète. Roadmap item #14 à
+créer : "Garde-fou systématique pour composite-survies — exiger
+≥1 variable individuelle survivante avant publication".
+
 ### Différenciation pour Kondratieff (anti-trend-leakage) — résultat plus nuancé qu'attendu
 
 Suite aux audits CN_BIS K et WLD-WB K qui ont exposé un artefact
