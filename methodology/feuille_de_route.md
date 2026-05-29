@@ -406,6 +406,64 @@
 - **Dépendances ajoutées.** `nolds==0.6.2`, `antropy==0.1.7` (rebuild
   Docker requis).
 
+## #16 — Étude per-band vs band-agnostique (validation du design choice de #15) — TODO {#item-16-per-band-vs-band-agnostique}
+
+- **Problème.** L'item #15 a posé une décision design forte : "les
+  diagnostics sont band-agnostiques car réintroduire un axe `cycle ∈
+  {kitchin, juglar, kuznets, kondratieff}` recréerait le scaffold qu'on
+  vient de falsifier". Cette décision *n'a pas été testée empiriquement*.
+  Sans étude de comparaison, on affirme un design choice plutôt qu'on ne
+  le démontre. Reviewers et lecteurs sceptiques peuvent légitimement
+  demander : "et si on faisait quand même per-band, qu'est-ce qu'on
+  perdrait / gagnerait ?"
+- **Méthode.** Implémentation parallèle au module `alternative_dynamics.py`
+  d'un module `alternative_dynamics_per_band.py` qui applique un
+  sous-ensemble restreint de 4 diagnostics au **signal CF-bandpassé**
+  dans chacune des 4 bandes (Kitchin 3-5y, Juglar 7-11y, Kuznets 15-25y,
+  Kondratieff 40-60y) :
+
+    1. **`spectrum_slope` (β)** — restreint à la bande de fréquence, mesure
+       si la bande a sa propre loi de puissance interne.
+    2. **`critical_slowdown` (τ_var)** — variance roulante du signal
+       bandpassé, mesure si un tipping point cyclique approche.
+    3. **`levy_stable_fit` (α)** — fit Lévy sur les incréments du signal
+       filtré, mesure les queues du bruit dans la bande.
+    4. **`hurst_dfa` (H)** — diagnostic marginal mais inclus pour
+       complétude (sera probablement ≈ 0.5 par construction du filtre).
+
+    Les autres diagnostics (MF-DFA, K41, RMT, perm-entropy, MSD,
+    Tsallis, Hill, réflexivité) **ne font pas sens per-band** :
+    soit multi-scale par définition (K41, MF-DFA), soit panel (RMT),
+    soit transversaux (réflexivité), soit altérés par le filtre.
+
+- **Code.** Nouveau module `ecowave/cycles/alternative_dynamics_per_band.py`
+  qui réutilise les fonctions atomiques de `alternative_dynamics.py`
+  appliquées à `cf_bandpass(series, lo_years, hi_years)`. Nouvelle
+  commande CLI `ecowave dx-diagnostics-per-band --as-of YYYY-MM
+  --horizons {wb|q|long|boe|bis|sh}` produisant
+  `reports/dx_diagnostics_per_band_{as_of}_{horizon}.json` et page
+  `docs/dx_diagnostics_per_band.md` avec **table de comparaison directe
+  par variable** : colonnes = (raw, kitchin, juglar, kuznets,
+  kondratieff) × diagnostic, lignes = variables. Le lecteur voit
+  immédiatement si per-band ajoute de l'info.
+- **Acceptance.** Deux verdicts possibles, tous deux acceptables :
+  - **Cas A (probable a priori)** : per-band n'ajoute pas d'info
+    significative au-delà du band-agnostique. **Conclusion** : la
+    décision design de #15 est *validée empiriquement* — pas juste
+    affirmée. Le papier académique gagne une réponse falsifiabiliste à
+    l'objection "vous n'avez pas montré le contrefactuel".
+  - **Cas B (intéressant si observé)** : per-band révèle des structures
+    internes (ex: bande Kondratieff filtrée montre un CSD significatif
+    même quand Gate 1 rejette la band-power). **Conclusion** : nouvelle
+    question de recherche, à creuser dans Roadmap #17.
+- **Effort estimé.** ~2 jours : module (1 j) + tests (0.5 j) + run +
+  page rendering (0.5 j). À implémenter après merge de PR #23
+  (item #15).
+- **Garde-fou méthodologique.** L'étude #16 ne *remplace pas* l'étude
+  #15. Le module per-band est strictement parallèle, pas substitut. La
+  taxonomie cyclique n'est pas restaurée comme angle d'analyse principal
+  — uniquement comme angle de validation.
+
 ## Références
 
 - Bailey, D. H., & López de Prado, M. (2014). The deflated Sharpe ratio.

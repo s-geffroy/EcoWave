@@ -77,6 +77,16 @@ ne touche pas à la taxonomie cyclique. Une décision data-driven d'ajout
 sera prise après les premiers runs, dans une PR séparée avec
 pré-enregistrement explicite.
 
+**Roadmap #16 pré-enregistré : étude per-band vs band-agnostique.** La
+décision design "pas de découpage 4-cycles" de l'item #15 sera *testée
+empiriquement* dans une PR ultérieure (item #16 dans la feuille de
+route) : appliquer 4 diagnostics (β, τ_var, α_Lévy, Hurst) au signal
+CF-bandpassé dans chacune des 4 bandes canoniques, puis comparer
+directement avec la version band-agnostique. Si per-band n'ajoute pas
+d'info, la décision design de #15 est validée empiriquement (pas juste
+affirmée). Si per-band révèle des structures internes, nouvelle question
+de recherche pour #17.
+
 ### Au-delà des cycles — extension à 21 familles + composante transversale de réflexivité
 
 Extension du panorama initial (15 → 21 familles) pour combler trois
