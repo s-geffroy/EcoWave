@@ -5,6 +5,69 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Différenciation pour Kondratieff (anti-trend-leakage) — résultat plus nuancé qu'attendu
+
+Suite aux audits CN_BIS K et WLD-WB K qui ont exposé un artefact
+systématique d'agrégation par fuite de tendance via les effets de
+bord du filtre Christiano-Fitzgerald, le pipeline applique
+désormais une **première-différence avant compositing pour la
+bande Kondratieff uniquement**. `_composite_panel` accepte un
+nouveau paramètre `differencing=True` qui transforme `panel.diff()`
+puis applique band-pass + z-score + moyenne. Pour les samples trop
+courts (`hi_years × 2 > n_samples`), le fallback z-scoré
+cross-band hérite aussi de la différenciation.
+
+**Le pipeline a été re-tourné sur les 5 horizons** (`wb`, `q`,
+`long`, `boe`, `bis`) avec dual null + 1000 surrogates par cellule.
+
+#### Artefacts éliminés (résultat attendu)
+
+| Cellule | p avant (niveaux) | p après (différencié) |
+|---|---|---|
+| WLD-WB K | 0.001 🟢 contraction | **0.488 🔴 rejected** |
+| HIC-WB K | 0.001 🟢 disputed | **0.473 🔴 rejected** |
+| OECD-WB K | 0.001 🟢 disputed | **0.560 🔴 rejected** |
+| G7-WB K | 0.055 🟠 marginal | 0.161 🔴 rejected |
+
+Sur le panel WB (1960-2024, 65 ans), **toutes** les anciennes K-
+survivances étaient des artefacts de fuite de tendance des variables
+trend-dominées `CY_FIN` (financiarisation) et `CY_PRD` (productivité).
+La thèse centrale est confirmée sur ce périmètre.
+
+#### Survies inattendues — possiblement réelles
+
+Plus surprenant, la différenciation **fait émerger** plusieurs K
+sur les horizons longs européens, jusqu'ici cachées sous le bruit
+de trend :
+
+| Cellule | p avant (niveaux) | p après (différencié) |
+|---|---|---|
+| **G7-long K** | 0.001 🟢 | **0.001 🟢** (persistant) |
+| **NORDIC-long K** | 0.608 🔴 | **0.001 🟢** (émerge) |
+| **EU4-long K** | 0.142 🔴 | **0.004 🟢** (renforcé) |
+| **UK_BOE K** | 0.892 🔴 | **0.001 🟢** (émerge sur 316 ans) |
+
+Pattern frappant : K émerge sur les **panels européens longs** (G7,
+NORDIC, EU4 sur 152 ans ; UK sur 316 ans) mais **pas sur USA-long
+ni ANGLO-long**. Cohérent avec Schumpeter (1939) qui regardait des
+taux de croissance, pas des niveaux. Pourrait être un phénomène
+empirique authentique — un K-wave européen mesurable sur les
+taux de croissance économique de long terme — ou un nouvel artefact.
+
+#### Diagnostic en cours
+
+Run `evidence-per-variable --horizons boe,long` lancé en
+parallèle pour distinguer redistribution d'artefact vs. découverte
+authentique. Si les K nouvellement-survivants sont portés par
+**plusieurs variables individuelles** indépendamment, le signal
+est probablement réel. Si seul le composite survit, c'est un
+artefact d'agrégation post-différenciation.
+
+Nouvelle page `docs/methodology_differencing_for_kondratieff.md`
+sous la section 3 (Protocole) de la nav. Documente le mécanisme,
+les résultats post-fix, la nuance entre artefacts éliminés et
+signaux émergents, et les garde-fous pour distinguer les deux.
+
 ### Audit WLD-WB Kondratieff — second artefact d'agrégation démasqué
 
 Application du même protocole 5-étapes que pour

@@ -82,7 +82,9 @@ CYCLES_MANIFEST_PATH = Path("/app/cycles_manifest.json")
 
 def _composite_panel(panel: pd.DataFrame,
                      band: tuple[float, float] | None = None,
-                     samples_per_year: float = 1.0) -> pd.Series:
+                     samples_per_year: float = 1.0,
+                     *,
+                     differencing: bool = False) -> pd.Series:
     """Equal-weighted standardized composite across all indicators in the panel.
 
     When ``band`` is None, each column is z-scored against its own history then
@@ -98,6 +100,16 @@ def _composite_panel(panel: pd.DataFrame,
     the quarterly horizon; it scales the minimum-length guard and is passed
     through to the CF filter so the cutoffs are computed against the right
     sample frequency.
+
+    ``differencing`` first-differences each column **before** band-passing.
+    Standard in macroeconometric cycle analysis: strongly trending series
+    (population, productivity, financialization) leak low-frequency power
+    into the CF band-pass band through endpoint effects, manufacturing
+    spurious cycle signatures. First-differencing converts levels into
+    growth rates, which are typically mean-reverting and do not leak.
+    Recommended for Kondratieff (40-60y) testing on short samples where
+    half a structural transition looks like a half-K-cycle. Diagnosed in
+    `docs/case_study_wld_wb_kondratieff.md`.
     """
     if panel.empty:
         return pd.Series(dtype=float)
@@ -105,11 +117,13 @@ def _composite_panel(panel: pd.DataFrame,
         standardized = (panel - panel.mean(axis=0)) / panel.std(axis=0).replace(0, np.nan)
         return standardized.mean(axis=1, skipna=True)
 
+    work_panel = panel.diff().dropna(how="all") if differencing else panel
+
     lo, hi = band
     min_samples = int(2 * hi * samples_per_year)
     filtered_cols: dict[str, pd.Series] = {}
-    for col in panel.columns:
-        series = panel[col].dropna()
+    for col in work_panel.columns:
+        series = work_panel[col].dropna()
         if series.size < min_samples:
             continue
         try:
@@ -117,8 +131,18 @@ def _composite_panel(panel: pd.DataFrame,
                                 samples_per_year=samples_per_year)
         except Exception:  # noqa: BLE001
             continue
-        filtered_cols[col] = cycle.reindex(panel.index)
+        filtered_cols[col] = cycle.reindex(work_panel.index)
     if not filtered_cols:
+        # CF band-pass cannot run (sample shorter than 2*hi_years). When
+        # differencing was requested, the caller still needs a differenced
+        # fallback — otherwise the trend-leakage artifact reappears via the
+        # levels-based cross-band composite. Return the z-scored mean of
+        # the (differenced) panel so the band-test still operates on a
+        # trend-stripped composite.
+        if differencing and not work_panel.empty:
+            standardized = ((work_panel - work_panel.mean(axis=0))
+                             / work_panel.std(axis=0).replace(0, np.nan))
+            return standardized.mean(axis=1, skipna=True)
         return pd.Series(dtype=float, index=panel.index)
     df = pd.DataFrame(filtered_cols)
     z = (df - df.mean(axis=0)) / df.std(axis=0).replace(0, np.nan)
@@ -402,9 +426,19 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
                     band_panel = panel[band_cols] if band_cols else panel
                 else:
                     band_panel = panel
+                # Roadmap #13 / WLD-WB K audit (2026-05): apply first-differencing
+                # to the K composite to kill the trend-leakage artifact diagnosed
+                # in `case_study_wld_wb_kondratieff.md`. Trending variables (POP,
+                # PRD, financialization indicators) leak low-frequency power into
+                # the CF band-pass through endpoint effects and manufacture
+                # spurious K-cycle signatures on samples too short for genuine K
+                # detection. First-differencing converts levels into growth
+                # rates that are typically mean-reverting and don't leak.
+                differencing = (cycle_name == "kondratieff")
                 band_composite = _composite_panel(
                     band_panel, band=(lo, hi),
-                    samples_per_year=samples_per_year)
+                    samples_per_year=samples_per_year,
+                    differencing=differencing)
                 if band_composite.dropna().empty:
                     band_composite = composite
             else:
