@@ -93,7 +93,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | disputed | falling | 📉 min dans 12 mois |
+| Kitchin ⚠️ | contraction | falling | 📉 min dans 12 mois |
 | Juglar ⚠️ | disputed | rising (post-peak) | 📉 min dans 3.6 ans |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -111,7 +111,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | peak | rising (post-peak) | 📉 min dans 1.2 ans |
+| Kitchin ⚠️ | disputed | rising (post-peak) | 📉 min dans 1.2 ans |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -121,7 +121,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin ⚠️ | rejected | — | — |
-| Juglar ⚠️ | contraction | rising (post-peak) | 📉 min dans 3.3 ans |
+| Juglar ⚠️ | disputed | rising (post-peak) | 📉 min dans 3.3 ans |
 | Kuznets ⚠️ | disputed | falling | 📉 min dans 3.9 ans |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -129,42 +129,42 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Matrice de phase (Gate 2 — consensus inter-méthode)
 
-| group_code   | kitchin   | juglar      | kuznets   | kondratieff   |
-|:-------------|:----------|:------------|:----------|:--------------|
-| BIS_AE       | rejected  | rejected    | rejected  | rejected      |
-| BIS_EM       | disputed  | rejected    | disputed  | rejected      |
-| BR_BIS       | rejected  | rejected    | rejected  | rejected      |
-| CN_BIS       | rejected  | rejected    | rejected  | rejected      |
-| ID_BIS       | peak      | contraction | rejected  | rejected      |
-| IN_BIS       | rejected  | rejected    | expansion | rejected      |
-| KR_BIS       | disputed  | rejected    | rejected  | rejected      |
-| MX_BIS       | disputed  | disputed    | rejected  | rejected      |
-| RU_BIS       | rejected  | rejected    | rejected  | rejected      |
-| TR_BIS       | peak      | rejected    | rejected  | rejected      |
-| ZA_BIS       | rejected  | contraction | disputed  | rejected      |
+| group_code   | kitchin     | juglar      | kuznets   | kondratieff   |
+|:-------------|:------------|:------------|:----------|:--------------|
+| BIS_AE       | rejected    | rejected    | rejected  | rejected      |
+| BIS_EM       | disputed    | rejected    | disputed  | rejected      |
+| BR_BIS       | rejected    | rejected    | rejected  | rejected      |
+| CN_BIS       | rejected    | rejected    | rejected  | rejected      |
+| ID_BIS       | peak        | contraction | rejected  | rejected      |
+| IN_BIS       | rejected    | rejected    | expansion | rejected      |
+| KR_BIS       | disputed    | rejected    | rejected  | rejected      |
+| MX_BIS       | contraction | disputed    | rejected  | rejected      |
+| RU_BIS       | rejected    | rejected    | rejected  | rejected      |
+| TR_BIS       | disputed    | rejected    | rejected  | rejected      |
+| ZA_BIS       | rejected    | disputed    | disputed  | rejected      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| BIS_AE       |     0.777 |    0.453 |     0.205 |         1     |
-| BIS_EM       |     0.001 |    0.096 |     0.001 |         0.949 |
-| BR_BIS       |     0.376 |    0.96  |     0.715 |         0.999 |
-| CN_BIS       |     0.091 |    0.885 |     0.301 |         0.051 |
-| ID_BIS       |     0.044 |    0.001 |     0.672 |         0.663 |
-| IN_BIS       |     0.17  |    0.13  |     0.001 |         0.992 |
-| KR_BIS       |     0.05  |    0.234 |     0.156 |         0.721 |
-| MX_BIS       |     0.015 |    0.006 |     0.518 |         0.439 |
-| RU_BIS       |     0.105 |    0.231 |     0.801 |         0.99  |
-| TR_BIS       |     0.002 |    0.712 |     0.992 |         1     |
-| ZA_BIS       |     0.074 |    0.001 |     0.001 |         0.272 |
+| BIS_AE       |     0.777 |    0.453 |     0.205 |         0.852 |
+| BIS_EM       |     0.001 |    0.096 |     0.001 |         0.632 |
+| BR_BIS       |     0.376 |    0.96  |     0.715 |         0.735 |
+| CN_BIS       |     0.091 |    0.885 |     0.301 |         0.821 |
+| ID_BIS       |     0.044 |    0.001 |     0.672 |         0.939 |
+| IN_BIS       |     0.17  |    0.13  |     0.001 |         0.687 |
+| KR_BIS       |     0.05  |    0.234 |     0.156 |         0.839 |
+| MX_BIS       |     0.015 |    0.006 |     0.518 |         0.954 |
+| RU_BIS       |     0.105 |    0.231 |     0.801 |         0.424 |
+| TR_BIS       |     0.002 |    0.712 |     0.992 |         0.978 |
+| ZA_BIS       |     0.074 |    0.001 |     0.001 |         0.711 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
 | cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
 |:------------|:--------------|----------------------:|-----------------:|:---------|
-| kitchin     | peak          |                     2 |               11 | regional |
-| juglar      | contraction   |                     2 |               11 | regional |
+| kitchin     | contraction   |                     1 |               11 | regional |
+| juglar      | contraction   |                     1 |               11 | regional |
 | kuznets     | expansion     |                     1 |               11 | regional |
 | kondratieff | rejected      |                     0 |               11 | regional |
 
@@ -172,29 +172,29 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ### Kitchin
 
-| group_code   | D           | E         | F           | G           |
-|:-------------|:------------|:----------|:------------|:------------|
-| BIS_EM       | expansion   | peak      | contraction | contraction |
-| ID_BIS       | contraction | peak      | peak        | contraction |
-| KR_BIS       | trough      | expansion | peak        | expansion   |
-| MX_BIS       | trough      | peak      | contraction | contraction |
-| TR_BIS       | contraction | peak      | peak        | contraction |
+| group_code   | D           | E           | F           | G           |
+|:-------------|:------------|:------------|:------------|:------------|
+| BIS_EM       | expansion   | peak        | contraction | contraction |
+| ID_BIS       | contraction | peak        | peak        | contraction |
+| KR_BIS       | trough      | expansion   | peak        | expansion   |
+| MX_BIS       | trough      | contraction | contraction | contraction |
+| TR_BIS       | contraction | contraction | peak        | contraction |
 
 ### Juglar
 
-| group_code   | D           | E           | F           | G           |
-|:-------------|:------------|:------------|:------------|:------------|
-| ID_BIS       | contraction | contraction | contraction | contraction |
-| MX_BIS       | trough      | trough      | peak        | expansion   |
-| ZA_BIS       | contraction | contraction | peak        | contraction |
+| group_code   | D           | E         | F           | G           |
+|:-------------|:------------|:----------|:------------|:------------|
+| ID_BIS       | contraction | peak      | contraction | contraction |
+| MX_BIS       | trough      | expansion | peak        | expansion   |
+| ZA_BIS       | contraction | peak      | peak        | contraction |
 
 ### Kuznets
 
-| group_code   | D           | E         | F           | G           |
-|:-------------|:------------|:----------|:------------|:------------|
-| BIS_EM       | contraction | expansion | trough      | expansion   |
-| IN_BIS       | expansion   | trough    | expansion   | expansion   |
-| ZA_BIS       | expansion   | peak      | contraction | contraction |
+| group_code   | D           | E      | F           | G           |
+|:-------------|:------------|:-------|:------------|:------------|
+| BIS_EM       | contraction | trough | trough      | expansion   |
+| IN_BIS       | expansion   | trough | expansion   | expansion   |
+| ZA_BIS       | expansion   | peak   | contraction | contraction |
 
 ## Figures
 
@@ -242,7 +242,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T10:41:00+00:00
+- Date de la note : 2026-05-29T11:04:09+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`

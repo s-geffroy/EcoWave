@@ -33,7 +33,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Kitchin | rejected | — | — |
 | Juglar | rejected | — | — |
 | Kuznets ⚠️ | contraction | falling | 📈 max dans 7.8 ans |
-| Kondratieff ⚠️ | rejected | — | — |
+| Kondratieff ⚠️ | contraction | falling | 📈 max dans 19 ans |
 
 _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._
 
@@ -41,13 +41,13 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | group_code   | kitchin   | juglar   | kuznets     | kondratieff   |
 |:-------------|:----------|:---------|:------------|:--------------|
-| UK_BOE       | rejected  | rejected | contraction | rejected      |
+| UK_BOE       | rejected  | rejected | contraction | contraction   |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| UK_BOE       |     0.126 |    0.856 |     0.024 |         0.892 |
+| UK_BOE       |     0.126 |    0.856 |     0.024 |         0.001 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
@@ -56,7 +56,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | kitchin     | rejected      |                     0 |                1 | regional |
 | juglar      | rejected      |                     0 |                1 | regional |
 | kuznets     | contraction   |                     1 |                1 | regional |
-| kondratieff | rejected      |                     0 |                1 | regional |
+| kondratieff | contraction   |                     1 |                1 | regional |
 
 ## Votes par modèle (D/E/F/G) — détail Gate 2
 
@@ -65,6 +65,12 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | group_code   | D         | E           | F           | G           |
 |:-------------|:----------|:------------|:------------|:------------|
 | UK_BOE       | expansion | contraction | contraction | contraction |
+
+### Kondratieff
+
+| group_code   | D    | E    | F           | G           |
+|:-------------|:-----|:-----|:------------|:------------|
+| UK_BOE       | peak | peak | contraction | contraction |
 
 ## Figures
 
@@ -81,6 +87,8 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 ![Spectre wavelet (UK_BOE)](../figures/cycle_wavelet_power_2026_05_boe.png)
 
 ![Diagramme polaire — Kuznets](../figures/cycle_phase_polar_kuznets_2026_05_boe.png)
+
+![Diagramme polaire — Kondratieff](../figures/cycle_phase_polar_kondratieff_2026_05_boe.png)
 
 ## Lecture par cycle (ancrage littérature)
 
@@ -106,7 +114,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T09:41:04+00:00
+- Date de la note : 2026-05-29T11:01:04+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`

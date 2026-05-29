@@ -49,7 +49,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin ⚠️ | rejected | — | — |
-| Juglar ⚠️ | disputed | falling | 📈 max dans 3.4 ans |
+| Juglar ⚠️ | contraction | falling | 📈 max dans 3.4 ans |
 | Kuznets ⚠️ | disputed | rising (post-trough) | 📈 max dans 6.7 ans |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -84,32 +84,32 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Matrice de phase (Gate 2 — consensus inter-méthode)
 
-| group_code   | kitchin   | juglar   | kuznets   | kondratieff   |
-|:-------------|:----------|:---------|:----------|:--------------|
-| EA           | rejected  | rejected | rejected  | rejected      |
-| G7Q          | rejected  | rejected | rejected  | rejected      |
-| GBR          | rejected  | disputed | disputed  | rejected      |
-| JPN          | peak      | rejected | disputed  | rejected      |
-| OECDQ        | rejected  | rejected | rejected  | rejected      |
-| USA          | rejected  | rejected | disputed  | rejected      |
+| group_code   | kitchin   | juglar      | kuznets   | kondratieff   |
+|:-------------|:----------|:------------|:----------|:--------------|
+| EA           | rejected  | rejected    | rejected  | rejected      |
+| G7Q          | rejected  | rejected    | rejected  | rejected      |
+| GBR          | rejected  | contraction | disputed  | rejected      |
+| JPN          | peak      | rejected    | disputed  | rejected      |
+| OECDQ        | rejected  | rejected    | rejected  | rejected      |
+| USA          | rejected  | rejected    | disputed  | rejected      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
 | group_code   |   kitchin |   juglar |   kuznets |   kondratieff |
 |:-------------|----------:|---------:|----------:|--------------:|
-| EA           |     0.388 |    0.252 |     0.428 |         0.957 |
-| G7Q          |     0.106 |    0.531 |     0.12  |         0.608 |
-| GBR          |     0.297 |    0.025 |     0.004 |         0.43  |
-| JPN          |     0.001 |    0.528 |     0.041 |         0.804 |
-| OECDQ        |     0.106 |    0.531 |     0.12  |         0.608 |
-| USA          |     0.185 |    0.421 |     0.001 |         0.496 |
+| EA           |     0.388 |    0.252 |     0.428 |         0.551 |
+| G7Q          |     0.106 |    0.531 |     0.12  |         0.516 |
+| GBR          |     0.297 |    0.025 |     0.004 |         0.945 |
+| JPN          |     0.001 |    0.528 |     0.041 |         0.302 |
+| OECDQ        |     0.106 |    0.531 |     0.12  |         0.516 |
+| USA          |     0.185 |    0.421 |     0.001 |         0.476 |
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
 | cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
 |:------------|:--------------|----------------------:|-----------------:|:---------|
 | kitchin     | peak          |                     1 |                6 | regional |
-| juglar      | rejected      |                     0 |                6 | regional |
+| juglar      | contraction   |                     1 |                6 | regional |
 | kuznets     | rejected      |                     0 |                6 | regional |
 | kondratieff | rejected      |                     0 |                6 | regional |
 
@@ -123,9 +123,9 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ### Juglar
 
-| group_code   | D    | E    | F           | G           |
-|:-------------|:-----|:-----|:------------|:------------|
-| GBR          | peak | peak | contraction | contraction |
+| group_code   | D    | E           | F           | G           |
+|:-------------|:-----|:------------|:------------|:------------|
+| GBR          | peak | contraction | contraction | contraction |
 
 ### Kuznets
 
@@ -181,7 +181,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T07:53:13+00:00
+- Date de la note : 2026-05-29T10:59:06+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`
