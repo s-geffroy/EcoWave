@@ -4,7 +4,7 @@
 
 ## Résultat global
 
-Sur **724 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **15 survivent Gate 1** dual-null à α = 0.05 — soit **2.1%**.
+Sur **1540 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **21 survivent Gate 1** dual-null à α = 0.05 — soit **1.4%**.
 
 **Comparaison avec les composites** (cf. [home dashboard](index.md#ou-en-sommes-nous)) : Gate 1 sur les agrégats composites laisse passer environ 25-30% des cellules. L'écart s'explique mécaniquement — sommer plusieurs séries z-scorées crée des artefacts de variance autocorrélée qui battent un null AR(1), même quand aucune des séries n'a individuellement de signal cyclique. **C'est exactement le diagnostic posé par [Wen (2005)](bibliographie.md#wen-2005) sur le cycle d'inventaire et par [Solomou (1987)](bibliographie.md#solomou-1987) sur Kuznets/Kondratieff il y a 40 et 20 ans respectivement.**
 
@@ -48,12 +48,41 @@ _Référence critique : [Wen 2005](bibliographie.md#wen-2005) — Kitchin survit
 
 | Variable | Survies Gate 1 | Total agrégats | Taux | p-value min |
 |---|---:|---:|---:|---:|
+| `LH_STIR` | 1 | 6 | 17% | 0.044 |
+| `LH_UNRATE` | 0 | 6 | 0% | 0.214 |
+| `LH_EQTR` | 0 | 6 | 0% | 0.353 |
 | `LH_EQUITY` | 0 | 6 | 0% | 0.353 |
 | `LH_YIELD` | 0 | 6 | 0% | 0.436 |
+| `LH_BONDTR` | 0 | 6 | 0% | 0.499 |
+| `LH_EQDIVP` | 0 | 6 | 0% | 0.536 |
+| `LH_CA` | 0 | 6 | 0% | 0.566 |
+| `LH_BILLRATE` | 0 | 6 | 0% | 0.789 |
+| `LH_HOUSINGTR` | 0 | 6 | 0% | 0.813 |
 | `LH_HPI` | 0 | 6 | 0% | 0.899 |
+| `LH_HOUSECG` | 0 | 6 | 0% | 0.902 |
+| `LH_DEBTGDP` | 0 | 6 | 0% | 0.942 |
+| `LH_BONDRATE` | 0 | 6 | 0% | 0.950 |
+| `LH_MORT` | 0 | 6 | 0% | 0.967 |
 | `LH_CREDIT` | 0 | 6 | 0% | 0.991 |
+| `LH_INV` | 0 | 6 | 0% | 0.992 |
+| `LH_EXP` | 0 | 6 | 0% | 0.998 |
+| `LH_REV` | 0 | 6 | 0% | 0.998 |
+| `LH_BANKDEBT` | 0 | 6 | 0% | 1.000 |
+| `LH_BUSCREDIT` | 0 | 6 | 0% | 1.000 |
 | `LH_CPI` | 0 | 6 | 0% | 1.000 |
+| `LH_EXPORTS` | 0 | 6 | 0% | 1.000 |
 | `LH_GDP` | 0 | 6 | 0% | 1.000 |
+| `LH_GDPNOM` | 0 | 6 | 0% | 1.000 |
+| `LH_HHCREDIT` | 0 | 6 | 0% | 1.000 |
+| `LH_IMPORTS` | 0 | 6 | 0% | 1.000 |
+| `LH_LEV` | 0 | 6 | 0% | 1.000 |
+| `LH_MONEY` | 0 | 6 | 0% | 1.000 |
+| `LH_NARROW` | 0 | 6 | 0% | 1.000 |
+| `LH_POP` | 0 | 6 | 0% | 1.000 |
+| `LH_RCONS` | 0 | 6 | 0% | 1.000 |
+| `LH_RGDP_BARRO` | 0 | 6 | 0% | 1.000 |
+| `LH_WAGE` | 0 | 6 | 0% | 1.000 |
+| `LH_XRUSD` | 0 | 5 | 0% | 1.000 |
 
 ## Juglar
 
@@ -89,12 +118,41 @@ _Référence critique : [Romer 1999](bibliographie.md#romer-1999), [Stock-Watson
 
 | Variable | Survies Gate 1 | Total agrégats | Taux | p-value min |
 |---|---:|---:|---:|---:|
+| `LH_HOUSECG` | 0 | 6 | 0% | 0.094 |
+| `LH_HOUSINGTR` | 0 | 6 | 0% | 0.098 |
+| `LH_UNRATE` | 0 | 6 | 0% | 0.152 |
+| `LH_CA` | 0 | 6 | 0% | 0.213 |
+| `LH_BILLRATE` | 0 | 6 | 0% | 0.300 |
 | `LH_EQUITY` | 0 | 6 | 0% | 0.393 |
+| `LH_EQTR` | 0 | 6 | 0% | 0.401 |
 | `LH_YIELD` | 0 | 6 | 0% | 0.413 |
+| `LH_DEBTGDP` | 0 | 6 | 0% | 0.438 |
+| `LH_BONDTR` | 0 | 6 | 0% | 0.646 |
+| `LH_INV` | 0 | 6 | 0% | 0.662 |
+| `LH_STIR` | 0 | 6 | 0% | 0.674 |
+| `LH_BONDRATE` | 0 | 6 | 0% | 0.805 |
+| `LH_EQDIVP` | 0 | 6 | 0% | 0.847 |
 | `LH_CREDIT` | 0 | 6 | 0% | 0.907 |
+| `LH_MORT` | 0 | 6 | 0% | 0.940 |
 | `LH_HPI` | 0 | 6 | 0% | 0.952 |
+| `LH_XRUSD` | 0 | 5 | 0% | 0.968 |
+| `LH_LEV` | 0 | 6 | 0% | 0.984 |
+| `LH_BANKDEBT` | 0 | 6 | 0% | 1.000 |
+| `LH_BUSCREDIT` | 0 | 6 | 0% | 1.000 |
 | `LH_CPI` | 0 | 6 | 0% | 1.000 |
+| `LH_EXP` | 0 | 6 | 0% | 1.000 |
+| `LH_EXPORTS` | 0 | 6 | 0% | 1.000 |
 | `LH_GDP` | 0 | 6 | 0% | 1.000 |
+| `LH_GDPNOM` | 0 | 6 | 0% | 1.000 |
+| `LH_HHCREDIT` | 0 | 6 | 0% | 1.000 |
+| `LH_IMPORTS` | 0 | 6 | 0% | 1.000 |
+| `LH_MONEY` | 0 | 6 | 0% | 1.000 |
+| `LH_NARROW` | 0 | 6 | 0% | 1.000 |
+| `LH_POP` | 0 | 6 | 0% | 1.000 |
+| `LH_RCONS` | 0 | 6 | 0% | 1.000 |
+| `LH_REV` | 0 | 6 | 0% | 1.000 |
+| `LH_RGDP_BARRO` | 0 | 6 | 0% | 1.000 |
+| `LH_WAGE` | 0 | 6 | 0% | 1.000 |
 
 ## Kuznets
 
@@ -130,12 +188,41 @@ _Référence critique : [Solomou 1987](bibliographie.md#solomou-1987), [Klotz-Ne
 
 | Variable | Survies Gate 1 | Total agrégats | Taux | p-value min |
 |---|---:|---:|---:|---:|
+| `LH_CA` | 1 | 6 | 17% | 0.002 |
+| `LH_BUSCREDIT` | 0 | 6 | 0% | 0.227 |
+| `LH_UNRATE` | 0 | 6 | 0% | 0.339 |
 | `LH_CREDIT` | 0 | 6 | 0% | 0.360 |
+| `LH_BANKDEBT` | 0 | 6 | 0% | 0.361 |
+| `LH_EQTR` | 0 | 6 | 0% | 0.483 |
 | `LH_EQUITY` | 0 | 6 | 0% | 0.483 |
+| `LH_HOUSECG` | 0 | 6 | 0% | 0.503 |
+| `LH_HHCREDIT` | 0 | 6 | 0% | 0.548 |
+| `LH_MORT` | 0 | 6 | 0% | 0.582 |
+| `LH_INV` | 0 | 6 | 0% | 0.668 |
+| `LH_HOUSINGTR` | 0 | 6 | 0% | 0.737 |
+| `LH_BONDTR` | 0 | 6 | 0% | 0.744 |
+| `LH_LEV` | 0 | 6 | 0% | 0.744 |
+| `LH_BONDRATE` | 0 | 6 | 0% | 0.745 |
+| `LH_EQDIVP` | 0 | 6 | 0% | 0.747 |
+| `LH_BILLRATE` | 0 | 6 | 0% | 0.749 |
+| `LH_DEBTGDP` | 0 | 6 | 0% | 0.816 |
 | `LH_YIELD` | 0 | 6 | 0% | 0.937 |
+| `LH_EXP` | 0 | 6 | 0% | 0.970 |
 | `LH_CPI` | 0 | 6 | 0% | 0.976 |
+| `LH_REV` | 0 | 6 | 0% | 0.976 |
+| `LH_STIR` | 0 | 6 | 0% | 0.980 |
+| `LH_XRUSD` | 0 | 5 | 0% | 0.983 |
 | `LH_HPI` | 0 | 6 | 0% | 0.995 |
+| `LH_EXPORTS` | 0 | 6 | 0% | 1.000 |
 | `LH_GDP` | 0 | 6 | 0% | 1.000 |
+| `LH_GDPNOM` | 0 | 6 | 0% | 1.000 |
+| `LH_IMPORTS` | 0 | 6 | 0% | 1.000 |
+| `LH_MONEY` | 0 | 6 | 0% | 1.000 |
+| `LH_NARROW` | 0 | 6 | 0% | 1.000 |
+| `LH_POP` | 0 | 6 | 0% | 1.000 |
+| `LH_RCONS` | 0 | 6 | 0% | 1.000 |
+| `LH_RGDP_BARRO` | 0 | 6 | 0% | 1.000 |
+| `LH_WAGE` | 0 | 6 | 0% | 1.000 |
 
 ## Kondratieff
 
@@ -171,55 +258,91 @@ _Référence critique : [Garvy 1943](bibliographie.md#garvy-1943), [Mansfield 19
 
 | Variable | Survies Gate 1 | Total agrégats | Taux | p-value min |
 |---|---:|---:|---:|---:|
+| `LH_DEBTGDP` | 1 | 6 | 17% | 0.028 |
+| `LH_UNRATE` | 0 | 6 | 0% | 0.055 |
+| `LH_BONDTR` | 0 | 6 | 0% | 0.119 |
+| `LH_CA` | 0 | 6 | 0% | 0.136 |
+| `LH_HOUSINGTR` | 0 | 6 | 0% | 0.149 |
 | `LH_EQUITY` | 0 | 6 | 0% | 0.235 |
+| `LH_EQTR` | 0 | 6 | 0% | 0.286 |
+| `LH_HOUSECG` | 0 | 6 | 0% | 0.333 |
+| `LH_EQDIVP` | 0 | 6 | 0% | 0.488 |
 | `LH_CPI` | 0 | 6 | 0% | 0.500 |
+| `LH_LEV` | 0 | 6 | 0% | 0.517 |
+| `LH_BILLRATE` | 0 | 6 | 0% | 0.529 |
+| `LH_BONDRATE` | 0 | 6 | 0% | 0.529 |
 | `LH_CREDIT` | 0 | 6 | 0% | 0.695 |
+| `LH_INV` | 0 | 6 | 0% | 0.710 |
+| `LH_MORT` | 0 | 6 | 0% | 0.756 |
+| `LH_BUSCREDIT` | 0 | 6 | 0% | 0.773 |
+| `LH_HHCREDIT` | 0 | 6 | 0% | 0.796 |
+| `LH_REV` | 0 | 6 | 0% | 0.849 |
+| `LH_EXP` | 0 | 6 | 0% | 0.867 |
 | `LH_YIELD` | 0 | 6 | 0% | 0.937 |
 | `LH_HPI` | 0 | 6 | 0% | 0.940 |
+| `LH_NARROW` | 0 | 6 | 0% | 0.989 |
 | `LH_GDP` | 0 | 6 | 0% | 0.994 |
+| `LH_STIR` | 0 | 6 | 0% | 0.999 |
+| `LH_BANKDEBT` | 0 | 6 | 0% | 1.000 |
+| `LH_EXPORTS` | 0 | 6 | 0% | 1.000 |
+| `LH_GDPNOM` | 0 | 6 | 0% | 1.000 |
+| `LH_IMPORTS` | 0 | 6 | 0% | 1.000 |
+| `LH_MONEY` | 0 | 6 | 0% | 1.000 |
+| `LH_POP` | 0 | 6 | 0% | 1.000 |
+| `LH_RCONS` | 0 | 6 | 0% | 1.000 |
+| `LH_RGDP_BARRO` | 0 | 6 | 0% | 1.000 |
+| `LH_WAGE` | 0 | 6 | 0% | 1.000 |
+| `LH_XRUSD` | 0 | 5 | 0% | 1.000 |
 
 ## Spotlight : variables porteuses par agrégat phare
 
 Pour chaque cycle, on isole l'agrégat avec le plus de variables survivantes — c'est là que le cycle est le mieux documenté. Les cellules sont les p-values brutes ; vert (`p ≤ 0.05`) marque les variables porteuses.
 
-### Kitchin → MX_BIS (horizon `bis`)
+### Kitchin → LIC (horizon `wb`)
 
 | Variable | p-value Gate 1 | Survit ? | n observations |
 |---|---:|:---:|---:|
-| `BIS_CRATIO` | 0.050 | ✅ | 180 |
-| `BIS_TCRED` | 0.050 | ✅ | 180 |
-| `BIS_CGAP` | 0.879 | ❌ | 140 |
-| `BIS_RPP` | 0.998 | ❌ | 84 |
-
-### Kuznets → BRICS (horizon `wb`)
-
-| Variable | p-value Gate 1 | Survit ? | n observations |
-|---|---:|:---:|---:|
-| `CY_GDP` | 0.010 | ✅ | 64 |
-| `CY_INF` | 0.323 | ❌ | 65 |
-| `CY_UEM` | 0.400 | ❌ | 34 |
-| `CY_INV` | 0.891 | ❌ | 65 |
-| `CY_TRD` | 0.990 | ❌ | 65 |
-| `CY_FIN` | 1.000 | ❌ | 65 |
+| `CY_INV` | 0.029 | ✅ | 34 |
+| `CY_UEM` | 0.272 | ❌ | 35 |
+| `CY_PRD` | 0.320 | ❌ | 45 |
+| `CY_GDP` | 0.467 | ❌ | 44 |
+| `CY_TRD` | 0.736 | ❌ | 34 |
+| `CY_FIN` | 0.963 | ❌ | 60 |
 | `CY_POP` | 1.000 | ❌ | 65 |
-| `CY_PRD` | 1.000 | ❌ | 65 |
 
-### Kondratieff → BRICS (horizon `wb`)
+### Juglar → RU_BIS (horizon `bis`)
 
 | Variable | p-value Gate 1 | Survit ? | n observations |
 |---|---:|:---:|---:|
-| `CY_GDP` | 0.001 | ✅ | 64 |
-| `CY_INF` | 0.347 | ❌ | 65 |
-| `CY_PRD` | 0.572 | ❌ | 65 |
-| `CY_UEM` | 0.834 | ❌ | 34 |
-| `CY_FIN` | 0.951 | ❌ | 65 |
-| `CY_TRD` | 0.969 | ❌ | 65 |
-| `CY_INV` | 0.971 | ❌ | 65 |
-| `CY_POP` | 0.974 | ❌ | 65 |
+| `BIS_BUSCRED` | 0.050 | ✅ | 112 |
+| `BIS_CGAP` | 0.677 | ❌ | 82 |
+| `BIS_CRATIO` | 1.000 | ❌ | 122 |
+| `BIS_HHCRED` | 1.000 | ❌ | 111 |
+| `BIS_RPP` | 1.000 | ❌ | 100 |
+
+### Kuznets → MX_BIS (horizon `bis`)
+
+| Variable | p-value Gate 1 | Survit ? | n observations |
+|---|---:|:---:|---:|
+| `BIS_RPP` | 0.001 | ✅ | 84 |
+| `BIS_BUSCRED` | 0.019 | ✅ | 140 |
+| `BIS_CGAP` | 0.338 | ❌ | 140 |
+| `BIS_CRATIO` | 0.500 | ❌ | 180 |
+| `BIS_HHCRED` | 0.807 | ❌ | 124 |
+
+### Kondratieff → ID_BIS (horizon `bis`)
+
+| Variable | p-value Gate 1 | Survit ? | n observations |
+|---|---:|:---:|---:|
+| `BIS_RPP` | 0.007 | ✅ | 96 |
+| `BIS_BUSCRED` | 0.049 | ✅ | 96 |
+| `BIS_CRATIO` | 0.384 | ❌ | 199 |
+| `BIS_HHCRED` | 0.448 | ❌ | 96 |
+| `BIS_CGAP` | 0.769 | ❌ | 159 |
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T10:36:57+00:00
+- Date de la note : 2026-05-29T11:53:55+00:00
 - As-of : 2026-05
 - Pipeline : `ecowave evidence-per-variable`
 - Null : dual (AR(1) + phase-scramble), 1000 surrogates, α=0.05
