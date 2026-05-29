@@ -23,17 +23,17 @@
 | `NORDIC` | Long | disputed | rising (post-peak) | 📉 min dans 2.2 ans | contraction ⚠️ | falling | 📈 max dans 3.9 ans | — | — | — | — | — | — |
 | `USA` | Long | — | — | — | expansion ⚠️ | rising | 📈 max dans 7 mois | — | — | — | — | — | — |
 | `UK_BOE` | BoE | — | — | — | — | — | — | contraction ⚠️ | falling | 📈 max dans 7.8 ans | — | — | — |
-| `BIS_EM` | BIS | disputed ⚠️ | falling | 📉 min dans 8 mois | — | — | — | disputed ⚠️ | rising (post-trough) | 📈 max dans 6.3 ans | — | — | — |
+| `BIS_EM` | BIS | disputed ⚠️ | falling | 📉 min dans 9 mois | — | — | — | disputed ⚠️ | rising (post-trough) | 📈 max dans 6.3 ans | — | — | — |
 | `BIS_AE` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
 | `BR_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
-| `CN_BIS` | BIS | contraction ⚠️ | falling | 📉 min dans 4 mois | — | — | — | — | — | — | peak ⚠️ | rising (post-peak) | 📉 min dans 13 ans |
-| `IN_BIS` | BIS | — | — | — | — | — | — | expansion ⚠️ | rising | 📈 max dans 1.5 ans | — | — | — |
-| `MX_BIS` | BIS | contraction ⚠️ | falling | 📉 min dans 11 mois | — | — | — | — | — | — | — | — | — |
-| `KR_BIS` | BIS | expansion ⚠️ | rising | 📈 max dans 1 mois | — | — | — | disputed ⚠️ | rising (post-trough) | 📈 max dans 6.8 ans | — | — | — |
-| `TR_BIS` | BIS | peak ⚠️ | rising (post-peak) | 📉 min dans 1.3 ans | — | — | — | — | — | — | — | — | — |
-| `ZA_BIS` | BIS | — | — | — | disputed ⚠️ | rising (post-peak) | 📉 min dans 3.8 ans | disputed ⚠️ | rising | 📈 max dans 2.6 ans | — | — | — |
-| `RU_BIS` | BIS | — | — | — | disputed ⚠️ | rising (post-peak) | 📉 min dans 4.0 ans | — | — | — | — | — | — |
-| `ID_BIS` | BIS | disputed ⚠️ | rising (post-peak) | 📉 min dans 1.7 ans | expansion ⚠️ | rising (post-trough) | 📈 max dans 3.3 ans | — | — | — | — | — | — |
+| `CN_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
+| `IN_BIS` | BIS | — | — | — | — | — | — | expansion ⚠️ | rising | 📈 max dans 9 mois | — | — | — |
+| `MX_BIS` | BIS | disputed ⚠️ | falling | 📉 min dans 12 mois | disputed ⚠️ | rising (post-peak) | 📉 min dans 3.6 ans | — | — | — | — | — | — |
+| `KR_BIS` | BIS | disputed ⚠️ | rising (post-peak) | 📉 min dans 1.8 ans | — | — | — | — | — | — | — | — | — |
+| `TR_BIS` | BIS | peak ⚠️ | rising (post-peak) | 📉 min dans 1.2 ans | — | — | — | — | — | — | — | — | — |
+| `ZA_BIS` | BIS | — | — | — | contraction ⚠️ | rising (post-peak) | 📉 min dans 3.3 ans | disputed ⚠️ | falling | 📉 min dans 3.9 ans | — | — | — |
+| `RU_BIS` | BIS | — | — | — | — | — | — | — | — | — | — | — | — |
+| `ID_BIS` | BIS | peak ⚠️ | rising (post-peak) | 📉 min dans 1.2 ans | contraction ⚠️ | falling | 📉 min dans 4 mois | — | — | — | — | — | — |
 
 _⚠️ = effet endpoint CF dominant sur les dernières `hi_years/2` années ; la prévision donne l'ordre de grandeur, pas la date exacte._
 

@@ -165,24 +165,45 @@ def load_rpp(dataset: BisBulkDataset) -> pd.DataFrame:
 
 
 def load_total_credit(dataset: BisBulkDataset) -> pd.DataFrame:
-    """Return (country, variable_code='BIS_TCRED', year, quarter, value).
+    """Return (country, variable_code, year, quarter, value) for credit
+    decomposition.
 
-    Picks Total credit to **Private non-financial sector** valued in
-    **percent of GDP** (UNIT_TYPE='770'), market-value VALUATION='M',
-    no adjustment TC_ADJUST='A'. The most cross-country comparable
-    headline series.
+    Splits credit by borrower sector (Mian-Sufi 2018 financial cycle work):
+
+      - TC_BORROWERS='H'  →  BIS_HHCRED   (households)
+      - TC_BORROWERS='C'  →  BIS_BUSCRED  (corporates / non-financial businesses)
+      - TC_BORROWERS='G'  →  BIS_GVCRED   (general government)
+
+    Filters: TC_LENDERS='A' (all sectors), UNIT_TYPE='770' (% of GDP),
+    VALUATION='M' (market value), TC_ADJUST='A' (break-adjusted).
+
+    **Important**: we do NOT load the TC_BORROWERS='P' (private non-financial)
+    aggregate, because it duplicates ``BIS_CRATIO`` from the credit-gap bulk
+    by construction (P = H + C, both ratios over GDP). Loading it would
+    feed the composite the same series twice and inflate band-pass power
+    spuriously — diagnosed during the CN_BIS Kondratieff deep dive
+    (2026-05).
     """
     wide = _read_bulk_csv(dataset.total_credit_zip)
-    mask = (
-        (wide["TC_BORROWERS"] == "P")
-        & (wide["TC_LENDERS"] == "A")
-        & (wide["UNIT_TYPE"] == "770")  # % of GDP
-        & (wide["VALUATION"] == "M")     # market value
-        & (wide["TC_ADJUST"] == "A")     # adjusted
-    )
-    sub = wide[mask].copy()
-    sub["variable_code"] = "BIS_TCRED"
-    long = _melt_quarterly(sub, ["BORROWERS_CTY", "variable_code"])
+    sector_to_code = {"H": "BIS_HHCRED", "C": "BIS_BUSCRED", "G": "BIS_GVCRED"}
+    out_frames = []
+    for sector, var_code in sector_to_code.items():
+        mask = (
+            (wide["TC_BORROWERS"] == sector)
+            & (wide["TC_LENDERS"] == "A")
+            & (wide["UNIT_TYPE"] == "770")  # % of GDP
+            & (wide["VALUATION"] == "M")     # market value
+            & (wide["TC_ADJUST"] == "A")     # break-adjusted
+        )
+        sub = wide[mask].copy()
+        if sub.empty:
+            continue
+        sub["variable_code"] = var_code
+        out_frames.append(sub)
+    if not out_frames:
+        return pd.DataFrame()
+    combined = pd.concat(out_frames, ignore_index=True)
+    long = _melt_quarterly(combined, ["BORROWERS_CTY", "variable_code"])
     return (long.rename(columns={"BORROWERS_CTY": "country"})
                  .drop_duplicates(subset=["country", "variable_code",
                                             "year", "quarter"], keep="first")
@@ -216,7 +237,7 @@ def build_bis_panel(group_code: str, variable_specs: list[dict],
         long_pieces.append(load_credit_gap(dataset))
     if "BIS_RPP" in requested:
         long_pieces.append(load_rpp(dataset))
-    if "BIS_TCRED" in requested:
+    if {"BIS_HHCRED", "BIS_BUSCRED", "BIS_GVCRED"} & requested:
         long_pieces.append(load_total_credit(dataset))
     if not long_pieces:
         return pd.DataFrame()

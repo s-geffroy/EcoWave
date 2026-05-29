@@ -33,10 +33,12 @@
     }
   ],
   "variable_codes": [
-    {"variable_code": "BIS_CGAP",   "cycle_targets": ["juglar", "kuznets"],            "notes": "Credit-to-GDP gap (Borio-Drehmann CCyB signal). Tracks credit booms relative to long-run HP-filtered trend. Basel III CCyB primary trigger."},
-    {"variable_code": "BIS_CRATIO", "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Credit-to-GDP actual ratio. Raw level for the credit cycle."},
-    {"variable_code": "BIS_RPP",    "cycle_targets": ["kuznets"],                       "notes": "Residential property prices (nominal). Kuznets construction-swing channel."},
-    {"variable_code": "BIS_TCRED",  "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Total credit to private non-financial sector (% of GDP). Borio financial-cycle headline."}
+    {"variable_code": "BIS_CGAP",    "cycle_targets": ["juglar", "kuznets"],            "notes": "Credit-to-GDP gap (Borio-Drehmann CCyB signal). Tracks credit booms relative to long-run HP-filtered trend. Basel III CCyB primary trigger. Already detrended by construction."},
+    {"variable_code": "BIS_CRATIO",  "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Credit-to-GDP actual ratio (private non-financial, % of GDP). Raw level for the credit cycle."},
+    {"variable_code": "BIS_RPP",     "cycle_targets": ["kuznets"],                       "notes": "Residential property prices (nominal). Kuznets construction-swing channel."},
+    {"variable_code": "BIS_HHCRED",  "cycle_targets": ["juglar", "kuznets"],            "notes": "Household credit (% of GDP). Mian-Sufi financial cycle, distinct from corporate credit."},
+    {"variable_code": "BIS_BUSCRED", "cycle_targets": ["juglar", "kuznets"],            "notes": "Non-financial corporate credit (% of GDP). Schumpeter Juglar investment-financing channel separated."},
+    {"variable_code": "BIS_GVCRED",  "cycle_targets": ["kondratieff"],                   "notes": "General government credit (% of GDP). Reinhart-Rogoff debt-cycle channel."}
   ],
   "groups": ["BIS_EM", "BIS_AE", "BR_BIS", "CN_BIS", "IN_BIS", "MX_BIS", "KR_BIS", "TR_BIS", "ZA_BIS", "RU_BIS", "ID_BIS"]
 }

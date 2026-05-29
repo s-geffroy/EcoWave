@@ -251,6 +251,9 @@ def evidence_per_variable(
         "wb":   ["WLD", "OECD", "HIC", "UMC", "LMC", "LIC", "G7", "BRICS"],
         "q":    ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"],
         "long": ["ADV18", "G7", "USA", "EU4", "ANGLO", "NORDIC"],
+        "boe":  ["UK_BOE"],
+        "bis":  ["BIS_EM", "BIS_AE", "BR_BIS", "CN_BIS", "IN_BIS",
+                  "MX_BIS", "KR_BIS", "TR_BIS", "ZA_BIS", "RU_BIS", "ID_BIS"],
     }
     horizons_to_run = {h.strip() for h in horizons.split(",") if h.strip()}
     unknown = horizons_to_run - set(horizon_groups)
