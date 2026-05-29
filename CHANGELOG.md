@@ -5,6 +5,61 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Au-delà des cycles — panorama de 15 cadres physiques alternatifs
+
+Suite à la chaîne d'audits (PRs #15-20) qui a démontré l'absence de
+cycles authentiques à tous les niveaux du protocole CPV (composites
+macro, variables individuelles, séries originales des découvreurs),
+ouverture du chantier *positif* du papier : si les cycles n'existent
+pas, par quoi sont remplacés les phénomènes observés (ACF ≈ 1.000,
+agglomération de la volatilité, queues lourdes, ruptures
+structurelles) ?
+
+**Nouvelle page** `docs/methodology_beyond_cycles.md` (~700 lignes)
+publie un panorama de **15 familles de cadres physiques candidats**,
+organisées en 3 tiers d'applicabilité :
+
+- **Tier 1** (7 cadres directement testables) : SOC + lois de
+  puissance (Bak 1996, Sornette 2003), multifractalité
+  (Bacry-Muzy-Delour 2001, Kantelhardt 2002), longue mémoire
+  (Hurst 1951, Mandelbrot 1997), critical slowing down
+  (Scheffer 2009, Dakos 2008), RMT (Bouchaud-Potters 2003,
+  Marchenko-Pastur 1967), théorie de l'information
+  (Bandt-Pompe 2002, Schreiber 2000, Crutchfield-Young 1989),
+  Lévy flights (Mantegna-Stanley 1999).
+- **Tier 2** : oscillateurs couplés / Kuramoto / KAM / pendules
+  multiples (Kuramoto 1984, Strogatz 2003) ; biologie évolutionniste
+  (Gould-Eldredge 1972, West-Brown-Enquist 1997) ; bifurcations
+  / catastrophes (Thom 1972).
+- **Tier 3** : chaos déterministe (Takens 1981, Grassberger-Procaccia
+  1983), verres de spin (Mézard-Parisi-Virasoro 1987), soft matter /
+  cristaux liquides (De Gennes 1974), quantum analogies
+  (Baaquie 2004), cellular automata (Wolfram 2002).
+
+Pour chaque famille : description conceptuelle, références-clé,
+**signature statistique attendue**, et applicabilité au matériau CPV
+(★1-5).
+
+**Enrichissement `docs/bibliographie.md`** : 28 nouvelles références
+physique réparties dans les sections A-W de la biblio + nouvelle
+section *"Au-delà des cycles — références par famille"* qui regroupe
+par famille.
+
+**Roadmap item #15** (TODO) ajouté à `methodology/feuille_de_route.md` :
+plan d'implémentation pour la session suivante d'un module
+`ecowave/cycles/alternative_dynamics.py` avec 7 diagnostics
+statistiques compacts (DFA/Hurst, MF-DFA, slope spectrale 1/f,
+permutation entropy + complexity, critical slowing down,
+Lévy stable fit, RMT analysis) appliqués à toutes les séries CPV.
+Chaque diagnostic accompagné d'un null hypothesis test (philosophie
+Gate 1 reproduite hors paradigme cyclique).
+
+**Position épistémologique explicite** : *"la macroéconomie n'est
+pas un cycle, et voici 15 grilles de lecture alternatives, dont 7
+directement testables"*. Le programme reste falsifiabiliste — on
+multiplie les cadres candidats pour ne pas tomber dans un nouveau
+dogme post-cycle.
+
 ### Roadmap #13 Phase 3 — Substitut Mitchell IHS via FRED + OWID + DECC/BEIS : Wen 2005 falsifié
 
 Substitut ouvert au Mitchell IHS (paywall Springer Palgrave) via :

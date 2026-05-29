@@ -14,9 +14,70 @@ moving beyond uni- and bivariate analysis. *Journal of Economic Surveys*,
 
 ## B
 
+### Baaquie (2004) {#baaquie-2004}
+
+Baaquie, B. E. (2004). *Quantum finance: path integrals and Hamiltonians
+for options and interest rates*. Cambridge University Press. *Application
+des intégrales de chemin de la mécanique quantique au pricing d'options
+et à la modélisation de la structure par terme. Cadre méthodologique
+"Famille M — quantum analogies" du panorama au-delà des cycles.*
+
+### Bacry, Muzy & Delour (2001) {#bacry-muzy-delour-2001}
+
+Bacry, E., Muzy, J. F., & Delour, J. (2001). Multifractal random walk.
+*Physical Review E*, 64(2), 026103. *Modèle stochastique multifractal
+avec mémoire log-normale. Reproduit les faits stylisés des séries
+financières (queues lourdes, agglomération de la volatilité, scaling
+multifractal) sans aucune périodicité. Cadre principal de la
+"Famille B — multifractalité".*
+
+### Bak (1996) {#bak-1996}
+
+Bak, P. (1996). *How nature works: the science of self-organized
+criticality*. Copernicus. *Manifeste vulgarisé de la criticité
+auto-organisée. Les systèmes physiques, biologiques et économiques
+évoluent spontanément vers des états critiques caractérisés par des
+avalanches de toutes tailles (loi de puissance), sans périodicité.
+Cadre principal de la "Famille A — SOC".*
+
+### Bak, Tang & Wiesenfeld (1987) {#bak-tang-wiesenfeld-1987}
+
+Bak, P., Tang, C., & Wiesenfeld, K. (1987). Self-organized criticality:
+an explanation of 1/f noise. *Physical Review Letters*, 59(4), 381–384.
+*Article fondateur de la SOC. Le modèle du tas de sable (sandpile)
+produit naturellement du bruit 1/f et des avalanches scale-free —
+exactement la signature spectrale qu'on observe sur de nombreuses
+séries macro après échec du test de cycle.*
+
+### Bandt & Pompe (2002) {#bandt-pompe-2002}
+
+Bandt, C., & Pompe, B. (2002). Permutation entropy: a natural complexity
+measure for time series. *Physical Review Letters*, 88(17), 174102.
+*Mesure de complexité basée sur les motifs ordinaux (ordres de rangs
+locaux). Robuste au bruit, n'exige pas de stationarité. Diagnostic
+de choix pour la "Famille I — théorie de l'information".*
+
 ### Bolt & van Zanden (2024) {#bolt-vanzanden-2024}
 
 Voir [Maddison Project Database (2023)](#maddison-2023).
+
+### Bouchaud & Potters (2003) {#bouchaud-potters-2003}
+
+Bouchaud, J.-P., & Potters, M. (2003). *Theory of financial risk and
+derivative pricing: from statistical physics to risk management*
+(2nd ed.). Cambridge University Press. *Manuel fondateur de
+l'econophysique appliquée au risque. Théorie des matrices aléatoires,
+filtrage des corrélations spurieuses, queues lourdes. Cadre principal
+de la "Famille G — RMT".*
+
+### Brock, Dechert & Scheinkman (1996) {#brock-dechert-scheinkman-1996}
+
+Brock, W. A., Dechert, W. D., Scheinkman, J. A., & LeBaron, B. (1996).
+A test for independence based on the correlation dimension. *Econometric
+Reviews*, 15(3), 197–235. *Test BDS pour la non-linéarité et la
+non-indépendance d'une série temporelle. Détecte le chaos déterministe,
+les modèles ARCH, et toute structure non-IID. Outil-clé de la
+"Famille D — chaos déterministe".*
 
 ### Burns & Mitchell (1946) {#burns-mitchell-1946}
 
@@ -43,7 +104,33 @@ procedures and computer programs*. NBER Technical Paper 20.
 Christiano, L. J., & Fitzgerald, T. J. (2003). The band pass filter.
 *International Economic Review*, 44(2), 435–465.
 
+### Crutchfield & Young (1989) {#crutchfield-young-1989}
+
+Crutchfield, J. P., & Young, K. (1989). Inferring statistical complexity.
+*Physical Review Letters*, 63(2), 105–108. *Distingue complexité
+"intéressante" (structurée) de l'aléatoire pur ET de l'ordre périodique
+trivial. Définit l'ε-machine minimale. Fondement théorique de la
+"Famille I — théorie de l'information & complexité".*
+
 ## D
+
+### Dakos et al. (2008) {#dakos-2008}
+
+Dakos, V., Scheffer, M., van Nes, E. H., Brovkin, V., Petoukhov, V., &
+Held, H. (2008). Slowing down as an early warning signal for abrupt
+climate change. *PNAS*, 105(38), 14308–14312. *Démontre empiriquement
+que la variance et l'autocorrélation lag-1 croissent avant 8 transitions
+climatiques majeures du Quaternaire. Méthode directement transposable
+aux séries macro pour détecter l'approche d'une tipping point. Cadre
+principal de la "Famille E — critical slowing down".*
+
+### De Gennes (1974) {#de-gennes-1974}
+
+De Gennes, P.-G. (1974). *The physics of liquid crystals*. Oxford
+University Press. *Manuel fondateur de la physique des cristaux
+liquides. Phases nématique, smectique, cholestérique. Défauts
+topologiques persistants comme métaphore d'ordres partiels
+macroéconomiques. Cadre suggéré pour la "Famille K — soft matter".*
 
 ### Diebolt & Doliger (2008) {#diebolt-doliger-2008}
 
@@ -66,6 +153,22 @@ résiste est le cycle court (Kitchin).*
 
 Goldstein, J. S. (1988). *Long cycles: prosperity and war in the modern age*.
 Yale University Press.
+
+### Gould & Eldredge (1972) {#gould-eldredge-1972}
+
+Gould, S. J., & Eldredge, N. (1972). Punctuated equilibria: an alternative
+to phyletic gradualism. In T. J. M. Schopf (Ed.), *Models in paleobiology*
+(pp. 82–115). Freeman, Cooper. *Théorie des équilibres ponctués : stases
+longues + ruptures rapides. Analogue paléontologique de la "creative
+destruction" schumpetérienne et des transitions économiques abruptes.
+Cadre principal de la "Famille L — biologie évolutionniste".*
+
+### Grassberger & Procaccia (1983) {#grassberger-procaccia-1983}
+
+Grassberger, P., & Procaccia, I. (1983). Characterization of strange
+attractors. *Physical Review Letters*, 50(5), 346–349. *Dimension de
+corrélation pour caractériser les attracteurs étranges. Outil canonique
+de la "Famille D — chaos déterministe".*
 
 ### Gordon (2016) {#gordon-2016}
 
@@ -95,6 +198,16 @@ filter. *Review of Economics and Statistics*, 100(5), 831–843.
 
 Harding, D., & Pagan, A. (2002). Dissecting the cycle: a methodological
 investigation. *Journal of Monetary Economics*, 49(2), 365–381.
+
+### Hurst (1951) {#hurst-1951}
+
+Hurst, H. E. (1951). Long-term storage capacity of reservoirs.
+*Transactions of the American Society of Civil Engineers*, 116, 770–808.
+*Découverte de la longue mémoire (Hurst exponent H ≠ 0.5) sur les crues
+du Nil. H > 0.5 = persistance ; H < 0.5 = anti-persistance.
+Cadre fondateur de la "Famille C — longue mémoire" — directement
+applicable aux séries macro avec ACF lag-1 ≈ 1.000 observées sur
+CPV.*
 
 ### Hodrick & Prescott (1997) {#hodrick-prescott-1997}
 
@@ -135,6 +248,15 @@ les "long swings" 15-25 ans n'apparaissent pas comme pics distincts du
 spectre — l'apparente périodicité résulte d'un lissage statistique
 arbitraire des séries originales de Kuznets.*
 
+### Kantelhardt et al. (2002) {#kantelhardt-2002}
+
+Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,
+Bunde, A., & Stanley, H. E. (2002). Multifractal detrended fluctuation
+analysis of nonstationary time series. *Physica A*, 316(1–4), 87–114.
+*MF-DFA — extension multifractale du DFA de Peng et al. (1994).
+Estime le spectre multifractal f(α) sur séries non-stationnaires.
+Outil principal de la "Famille B — multifractalité".*
+
 ### Kitchin (1923) {#kitchin-1923}
 
 Kitchin, J. (1923). Cycles and trends in economic factors. *Review of
@@ -159,6 +281,16 @@ Kose, M. A., Otrok, C., & Whiteman, C. H. (2003). International business
 cycles: world, region, and country-specific factors. *American Economic
 Review*, 93(4), 1216–1239.
 
+### Kuramoto (1984) {#kuramoto-1984}
+
+Kuramoto, Y. (1984). *Chemical oscillations, waves, and turbulence*.
+Springer. *Modèle des oscillateurs couplés (Kuramoto model) : N
+oscillateurs avec fréquences naturelles distribuées, couplés
+globalement, montrent une transition de phase ordre-désordre vers la
+synchronisation collective. Cadre principal de la "Famille F —
+oscillateurs couplés". Analogue mathématique des pendules multiples
+suggérés par sge.*
+
 ### Kuznets (1930) {#kuznets-1930}
 
 Kuznets, S. (1930). *Secular movements in production and prices*.
@@ -171,7 +303,50 @@ Houghton Mifflin.
 Laeven, L., & Valencia, F. (2018). Systemic banking crises revisited.
 IMF Working Paper 18/206.
 
+### Laloux et al. (1999) {#laloux-1999}
+
+Laloux, L., Cizeau, P., Bouchaud, J.-P., & Potters, M. (1999). Noise
+dressing of financial correlation matrices. *Physical Review Letters*,
+83(7), 1467–1470. *Application opérationnelle de la théorie des
+matrices aléatoires aux corrélations financières. La majorité du
+spectre eigenvalues correspond à du bruit (Marchenko-Pastur) ; seules
+quelques eigenvalues "bulk-deviating" portent du signal réel.
+"Famille G — RMT".*
+
+### Lenton & Williams (2013) {#lenton-williams-2013}
+
+Lenton, T. M., & Williams, H. T. P. (2013). On the origin of planetary-
+scale tipping points. *Trends in Ecology & Evolution*, 28(7), 380–382.
+*Cascades de tipping points : un système qui bascule peut déclencher
+le basculement d'un autre. Transposable aux crises financières
+systémiques. "Famille E — critical slowing down + tipping cascades".*
+
 ## M
+
+### Mandelbrot (1997) {#mandelbrot-1997}
+
+Mandelbrot, B. B. (1997). *Fractals and scaling in finance:
+discontinuity, concentration, risk*. Springer. *Manuel synthétique
+de la finance fractale par son fondateur. Modèles multifractaux,
+queues lourdes Lévy, agglomération de la volatilité. Cadre fondateur
+des familles B (multifractalité), C (longue mémoire) et J (Lévy
+flights).*
+
+### Mantegna & Stanley (1999) {#mantegna-stanley-1999}
+
+Mantegna, R. N., & Stanley, H. E. (1999). *An introduction to
+econophysics: correlations and complexity in finance*. Cambridge
+University Press. *Manuel fondateur de l'econophysique. Applications
+des distributions Lévy stables, lois d'échelle, RMT aux séries
+financières. Cadre transversal touchant aux familles A, B, C, G, J.*
+
+### Marchenko & Pastur (1967) {#marchenko-pastur-1967}
+
+Marchenko, V. A., & Pastur, L. A. (1967). Distribution of eigenvalues
+for some sets of random matrices. *Matematicheskii Sbornik*, 72(4),
+507–536. *Distribution théorique des valeurs propres d'une matrice de
+covariance échantillonnée à partir de bruit. Pierre angulaire de la
+RMT financière (Bouchaud-Potters, Laloux). "Famille G".*
 
 ### Maddison Project Database (2023) {#maddison-2023}
 
@@ -197,6 +372,14 @@ techno-économique de Kondratieff/Schumpeter : l'analyse des grappes
 d'innovations 1837-1972 ne révèle aucune périodicité à 40-60 ans, les
 "vagues d'innovation" suivent une logique sectorielle aléatoire.*
 
+### Mézard, Parisi & Virasoro (1987) {#mezard-parisi-virasoro-1987}
+
+Mézard, M., Parisi, G., & Virasoro, M. A. (1987). *Spin glass theory
+and beyond*. World Scientific. *Manuel canonique des verres de spin
+et systèmes désordonnés. Frustration, replica symmetry breaking,
+multitude d'états métastables. Méthode théorique pour traiter
+l'hétérogénéité des agents économiques. "Famille H — verres de spin".*
+
 ### Mensch (1979) {#mensch-1979}
 
 Mensch, G. (1979). *Stalemate in technology: innovations overcome the
@@ -208,6 +391,15 @@ Modelski, G. (1987). *Long cycles in world politics*. University of
 Washington Press.
 
 ## P
+
+### Peng et al. (1994) {#peng-1994}
+
+Peng, C.-K., Buldyrev, S. V., Havlin, S., Simons, M., Stanley, H. E., &
+Goldberger, A. L. (1994). Mosaic organization of DNA nucleotides.
+*Physical Review E*, 49(2), 1685–1689. *Detrended Fluctuation Analysis
+(DFA) — méthode pour estimer le Hurst exponent sur séries non-
+stationnaires. Diagnostic de base de la "Famille C — longue mémoire"
+et "Famille B — multifractalité" (via MF-DFA, Kantelhardt 2002).*
 
 ### Perez (2002) {#perez-2002}
 
@@ -244,10 +436,44 @@ constante structurelle.*
 
 ## S
 
+### Scheffer (2009) {#scheffer-2009}
+
+Scheffer, M., Bascompte, J., Brock, W. A., Brovkin, V., Carpenter, S. R.,
+Dakos, V., Held, H., van Nes, E. H., Rietkerk, M., & Sugihara, G.
+(2009). Early-warning signals for critical transitions. *Nature*,
+461(7260), 53–59. *Article de référence sur les signaux précurseurs
+des transitions critiques en systèmes dynamiques. Critical slowing
+down comme indicateur générique. "Famille E".*
+
+### Schreiber (2000) {#schreiber-2000}
+
+Schreiber, T. (2000). Measuring information transfer. *Physical Review
+Letters*, 85(2), 461–464. *Transfer entropy : mesure asymétrique de
+l'information transférée d'une série à une autre. Permet d'identifier
+des cascades causales sans hypothèse de linéarité. "Famille I —
+théorie de l'information".*
+
 ### Schumpeter (1939) {#schumpeter-1939}
 
 Schumpeter, J. A. (1939). *Business cycles: a theoretical, historical and
 statistical analysis of the capitalist process*. McGraw-Hill.
+
+### Sornette (2003) {#sornette-2003}
+
+Sornette, D. (2003). *Why stock markets crash: critical events in
+complex financial systems*. Princeton University Press. *Manuel
+fondateur des marchés financiers vus comme systèmes critiques avec
+précurseurs log-périodiques. Lois de puissance distributionnelles
+des crashes, dragon kings. "Famille A — SOC + lois de puissance".*
+
+### Sornette & Johansen (1999) {#sornette-johansen-1999}
+
+Sornette, D., & Johansen, A. (1999). Significance of log-periodic
+precursors to financial crashes. *Quantitative Finance*, 1(4), 452–471.
+*Modèle LPPL (Log-Periodic Power Law Singularity). Bulles financières
+caractérisées par accélération en loi de puissance avec oscillations
+log-périodiques. Outil prédictif de la "Famille A — phénomènes
+critiques".*
 
 ### Solomou (1987) {#solomou-1987}
 
@@ -259,6 +485,16 @@ les tests de racine unitaire aux séries de Kondratieff (1925) et Kuznets
 phénomènes statistiquement distincts d'un bruit stochastique.
 **Référence canonique de la critique empirique des cycles longs.**
 Précurseur direct du protocole CPV.*
+
+### Strogatz (2003) {#strogatz-2003}
+
+Strogatz, S. H. (2003). *Sync: how order emerges from chaos in the
+universe, nature, and daily life*. Hyperion. *Vulgarisation
+synthétique des modèles de synchronisation (Kuramoto, oscillateurs
+couplés). Présente la synchronisation comme phénomène émergent
+universel — analogue mathématique aux "cycles économiques" sans
+en imposer la périodicité. Compagnon accessible à Kuramoto 1984
+pour la "Famille F".*
 
 ### Stock & Watson (2003) {#stock-watson-2003}
 
@@ -282,6 +518,15 @@ hysteresis, and the zero lower bound. *Business Economics*, 49(2), 65–73.
 
 ## T
 
+### Takens (1981) {#takens-1981}
+
+Takens, F. (1981). Detecting strange attractors in turbulence. In
+*Dynamical systems and turbulence, Warwick 1980* (pp. 366–381).
+Springer. *Théorème d'embedding : à partir d'une seule série
+temporelle scalaire et de ses lags, on peut reconstruire
+l'attracteur de l'espace de phase original (sous conditions de
+régularité). Outil canonique de la "Famille D — chaos déterministe".*
+
 ### Theiler, Eubank, Longtin, Galdrikian & Farmer (1992) {#theiler-et-al-1992}
 
 Theiler, J., Eubank, S., Longtin, A., Galdrikian, B., & Farmer, J. D.
@@ -294,6 +539,23 @@ Torrence, C., & Compo, G. P. (1998). A practical guide to wavelet analysis.
 *Bulletin of the American Meteorological Society*, 79(1), 61–78.
 
 ## W
+
+### West, Brown & Enquist (1997) {#west-brown-enquist-1997}
+
+West, G. B., Brown, J. H., & Enquist, B. J. (1997). A general model
+for the origin of allometric scaling laws in biology. *Science*,
+276(5309), 122–126. *Modèle universel des lois d'échelle
+allométriques (Kleiber). Cadre théorique pour les lois d'échelle
+universelles en systèmes complexes — applicable aux distributions
+de tailles d'entreprises, métropoles, crises. "Famille L —
+biologie / écosystèmes".*
+
+### Wolfram (2002) {#wolfram-2002}
+
+Wolfram, S. (2002). *A new kind of science*. Wolfram Media. *Manifeste
+des automates cellulaires comme modèles universels. Class IV
+behavior : computation universelle à la frontière entre ordre et
+chaos. Cadre méthodologique de la "Famille O — cellular automata".*
 
 ### Wen (2005) {#wen-2005}
 
@@ -378,6 +640,74 @@ l'échantillon de 65 ans. La survie sur l'agrégat monde est cohérente
 avec le post-WWII rising K en cours, mais la statistique reste limitée
 (Maddison 1991 reconnaîtrait ces phases comme exogènes, pas comme un
 cycle endogène).
+
+## Au-delà des cycles — références par famille {#au-dela-des-cycles}
+
+Cartographie des cadres physiques alternatifs au paradigme du cycle,
+détaillée dans [Au-delà des cycles — cadres physiques alternatifs](methodology_beyond_cycles.md).
+Chaque famille regroupe ses 2–5 références-clé ; la page méthodologique
+discute pour chacune la signature statistique attendue et l'applicabilité
+aux données CPV.
+
+### Famille A — Criticité auto-organisée et lois de puissance
+
+[Bak (1996)](#bak-1996) · [Bak, Tang & Wiesenfeld (1987)](#bak-tang-wiesenfeld-1987) · [Sornette (2003)](#sornette-2003) · [Sornette & Johansen (1999)](#sornette-johansen-1999)
+
+### Famille B — Géométrie fractale et multifractalité
+
+[Bacry, Muzy & Delour (2001)](#bacry-muzy-delour-2001) · [Kantelhardt et al. (2002)](#kantelhardt-2002) · [Mandelbrot (1997)](#mandelbrot-1997) · [Peng et al. (1994)](#peng-1994)
+
+### Famille C — Longue mémoire et processus fractionnaires
+
+[Hurst (1951)](#hurst-1951) · [Mandelbrot (1997)](#mandelbrot-1997) · [Peng et al. (1994)](#peng-1994)
+
+### Famille D — Chaos déterministe et attracteurs étranges
+
+[Brock, Dechert & Scheinkman (1996)](#brock-dechert-scheinkman-1996) · [Grassberger & Procaccia (1983)](#grassberger-procaccia-1983) · [Takens (1981)](#takens-1981)
+
+### Famille E — Critical slowing down et tipping points
+
+[Dakos et al. (2008)](#dakos-2008) · [Lenton & Williams (2013)](#lenton-williams-2013) · [Scheffer (2009)](#scheffer-2009)
+
+### Famille F — Synchronisation et oscillateurs couplés (Kuramoto, KAM, pendules multiples)
+
+[Kuramoto (1984)](#kuramoto-1984) · [Strogatz (2003)](#strogatz-2003)
+
+### Famille G — Théorie des matrices aléatoires
+
+[Bouchaud & Potters (2003)](#bouchaud-potters-2003) · [Laloux et al. (1999)](#laloux-1999) · [Marchenko & Pastur (1967)](#marchenko-pastur-1967)
+
+### Famille H — Verres de spin et systèmes désordonnés
+
+[Mézard, Parisi & Virasoro (1987)](#mezard-parisi-virasoro-1987)
+
+### Famille I — Théorie de l'information et complexité
+
+[Bandt & Pompe (2002)](#bandt-pompe-2002) · [Crutchfield & Young (1989)](#crutchfield-young-1989) · [Schreiber (2000)](#schreiber-2000)
+
+### Famille J — Lévy flights et processus à sauts
+
+[Mandelbrot (1997)](#mandelbrot-1997) · [Mantegna & Stanley (1999)](#mantegna-stanley-1999)
+
+### Famille K — Soft matter, cristaux liquides, topologie
+
+[De Gennes (1974)](#de-gennes-1974)
+
+### Famille L — Biologie évolutionniste et écologie
+
+[Gould & Eldredge (1972)](#gould-eldredge-1972) · [West, Brown & Enquist (1997)](#west-brown-enquist-1997)
+
+### Famille M — Quantum analogies
+
+[Baaquie (2004)](#baaquie-2004)
+
+### Famille N — Cybernétique, bifurcations, catastrophes
+
+*(Références théoriques classiques non détaillées ici : Thom 1972, Zeeman 1977, Hopf 1942 ; voir la page méthodologique.)*
+
+### Famille O — Cellular automata et calcul universel
+
+[Wolfram (2002)](#wolfram-2002)
 
 ## Bases de données externes
 
