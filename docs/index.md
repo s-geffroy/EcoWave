@@ -19,6 +19,18 @@ ses échecs"**. Chaque cellule est traçable à une ligne SQLite
 
 --8<-- "_includes/home_synthesis_table.md"
 
+### Poids de preuve — quelle p-value faudrait-il pour passer Gate 1 ?
+
+Le tableau précédent est binaire : "cycle survit à α=0.05 ou non". La
+matrice ci-dessous publie les p-values brutes — un lecteur qui veut
+appliquer un seuil plus strict (Bonferroni-correcté, α ≈ 0.0014 sur les
+36 cellules WB) ou plus permissif (convention macro, α = 0.10) peut
+lire directement la cellule. Les cas borderline (`p` entre 0.05 et
+0.10, codés 🟠) sont les plus instructifs pour la suite du programme
+de recherche : ils auraient survécu à une convention macro standard.
+
+--8<-- "_includes/home_pvalues_table.md"
+
 Lecture transversale détaillée, commentaire par cycle et panels étendus :
 [Synthèse multi-horizons](reports/cycle_position_synthesis.md).
 

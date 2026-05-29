@@ -223,6 +223,74 @@ def render_home_synthesis_table(by_horizon: dict[str, pd.DataFrame],
     return "\n".join(lines)
 
 
+# Thresholds for the home p-values matrix. Each tuple is (upper_bound, icon)
+# tested in ascending order; the first bound a p-value falls under wins. The
+# four buckets (🟢/🟡/🟠/🔴) map to the readings shown in the table footer.
+PVALUE_THRESHOLDS: tuple[tuple[float, str], ...] = (
+    (0.01, "🟢"),
+    (0.05, "🟡"),
+    (0.10, "🟠"),
+    (1.01, "🔴"),
+)
+
+
+def _format_pvalue_cell(p) -> str:
+    if p is None or (isinstance(p, float) and pd.isna(p)):
+        return "—"
+    p = float(p)
+    for upper, icon in PVALUE_THRESHOLDS:
+        if p <= upper:
+            return f"{icon} {p:.3f}"
+    return f"🔴 {p:.3f}"
+
+
+def render_home_pvalues_table(by_horizon: dict[str, pd.DataFrame],
+                              as_of: str,
+                              link_prefix: str = "reports/") -> str:
+    """Compact p-value matrix: 20 rows × 4 cycle columns, color-coded.
+
+    Lets readers apply their own α threshold (Bonferroni-strict ≈ 0.0014 on
+    36 WB cells, macro-10%, or the protocol's standard 5%) by reading the
+    icon band. Complementary to ``render_home_aggregates_table`` — the
+    dashboard answers "what is the cycle doing when it survives?", this
+    matrix answers "how strong is the evidence, pass or fail?".
+    """
+    cycles = ("kitchin", "juglar", "kuznets", "kondratieff")
+    lines: list[str] = []
+    lines.append(
+        f"### Poids de preuve par cellule — p-values Gate 1 ({as_of})"
+    )
+    lines.append("")
+    header_cells = ["Agrégat", "Source"] + [c.capitalize() for c in cycles]
+    lines.append("| " + " | ".join(header_cells) + " |")
+    lines.append("|" + "---|" * len(header_cells))
+
+    for horizon, group in AGGREGATE_ROW_ORDER:
+        table = by_horizon.get(horizon, build_position_table([]))
+        source_label = HORIZON_LABEL_SHORT.get(horizon, horizon)
+        row_cells = [f"`{group}`", source_label]
+        for cycle in cycles:
+            cell = _select_canonical_row(table, cycle, group)
+            p = cell.get("ar1_p_value") if cell else None
+            row_cells.append(_format_pvalue_cell(p))
+        lines.append("| " + " | ".join(row_cells) + " |")
+    lines.append("")
+    lines.append(
+        "Lecture : 🟢 `p ≤ 0.01` (signal fort, survivrait à α=0.01) · "
+        "🟡 `0.01 < p ≤ 0.05` (seuil standard CPV) · "
+        "🟠 `0.05 < p ≤ 0.10` (marginal, survivrait à α=0.10) · "
+        "🔴 `p > 0.10` (clairement null)."
+    )
+    lines.append("")
+    lines.append(
+        "_p-values issues du test dual-null sur 1000 surrogates, **non "
+        "corrigées** pour comparaisons multiples. Lecture Bonferroni-stricte "
+        "sur 36 cellules WB : comparer à α ≈ 0.0014. Pour les conventions "
+        "macro à α=0.10, traiter 🟢🟡🟠 comme survivants._"
+    )
+    return "\n".join(lines)
+
+
 def render_home_aggregates_table(by_horizon: dict[str, pd.DataFrame],
                                  as_of: str,
                                  link_prefix: str = "reports/") -> str:
