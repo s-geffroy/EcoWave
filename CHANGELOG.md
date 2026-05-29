@@ -5,6 +5,42 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Audit WLD-WB Kondratieff — second artefact d'agrégation démasqué
+
+Application du même protocole 5-étapes que pour
+[CN_BIS K](docs/case_study_cn_bis_kondratieff.md) à
+`WLD-WB Kondratieff p=0.001` (le seul autre survivant K du pipeline).
+
+**Résultat identique** : artefact d'agrégation, pas un vrai cycle.
+
+Le composite K WLD ne consomme que 2 variables (`CY_FIN`,
+`CY_PRD` — celles pré-enregistrées avec `cycle_targets=['kondratieff']`
+dans le manifest WB). Ces deux variables sont **toutes deux des
+tendances structurelles pures** :
+
+| Variable | R² log-lin | ACF lag-1 | p Gate 1 individuel |
+|---|---:|---:|---:|
+| CY_FIN (financiarisation) | 0.64 | 0.97 | 0.728 (rejected) |
+| CY_PRD (productivité) | **0.99** | **1.000** | 0.993 (rejected) |
+
+Individuellement, AUCUN signal K. Mais leur composite z-score à
+`p=0.001` parce que la moyenne de 2 trends z-scorées est encore
+une trend (avec un peu de bruit), et le filtre band-pass CF [40-60y]
+capture la moitié de la rampe sur 65 ans comme un demi-cycle K.
+
+**Le seul Kondratieff publié du pipeline CPV est donc également un
+artefact**. La thèse centrale (rejets = empirisme honnête) est
+confirmée de façon écrasante : aucune K-wave authentique ne survit
+quand on regarde par variable individuelle.
+
+Page `docs/case_study_wld_wb_kondratieff.md` ajoutée à la section 1
+de la nav. Documente le même protocole 5-étapes (coverage / forme /
+votes / per-variable / mécanisme) et soulève la question
+méthodologique de fond : doit-on **transformer les séries pour
+qu'elles ressemblent à des cycles** (pre-detrending, différenciation)
+avant de tester, ou tester telles quelles et accepter que les
+tendances structurelles fassent rejeter les K-waves par défaut ?
+
 ### Étude de cas CN_BIS Kondratieff — démasque un artefact d'agrégation
 
 Dive deep sur le seul Kondratieff survivant hors `WLD-WB` :
