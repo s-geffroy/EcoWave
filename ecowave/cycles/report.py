@@ -6,6 +6,7 @@ per group, and CF band-pass trajectories.
 """
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -13,6 +14,39 @@ import numpy as np
 import pandas as pd
 
 from ecowave.cycles.bands import CYCLE_BANDS, INCOME_GROUPS
+
+# Canonical (cycle, horizon, group) triplets used to assemble the homepage
+# synthesis table. One row per band, anchored to the aggregate where Gate 1
+# (dual null, α=0.05) actually survives at as-of 2026-05. Rationale: in a
+# 1000-surrogate dual-null regime, the global G7-quarterly composite dilutes
+# Kitchin (out-of-phase 7-country averaging) and the annual WB panel sees too
+# few Juglar/Kuznets cycles in 65 years. The pair (WB-WLD, Long-G7) covers
+# all four bands at p ≤ 0.01:
+#   - WB WLD Kitchin (4-5y, 16 cycles in panel)        p=0.002
+#   - Long G7 Juglar (7-11y, ~17 cycles in 152y)        p=0.005
+#   - Long G7 Kuznets (15-25y, ~7 cycles in 152y)       p=0.008
+#   - WB WLD Kondratieff (40-60y, 1.3 cycles in panel)  p=0.001
+CANONICAL_HOME_ROWS: tuple[tuple[str, str, str, str], ...] = (
+    # (cycle, horizon, group_code, source_label)
+    ("kitchin", "wb", "WLD", "Panel Banque mondiale (1960-2024)"),
+    ("juglar", "long", "G7", "Histoire longue G7 (Maddison + JST, 1870-2022)"),
+    ("kuznets", "long", "G7", "Histoire longue G7 (Maddison + JST, 1870-2022)"),
+    ("kondratieff", "wb", "WLD", "Panel Banque mondiale (1960-2024)"),
+)
+
+# Aggregates worth surfacing in the cross-horizon synthesis note (more rows
+# than the headline table but still curated).
+SYNTHESIS_HORIZON_GROUPS: dict[str, tuple[str, ...]] = {
+    "wb": ("WLD", "G7", "OECD", "BRICS"),
+    "q": ("G7Q", "USA", "EA", "JPN"),
+    "long": ("ADV18", "G7", "EU4", "ANGLO", "NORDIC"),
+}
+
+HORIZON_LABELS: dict[str, str] = {
+    "wb": "Banque mondiale (1960-2024)",
+    "q": "Trimestriel (Path 5, 1960-Q1 2026)",
+    "long": "Histoire longue (1870-2022)",
+}
 
 GROUP_GLOSSARY = {
     "WLD": "Monde — agrégat World Bank (population + GDP pondérés)",
@@ -63,6 +97,194 @@ def _format_next(row) -> str:
         return "—"
     arrow = "📈 max" if kind == "max" else "📉 min"
     return f"{arrow} dans {_format_eta(eta)}"
+
+
+def positions_sidecar_path(reports_dir: Path, as_of: str, horizon: str) -> Path:
+    """Sidecar JSON path for the positions DataFrame of one horizon.
+
+    Why a sidecar: ``replace_cycle_positions`` wipes the SQLite table on every
+    ``position-cycles`` invocation, so the three horizons cannot coexist in DB.
+    The sidecars survive across runs and let ``home-synthesis`` reassemble the
+    cross-horizon view without re-running any pipeline.
+    """
+    stem = f"{as_of.replace('-', '_')}_{horizon}"
+    return reports_dir / f"cycle_position_{stem}.json"
+
+
+def write_positions_sidecar(table: pd.DataFrame, path: Path) -> Path:
+    """Serialize the positions table as JSON records (NaN → null)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if table.empty:
+        path.write_text("[]", encoding="utf-8")
+        return path
+    df = table.copy()
+    if isinstance(df["cycle"].dtype, pd.CategoricalDtype):
+        df["cycle"] = df["cycle"].astype(str)
+    records = df.where(pd.notna(df), None).to_dict(orient="records")
+    path.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")
+    return path
+
+
+def read_positions_sidecar(path: Path) -> pd.DataFrame:
+    """Rehydrate a positions DataFrame from a sidecar JSON file."""
+    if not path.exists():
+        return build_position_table([])
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    return build_position_table(raw)
+
+
+def _select_canonical_row(table: pd.DataFrame, cycle: str,
+                          group_code: str) -> dict | None:
+    if table.empty:
+        return None
+    matches = table[(table["cycle"].astype(str) == cycle)
+                    & (table["group_code"] == group_code)]
+    if matches.empty:
+        return None
+    return matches.iloc[0].to_dict()
+
+
+def render_home_synthesis_table(by_horizon: dict[str, pd.DataFrame],
+                                as_of: str,
+                                link_prefix: str = "reports/") -> str:
+    """Headline 4-row table for the homepage: one canonical row per cycle.
+
+    Each row picks the dataset best suited to the band's timescale (cf.
+    ``CANONICAL_HOME_ROWS``). Cells that cannot be located in the sidecars
+    (e.g. an horizon hasn't been run yet) appear with em-dashes so the snippet
+    is still renderable in a partial state.
+
+    ``link_prefix`` is the relative directory from the consumer page to the
+    `cycle_position_*.md` notes. Defaults to ``"reports/"`` (relative to
+    ``docs/index.md``). The cross-horizon synthesis note, which itself lives
+    in ``docs/reports/``, passes ``""``.
+    """
+    lines: list[str] = []
+    lines.append(f"### Position actuelle des 4 cycles canoniques — {as_of}")
+    lines.append("")
+    lines.append("| Cycle | Source canonique | Agrégat | Phase | Tendance | Prochain extremum |")
+    lines.append("|---|---|---|---|---|---|")
+    any_caveat = False
+    for cycle, horizon, group, source_label in CANONICAL_HOME_ROWS:
+        table = by_horizon.get(horizon, build_position_table([]))
+        row = _select_canonical_row(table, cycle, group)
+        cycle_lbl = cycle.capitalize()
+        if row is None:
+            lines.append(
+                f"| {cycle_lbl} | {source_label} | `{group}` | _en attente_ | — | — |"
+            )
+            continue
+        phase = str(row.get("phase") or "—")
+        trend = row.get("trend") or "—"
+        nxt = _format_next({"next_kind": row.get("next_kind", "—"),
+                            "next_eta_years": row.get("next_eta_years")})
+        caveat = " ⚠️" if int(row.get("endpoint_caveat") or 0) == 1 else ""
+        if caveat:
+            any_caveat = True
+        lines.append(
+            f"| {cycle_lbl}{caveat} | {source_label} | `{group}` | "
+            f"{phase} | {trend} | {nxt} |"
+        )
+    lines.append("")
+    if any_caveat:
+        lines.append(
+            "_⚠️ = effet endpoint CF dominant sur les dernières `hi_years/2` années ; "
+            "la prévision donne l'ordre de grandeur, pas la date exacte._"
+        )
+        lines.append("")
+    lines.append(
+        "Détails par agrégat : "
+        f"[Panel Banque mondiale]({link_prefix}cycle_position_2026_05_wb.md) · "
+        f"[Panel trimestriel]({link_prefix}cycle_position_2026_05_q.md) · "
+        f"[Histoire longue]({link_prefix}cycle_position_2026_05_long.md)."
+    )
+    return "\n".join(lines)
+
+
+def render_cross_horizon_commentary(by_horizon: dict[str, pd.DataFrame]) -> str:
+    """Short narrative paragraphs comparing the three horizons cycle-by-cycle."""
+    lines: list[str] = []
+    for cycle, horizon, group, _ in CANONICAL_HOME_ROWS:
+        cycle_lbl = cycle.capitalize()
+        row = _select_canonical_row(
+            by_horizon.get(horizon, build_position_table([])), cycle, group)
+        if row is None:
+            lines.append(
+                f"- **{cycle_lbl}** — données manquantes pour `{group}` "
+                f"sur l'horizon `{horizon}` ; lancer "
+                f"`ecowave position-cycles --horizon {horizon}`."
+            )
+            continue
+        phase = row.get("phase", "—")
+        trend = row.get("trend") or "—"
+        nxt = _format_next({"next_kind": row.get("next_kind", "—"),
+                            "next_eta_years": row.get("next_eta_years")})
+        lines.append(
+            f"- **{cycle_lbl}** ({group}, source `{horizon}`) — phase `{phase}`, "
+            f"tendance `{trend}`, {nxt}."
+        )
+    return "\n".join(lines)
+
+
+def render_cross_horizon_synthesis_md(as_of: str,
+                                      by_horizon: dict[str, pd.DataFrame],
+                                      schema_version: str,
+                                      out_path: Path) -> Path:
+    """Cross-horizon synthesis note: home table + extended per-horizon panels."""
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    now_iso = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    lines: list[str] = []
+    lines.append(f"# Synthèse multi-horizons — CPV {as_of}")
+    lines.append("")
+    lines.append("> Note signée — agrégation des trois horizons CPV (Banque mondiale,")
+    lines.append("> trimestriel, histoire longue) pour répondre à la question :")
+    lines.append("> **\"où en sommes-nous dans chaque cycle, et où allons-nous ?\"**.")
+    lines.append("> Chaque cellule provient d'une ligne SQLite `cycle_positions`")
+    lines.append("> traçable ; aucune agrégation inter-dataset n'est effectuée.")
+    lines.append("")
+
+    lines.append("## Position canonique par cycle")
+    lines.append("")
+    # The synthesis note lives in docs/reports/ so cycle_position_*.md siblings
+    # are reached without the "reports/" prefix used on the homepage snippet.
+    lines.append(render_home_synthesis_table(by_horizon, as_of, link_prefix=""))
+    lines.append("")
+
+    lines.append("## Lecture par cycle")
+    lines.append("")
+    lines.append(render_cross_horizon_commentary(by_horizon))
+    lines.append("")
+
+    lines.append("## Panels étendus par horizon")
+    lines.append("")
+    for horizon, label in HORIZON_LABELS.items():
+        table = by_horizon.get(horizon, build_position_table([]))
+        groups = SYNTHESIS_HORIZON_GROUPS.get(horizon, ())
+        lines.append(f"### {label}")
+        lines.append("")
+        if table.empty:
+            lines.append(f"_Aucune donnée — exécuter `ecowave position-cycles "
+                         f"--horizon {horizon}`._")
+            lines.append("")
+            continue
+        sub = table[table["group_code"].isin(groups)]
+        if sub.empty:
+            lines.append("_Aucun agrégat canonique disponible pour cet horizon._")
+            lines.append("")
+            continue
+        lines.append(render_recap_table(sub))
+        lines.append("")
+
+    lines.append("## Sign-off")
+    lines.append("")
+    lines.append(f"- Date de la note : {now_iso}")
+    lines.append(f"- As-of : {as_of}")
+    lines.append(f"- Schema EcoWave : `{schema_version}`")
+    lines.append("- Pipeline : `ecowave home-synthesis`")
+    lines.append("")
+
+    out_path.write_text("\n".join(lines), encoding="utf-8")
+    return out_path
 
 
 def render_recap_table(table: pd.DataFrame) -> str:

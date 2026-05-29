@@ -5,6 +5,50 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### GitHub Pages : refonte du site et tableau de synthèse en home
+
+Refonte complète du site MkDocs (`https://s-geffroy.github.io/EcoWave/`)
+pour passer d'une nav "par jeu de données" à une nav "par question
+scientifique" (1. Où en sommes-nous ? / 2. Pourquoi ? / 3. Comment ? /
+4. Preuves détaillées / 5. Données & références).
+
+- **Tableau de synthèse home** — `docs/index.md` affiche désormais en
+  headline un tableau 4 lignes (une par cycle canonique) avec phase,
+  tendance et prochain extremum. Sources canoniques par bande,
+  sélectionnées sur le critère "Gate 1 dual-null survives at α=0.05" :
+  Kitchin → WB / WLD (p=0.002), Juglar → long / G7 (p=0.005),
+  Kuznets → long / G7 (p=0.008), Kondratieff → WB / WLD (p=0.001).
+  Le couple (WB-WLD, long-G7) couvre les 4 bandes parce que (a) la
+  longue histoire fournit ~17 cycles Juglar et ~7 Kuznets sur G7
+  (impossible avec 65 ans annuels WB), et (b) le WB-WLD a assez de
+  cycles Kitchin (~16) et Kondratieff (~1.3) pour battre le bruit
+  rouge. Le trimestriel G7Q dilue le Kitchin (agrégation 7 pays
+  out-of-phase). Aucune agrégation inter-dataset artificielle ;
+  chaque cellule est traçable à une ligne SQLite `cycle_positions`.
+- **Nouvelle commande CLI** `ecowave home-synthesis --as-of YYYY-MM`
+  qui recompose la synthèse cross-horizon depuis trois sidecars JSON
+  (`reports/cycle_position_{as_of}_{wb,q,long}.json`) écrits par
+  `position-cycles`. Sortie : `docs/_includes/home_synthesis_table.md`
+  (inclus via `pymdownx.snippets`) + `reports/cycle_position_synthesis.md`
+  (note signée multi-horizons publiée dans la section 1 de la nav).
+- **Notes `cycle_position_*.md` publiées** — `scripts/sync_docs.sh`
+  copie maintenant les trois rapports horizon-par-horizon vers
+  `docs/reports/`, accessibles depuis la section "Où en sommes-nous ?".
+- **Activation de `pymdownx.snippets` + `pymdownx.details`** dans
+  `mkdocs.yml` (le second pour replier les métadonnées denses des
+  figures sans perdre la rigueur).
+- **Fonctions ajoutées dans `ecowave/cycles/report.py`** :
+  `positions_sidecar_path`, `write_positions_sidecar`,
+  `read_positions_sidecar`, `render_home_synthesis_table`,
+  `render_cross_horizon_commentary`,
+  `render_cross_horizon_synthesis_md`, et le mapping
+  `CANONICAL_HOME_ROWS` qui verrouille la sélection cycle ↔ horizon ↔
+  agrégat.
+
+Tests : `test_report_home_synthesis.py` (6 cas) couvre la sélection
+des 4 lignes canoniques, le placeholder "en attente" quand un sidecar
+manque, le roundtrip JSON, et le rendu de la note multi-horizons signée.
+
 ### Extended quarterly coverage + per-band variable filter + long-horizon comparison
 
 Two new quarterly variables on top of GDP / CPI / UNRATE / YIELD /
