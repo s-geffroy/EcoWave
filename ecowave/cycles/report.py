@@ -48,6 +48,7 @@ HORIZON_LABELS: dict[str, str] = {
     "long": "Histoire longue (1870-2022)",
     "boe": "Bank of England Millennium (1700-2016)",
     "bis": "BIS macroprudential (1970-2025, EM+AE)",
+    "sh": "Sectoral history (FRED+OWID+BEIS, 1850-present)",
 }
 
 # Short labels used as the "Source" column of the home dashboard table — kept
@@ -58,6 +59,7 @@ HORIZON_LABEL_SHORT: dict[str, str] = {
     "long": "Long",
     "boe": "BoE",
     "bis": "BIS",
+    "sh": "Sect.",
 }
 
 # Row order for the home dashboard table. Within each horizon block the order
@@ -79,6 +81,8 @@ AGGREGATE_ROW_ORDER: tuple[tuple[str, str], ...] = (
     ("bis", "BR_BIS"), ("bis", "CN_BIS"), ("bis", "IN_BIS"),
     ("bis", "MX_BIS"), ("bis", "KR_BIS"), ("bis", "TR_BIS"),
     ("bis", "ZA_BIS"), ("bis", "RU_BIS"), ("bis", "ID_BIS"),
+    # Phase 3 — Sectoral history (FRED + OWID + DECC/BEIS, Wen 2005 test).
+    ("sh", "US_SH"), ("sh", "UK_SH"), ("sh", "WORLD_SH"),
 )
 
 GROUP_GLOSSARY = {

@@ -1,0 +1,27 @@
+{
+  "project": "cpv_sectoral_history_2026",
+  "schema_version": "0.5.0",
+  "as_of_month": "2026-05",
+  "start_year": 1850,
+  "horizon": "sh",
+  "note": "Roadmap #13 Phase 3 — substitute for Mitchell IHS (Springer paywall). Open sources only: FRED (US, NBER Macrohistory + BLS, CC0), OWID (World coal+oil, CC BY 4.0), OWID-legacy + DECC/BEIS (UK coal 1700-2019). Tests Wen (2005)'s central claim: Kitchin survives on sectoral series (inventory, coal, pig iron, rail freight) not on macro composites. Per-variable Gate 1 (Roadmap #14 safeguard) directly applicable.",
+  "datasets": [
+    {"name": "FRED — Federal Reserve Economic Data", "url": "https://fred.stlouisfed.org/", "license": "Public Domain (CC0)", "files": "us_*.csv"},
+    {"name": "Our World In Data — grapher", "url": "https://ourworldindata.org/", "license": "CC BY 4.0", "files": "world_coal_owid.csv, world_oil_owid.csv"},
+    {"name": "DECC/BEIS UK coal 1700-2019 (via OWID legacy GitHub mirror)", "url": "https://github.com/owid/owid-datasets", "license": "OGL-UK-3.0", "files": "uk_coal_beis_1700_2019.csv"}
+  ],
+  "variable_codes": [
+    {"variable_code": "SH_US_WPI",       "loader": "fred_splice", "files": ["us_wpi_nber_1860_1939.csv", "us_wpi_bls_1913_now.csv"], "freq": "monthly", "cycle_targets": ["kitchin","juglar","kondratieff"], "notes": "US Wholesale Price Index — splice NBER General Price Level (1860-1939) + BLS PPIACO (1913-2026). Juglar's original variable in 1862."},
+    {"variable_code": "SH_US_INDPROD",   "loader": "fred",       "files": ["us_indprod_1919_now.csv"], "freq": "monthly", "cycle_targets": ["kitchin","juglar"], "notes": "US Industrial Production Index (FRB G.17) — 1919-2026 monthly. Modern reference for industrial-cycle testing."},
+    {"variable_code": "SH_US_COAL",      "loader": "fred",       "files": ["us_coal_1856_1958.csv"], "freq": "annual", "cycle_targets": ["kitchin","juglar"], "notes": "US Total Coal Production — annual 1856-1958. Wen (2005)'s prototypical inventory-cycle variable."},
+    {"variable_code": "SH_US_STEEL",     "loader": "fred_splice", "files": ["us_steel_1863_1919.csv", "us_steel_ingot_1932_1965.csv"], "freq": "mixed", "cycle_targets": ["kitchin","juglar"], "notes": "US Steel Ingots Production — splice annual 1863-1919 + monthly 1932-1965. Schumpeter (1939) Juglar driver."},
+    {"variable_code": "SH_US_PIGIRON",   "loader": "fred",       "files": ["us_pigiron_1941_1964.csv"], "freq": "monthly", "cycle_targets": ["kitchin"], "notes": "US Pig Iron Production (Iron Age/AISI) — monthly 1941-1964. Limited span but a canonical Kitchin inventory variable."},
+    {"variable_code": "SH_US_RAILFREIGHT", "loader": "fred",     "files": ["us_railfreight_1866_1922.csv"], "freq": "monthly", "cycle_targets": ["kitchin","juglar"], "notes": "US Railroad Freight Ton-Miles (Babson) — monthly 1866-1922. Kitchin (1923) original."},
+    {"variable_code": "SH_US_WHEAT",     "loader": "fred",       "files": ["us_wheat_1866_1952.csv"], "freq": "annual", "cycle_targets": ["kitchin"], "notes": "US Wheat Production — annual 1866-1952. Agricultural inventory cycle."},
+    {"variable_code": "SH_US_COTTON",    "loader": "fred",       "files": ["us_cotton_1912_1961.csv"], "freq": "monthly", "cycle_targets": ["kitchin"], "notes": "US Cotton Mill Consumption — monthly 1912-1961. Textile inventory cycle."},
+    {"variable_code": "SH_UK_COAL",      "loader": "owid_wide",  "files": ["uk_coal_beis_1700_2019.csv"], "freq": "annual", "entity": "United Kingdom", "value_col": "Coal Output (DECC (2018))", "cycle_targets": ["kitchin","juglar","kuznets"], "notes": "UK Coal Output (DECC/BEIS) — annual 1913-2019 (decadal 1700-1900). 107 annual observations post-1913."},
+    {"variable_code": "SH_WORLD_COAL",   "loader": "owid_grapher", "files": ["world_coal_owid.csv"], "freq": "annual", "entity": "World", "value_col": "Coal", "cycle_targets": ["kitchin","juglar","kuznets","kondratieff"], "notes": "World Coal Production (OWID, TWh) — annual 1900-2024."},
+    {"variable_code": "SH_WORLD_OIL",    "loader": "owid_grapher", "files": ["world_oil_owid.csv"], "freq": "annual", "entity": "World", "value_col": "Oil", "cycle_targets": ["kitchin","juglar","kuznets","kondratieff"], "notes": "World Oil Production (OWID, TWh) — annual 1900-2024."}
+  ],
+  "groups": ["US_SH", "UK_SH", "WORLD_SH"]
+}

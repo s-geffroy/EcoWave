@@ -20,6 +20,7 @@ services:
       - ./quarterly_manifest.json:/app/quarterly_manifest.json
       - ./boe_millennium_manifest.json:/app/boe_millennium_manifest.json
       - ./bis_manifest.json:/app/bis_manifest.json
+      - ./sectoral_history_manifest.json:/app/sectoral_history_manifest.json
       - ./mkdocs.yml:/app/mkdocs.yml
     ports:
       - "8000:8000"

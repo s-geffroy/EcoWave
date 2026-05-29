@@ -93,9 +93,9 @@ def position_cycles(
     from ecowave.cycles.runner import run_position_cycles
     from pathlib import Path
 
-    if horizon not in {"wb", "long", "quarterly", "boe", "bis"}:
+    if horizon not in {"wb", "long", "quarterly", "boe", "bis", "sh"}:
         raise typer.BadParameter(
-            "--horizon must be 'wb', 'long', 'quarterly', 'boe' or 'bis'."
+            "--horizon must be 'wb', 'long', 'quarterly', 'boe', 'bis' or 'sh'."
         )
     if null not in {"ar1", "phase", "wavelet", "dual"}:
         raise typer.BadParameter("--null must be ar1, phase, wavelet, or dual.")
@@ -106,6 +106,7 @@ def position_cycles(
         "quarterly": "/app/quarterly_manifest.json",
         "boe":       "/app/boe_millennium_manifest.json",
         "bis":       "/app/bis_manifest.json",
+        "sh":        "/app/sectoral_history_manifest.json",
     }
     _DEFAULT_GROUPS = {
         "wb":        "WLD,OECD,HIC,UMC,LMC,LIC,G7,BRICS",
@@ -113,6 +114,7 @@ def position_cycles(
         "quarterly": "USA,EA,JPN,GBR,G7Q,OECDQ",
         "boe":       "UK_BOE",
         "bis":       "BIS_EM,BIS_AE,BR_BIS,CN_BIS,IN_BIS,MX_BIS,KR_BIS,TR_BIS,ZA_BIS,RU_BIS,ID_BIS",
+        "sh":        "US_SH,UK_SH,WORLD_SH",
     }
     if not manifest:
         manifest = _DEFAULT_MANIFEST[horizon]
@@ -164,7 +166,7 @@ def home_synthesis(
     by_horizon = {
         h: read_positions_sidecar(
             positions_sidecar_path(settings.reports_dir, as_of, h))
-        for h in ("wb", "q", "long", "boe", "bis")
+        for h in ("wb", "q", "long", "boe", "bis", "sh")
     }
     missing = [h for h, t in by_horizon.items() if t.empty]
     if missing:
@@ -254,6 +256,7 @@ def evidence_per_variable(
         "boe":  ["UK_BOE"],
         "bis":  ["BIS_EM", "BIS_AE", "BR_BIS", "CN_BIS", "IN_BIS",
                   "MX_BIS", "KR_BIS", "TR_BIS", "ZA_BIS", "RU_BIS", "ID_BIS"],
+        "sh":   ["US_SH", "UK_SH", "WORLD_SH"],
     }
     horizons_to_run = {h.strip() for h in horizons.split(",") if h.strip()}
     unknown = horizons_to_run - set(horizon_groups)

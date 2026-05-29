@@ -167,9 +167,13 @@ _Aucun agrégat canonique disponible pour cet horizon._
 
 _Aucun agrégat canonique disponible pour cet horizon._
 
+### Sectoral history (FRED+OWID+BEIS, 1850-present)
+
+_Aucun agrégat canonique disponible pour cet horizon._
+
 ## Sign-off
 
-- Date de la note : 2026-05-29T12:25:53+00:00
+- Date de la note : 2026-05-29T12:54:13+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave home-synthesis`
