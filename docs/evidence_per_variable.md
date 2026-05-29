@@ -4,7 +4,7 @@
 
 ## Résultat global
 
-Sur **1540 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **21 survivent Gate 1** dual-null à α = 0.05 — soit **1.4%**.
+Sur **1584 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **21 survivent Gate 1** dual-null à α = 0.05 — soit **1.3%**.
 
 **Comparaison avec les composites** (cf. [home dashboard](index.md#ou-en-sommes-nous)) : Gate 1 sur les agrégats composites laisse passer environ 25-30% des cellules. L'écart s'explique mécaniquement — sommer plusieurs séries z-scorées crée des artefacts de variance autocorrélée qui battent un null AR(1), même quand aucune des séries n'a individuellement de signal cyclique. **C'est exactement le diagnostic posé par [Wen (2005)](bibliographie.md#wen-2005) sur le cycle d'inventaire et par [Solomou (1987)](bibliographie.md#solomou-1987) sur Kuznets/Kondratieff il y a 40 et 20 ans respectivement.**
 
@@ -342,7 +342,7 @@ Pour chaque cycle, on isole l'agrégat avec le plus de variables survivantes —
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T11:53:55+00:00
+- Date de la note : 2026-05-29T12:54:11+00:00
 - As-of : 2026-05
 - Pipeline : `ecowave evidence-per-variable`
 - Null : dual (AR(1) + phase-scramble), 1000 surrogates, α=0.05

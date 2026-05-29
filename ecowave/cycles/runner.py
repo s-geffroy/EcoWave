@@ -290,6 +290,10 @@ def run_position_cycles(settings: Settings, as_of: str, manifest_path: Path,
         return _run_bis(settings, as_of, manifest_path, groups, mode,
                         n_surrogates, seed, con, run_id, null)
 
+    if horizon == "sh":
+        return _run_sh(settings, as_of, manifest_path, groups, mode,
+                       n_surrogates, seed, con, run_id, null)
+
     manifest = load_cycle_manifest(manifest_path)
     typer.echo(f"CPV — manifest {manifest.project} (as-of {manifest.as_of_month}); "
                f"{len(manifest.specs)} variables; {len(groups)} groups.")
@@ -675,20 +679,19 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
         except Exception as exc:  # noqa: BLE001
             typer.echo(f"  Polar figure ({cycle_name}) failed: {exc}", err=True)
 
-    figures = {
-        "Heatmap des phases (consensus)":
-            str(Path("../figures") / fig_heatmap.name),
-        "Heatmap des amplitudes":
-            str(Path("../figures") / fig_amplitude.name),
-        "Heatmap des p-values (Gate 1)":
-            str(Path("../figures") / fig_pvalue.name),
-        "Frise des prochains extrema":
-            str(Path("../figures") / fig_timeline.name),
-        "CF band-pass par cycle":
-            str(Path("../figures") / fig_cf.name),
-        f"Spectre wavelet ({wavelet_group})":
-            str(Path("../figures") / fig_wavelet.name),
-    }
+    # Skip figures that the plotters returned without writing (no surviving
+    # cells), to avoid dead image links under `mkdocs build --strict`.
+    figures = {}
+    for caption, fig_path in (
+        ("Heatmap des phases (consensus)", fig_heatmap),
+        ("Heatmap des amplitudes", fig_amplitude),
+        ("Heatmap des p-values (Gate 1)", fig_pvalue),
+        ("Frise des prochains extrema", fig_timeline),
+        ("CF band-pass par cycle", fig_cf),
+        (f"Spectre wavelet ({wavelet_group})", fig_wavelet),
+    ):
+        if fig_path.exists():
+            figures[caption] = str(Path("../figures") / fig_path.name)
     for cycle_name, fig_polar in fig_polar_per_cycle.items():
         figures[f"Diagramme polaire — {cycle_name.capitalize()}"] = str(
             Path("../figures") / fig_polar.name)
@@ -994,6 +997,78 @@ def _run_bis(settings: Settings, as_of: str, manifest_path: Path,
         wavelet_group="BIS_EM",
         samples_per_year=samples_per_year,
         report_suffix="bis",
+        targets_by_var={v["variable_code"]: tuple(v.get("cycle_targets", []))
+                         for v in variable_specs},
+    )
+
+
+def _run_sh(settings: Settings, as_of: str, manifest_path: Path,
+            groups: list[str], mode: str,
+            n_surrogates: int, seed: int,
+            con: "sqlite3.Connection", run_id: int,
+            null: str = "ar1") -> Path:
+    """Sectoral history variant. Roadmap #13 Phase 3 — substitute for
+    Mitchell IHS via FRED + OWID + DECC/BEIS open sources. Tests the
+    Wen (2005) claim that Kitchin survives on sectoral inventory /
+    production series even where it fails on macro composites."""
+    from ecowave.cycles.sectoral_history import (
+        SH_GROUPS,
+        SectoralHistoryDataset,
+        build_sh_panel,
+        load_sh_manifest,
+    )
+
+    spec = load_sh_manifest(Path(manifest_path))
+    variable_specs = spec.get("variable_codes", [])
+    start_year = int(spec.get("start_year", 1850))
+    typer.echo(
+        f"CPV (sectoral history) — {spec.get('project','cpv_sectoral_history')}; "
+        f"{len(variable_specs)} variables; {len(groups)} groups; "
+        f"start_year={start_year}."
+    )
+
+    dataset = SectoralHistoryDataset.default(settings.data_raw_dir)
+    composite_by_group: dict[str, pd.Series] = {}
+    panels_by_group: dict[str, pd.DataFrame] = {}
+    for group in groups:
+        if group not in SH_GROUPS:
+            typer.echo(f"  SH group {group} unknown — skipped.", err=True)
+            continue
+        try:
+            panel = build_sh_panel(group, variable_specs, dataset,
+                                    start_year=start_year,
+                                    persist={"con": con})
+        except Exception as exc:  # noqa: BLE001
+            typer.echo(f"  Group {group}: SH ingestion failed: {exc}",
+                       err=True)
+            if mode == "strict":
+                finish_ingestion_run(con, run_id, "failed", notes=str(exc))
+                con.close()
+                raise typer.Exit(code=1)
+            continue
+        if panel.empty:
+            typer.echo(f"  Group {group}: empty SH panel — skipped.")
+            continue
+        panels_by_group[group] = panel
+        composite_by_group[group] = _composite_panel(panel)
+        typer.echo(f"  {group}: {panel.shape[0]} years × {panel.shape[1]} vars.")
+
+    if not composite_by_group:
+        typer.echo("No SH group produced data; aborting.", err=True)
+        finish_ingestion_run(con, run_id, "failed", notes="empty panels")
+        con.close()
+        raise typer.Exit(code=1)
+
+    return _analyse_and_render(
+        settings=settings, as_of=as_of, con=con, run_id=run_id, mode=mode,
+        groups=list(composite_by_group.keys()),
+        composite_by_group=composite_by_group,
+        panels_by_group=panels_by_group,
+        n_surrogates=n_surrogates, seed=seed, null=null,
+        horizon_label=f"Sectoral history ({start_year}-present, US+UK+World)",
+        wavelet_group="US_SH",
+        samples_per_year=1.0,
+        report_suffix="sh",
         targets_by_var={v["variable_code"]: tuple(v.get("cycle_targets", []))
                          for v in variable_specs},
     )

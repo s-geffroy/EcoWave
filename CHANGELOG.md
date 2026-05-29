@@ -5,6 +5,55 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #13 Phase 3 — Substitut Mitchell IHS via FRED + OWID + DECC/BEIS : Wen 2005 falsifié
+
+Substitut ouvert au Mitchell IHS (paywall Springer Palgrave) via :
+- **FRED** (NBER Macrohistory + BLS PPI, CC0) — 8 séries sectorielles US
+- **OWID grapher** (CC BY 4.0) — World coal + oil 1900-2024
+- **OWID legacy + DECC/BEIS** (OGL-UK-3.0) — UK coal 1853-2019
+
+**11 séries × 3 groupes** :
+- `US_SH` (8 vars 1856-2026) : SH_US_WPI, INDPROD, COAL, STEEL, PIGIRON, RAILFREIGHT, WHEAT, COTTON
+- `UK_SH` (1 var 1853-2019) : SH_UK_COAL
+- `WORLD_SH` (2 vars 1900-2024) : SH_WORLD_COAL, SH_WORLD_OIL
+
+**Test décisif Wen (2005)** : Kitchin (3-5 ans) doit survivre sur les
+séries sectorielles d'inventaire/production là où il échoue sur les
+composites macro.
+
+**Verdict : Wen (2005) falsifié empiriquement.**
+
+| Niveau | Cellules testées | Kitchin survivants |
+|---|---|---|
+| Composite Gate 1 | 12 (3 groupes × 4 cycles) | 0 (1 vetoed par safeguard #14) |
+| **Per-variable Gate 1** | **44 (11 vars × 4 cycles)** | **0** |
+
+Aucune des 11 séries sectorielles — y compris les variables originales
+de Kitchin (1923) (production charbon, fonte, fret, blé, coton) — ne
+porte de cycle Kitchin détectable au niveau individuel à α=0.05.
+Min p-value : `SH_US_PIGIRON Kitchin p=0.188` — loin de tout seuil
+honnête.
+
+Le rejet des cycles canoniques est désormais empiriquement étendu à :
+1. Tous les composites macroéconomiques (Phases 0-2)
+2. **Toutes les séries sectorielles individuelles** (Phase 3)
+3. Toutes les bandes cycliques (Kitchin/Juglar/Kuznets/Kondratieff)
+
+**Confirmation maximale de la thèse centrale CPV** —
+[Garvy 1943](docs/bibliographie.md#garvy-1943) →
+[Solomou 1987](docs/bibliographie.md#solomou-1987) →
+[Maddison 1991](docs/bibliographie.md#maddison-1991) →
+[Wen 2005 lui-même](docs/bibliographie.md#wen-2005) tous validés
+empiriquement par le protocole strict.
+
+- Nouveau module `ecowave/cycles/sectoral_history.py`
+- Nouveau manifest `sectoral_history_manifest.json`
+- Nouveau downloader `scripts/download_sectoral_history.sh`
+- Nouvel horizon `position-cycles --horizon sh`
+- Nouvelle page `docs/case_study_wen_2005_test.md` (section 1 nav)
+- Nouvelle ligne dashboard home : US_SH / UK_SH / WORLD_SH
+- Fix collatéral : `_analyse_and_render` skip figures non écrites (analogue PR #12 sur polar Kuznets)
+
 ### Roadmap #14 — garde-fou per-variable systématique
 
 Nouveau garde-fou universel dans `_analyse_and_render` : pour publier

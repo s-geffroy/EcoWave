@@ -67,6 +67,8 @@ nav:
       - Histoire longue (1870-2022): reports/cycle_position_2026_05_long.md
       - Bank of England Millennium (1700-2016): reports/cycle_position_2026_05_boe.md
       - BIS macroprudential (EM + AE, 1970-2025): reports/cycle_position_2026_05_bis.md
+      - "Sectoral history (FRED+OWID+BEIS, test Wen 2005)": reports/cycle_position_2026_05_sh.md
+      - "Test direct Wen 2005 (Phase 3)": case_study_wen_2005_test.md
       - Évidence par variable (Wen/Solomou): evidence_per_variable.md
       - "Étude de cas — CN_BIS K (artefact d'agrégation)": case_study_cn_bis_kondratieff.md
       - "Étude de cas — WLD-WB K (trends agrégées)": case_study_wld_wb_kondratieff.md

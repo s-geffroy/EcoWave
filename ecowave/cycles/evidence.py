@@ -43,6 +43,7 @@ HORIZON_VARIABLE_SOURCE: dict[str, tuple[str, str | None]] = {
     "long": ("/app/long_history_manifest.json", None),
     "boe":  ("/app/boe_millennium_manifest.json", None),
     "bis":  ("/app/bis_manifest.json", "quarterly"),
+    "sh":   ("/app/sectoral_history_manifest.json", None),
 }
 
 

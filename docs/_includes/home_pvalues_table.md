@@ -34,6 +34,9 @@
 | `ZA_BIS` | BIS | 🟠 0.074 | 🟢 0.001 | 🟢 0.001 | 🔴 0.711 |
 | `RU_BIS` | BIS | 🔴 0.105 | 🔴 0.231 | 🔴 0.801 | 🔴 0.424 |
 | `ID_BIS` | BIS | 🟡 0.044 | 🟢 0.001 | 🔴 0.672 | 🔴 0.939 |
+| `US_SH` | Sect. | 🟠 0.089 | 🟠 0.078 | 🔴 0.565 | 🔴 0.743 |
+| `UK_SH` | Sect. | 🟠 0.053 | 🔴 0.232 | 🔴 0.634 | 🔴 0.490 |
+| `WORLD_SH` | Sect. | 🔴 0.392 | 🔴 0.261 | 🟠 0.061 | 🟢 0.001 |
 
 Lecture : 🟢 `p ≤ 0.01` (signal fort, survivrait à α=0.01) · 🟡 `0.01 < p ≤ 0.05` (seuil standard CPV) · 🟠 `0.05 < p ≤ 0.10` (marginal, survivrait à α=0.10) · 🔴 `p > 0.10` (clairement null).
 
