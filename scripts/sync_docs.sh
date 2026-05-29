@@ -22,7 +22,11 @@ for f in reports/panel_banque_mondiale_2026.md \
          reports/panel_trimestriel_2026.md \
          reports/juglar_us_anglo_nordic_2026.md \
          reports/kondratieff_adv18_eu4_2026.md \
-         reports/validation_ews.md; do
+         reports/validation_ews.md \
+         reports/cycle_position_2026_05_wb.md \
+         reports/cycle_position_2026_05_q.md \
+         reports/cycle_position_2026_05_long.md \
+         reports/cycle_position_synthesis.md; do
   [[ -f "$f" ]] && cp "$f" "docs/reports/$(basename "$f")"
 done
 

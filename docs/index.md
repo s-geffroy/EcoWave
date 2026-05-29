@@ -8,19 +8,38 @@
 > méthodes hétérogènes ; universalité cross-groupes). Le code, les données
 > et les figures sont régénérables d'une seule commande Docker.
 
+## Où en sommes-nous ?
+
+Tableau de synthèse : une ligne par cycle, agrégat canonique sélectionné
+selon la **plus haute fréquence d'échantillonnage compatible** avec la bande
+visée (Kitchin → trimestriel, Juglar/Kuznets → annuel WB, Kondratieff →
+histoire longue). Chaque cellule est traçable à une ligne SQLite
+`cycle_positions` ; aucune valeur agrégée artificiellement entre datasets.
+
+--8<-- "_includes/home_synthesis_table.md"
+
+Lecture transversale détaillée et panels étendus :
+[Synthèse multi-horizons](reports/cycle_position_synthesis.md).
+
 <figure markdown>
-  ![Heatmap des phases — panel Banque mondiale, mai 2026](figures/cycle_phase_heatmap_2026_05_wb.png){ width="100%" }
+  ![Heatmap des phases — panel Banque mondiale, mai 2026](figures/cycle_phase_heatmap_2026_05_wb.png){ width="100%" loading="lazy" }
   <figcaption>
     <strong>Figure 1.</strong> Phase de consensus CPV par agrégat × bande
-    cyclique, panel Banque mondiale (1960-2024), as-of mai 2026. Chaque
-    cellule est colorée par l'étiquette publiée après application des
-    trois portes de falsifiabilité ; <code>rejected</code> indique
-    l'échec de la Porte 1 (le cycle ne se distingue pas d'un bruit AR(1)
-    + scramble de phase), <code>disputed</code> indique l'échec de la
-    Porte 2 (moins de 3 méthodes votantes sur 4 en accord). Run :
-    <code>position-cycles --horizon wb --null dual --n-surrogates 1000</code>.
+    cyclique, panel Banque mondiale (1960-2024), as-of mai 2026.
   </figcaption>
 </figure>
+
+<details markdown>
+<summary>Méthodologie de la heatmap (run + portes appliquées)</summary>
+
+Chaque cellule est colorée par l'étiquette publiée après application des
+trois portes de falsifiabilité ; `rejected` indique l'échec de la Porte 1
+(le cycle ne se distingue pas d'un bruit AR(1) + scramble de phase),
+`disputed` indique l'échec de la Porte 2 (moins de 3 méthodes votantes sur
+4 en accord). Run :
+`position-cycles --horizon wb --null dual --n-surrogates 1000`.
+
+</details>
 
 ## Vue d'ensemble
 
@@ -70,7 +89,7 @@ unique ne pilote le résultat. La survie sous la Porte 1 montre qu'aucun
 bruit auto-corrélé ne pilote le résultat non plus. Survey complet et
 matrice de décision sur [Méthodes de décomposition](methodology/methodes_decomposition.md).
 
-## Résultats principaux — mai 2026
+## Bilan de falsifiabilité — mai 2026
 
 Sur le panel Banque mondiale (1960-2024, 9 agrégats × 4 bandes, 36 cellules,
 1000 surrogates par cellule, dual null) :
@@ -105,13 +124,15 @@ les fichiers Maddison et JST R6 doivent avoir été téléchargés au préalable
 
 ## Navigation
 
-- [**Protocole CPV**](methodology/protocole_cpv.md) — spécification détaillée
-- [**Cycles canoniques**](cycles/kitchin.md) — une page par bande
-- [**Groupes**](groupes.md) — composition des agrégats
-- [**Résultats**](reports/panel_banque_mondiale_2026.md) — notes signées
-- [**Analyses approfondies**](reports/juglar_us_anglo_nordic_2026.md)
-- [**Bibliographie**](bibliographie.md) — toutes les références consolidées
-- [**Sources de données**](sources.md)
+1. [**Où en sommes-nous ?**](reports/cycle_position_synthesis.md) — position
+   actuelle des 4 cycles, par horizon et en synthèse.
+2. [**Pourquoi ? — Cycles canoniques**](cycles/kitchin.md) — Kitchin /
+   Juglar / Kuznets / Kondratieff.
+3. [**Comment ? — Protocole CPV**](methodology/protocole_cpv.md) —
+   spécification, portes, méthodes.
+4. [**Preuves détaillées**](reports/panel_banque_mondiale_2026.md) — notes
+   signées + analyses approfondies + validation EWS.
+5. [**Données & références**](groupes.md) — groupes, sources, bibliographie.
 
 ---
 

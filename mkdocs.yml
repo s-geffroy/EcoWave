@@ -4,6 +4,12 @@ site_url: https://s-geffroy.github.io/EcoWave/
 repo_url: https://github.com/s-geffroy/EcoWave
 repo_name: s-geffroy/EcoWave
 
+# `_includes/*.md` are snippets stitched into pages via pymdownx.snippets; they
+# are not standalone documents and would otherwise be flagged as unreferenced
+# under `--strict`.
+exclude_docs: |
+  _includes/
+
 theme:
   name: material
   language: fr
@@ -39,6 +45,12 @@ markdown_extensions:
       permalink: true
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path:
+        - docs
+        - .
+      check_paths: true
+  - pymdownx.details
   - pymdownx.arithmatex:
       generic: true
 
@@ -48,7 +60,17 @@ extra_javascript:
 
 nav:
   - Accueil: index.md
-  - Protocole CPV:
+  - 1. Où en sommes-nous ?:
+      - Synthèse multi-horizons: reports/cycle_position_synthesis.md
+      - Panel Banque mondiale (1960-2024): reports/cycle_position_2026_05_wb.md
+      - Panel trimestriel (Path 5): reports/cycle_position_2026_05_q.md
+      - Histoire longue (1870-2022): reports/cycle_position_2026_05_long.md
+  - 2. Pourquoi ? — Cycles canoniques:
+      - Kitchin (3–5 ans): cycles/kitchin.md
+      - Juglar (7–11 ans): cycles/juglar.md
+      - Kuznets (15–25 ans): cycles/kuznets.md
+      - Kondratieff (40–60 ans): cycles/kondratieff.md
+  - 3. Comment ? — Protocole CPV:
       - Vue d'ensemble: methodology/protocole_cpv.md
       - Trois portes de falsifiabilité: methodology/trois_portes.md
       - Méthodes de décomposition: methodology/methodes_decomposition.md
@@ -57,19 +79,14 @@ nav:
       - Garde-fous anti-pseudoscience: methodology/garde_fous.md
       - Fenêtres de référence: methodology/fenetres_reference.md
       - Feuille de route: methodology/feuille_de_route.md
-  - Cycles canoniques:
-      - Kitchin (3–5 ans): cycles/kitchin.md
-      - Juglar (7–11 ans): cycles/juglar.md
-      - Kuznets (15–25 ans): cycles/kuznets.md
-      - Kondratieff (40–60 ans): cycles/kondratieff.md
-  - Groupes: groupes.md
-  - Résultats 2026-05:
-      - Panel Banque mondiale: reports/panel_banque_mondiale_2026.md
-      - Panel trimestriel (Path 5): reports/panel_trimestriel_2026.md
-      - Histoire longue (Maddison + JST): reports/histoire_longue_2026.md
-  - Analyses approfondies:
+  - 4. Preuves détaillées:
+      - Panel Banque mondiale (note signée): reports/panel_banque_mondiale_2026.md
+      - Panel trimestriel (note signée): reports/panel_trimestriel_2026.md
+      - Histoire longue (note signée): reports/histoire_longue_2026.md
       - Juglar — US/ANGLO vs NORDIC: reports/juglar_us_anglo_nordic_2026.md
       - Kondratieff K5 — ADV18/EU4: reports/kondratieff_adv18_eu4_2026.md
-  - Validation EWS: reports/validation_ews.md
-  - Sources & données: sources.md
-  - Bibliographie: bibliographie.md
+      - Validation EWS (holdout): reports/validation_ews.md
+  - 5. Données & références:
+      - Groupes agrégés: groupes.md
+      - Sources de données: sources.md
+      - Bibliographie: bibliographie.md

@@ -51,7 +51,9 @@ from ecowave.cycles.report import (
     plot_phase_polar_diagram,
     plot_pvalue_heatmap,
     plot_wavelet_power,
+    positions_sidecar_path,
     render_cycle_position_md,
+    write_positions_sidecar,
 )
 from ecowave.cycles.surrogate import (
     ar1_bootstrap_null,
@@ -545,7 +547,11 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
             f"cycle_phase_polar_{cycle_name}_{stem}.png")
         try:
             plot_phase_polar_diagram(table, cycle_name, fig_polar)
-            fig_polar_per_cycle[cycle_name] = fig_polar
+            # plot_phase_polar_diagram returns early without writing when every
+            # cell on the band failed Gate 1 — skip the dict entry so the
+            # report doesn't link to a missing PNG (would break mkdocs --strict).
+            if fig_polar.exists():
+                fig_polar_per_cycle[cycle_name] = fig_polar
         except Exception as exc:  # noqa: BLE001
             typer.echo(f"  Polar figure ({cycle_name}) failed: {exc}", err=True)
 
@@ -573,6 +579,10 @@ def _analyse_and_render(*, settings: Settings, as_of: str,
                              universality_rows=universality_rows,
                              figures=figures, schema_version=schema_version,
                              out_path=out_path)
+    # Persist positions sidecar so `home-synthesis` can recompose all horizons
+    # without rerunning the pipelines (cycle_positions table is wiped per run).
+    sidecar = positions_sidecar_path(settings.reports_dir, as_of, report_suffix)
+    write_positions_sidecar(table, sidecar)
     typer.echo(f"CPV report written ({horizon_label}): {out_path}")
     return out_path
 

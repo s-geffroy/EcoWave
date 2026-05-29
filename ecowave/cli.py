@@ -125,6 +125,61 @@ def position_cycles(
     typer.echo(f"position-cycles complete: {out}")
 
 
+@app.command("home-synthesis")
+def home_synthesis(
+    as_of: str = typer.Option("2026-05", "--as-of",
+                              help="Target month (YYYY-MM) — must match the "
+                                   "three position-cycles runs."),
+    snippet_out: str = typer.Option(
+        "/app/docs/_includes/home_synthesis_table.md", "--snippet-out",
+        help="Path to the MkDocs snippet included from docs/index.md."),
+    note_out: str = typer.Option(
+        "/app/reports/cycle_position_synthesis.md", "--note-out",
+        help="Path to the cross-horizon synthesis note (signed)."),
+) -> None:
+    """Recompose the cross-horizon CPV view from the three sidecar JSONs.
+
+    Reads ``reports/cycle_position_{as_of}_{wb,q,long}.json`` (written by
+    ``position-cycles``) and emits two artifacts: a short headline table
+    included in the homepage, and a full multi-horizon signed note.
+    """
+    from ecowave.cycles.report import (
+        positions_sidecar_path,
+        read_positions_sidecar,
+        render_cross_horizon_synthesis_md,
+        render_home_synthesis_table,
+    )
+    from ecowave.db import get_schema_version
+
+    settings = Settings.from_env()
+    by_horizon = {
+        h: read_positions_sidecar(
+            positions_sidecar_path(settings.reports_dir, as_of, h))
+        for h in ("wb", "q", "long")
+    }
+    missing = [h for h, t in by_horizon.items() if t.empty]
+    if missing:
+        typer.echo(
+            f"Warning: missing sidecars for horizons {missing}. "
+            f"Run `position-cycles --horizon <h>` first; rows will appear as "
+            f"'en attente'.",
+            err=True,
+        )
+
+    snippet_path = Path(snippet_out)
+    snippet_path.parent.mkdir(parents=True, exist_ok=True)
+    snippet_path.write_text(
+        render_home_synthesis_table(by_horizon, as_of) + "\n",
+        encoding="utf-8",
+    )
+    schema_version = get_schema_version(settings.db_path) or "unknown"
+    render_cross_horizon_synthesis_md(as_of=as_of, by_horizon=by_horizon,
+                                       schema_version=schema_version,
+                                       out_path=Path(note_out))
+    typer.echo(f"Home snippet  : {snippet_path}")
+    typer.echo(f"Synthesis note: {note_out}")
+
+
 @app.command("sources")
 def sources(
     output: str = typer.Option("/app/docs/sources.md", "--output"),
