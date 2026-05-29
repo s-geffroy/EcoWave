@@ -331,6 +331,62 @@
     - BIS bulk : `data.bis.org/bulkdownload` · lib `github.com/bis-med-it/pysdmx`
     - Mitchell IHS online : `link.springer.com/referencework/10.1057/978-1-137-30568-8`
 
+## #15 — Diagnostics non-cycliques (toolkit de l'au-delà-des-cycles) — TODO {#item-15-diagnostics-non-cycliques}
+
+- **Problème.** La chaîne d'audits (CN_BIS K, WLD-WB K, G7-long/UK_BOE K,
+  Wen 2005 falsifié) + safeguard #14 a démontré qu'**aucun cycle canonique
+  n'est statistiquement défendable** dans le pipeline CPV. Mais les séries
+  macro ne sont pas du bruit blanc : ACF lag-1 ≈ 1.000 sur 30 % des séries,
+  agglomération de la volatilité, distributions à queues lourdes des
+  crashes, trends structurels post-1980. Quelque chose de **non-cyclique
+  mais structuré** s'y produit. La page [Au-delà des cycles —
+  cadres physiques alternatifs](../methodology_beyond_cycles.md) recense
+  15 familles candidates ; il faut un toolkit minimal pour les comparer
+  empiriquement sur les données CPV.
+- **Méthode.** Implémenter un module
+  `ecowave/cycles/alternative_dynamics.py` avec 7 diagnostics
+  statistiques compacts (familles Tier 1 du panorama) :
+
+    1. **DFA / Hurst exponent** (famille C). `peng_dfa(series) → (H, fit_quality)`.
+       Détecte la longue mémoire.
+    2. **MF-DFA spectrum width** (famille B). `mfdfa_spectrum(series, q_range)
+       → (alpha_min, alpha_max, delta_alpha, tau_q_table)`. Multifractalité.
+    3. **Power spectrum slope** (famille A). `spectrum_slope(series, log_log_fit)
+       → (β, R²)`. Test 1/f^β pour SOC.
+    4. **Permutation entropy + statistical complexity** (famille I).
+       `permutation_entropy(series, order=3..6) → (H_perm, C_stat)`.
+    5. **Critical slowing down** (famille E). `critical_slowdown(series,
+       window) → (rolling_var, rolling_ac1, kendall_tau_trend, p_value)`.
+    6. **Lévy stable fit** (famille J). `levy_fit(returns) → (α, β, scale, loc)`.
+    7. **RMT spectrum analysis** (famille G). `rmt_analysis(panel) →
+       (eigenvalues, marchenko_pastur_band, bulk_deviating_modes)`.
+
+- **Code.** Nouveau module `ecowave/cycles/alternative_dynamics.py` ;
+  nouvelle commande CLI `ecowave dx-diagnostics --as-of YYYY-MM
+  --horizons {all|wb|q|long|boe|bis|sh}` qui :
+    - applique les 7 diagnostics à chaque variable individuelle de chaque
+      horizon ;
+    - produit un sidecar JSON
+      `reports/dx_diagnostics_{as_of}_{horizon}.json` par horizon ;
+    - produit une page consolidée `docs/dx_diagnostics.md` avec
+      heatmaps (diagnostic × variable × horizon).
+- **Acceptance.** Pour chaque famille du panorama beyond_cycles, on peut
+  dire "tel diagnostic favorise / défavorise ce cadre sur les données
+  CPV". Chaque cellule du tableau de synthèse de la page
+  `methodology_beyond_cycles.md` devient complétable. Critère
+  fonctionnel : `dx_diagnostics.md` publie au moins 7 lignes (une par
+  diagnostic) × N colonnes (variables) sur l'horizon `long` (152 ans,
+  données les plus riches).
+- **Garde-fou méthodologique.** Comme pour les cycles, chaque diagnostic
+  Tier 1 doit être accompagné d'un **null hypothesis test avec
+  surrogates** (AR(1) bootstrap ou phase-scrambling Theiler 1992) à
+  α=0.05. Le diagnostic seul ne suffit pas — il doit être significatif
+  contre le null pour être publié comme survie. Reproduit la philosophie
+  CPV (Gate 1) sur le terrain non-cyclique.
+- **Estimation effort.** ~3-5 jours pour le module + 1 jour run +
+  documentation. À implémenter après validation du présent panorama
+  (Tier 1 confirmé / ajusté par sge).
+
 ## Références
 
 - Bailey, D. H., & López de Prado, M. (2014). The deflated Sharpe ratio.
