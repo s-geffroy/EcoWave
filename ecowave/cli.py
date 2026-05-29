@@ -196,6 +196,11 @@ def home_synthesis(
 def evidence_per_variable(
     as_of: str = typer.Option("2026-05", "--as-of",
                               help="Target month (YYYY-MM) for the per-variable run."),
+    horizons: str = typer.Option(
+        "wb,q,long", "--horizons",
+        help="Comma-separated horizons to recompute. Horizons not listed "
+             "are loaded from existing sidecars (if any) so the rendered "
+             "page still shows the full multi-horizon view."),
     null: str = typer.Option(
         "dual", "--null",
         help="Gate-1 null: 'ar1', 'phase', 'wavelet' or 'dual'. "
@@ -243,10 +248,37 @@ def evidence_per_variable(
         "q":    ["USA", "EA", "JPN", "GBR", "G7Q", "OECDQ"],
         "long": ["ADV18", "G7", "USA", "EU4", "ANGLO", "NORDIC"],
     }
+    horizons_to_run = {h.strip() for h in horizons.split(",") if h.strip()}
+    unknown = horizons_to_run - set(horizon_groups)
+    if unknown:
+        raise typer.BadParameter(
+            f"--horizons unknown: {sorted(unknown)} "
+            f"(expected subset of {sorted(horizon_groups)})"
+        )
     out_root = Path(out_dir)
     evidence_dfs: dict[str, "pd.DataFrame"] = {}  # type: ignore[name-defined]
 
     for horizon, groups in horizon_groups.items():
+        sidecar = out_root / (
+            f"cycle_position_per_variable_{as_of.replace('-','_')}_{horizon}.json"
+        )
+        if horizon not in horizons_to_run:
+            # Skipped on this invocation — load whatever a previous run wrote
+            # so the page still aggregates the full multi-horizon evidence.
+            df = read_evidence_sidecar(sidecar)
+            if not df.empty:
+                evidence_dfs[horizon] = df
+                typer.echo(
+                    f"horizon={horizon}: skipped (reusing sidecar with "
+                    f"{len(df)} cells)"
+                )
+            else:
+                typer.echo(
+                    f"horizon={horizon}: skipped and no sidecar on disk — "
+                    f"page will omit this horizon",
+                    err=True,
+                )
+            continue
         manifest_path, kind = HORIZON_VARIABLE_SOURCE[horizon]
         variable_codes = _load_variable_codes(manifest_path)
         loader = _load_quarterly_panel if kind == "quarterly" else _load_annual_panel
@@ -271,7 +303,6 @@ def evidence_per_variable(
             panels_by_group, samples_per_year=samples_per_year,
             n_surrogates=n_surrogates, null=null, seed=seed,
         )
-        sidecar = out_root / f"cycle_position_per_variable_{as_of.replace('-','_')}_{horizon}.json"
         write_evidence_sidecar(records, sidecar)
         evidence_dfs[horizon] = read_evidence_sidecar(sidecar)
         typer.echo(f"  → {sidecar} ({len(records)} cells)")

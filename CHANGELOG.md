@@ -5,6 +5,44 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Évidence par variable + bibliographie critique : thèse centrale du papier
+
+**Résultat empirique central** : sur **548 cellules** (variable × agrégat
+× cycle, 3 horizons) testées via Gate 1 dual-null à α=0.05 avec 1000
+surrogates, seules **8 cellules survivent (1.5%)**. Sur les agrégats
+composites, le même test laisse passer ~25-30% des cellules.
+
+L'écart de ~20 points s'explique mécaniquement : sommer plusieurs séries
+z-scorées crée des artefacts de variance autocorrélée qui battent un
+null AR(1), même quand aucune des séries n'a individuellement de
+signal cyclique. **C'est exactement le diagnostic posé par Wen (2005)
+sur Kitchin et Solomou (1987) sur Kuznets/Kondratieff il y a 20-40
+ans.** Le résultat positionne CPV comme **stress test** du cycle
+composite, pas comme méthode d'attribution.
+
+- Nouveau module `ecowave/cycles/evidence.py` (panel reconstruction depuis
+  SQLite, calcul Gate 1 par variable, rendu page).
+- Nouvelle commande `ecowave evidence-per-variable --as-of YYYY-MM
+  --horizons wb,q,long --null dual --n-surrogates 1000` avec fallback
+  read-from-sidecar pour réexécutions partielles.
+- Nouvelle page `docs/evidence_per_variable.md` ajoutée à la section
+  "1. Où en sommes-nous ?" de la nav. Structure : headline 1.5% +
+  tables de survie par variable par cycle par horizon + spotlight par
+  agrégat phare. Chaque cycle linké à sa référence critique canonique.
+- **Bibliographie enrichie** (`docs/bibliographie.md`) : 11 nouvelles
+  références (Burns-Mitchell 1946, Garvy 1943, Hodrick-Prescott 1997,
+  Klotz-Neal 1973, Mansfield 1983, Maddison 1991, Quah 1992, Romer 1999,
+  Solomou 1987, Stock-Watson 2003, Wen 2005) + section "Critiques et
+  scepticisme empirique par cycle" qui articule la thèse centrale avec
+  les résultats CPV cellule par cellule.
+- **Roadmap** : item #12 "Évidence par variable" (IMPLÉMENTÉ) ;
+  item #13 "Allongement des séries temporelles" (TODO) documentant 4
+  voies — BoE Millennium 1086-2024, Mitchell IHS 1750-2010, JST/BIS
+  extensions, Toutain France 1789-1990.
+- Tests : 5 nouveaux dans `tests/test_evidence_per_variable.py`
+  (reconstruction panel annual + quarterly, sidecar NaN-safe roundtrip,
+  helper survival count, rendu page avec liens biblio).
+
 ### GitHub Pages : matrice "poids de preuve" (p-values Gate 1) sous le dashboard
 
 Complète le dashboard binaire (cycle survit/rejected à α=0.05) par
