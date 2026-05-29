@@ -133,6 +133,9 @@ def home_synthesis(
     snippet_out: str = typer.Option(
         "/app/docs/_includes/home_synthesis_table.md", "--snippet-out",
         help="Path to the MkDocs snippet included from docs/index.md."),
+    pvalues_snippet_out: str = typer.Option(
+        "/app/docs/_includes/home_pvalues_table.md", "--pvalues-snippet-out",
+        help="Path to the p-values matrix snippet (Gate 1 weight of evidence)."),
     note_out: str = typer.Option(
         "/app/reports/cycle_position_synthesis.md", "--note-out",
         help="Path to the cross-horizon synthesis note (signed)."),
@@ -140,14 +143,16 @@ def home_synthesis(
     """Recompose the cross-horizon CPV view from the three sidecar JSONs.
 
     Reads ``reports/cycle_position_{as_of}_{wb,q,long}.json`` (written by
-    ``position-cycles``) and emits two artifacts: a short headline table
-    included in the homepage, and a full multi-horizon signed note.
+    ``position-cycles``) and emits three artifacts: the per-aggregate
+    dashboard snippet, the Gate-1 p-values matrix snippet, and a full
+    multi-horizon signed note.
     """
     from ecowave.cycles.report import (
         positions_sidecar_path,
         read_positions_sidecar,
         render_cross_horizon_synthesis_md,
         render_home_aggregates_table,
+        render_home_pvalues_table,
     )
     from ecowave.db import get_schema_version
 
@@ -172,12 +177,19 @@ def home_synthesis(
         render_home_aggregates_table(by_horizon, as_of) + "\n",
         encoding="utf-8",
     )
+    pvalues_path = Path(pvalues_snippet_out)
+    pvalues_path.parent.mkdir(parents=True, exist_ok=True)
+    pvalues_path.write_text(
+        render_home_pvalues_table(by_horizon, as_of) + "\n",
+        encoding="utf-8",
+    )
     schema_version = get_schema_version(settings.db_path) or "unknown"
     render_cross_horizon_synthesis_md(as_of=as_of, by_horizon=by_horizon,
                                        schema_version=schema_version,
                                        out_path=Path(note_out))
-    typer.echo(f"Home snippet  : {snippet_path}")
-    typer.echo(f"Synthesis note: {note_out}")
+    typer.echo(f"Home snippet   : {snippet_path}")
+    typer.echo(f"P-values matrix: {pvalues_path}")
+    typer.echo(f"Synthesis note : {note_out}")
 
 
 @app.command("sources")

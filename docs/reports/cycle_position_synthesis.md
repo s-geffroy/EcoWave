@@ -161,7 +161,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T07:54:43+00:00
+- Date de la note : 2026-05-29T08:13:15+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave home-synthesis`

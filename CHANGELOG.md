@@ -5,6 +5,37 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### GitHub Pages : matrice "poids de preuve" (p-values Gate 1) sous le dashboard
+
+Complète le dashboard binaire (cycle survit/rejected à α=0.05) par
+une matrice colorée 20 × 4 (un agrégat par ligne, un cycle par
+colonne) qui publie la **p-value brute** du test dual-null. Le
+lecteur peut appliquer son propre seuil sans recalcul :
+
+- 🟢 `p ≤ 0.01` — signal fort, survit à α=0.01
+- 🟡 `0.01 < p ≤ 0.05` — seuil CPV standard
+- 🟠 `0.05 < p ≤ 0.10` — marginal, survit à la convention macro α=0.10
+- 🔴 `p > 0.10` — clairement null
+
+Met en lumière les cas borderline qui auraient été perdus dans le
+binaire : `WLD Kuznets p=0.054`, `G7 Kondratieff p=0.055`,
+`LMC Kondratieff p=0.063` — autant de pistes d'analyse pour la
+suite. Pied de page rappelle que les p-values ne sont **pas
+corrigées** pour comparaisons multiples (Bonferroni-stricte sur 36
+cellules WB → α ≈ 0.0014).
+
+- Nouvelles fonctions `render_home_pvalues_table()` et
+  `_format_pvalue_cell()` + constante `PVALUE_THRESHOLDS` dans
+  `ecowave/cycles/report.py`.
+- La commande `ecowave home-synthesis` écrit désormais un troisième
+  artefact : `docs/_includes/home_pvalues_table.md`, inclus dans
+  `docs/index.md` sous le dashboard (snippet séparé pour
+  modularité).
+- Tests : 3 cas supplémentaires
+  (`test_pvalue_thresholds_are_ordered_ascending`,
+  `test_format_pvalue_cell_maps_each_threshold_band`,
+  `test_home_pvalues_table_renders_20_rows_with_4_cycle_columns`).
+
 ### GitHub Pages : dashboard agrégats en home (20 × 14)
 
 Le snippet inclus dans `docs/index.md` n'est plus le tableau 4 lignes

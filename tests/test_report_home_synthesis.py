@@ -6,11 +6,14 @@ import pandas as pd
 from ecowave.cycles.report import (
     AGGREGATE_ROW_ORDER,
     CANONICAL_HOME_ROWS,
+    PVALUE_THRESHOLDS,
+    _format_pvalue_cell,
     build_position_table,
     positions_sidecar_path,
     read_positions_sidecar,
     render_cross_horizon_synthesis_md,
     render_home_aggregates_table,
+    render_home_pvalues_table,
     render_home_synthesis_table,
     write_positions_sidecar,
 )
@@ -18,10 +21,11 @@ from ecowave.cycles.report import (
 
 def _row(group_code: str, cycle: str, phase: str, *, trend: str = "—",
          next_kind: str | None = None, next_eta_years: float | None = None,
-         endpoint_caveat: int = 0, separable: int = 1) -> dict:
+         endpoint_caveat: int = 0, separable: int = 1,
+         ar1_p_value: float = 0.01) -> dict:
     return {
         "group_code": group_code, "cycle": cycle, "phase": phase,
-        "phi_rad": 0.1, "amplitude": 0.5, "ar1_p_value": 0.01,
+        "phi_rad": 0.1, "amplitude": 0.5, "ar1_p_value": ar1_p_value,
         "separable": separable, "endpoint_caveat": endpoint_caveat,
         "trend": trend, "next_kind": next_kind,
         "next_eta_years": next_eta_years, "notes": "",
@@ -131,6 +135,53 @@ def test_home_aggregates_table_renders_surviving_cells_and_emdashes():
 def test_home_aggregates_table_link_prefix_override():
     md = render_home_aggregates_table({}, "2026-05", link_prefix="")
     assert "[Banque mondiale](cycle_position_2026_05_wb.md)" in md
+
+
+def test_pvalue_thresholds_are_ordered_ascending():
+    bounds = [b for b, _ in PVALUE_THRESHOLDS]
+    assert bounds == sorted(bounds)
+    assert bounds[-1] >= 1.0  # last bucket catches all valid p-values
+
+
+def test_format_pvalue_cell_maps_each_threshold_band():
+    assert _format_pvalue_cell(0.005).startswith("🟢")  # strong
+    assert _format_pvalue_cell(0.030).startswith("🟡")  # standard
+    assert _format_pvalue_cell(0.080).startswith("🟠")  # marginal
+    assert _format_pvalue_cell(0.500).startswith("🔴")  # weak/null
+    assert _format_pvalue_cell(0.999).startswith("🔴")  # very-far-null
+    # Exact boundaries fall into the band that the bound closes.
+    assert _format_pvalue_cell(0.01).startswith("🟢")
+    assert _format_pvalue_cell(0.05).startswith("🟡")
+    assert _format_pvalue_cell(0.10).startswith("🟠")
+    # Numeric precision shown to 3 decimals.
+    assert _format_pvalue_cell(0.0012345) == "🟢 0.001"
+    # Missing values fall back to em-dash, not "🔴 nan".
+    assert _format_pvalue_cell(None) == "—"
+    assert _format_pvalue_cell(float("nan")) == "—"
+
+
+def test_home_pvalues_table_renders_20_rows_with_4_cycle_columns():
+    # Fixtures inject p-values across all 4 buckets for WLD.
+    wb = build_position_table([
+        _row("WLD", "kitchin", "contraction", ar1_p_value=0.002),  # 🟢
+        _row("WLD", "juglar", "rejected", ar1_p_value=0.030, separable=0),  # 🟡
+        _row("WLD", "kuznets", "rejected", ar1_p_value=0.054, separable=0),  # 🟠
+        _row("WLD", "kondratieff", "rejected", ar1_p_value=0.444, separable=0),  # 🔴
+    ])
+    md = render_home_pvalues_table({"wb": wb, "q": build_position_table([]),
+                                     "long": build_position_table([])}, "2026-05")
+    # Header has Agrégat + Source + 4 cycles = 6 cells / 7 pipes.
+    header = next(l for l in md.split("\n") if l.startswith("| Agrégat"))
+    assert header.count("|") == 7
+    # Body has 20 data rows (one per AGGREGATE_ROW_ORDER entry).
+    body_rows = [l for l in md.split("\n") if l.startswith("| `")]
+    assert len(body_rows) == 20
+    # WLD row should carry the 4 colored cells in fixture order.
+    wld = next(l for l in body_rows if l.startswith("| `WLD` |"))
+    assert "🟢 0.002" in wld and "🟡 0.030" in wld
+    assert "🟠 0.054" in wld and "🔴 0.444" in wld
+    # Footer mentions Bonferroni — informs the user the p-values aren't corrected.
+    assert "Bonferroni" in md
 
 
 def test_cross_horizon_synthesis_md_writes_signed_note(tmp_path):
