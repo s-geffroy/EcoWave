@@ -77,21 +77,21 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 |---|---|---|---|
 | Kitchin ⚠️ | rejected | — | — |
 | Juglar ⚠️ | rejected | — | — |
-| Kuznets ⚠️ | contraction | falling | 📉 min dans 1.7 ans |
+| Kuznets ⚠️ | disputed | falling | 📉 min dans 1.7 ans |
 | Kondratieff ⚠️ | rejected | — | — |
 
 _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moins fiables ; la prévision donne l'ordre de grandeur, pas la date exacte)._
 
 ## Matrice de phase (Gate 2 — consensus inter-méthode)
 
-| group_code   | kitchin   | juglar   | kuznets     | kondratieff   |
-|:-------------|:----------|:---------|:------------|:--------------|
-| EA           | rejected  | rejected | rejected    | rejected      |
-| G7Q          | rejected  | rejected | rejected    | rejected      |
-| GBR          | rejected  | disputed | disputed    | rejected      |
-| JPN          | peak      | rejected | disputed    | rejected      |
-| OECDQ        | rejected  | rejected | rejected    | rejected      |
-| USA          | rejected  | rejected | contraction | rejected      |
+| group_code   | kitchin   | juglar   | kuznets   | kondratieff   |
+|:-------------|:----------|:---------|:----------|:--------------|
+| EA           | rejected  | rejected | rejected  | rejected      |
+| G7Q          | rejected  | rejected | rejected  | rejected      |
+| GBR          | rejected  | disputed | disputed  | rejected      |
+| JPN          | peak      | rejected | disputed  | rejected      |
+| OECDQ        | rejected  | rejected | rejected  | rejected      |
+| USA          | rejected  | rejected | disputed  | rejected      |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
 
@@ -110,7 +110,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |:------------|:--------------|----------------------:|-----------------:|:---------|
 | kitchin     | peak          |                     1 |                6 | regional |
 | juglar      | rejected      |                     0 |                6 | regional |
-| kuznets     | contraction   |                     1 |                6 | regional |
+| kuznets     | rejected      |                     0 |                6 | regional |
 | kondratieff | rejected      |                     0 |                6 | regional |
 
 ## Votes par modèle (D/E/F/G) — détail Gate 2
@@ -133,7 +133,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 |:-------------|:----------|:------------|:------------|:------------|
 | GBR          | peak      | contraction | trough      | contraction |
 | JPN          | expansion | peak        | peak        | contraction |
-| USA          | peak      | contraction | contraction | contraction |
+| USA          | peak      | peak        | contraction | contraction |
 
 ## Figures
 
@@ -181,7 +181,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T07:13:52+00:00
+- Date de la note : 2026-05-29T07:53:13+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`
