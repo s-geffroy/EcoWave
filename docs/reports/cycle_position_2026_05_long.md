@@ -40,7 +40,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | expansion | rising | 📈 max dans 1.5 ans |
+| Juglar ⚠️ | disputed | rising | 📈 max dans 1.5 ans |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
 
@@ -58,9 +58,9 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
 | Kitchin | rejected | — | — |
-| Juglar ⚠️ | contraction | falling | 📈 max dans 3.8 ans |
+| Juglar ⚠️ | disputed | falling | 📈 max dans 3.8 ans |
 | Kuznets ⚠️ | disputed | rising | 📈 max dans 1.4 ans |
-| Kondratieff ⚠️ | contraction | rising (post-trough) | 📈 max dans 16 ans |
+| Kondratieff ⚠️ | disputed | rising (post-trough) | 📈 max dans 16 ans |
 
 ### NORDIC
 
@@ -87,9 +87,9 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | group_code   | kitchin   | juglar      | kuznets   | kondratieff   |
 |:-------------|:----------|:------------|:----------|:--------------|
 | ADV18        | rejected  | contraction | disputed  | rejected      |
-| ANGLO        | rejected  | expansion   | rejected  | rejected      |
+| ANGLO        | rejected  | disputed    | rejected  | rejected      |
 | EU4          | rejected  | rejected    | disputed  | rejected      |
-| G7           | rejected  | contraction | disputed  | contraction   |
+| G7           | rejected  | disputed    | disputed  | disputed      |
 | NORDIC       | rejected  | rejected    | rejected  | rejected      |
 | USA          | rejected  | disputed    | rejected  | rejected      |
 
@@ -109,20 +109,20 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 | cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
 |:------------|:--------------|----------------------:|-----------------:|:---------|
 | kitchin     | rejected      |                     0 |                6 | regional |
-| juglar      | contraction   |                     2 |                6 | regional |
+| juglar      | contraction   |                     1 |                6 | regional |
 | kuznets     | rejected      |                     0 |                6 | regional |
-| kondratieff | contraction   |                     1 |                6 | regional |
+| kondratieff | rejected      |                     0 |                6 | regional |
 
 ## Votes par modèle (D/E/F/G) — détail Gate 2
 
 ### Juglar
 
-| group_code   | D           | E           | F           | G           |
-|:-------------|:------------|:------------|:------------|:------------|
-| ADV18        | contraction | contraction | contraction | contraction |
-| ANGLO        | trough      | expansion   | expansion   | expansion   |
-| G7           | peak        | contraction | contraction | contraction |
-| USA          | peak        | expansion   | trough      | expansion   |
+| group_code   | D           | E         | F           | G           |
+|:-------------|:------------|:----------|:------------|:------------|
+| ADV18        | contraction | peak      | contraction | contraction |
+| ANGLO        | trough      | trough    | expansion   | expansion   |
+| G7           | peak        | peak      | contraction | contraction |
+| USA          | peak        | expansion | trough      | expansion   |
 
 ### Kuznets
 
@@ -134,9 +134,9 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ### Kondratieff
 
-| group_code   | D    | E           | F      | G           |
-|:-------------|:-----|:------------|:-------|:------------|
-| G7           | peak | contraction | trough | contraction |
+| group_code   | D    | E    | F      | G           |
+|:-------------|:-----|:-----|:-------|:------------|
+| G7           | peak | peak | trough | contraction |
 
 ## Figures
 
@@ -184,7 +184,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T07:15:21+00:00
+- Date de la note : 2026-05-29T07:54:41+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`

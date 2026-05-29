@@ -30,7 +30,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | contraction | falling | 📉 min dans 7 mois |
+| Kitchin ⚠️ | disputed | falling | 📉 min dans 7 mois |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -39,7 +39,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | disputed | falling | 📉 min dans 6 mois |
+| Kitchin ⚠️ | contraction | falling | 📉 min dans 6 mois |
 | Juglar ⚠️ | rejected | — | — |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -84,7 +84,7 @@ ETA du prochain pic/creux (calculé via la fréquence instantanée Hilbert :
 
 | Cycle | Phase | Tendance | Prochain extremum |
 |---|---|---|---|
-| Kitchin ⚠️ | contraction | falling | 📉 min dans 5 mois |
+| Kitchin ⚠️ | disputed | falling | 📉 min dans 5 mois |
 | Juglar ⚠️ | contraction | falling | 📉 min dans 8 mois |
 | Kuznets ⚠️ | rejected | — | — |
 | Kondratieff ⚠️ | rejected | — | — |
@@ -104,13 +104,13 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | group_code   | kitchin     | juglar      | kuznets   | kondratieff   |
 |:-------------|:------------|:------------|:----------|:--------------|
-| BRICS        | contraction | rejected    | rejected  | rejected      |
-| G7           | disputed    | rejected    | rejected  | rejected      |
+| BRICS        | disputed    | rejected    | rejected  | rejected      |
+| G7           | contraction | rejected    | rejected  | rejected      |
 | HIC          | disputed    | rejected    | rejected  | disputed      |
 | LIC          | contraction | rejected    | rejected  | rejected      |
 | LMC          | contraction | rejected    | rejected  | rejected      |
 | OECD         | disputed    | rejected    | rejected  | disputed      |
-| UMC          | contraction | contraction | rejected  | rejected      |
+| UMC          | disputed    | contraction | rejected  | rejected      |
 | WLD          | contraction | rejected    | rejected  | contraction   |
 
 ## p-values AR(1) (Gate 1 — existence du cycle)
@@ -128,12 +128,12 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Drapeau d'universalité par cycle (Gate 3 — cross-group)
 
-| cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status    |
-|:------------|:--------------|----------------------:|-----------------:|:----------|
-| kitchin     | contraction   |                     4 |                5 | universal |
-| juglar      | contraction   |                     1 |                5 | regional  |
-| kuznets     | rejected      |                     0 |                5 | regional  |
-| kondratieff | contraction   |                     1 |                5 | regional  |
+| cycle       | modal_phase   |   n_groups_concording |   n_groups_total | status   |
+|:------------|:--------------|----------------------:|-----------------:|:---------|
+| kitchin     | contraction   |                     3 |                5 | regional |
+| juglar      | contraction   |                     1 |                5 | regional |
+| kuznets     | rejected      |                     0 |                5 | regional |
+| kondratieff | contraction   |                     1 |                5 | regional |
 
 ## Votes par modèle (D/E/F/G) — détail Gate 2
 
@@ -141,13 +141,13 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 | group_code   | D           | E           | F           | G           |
 |:-------------|:------------|:------------|:------------|:------------|
-| BRICS        | peak        | contraction | contraction | contraction |
-| G7           | contraction | peak        | contraction | contraction |
+| BRICS        | peak        | peak        | contraction | contraction |
+| G7           | contraction | contraction | contraction | contraction |
 | HIC          | contraction | peak        | contraction | contraction |
 | LIC          | peak        | contraction | contraction | contraction |
 | LMC          | contraction | contraction | contraction | contraction |
 | OECD         | contraction | peak        | contraction | contraction |
-| UMC          | contraction | contraction | contraction | contraction |
+| UMC          | contraction | peak        | contraction | contraction |
 | WLD          | contraction | contraction | contraction | contraction |
 
 ### Juglar
@@ -208,7 +208,7 @@ _⚠️ = effet endpoint CF dominant (les dernières hi_years/2 années sont moi
 
 ## Sign-off
 
-- Date de la note : 2026-05-29T07:10:48+00:00
+- Date de la note : 2026-05-29T07:50:46+00:00
 - As-of : 2026-05
 - Schema EcoWave : `0.5.1`
 - Pipeline : `ecowave position-cycles`
