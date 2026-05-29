@@ -9,12 +9,20 @@
 > **pas du bruit blanc** : ACF lag-1 ≈ 1.000, agglomération de la
 > volatilité, ruptures structurelles, lois de puissance dans les
 > distributions de crashes — autant de signatures de *quelque chose*.
-> Cette page passe en revue **15 familles de cadres physiques candidats**
-> qui pourraient rendre compte des signatures observées sans présupposer
-> de périodicité. Le mot final est ouvert : *"la macroéconomie n'est pas
-> un cycle, et voici 15 grilles de lecture alternatives, dont 5
-> directement testables"*. Le papier reste falsifiabiliste — on
-> multiplie les cadres pour ne pas tomber dans un nouveau dogme.
+> Cette page passe en revue **21 familles de cadres physiques
+> candidats** (15 initiales + 6 ajoutées dans l'extension : cascades
+> K41, universalité/MaxEnt, diffusion anormale, réflexivité,
+> Tsallis non-extensive, chimera states) qui pourraient rendre compte
+> des signatures observées sans présupposer de périodicité. La famille
+> S (réflexivité) est traitée à la fois comme une famille à part
+> entière et comme **composante transversale obligatoire** : les
+> agents économiques observent et anticipent les phénomènes qu'ils
+> habitent, ce qui modifie le contenu et la validité des 20 autres
+> familles. Le mot final est ouvert : *"la macroéconomie n'est pas
+> un cycle, et voici 21 grilles de lecture alternatives, dont 11
+> directement testables, toutes amendables par la réflexivité"*.
+> Le papier reste falsifiabiliste — on multiplie les cadres pour ne
+> pas tomber dans un nouveau dogme.
 
 ## Préambule — si pas un cycle, quoi alors ?
 
@@ -413,9 +421,255 @@ chaotique).
 lement difficile sur séries continues. À garder pour la simulation
 ABM future.
 
+## Famille P — Cascades multi-échelle et turbulence (Kolmogorov)
+
+> *"L'énergie cascade des grandes vers les petites échelles, avec
+> intermittence. Mécanisme générateur de la multifractalité."*
+
+- **P1. Kolmogorov K41** —
+  [Kolmogorov (1941)](bibliographie.md#kolmogorov-1941). Théorie
+  statistique de la turbulence : spectre d'énergie E(k) ∝ k^{-5/3}
+  dans la zone inertielle. Cascade d'énergie multi-échelle depuis les
+  grandes vers les petites échelles, dissipation viscosulle à
+  l'échelle de Kolmogorov.
+- **P2. Frisch synthèse moderne** —
+  [Frisch (1995)](bibliographie.md#frisch-1995). Corrections multifractales
+  (β-model, p-model), intermittence anomale.
+- **P3. Cascades en finance** —
+  [Ghashghaie et al. (1996)](bibliographie.md#ghashghaie-1996). Démonstration
+  empirique : volatilité des taux de change obéit aux mêmes lois
+  multi-échelle que la turbulence.
+
+**Différence avec la famille B (multifractalité)** : B *décrit*, P
+*explique le mécanisme*. La famille B observe la signature multifractale ;
+P propose pourquoi (cascade d'énergie/information à travers les
+échelles).
+
+**Signature statistique** : pente spectrale −5/3 (ou exposants
+voisins) dans la zone inertielle, queues distribution incréments
+qui s'élargissent à mesure que l'échelle de temps diminue,
+exposants de scaling ζ(p) non-linéaires en p (intermittence).
+
+**Applicabilité CPV** : ★★★★. Testable directement sur la
+volatilité réalisée (squared returns) des séries longues
+(BoE 316 ans, JST 152 ans). Si la pente spectrale et les exposants
+ζ(p) correspondent au K41 corrigé, on a un cadre **mécaniste**
+pour la multifractalité observée.
+
+## Famille Q — Universalité statistique et choix de modèle (renormalisation, MaxEnt)
+
+> *"Pourquoi des systèmes différents montrent les mêmes signatures
+> statistiques ? Comment choisir parmi les 21 familles candidates ?"*
+
+- **Q1. Groupe de renormalisation** —
+  [Wilson (1971)](bibliographie.md#wilson-1971). Prix Nobel 1982.
+  Explique l'**universalité** : des systèmes microscopiquement très
+  différents (ferromagnétiques, liquides, supraconducteurs) montrent
+  les mêmes exposants critiques près des transitions de phase
+  parce qu'ils appartiennent à la même **classe d'universalité**.
+- **Q2. Maximum Entropy Principle** —
+  [Jaynes (1957)](bibliographie.md#jaynes-1957). La distribution la
+  moins informative compatible avec les contraintes observées maximise
+  l'entropie de Shannon. **Méta-cadre pour le choix de modèle** :
+  parmi 21 familles candidates, laquelle est la plus parcimonieuse
+  étant donné les signatures observées sur CPV ?
+
+**Caractère méta** : cette famille n'est pas un cadre concurrent
+des 20 autres mais un **outil pour les arbitrer entre elles**.
+
+**Signature statistique** : ratios d'exposants prédictibles entre
+séries de natures différentes (équivalence de classe d'universalité) ;
+choix de modèle via critère information (AIC, BIC, MDL).
+
+**Applicabilité CPV** : ★★★★. Test direct : les exposants Hurst,
+multifractal Δα, slope spectrale 1/f^β, kurtosis, etc., présentent-ils
+des **regroupements** par classe (financier vs réel, AE vs EM,
+court vs long terme) ? Si oui, on a une confirmation d'universalité.
+
+## Famille R — Diffusion anormale
+
+> *"Comment l'écart-type d'une série grandit-il avec le temps ?"*
+
+- **R1. Mean Square Displacement scaling** —
+  [Metzler & Klafter (2000)](bibliographie.md#metzler-klafter-2000).
+  MSD(t) ~ t^α avec α ≠ 1. **Sub-diffusion** (α<1) : piégeage,
+  mémoire, viscoélasticité. **Super-diffusion** (α>1) : sauts longs,
+  vols actifs.
+- **R2. Continuous Time Random Walk (CTRW)** — Montroll & Weiss (1965).
+  Cadre théorique unifié des marches avec distribution de waiting times
+  et sauts.
+- **R3. Équations de diffusion fractionnaires** — Metzler-Klafter.
+  ∂^α u / ∂t^α = D ∂² u / ∂x².
+
+**Différence avec familles C (longue mémoire) et J (Lévy flights)** :
+- C caractérise l'**autocorrélation** (mémoire temporelle).
+- J caractérise la **distribution des incréments** (taille des sauts).
+- R caractérise la **croissance de l'écart-type** (transport temporel).
+
+Les trois peuvent coexister et se renforcer mutuellement.
+
+**Signature statistique** : MSD(t) ~ t^α avec α ≠ 1. Test : régression
+log-log de MSD sur t.
+
+**Applicabilité CPV** : ★★★★. Test direct sur le rapport
+écart-type / racine du temps pour différentes échelles temporelles
+(annuelle, trimestrielle, mensuelle quand disponible). Si on trouve
+α = 0.5-0.7 (sub-diffusion) sur CY_FIN ou LH_DEBTGDP, on identifie
+un type spécifique de longue mémoire (avec mécanisme de piégeage).
+
+## Famille S — Réflexivité et anticipation des agents
+
+> *"Les agents économiques observent et anticipent le système qu'ils
+> habitent. La grille du physicien doit intégrer l'observateur."*
+
+- **S1. Réflexivité** —
+  [Soros (1987, 2008)](bibliographie.md#soros-1987). Les croyances
+  des participants influencent la réalité économique qu'ils prétendent
+  observer. Boucle de rétroaction **fondamentalement non-stationnaire** :
+  une perception biaisée crée la réalité qu'elle anticipait, qui
+  modifie alors les perceptions, etc.
+- **S2. Free Energy Principle / Active Inference** —
+  [Friston (2010)](bibliographie.md#friston-2010). Les systèmes
+  biologiques minimisent leur énergie libre variationnelle = borne
+  supérieure de la surprise bayésienne. Unifie perception, action,
+  inférence. Transférable à la modélisation d'agents qui inférent
+  et anticipent.
+- **S3. Animal spirits** —
+  [Akerlof & Shiller (2009)](bibliographie.md#akerlof-shiller-2009).
+  Reprise contemporaine de Keynes. Comportements collectifs (confiance,
+  équité, histoires partagées) comme moteurs primaires des fluctuations
+  macro.
+- **S4. Bounded rationality** — Simon (1955). Agents à capacité
+  cognitive limitée, satisficing plutôt qu'optimisation.
+
+**Position épistémologique unique** : cette famille **n'est pas un
+phénomène physique à fitter sur les données** — c'est une
+**pré-condition** sur ce que peuvent être les autres familles. Voir
+section "Composante transversale" ci-dessous.
+
+**Signature statistique** : non-stationnarité endogène, ruptures
+structurelles synchronisées avec changements de paradigme collectif,
+distributions de croyances avec modalités multiples (cf. surveys
+d'anticipations).
+
+**Applicabilité CPV** : ★★★. Test indirect via les régimes
+identifiés (Great Moderation, Bretton Woods, post-2008 — chacun
+peut être lu comme une période de cohérence des anticipations
+collectives). Beaucoup plus difficile à formaliser que les familles
+A-O ; intérêt principalement conceptuel.
+
+## Famille T — Thermodynamique non-extensive (Tsallis)
+
+> *"Généraliser l'entropie de Boltzmann-Gibbs pour systèmes avec
+> longue mémoire, fractalité et interactions à longue portée."*
+
+- **T1. Entropie de Tsallis** —
+  [Tsallis (1988)](bibliographie.md#tsallis-1988). `S_q = (1 - Σ p_i^q) / (q-1)`.
+  Pour q→1 : Boltzmann-Gibbs. Pour q≠1 : distributions stationnaires
+  en loi de puissance (q-Gaussiennes, q-exponentielles).
+- **T2. Distributions q-Gaussiennes** universelles : pour
+  q ∈ ]1, 3[, queues lourdes en loi de puissance. Observées
+  empiriquement sur returns financiers, taux de change, températures.
+
+**Cadre unifié** : englobe les familles A (SOC), B (multifractal),
+C (longue mémoire) et J (Lévy) sous une même **statistique
+généralisée**. Le paramètre q mesure l'écart à l'équilibre
+Boltzmann-Gibbs et indique le **type de non-extensivité**.
+
+**Signature statistique** : ajustement de q-Gaussiennes à la
+distribution des incréments — q ≈ 1.4-1.6 typique pour returns
+financiers, q = 1 pour bruit blanc, q > 2 pour distributions très
+lourdes.
+
+**Applicabilité CPV** : ★★★★. Fit immédiat de la distribution des
+incréments annuels (BoE 316 ans, JST 152 ans) à la famille
+q-Gaussienne. Si q s'écarte significativement de 1, on a une
+preuve directe de non-extensivité et un paramètre unique qui
+**résume** plusieurs signatures (queues, mémoire, fractalité).
+
+## Famille U — Synchronisation partielle (chimera states)
+
+> *"Sur un même substrat d'oscillateurs identiques, des zones
+> synchronisées et désordonnées peuvent coexister stablement."*
+
+- **U1. Chimera states** —
+  [Kuramoto & Battogtokh (2002)](bibliographie.md#kuramoto-battogtokh-2002),
+  [Abrams & Strogatz (2004)](bibliographie.md#abrams-strogatz-2004).
+  Sur un anneau d'oscillateurs identiques avec couplage non-local,
+  une partie se synchronise tandis que le reste reste désordonné —
+  les deux phases coexistent stablement.
+- **U2. Multi-cluster synchronization**. Plusieurs sous-groupes
+  synchronisés sur des phases différentes.
+- **U3. Phase-coherent transitions** — les chimera peuvent migrer,
+  se fragmenter, se reformer.
+
+**Pertinence pour CPV** : explique pourquoi certains agrégats du
+panel CPV semblent porter un cycle (G7-long K, ADV18 dans certaines
+runs) tandis que d'autres voisins le rejettent (USA-long, ANGLO).
+**Pas d'agrégation artefactuelle ni de signal vraiment universel**,
+mais des **zones de synchronisation partielle** sur un substrat
+hétérogène.
+
+**Signature statistique** : matrice de cohérence cross-séries avec
+**structure de cluster** (groupes synchronisés vs groupes désordonnés),
+distribution bimodale des phases de Hilbert dans une fenêtre roulante.
+
+**Applicabilité CPV** : ★★★. Tests via cohérence wavelet pairwise
+sur le panel JST 18 économies. Si on observe des sous-groupes de
+3-5 économies synchronisées coexistant avec d'autres désordonnées,
+c'est un **chimera** plutôt qu'un cycle global.
+
+## Composante transversale — la réflexivité reshape les 20 familles
+
+> *"Les familles A-R et T-U décrivent des systèmes physiques. Or les
+> agents économiques **observent et anticipent** ce qu'ils habitent.
+> La famille S n'est pas seulement une famille — c'est une condition
+> de validité pour les autres."*
+
+Toutes les familles physiques A-R, T-U héritent de propriétés que
+les systèmes naturels ont : Markov property, ergodicité asymptotique,
+exogéneité du paramètre observé. Les systèmes macroéconomiques
+**n'ont aucune de ces propriétés** parce que les agents
+**réfléchissent** sur eux-mêmes. Chaque famille doit donc être
+amendée :
+
+| Famille | Composante réflexivité (Soros/Friston/Akerlof-Shiller) |
+|---|---|
+| **A — SOC** | L'observation collective d'une approche du point critique modifie le moment de l'avalanche. Endogeneité de la criticité. |
+| **B — Multifractalité** | Les anticipations créent de nouvelles échelles d'organisation (intraday algorithmique vs hebdomadaire vs cycle politique). Le spectre f(α) est **time-varying**. |
+| **C — Longue mémoire** | La mémoire est partiellement **cognitive collective** (souvenir partagé des crises 1929, 1973, 2008), pas seulement statistique. Hurst exponent varie avec les générations. |
+| **D — Chaos déterministe** | L'observation modifie la trajectoire (feedback réflexif). Pas de séparation propre observateur-système. |
+| **E — Critical slowing down** | Les early-warning signals **identifiés sont exploités** par les agents sophistiqués, modifiant ainsi la dynamique de slowdown elle-même. Self-fulfilling. |
+| **F — Kuramoto / KAM** | Les coupling strengths entre agents dépendent des **anticipations sur les anticipations** (mimétisme keynésien). Coupling time-varying. |
+| **G — RMT** | Une fois identifiées et publiées, les eigenvalues "bulk-deviating" sont arbitrées, modifiant la matrice de corrélation elle-même. Goodhart's law spectral. |
+| **H — Verres de spin** | Le free energy landscape est **endogène** : les choix passés modifient la topographie pour les choix futurs. |
+| **I — Théorie de l'information** | L'observateur est partie du système (canal de Shannon auto-référentiel). |
+| **J — Lévy flights** | Les queues lourdes reflètent **les anticipations d'extrêmes par les agents**, non un processus stochastique exogène. |
+| **K — Cristaux liquides** | L'order parameter est partiellement **cognitif** (croyance collective sur la phase). Hystérésis lors des transitions de phase macroéconomiques. |
+| **L — Punctuated equilibrium** | Les rates of change dépendent de la **conscience collective** de la stase ou de la rupture (récits, médias). |
+| **M — Quantum** | Le problème de la mesure est explicite — directement transférable. |
+| **N — Bifurcations** | Les bifurcation parameters incluent les **anticipations collectives** sur la valeur critique du paramètre. |
+| **O — Cellular automata** | Les règles peuvent être **modifiées par apprentissage des agents** (meta-learning). |
+| **P — Cascades K41** | Les cascades inter-échelle sont biaisées par les **stratégies trading inter-fréquence** (HFT vs swing trade vs investisseur LT). |
+| **Q — Universalité** | Les classes d'universalité incluent une **classe humaine** : on retrouve les mêmes signatures parce que les structures cognitives convergent. |
+| **R — Diffusion anormale** | Les "pièges" sub-diffusifs sont souvent des **points focaux d'attention collective** (niveaux psychologiques, événements politiques attendus). |
+| **T — Tsallis** | Le paramètre q non-extensif reflète la **densité de l'interaction sociale** dans le système — corrigible empiriquement. |
+| **U — Chimera states** | Les zones synchronisées sont des **communautés d'anticipation partagée**, séparées des zones désordonnées par hétérogénéité des croyances. |
+
+**Conséquence méthodologique** : tout cadre physique appliqué à
+des séries macro doit **soit** modéliser explicitement la réflexivité
+(ajout d'une couche d'anticipations bayésiennes Friston-like),
+**soit** assumer explicitement une limite de validité (par exemple
+"valide sur fenêtres courtes où les anticipations sont stables").
+
+C'est pourquoi la famille S est **dédoublée** : sa propre famille
+ET composante transversale des 20 autres. Le panorama n'est pas une
+liste plate de 21 candidats indépendants, mais une **matrice 20 × 1**
+où chaque famille est conditionnellement modifiée par la réflexivité.
+
 ## Synthèse — quelle famille pour CPV ?
 
-Tableau d'évaluation pour les 15 familles candidates (1-5 étoiles) :
+Tableau d'évaluation pour les 21 familles candidates (1-5 étoiles) :
 
 | Famille | Force conceptuelle | Disponibilité données CPV | Coût implementation | Pouvoir explicatif observé | Verdict |
 |---|:---:|:---:|:---:|:---:|---|
@@ -434,11 +688,19 @@ Tableau d'évaluation pour les 15 familles candidates (1-5 étoiles) :
 | M — Quantum analogies | ★★ | ★ | ★★★★★ | ★ | Tier 3 |
 | N — Bifurcations / catastrophes | ★★★★ | ★★ | ★★★ | ★★★ | Tier 2 |
 | O — Cellular automata | ★★★ | ★ | ★★★★ | ★★ | Tier 3 |
+| **P — Cascades K41 / turbulence** | ★★★★★ | ★★★★ | ★★★ | ★★★★ | **Tier 1** |
+| **Q — Universalité / RG / MaxEnt** (méta) | ★★★★★ | ★★★★ | ★★ | ★★★★ | **Tier 1 méta** |
+| **R — Diffusion anormale** | ★★★★ | ★★★★ | ★★ | ★★★★ | **Tier 1** |
+| **S — Réflexivité (transversale)** | ★★★★★ | ★★★ | ★★★★★ | ★★★ | **Composante transversale** |
+| **T — Tsallis non-extensive** | ★★★★ | ★★★★★ | ★★ | ★★★★ | **Tier 1** |
+| **U — Chimera states** | ★★★★ | ★★★★ | ★★★ | ★★★★ | Tier 2 |
 
 ### Tier 1 (à implémenter en priorité — Roadmap item #15)
 
-Six familles directement testables sur les données CPV existantes
-avec des diagnostics statistiques compacts :
+Onze familles directement testables sur les données CPV existantes
+avec des diagnostics statistiques compacts (les 7 originales + P, R, T
+ajoutées dans cette extension ; Q comme méta-cadre ; S comme
+composante transversale obligatoire) :
 
 1. **Famille A — SOC** : slope spectrale log-log (test 1/f^β), distribution des incréments (test loi de puissance via Hill).
 2. **Famille B — Multifractalité** : MF-DFA, spectre f(α).
@@ -447,8 +709,18 @@ avec des diagnostics statistiques compacts :
 5. **Famille G — RMT** : Marchenko-Pastur fit sur matrices de corrélation panel.
 6. **Famille I — Théorie de l'information** : permutation entropy + statistical complexity.
 7. **Famille J — Lévy flights** : fit Lévy stable, test queue lourde.
+8. **Famille P — Cascades K41** : exposants de scaling ζ(p), pente spectrale dans la zone inertielle.
+9. **Famille R — Diffusion anormale** : régression log-log MSD(t).
+10. **Famille T — Tsallis non-extensive** : ajustement q-Gaussien à la distribution des incréments.
+11. **Famille Q (méta) — Universalité / MaxEnt** : regroupement des exposants par classe d'universalité, sélection MDL/AIC du meilleur modèle.
 
-Ces 7 cadres se testent avec un module compact `ecowave/cycles/alternative_dynamics.py`
+**Composante transversale obligatoire** : **Famille S (réflexivité)**
+doit être intégrée dans chaque test Tier 1 sous une des deux formes :
+soit modélisation explicite (couche bayésienne d'anticipations type
+Friston), soit limite de validité affichée ("résultat valable sur la
+fenêtre 1980-2020 où le régime cognitif collectif est stable").
+
+Ces cadres se testent avec un module compact `ecowave/cycles/alternative_dynamics.py`
 (spec dans le roadmap item #15 — voir [feuille de route](methodology/feuille_de_route.md)).
 
 ### Tier 2 (à explorer après Tier 1)
@@ -459,6 +731,9 @@ Ces 7 cadres se testent avec un module compact `ecowave/cycles/alternative_dynam
 - **Famille L — Biologie évolutionniste**. Distribution durées
   inter-crises.
 - **Famille N — Bifurcations**. Régimes markoviens non-stationnaires.
+- **Famille U — Chimera states**. À tester via cohérence wavelet
+  pairwise sur le panel JST 18 économies pour identifier les clusters
+  de synchronisation partielle.
 
 ### Tier 3 (gardés en réserve)
 

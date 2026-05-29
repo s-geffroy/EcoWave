@@ -6,11 +6,33 @@
 
 ## A
 
+### Abrams & Strogatz (2004) {#abrams-strogatz-2004}
+
+Abrams, D. M., & Strogatz, S. H. (2004). Chimera states for coupled
+oscillators. *Physical Review Letters*, 93(17), 174102. *Découverte que
+sur un anneau d'oscillateurs identiques, des sous-domaines synchronisés
+peuvent coexister stablement avec des sous-domaines désordonnés — les
+**chimera states**. Phénomène nommé d'après les chimères mythologiques.
+Métaphore directe pour l'observation CPV : pourquoi certains agrégats
+montrent un signal apparent alors que d'autres voisins ne montrent
+rien. "Famille U — synchronisation partielle".*
+
 ### Aguiar-Conraria & Soares (2014) {#aguiar-conraria-soares-2014}
 
 Aguiar-Conraria, L., & Soares, M. J. (2014). The continuous wavelet transform:
 moving beyond uni- and bivariate analysis. *Journal of Economic Surveys*,
 28(2), 344–375.
+
+### Akerlof & Shiller (2009) {#akerlof-shiller-2009}
+
+Akerlof, G. A., & Shiller, R. J. (2009). *Animal spirits: how human
+psychology drives the economy, and why it matters for global capitalism*.
+Princeton University Press. *Reprise et formalisation contemporaine
+des "animal spirits" keynésiens. Les comportements collectifs (confiance,
+équité, illusion monétaire, histoires partagées) ne sont pas du bruit
+secondaire mais des **moteurs primaires** des fluctuations macro. Cadre
+de référence pour la "Famille S — réflexivité et anticipations" et la
+composante transversale.*
 
 ## B
 
@@ -138,6 +160,29 @@ Diebolt, C., & Doliger, C. (2008). New international evidence on the
 cyclical behaviour of output: Kondratieff and beyond. *Applied Economics*,
 40(13), 1675–1684.
 
+## F
+
+### Frisch (1995) {#frisch-1995}
+
+Frisch, U. (1995). *Turbulence: the legacy of A. N. Kolmogorov*.
+Cambridge University Press. *Manuel synthétique de la turbulence
+hydrodynamique avec l'angle Kolmogorov K41 + corrections multifractales.
+**Cascades multi-échelle d'énergie**, intermittence, lois de
+Kolmogorov-Obukhov. Cadre du **mécanisme générateur** de la
+multifractalité — distinct de la simple description statistique.
+"Famille P".*
+
+### Friston (2010) {#friston-2010}
+
+Friston, K. (2010). The free-energy principle: a unified brain theory?
+*Nature Reviews Neuroscience*, 11(2), 127–138. *Principe d'énergie
+libre variationnelle : les systèmes biologiques (cerveaux, organismes)
+minimisent leur énergie libre — équivalente à la borne supérieure de
+la surprise bayésienne. Unifie inférence bayésienne, contrôle,
+perception, action (**active inference**). Transférable à la
+modélisation d'agents économiques qui inférent et anticipent. Pilier
+de la "Famille S" (avec Soros).*
+
 ## G
 
 ### Garvy (1943) {#garvy-1943}
@@ -148,6 +193,16 @@ contemporaine de Kondratieff (1925). Garvy montre que les "cycles longs"
 de prix résultent de chocs exogènes (guerres, découvertes d'or) et non
 d'un mécanisme endogène ; le seul cycle dont l'évidence statistique
 résiste est le cycle court (Kitchin).*
+
+### Ghashghaie et al. (1996) {#ghashghaie-1996}
+
+Ghashghaie, S., Breymann, W., Peinke, J., Talkner, P., & Dodge, Y.
+(1996). Turbulent cascades in foreign exchange markets. *Nature*,
+381(6585), 767–770. *Application des cascades Kolmogorov K41 aux
+taux de change. Démontre empiriquement que la volatilité financière
+obéit aux mêmes lois multi-échelle que la turbulence fluide. Pont entre
+**mécanisme physique identifié** et données économiques observées.
+"Famille P".*
 
 ### Goldstein (1988) {#goldstein-1988}
 
@@ -220,6 +275,16 @@ distincts. Cf. Hamilton (2018) pour la critique du filtre.*
 
 ## J
 
+### Jaynes (1957) {#jaynes-1957}
+
+Jaynes, E. T. (1957). Information theory and statistical mechanics.
+*Physical Review*, 106(4), 620–630. *Reformulation de la mécanique
+statistique comme **inférence sous contraintes** : la distribution
+la moins informative compatible avec les contraintes observées
+maximise l'entropie de Shannon. Méta-cadre de **choix de modèle** —
+particulièrement utile pour départager les 21 familles candidates du
+panorama au-delà des cycles. "Famille Q".*
+
 ### Jordà, Schularick & Taylor (2017) {#jorda-schularick-taylor-2017}
 
 Jordà, Ò., Schularick, M., & Taylor, A. M. (2017). Macrofinancial history
@@ -262,6 +327,17 @@ Outil principal de la "Famille B — multifractalité".*
 Kitchin, J. (1923). Cycles and trends in economic factors. *Review of
 Economics and Statistics*, 5(1), 10–16.
 
+### Kolmogorov (1941) {#kolmogorov-1941}
+
+Kolmogorov, A. N. (1941). The local structure of turbulence in
+incompressible viscous fluid for very large Reynolds numbers.
+*Doklady Akademii Nauk SSSR*, 30, 301–305. *Article fondateur "K41"
+de la théorie statistique de la turbulence. Prédiction du spectre
+d'énergie E(k) ∝ k^{-5/3} dans la zone inertielle. **Cascade
+d'énergie multi-échelle** depuis les grandes vers les petites
+échelles avec dissipation viscosulle à l'échelle de Kolmogorov.
+Cadre fondateur de la "Famille P — cascades multi-échelle".*
+
 ### Kondratieff (1925) {#kondratieff-1925}
 
 Kondratieff, N. D. (1925). The major economic cycles. *Voprosy Konjunktury*,
@@ -290,6 +366,16 @@ globalement, montrent une transition de phase ordre-désordre vers la
 synchronisation collective. Cadre principal de la "Famille F —
 oscillateurs couplés". Analogue mathématique des pendules multiples
 suggérés par sge.*
+
+### Kuramoto & Battogtokh (2002) {#kuramoto-battogtokh-2002}
+
+Kuramoto, Y., & Battogtokh, D. (2002). Coexistence of coherence and
+incoherence in nonlocally coupled phase oscillators. *Nonlinear
+Phenomena in Complex Systems*, 5(4), 380–385. *Découverte théorique
+des **chimera states** : sur un anneau d'oscillateurs identiques avec
+couplage non-local, des sous-domaines synchronisés coexistent avec
+des sous-domaines désordonnés. Formalisme original ; voir aussi
+[Abrams-Strogatz (2004)](#abrams-strogatz-2004). "Famille U".*
 
 ### Kuznets (1930) {#kuznets-1930}
 
@@ -379,6 +465,15 @@ and beyond*. World Scientific. *Manuel canonique des verres de spin
 et systèmes désordonnés. Frustration, replica symmetry breaking,
 multitude d'états métastables. Méthode théorique pour traiter
 l'hétérogénéité des agents économiques. "Famille H — verres de spin".*
+
+### Metzler & Klafter (2000) {#metzler-klafter-2000}
+
+Metzler, R., & Klafter, J. (2000). The random walk's guide to anomalous
+diffusion: a fractional dynamics approach. *Physics Reports*, 339(1),
+1–77. *Article de revue sur la **diffusion anormale** : MSD ~ t^α
+avec α ≠ 1. Sub-diffusion (α<1) liée au piégeage / mémoire ;
+super-diffusion (α>1) liée aux longs sauts. Formalisme des équations
+de diffusion fractionnaires. Cadre principal de la "Famille R".*
 
 ### Mensch (1979) {#mensch-1979}
 
@@ -475,6 +570,18 @@ caractérisées par accélération en loi de puissance avec oscillations
 log-périodiques. Outil prédictif de la "Famille A — phénomènes
 critiques".*
 
+### Soros (1987 / 2008) {#soros-1987}
+
+Soros, G. (1987). *The alchemy of finance*. Simon & Schuster.
+Soros, G. (2008). *The new paradigm for financial markets: the credit
+crisis of 2008 and what it means*. PublicAffairs. *Théorie de la
+**réflexivité** : les marchés financiers ne sont pas seulement le
+reflet passif d'une réalité économique sous-jacente — les croyances
+et anticipations des participants influencent la réalité qu'ils
+prétendent observer. Boucle de rétroaction qui rend le système
+**fondamentalement non-stationnaire**. Pilier conceptuel de la
+"Famille S" et composante transversale de tout le panorama.*
+
 ### Solomou (1987) {#solomou-1987}
 
 Solomou, S. (1987). *Phases of economic growth, 1850–1973: Kondratieff
@@ -533,12 +640,35 @@ Theiler, J., Eubank, S., Longtin, A., Galdrikian, B., & Farmer, J. D.
 (1992). Testing for nonlinearity in time series: the method of surrogate
 data. *Physica D*, 58(1–4), 77–94.
 
+### Tsallis (1988) {#tsallis-1988}
+
+Tsallis, C. (1988). Possible generalization of Boltzmann-Gibbs
+statistics. *Journal of Statistical Physics*, 52(1), 479–487.
+*Généralisation non-extensive de l'entropie de Boltzmann-Gibbs avec
+paramètre `q` : `S_q = (1 - Σ p_i^q) / (q-1)`. Pour q→1 on retrouve
+Boltzmann-Gibbs ; pour q≠1 on obtient des distributions à **queues
+en loi de puissance** comme stations d'équilibre. Cadre unifié pour
+systèmes à longue mémoire, fractalité, interactions à longue portée
+— directement applicable aux séries macro. "Famille T".*
+
 ### Torrence & Compo (1998) {#torrence-compo-1998}
 
 Torrence, C., & Compo, G. P. (1998). A practical guide to wavelet analysis.
 *Bulletin of the American Meteorological Society*, 79(1), 61–78.
 
 ## W
+
+### Wilson (1971) {#wilson-1971}
+
+Wilson, K. G. (1971). Renormalization group and critical phenomena.
+*Physical Review B*, 4(9), 3174–3205. *Théorie du groupe de
+renormalisation. Explique pourquoi des systèmes microscopiquement
+très différents présentent les mêmes **exposants critiques** près
+des transitions de phase — phénomène d'**universalité**. Cadre
+méta-théorique pour comprendre pourquoi tant de séries macro
+hétérogènes (UK 1700, US 1860, BIS-EM 1970) montrent des signatures
+statistiques similaires (queues lourdes, ACF persistante). Prix
+Nobel 1982. "Famille Q".*
 
 ### West, Brown & Enquist (1997) {#west-brown-enquist-1997}
 
@@ -708,6 +838,30 @@ aux données CPV.
 ### Famille O — Cellular automata et calcul universel
 
 [Wolfram (2002)](#wolfram-2002)
+
+### Famille P — Cascades multi-échelle et turbulence (Kolmogorov)
+
+[Frisch (1995)](#frisch-1995) · [Ghashghaie et al. (1996)](#ghashghaie-1996) · [Kolmogorov (1941)](#kolmogorov-1941)
+
+### Famille Q — Universalité et choix de modèle (renormalisation, MaxEnt)
+
+[Jaynes (1957)](#jaynes-1957) · [Wilson (1971)](#wilson-1971)
+
+### Famille R — Diffusion anormale
+
+[Metzler & Klafter (2000)](#metzler-klafter-2000)
+
+### Famille S — Réflexivité et anticipation des agents (transversale)
+
+[Akerlof & Shiller (2009)](#akerlof-shiller-2009) · [Friston (2010)](#friston-2010) · [Soros (1987 / 2008)](#soros-1987)
+
+### Famille T — Thermodynamique non-extensive
+
+[Tsallis (1988)](#tsallis-1988)
+
+### Famille U — Synchronisation partielle (chimera states)
+
+[Abrams & Strogatz (2004)](#abrams-strogatz-2004) · [Kuramoto & Battogtokh (2002)](#kuramoto-battogtokh-2002)
 
 ## Bases de données externes
 
