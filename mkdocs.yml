@@ -69,6 +69,7 @@ nav:
       - BIS macroprudential (EM + AE, 1970-2025): reports/cycle_position_2026_05_bis.md
       - Évidence par variable (Wen/Solomou): evidence_per_variable.md
       - "Étude de cas — CN_BIS K (artefact d'agrégation)": case_study_cn_bis_kondratieff.md
+      - "Étude de cas — WLD-WB K (trends agrégées)": case_study_wld_wb_kondratieff.md
   - 2. Pourquoi ? — Cycles canoniques:
       - Kitchin (3–5 ans): cycles/kitchin.md
       - Juglar (7–11 ans): cycles/juglar.md
