@@ -328,6 +328,103 @@ def evidence_per_variable(
     typer.echo(f"Evidence page written: {page_out}")
 
 
+@app.command("dx-diagnostics")
+def dx_diagnostics(
+    as_of: str = typer.Option("2026-05", "--as-of",
+                              help="Target month (YYYY-MM)."),
+    horizons: str = typer.Option(
+        "wb,q,long,boe,bis,sh", "--horizons",
+        help="Comma-separated horizons to (re)compute. Unknown horizons "
+             "are loaded from existing sidecars (if any) for the rendered "
+             "page."),
+    n_surrogates: int = typer.Option(
+        200, "--n-surrogates",
+        help="Number of surrogates per diagnostic (AR(1) or phase-scramble). "
+             "Default 200 — heavier than evidence-per-variable because every "
+             "surrogate triggers a full recompute of the structural "
+             "statistic (Hurst, MF-DFA, β, …)."),
+    seed: int = typer.Option(0, "--seed"),
+    out_dir: str = typer.Option(
+        "/app/reports", "--out-dir",
+        help="Directory for the JSON sidecars."),
+    page_out: str = typer.Option(
+        "/app/docs/dx_diagnostics.md", "--page-out",
+        help="Path to the generated docs page."),
+) -> None:
+    """Run 11 non-cyclical diagnostics (Tier 1 of the beyond-cycles panorama).
+
+    Covers families A (SOC 1/f^β + Hill tails), B (MF-DFA), C (DFA/Hurst),
+    E (critical slowing down), G (RMT), I (permutation entropy +
+    complexity), J (Lévy stable), P (K41 cascades), R (anomalous diffusion
+    MSD), T (Tsallis q-Gaussian) and S (reflexivity drift — transversal
+    component). Each diagnostic is scored against an AR(1) or
+    phase-scramble null at α = 0.05, reproducing the Gate-1 philosophy
+    on band-agnostic structure. Roadmap item #15.
+    """
+    from pathlib import Path
+
+    from ecowave.cycles.alternative_dynamics import (
+        compute_per_variable_diagnostics,
+        compute_rmt_per_group,
+        load_panels_for_horizon,
+        render_dx_diagnostics_md,
+        write_diagnostics_sidecar,
+        write_rmt_sidecar,
+    )
+
+    settings = Settings.from_env()
+    horizons_to_run = {h.strip() for h in horizons.split(",") if h.strip()}
+    known = {"wb", "q", "long", "boe", "bis", "sh"}
+    unknown = horizons_to_run - known
+    if unknown:
+        raise typer.BadParameter(
+            f"--horizons unknown: {sorted(unknown)} "
+            f"(expected subset of {sorted(known)})"
+        )
+
+    out_root = Path(out_dir)
+    results_by_horizon: dict[str, list[dict]] = {}
+    rmt_by_horizon: dict[str, list[dict]] = {}
+
+    for horizon in sorted(horizons_to_run):
+        panels = load_panels_for_horizon(settings.db_path, horizon)
+        if not panels:
+            typer.echo(
+                f"horizon={horizon}: no observations in DB — skipped. "
+                f"Run `ecowave position-cycles --horizon {horizon}` first.",
+                err=True,
+            )
+            continue
+        typer.echo(
+            f"horizon={horizon}: {len(panels)} groups — "
+            f"running 11 diagnostics per variable with "
+            f"{n_surrogates} surrogates each…"
+        )
+        records = compute_per_variable_diagnostics(
+            panels, n_surrogates=n_surrogates, seed=seed)
+        rmt_records = compute_rmt_per_group(panels)
+        diag_sidecar = out_root / (
+            f"dx_diagnostics_{as_of.replace('-','_')}_{horizon}.json"
+        )
+        rmt_sidecar = out_root / (
+            f"dx_rmt_{as_of.replace('-','_')}_{horizon}.json"
+        )
+        write_diagnostics_sidecar(records, diag_sidecar)
+        write_rmt_sidecar(rmt_records, rmt_sidecar)
+        results_by_horizon[horizon] = records
+        rmt_by_horizon[horizon] = rmt_records
+        typer.echo(f"  → {diag_sidecar} ({len(records)} cells)")
+        typer.echo(f"  → {rmt_sidecar} ({len(rmt_records)} groups)")
+
+    render_dx_diagnostics_md(
+        results_by_horizon=results_by_horizon,
+        rmt_by_horizon=rmt_by_horizon,
+        as_of=as_of,
+        out_path=Path(page_out),
+    )
+    typer.echo(f"Diagnostics page written: {page_out}")
+
+
 @app.command("sources")
 def sources(
     output: str = typer.Option("/app/docs/sources.md", "--output"),

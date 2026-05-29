@@ -18,6 +18,12 @@ import numpy as np
 import pandas as pd
 
 from ecowave.cycles.decompose import cf_bandpass
+from ecowave.cycles.surrogate_generators import (
+    ar1_surrogate_series,
+    fit_ar1 as _fit_ar1,
+    phase_scramble_surrogate_series,
+    simulate_ar1 as _simulate_ar1,
+)
 
 
 @dataclass(frozen=True)
@@ -30,30 +36,6 @@ class NullResult:
 
     def __bool__(self) -> bool:
         return not self.reject_cycle
-
-
-def _fit_ar1(y: np.ndarray) -> tuple[float, float, float]:
-    """Return (phi, sigma_noise, mu) for y = mu + phi*(y_{t-1} - mu) + eps."""
-    if y.size < 4:
-        return 0.0, 1.0, 0.0
-    mu = float(np.nanmean(y))
-    centered = y - mu
-    num = float(np.nansum(centered[:-1] * centered[1:]))
-    den = float(np.nansum(centered[:-1] ** 2))
-    phi = max(min(num / den if den > 0 else 0.0, 0.99), -0.99)
-    residuals = centered[1:] - phi * centered[:-1]
-    sigma = float(np.nanstd(residuals)) if residuals.size else 1.0
-    return phi, max(sigma, 1e-9), mu
-
-
-def _simulate_ar1(phi: float, sigma: float, mu: float, n: int,
-                  rng: np.random.Generator) -> np.ndarray:
-    eps = rng.normal(loc=0.0, scale=sigma, size=n)
-    y = np.empty(n, dtype=float)
-    y[0] = mu + eps[0] / max(np.sqrt(1.0 - phi ** 2), 1e-9)
-    for t in range(1, n):
-        y[t] = mu + phi * (y[t - 1] - mu) + eps[t]
-    return y
 
 
 def ar1_bootstrap_null(series: pd.Series, lo_years: float, hi_years: float,
@@ -75,11 +57,8 @@ def ar1_bootstrap_null(series: pd.Series, lo_years: float, hi_years: float,
                              samples_per_year=samples_per_year).dropna().to_numpy()
     real_power = float(np.sum(real_cycle ** 2))
 
-    phi, sigma, mu = _fit_ar1(y)
-    rng = np.random.default_rng(seed)
     n_geq = 0
-    for _ in range(n_surrogates):
-        surrogate = _simulate_ar1(phi, sigma, mu, y.size, rng)
+    for surrogate in ar1_surrogate_series(y, n_surrogates, seed):
         surr_cycle = cf_bandpass(pd.Series(surrogate), lo_years, hi_years,
                                  samples_per_year=samples_per_year).dropna().to_numpy()
         if np.sum(surr_cycle ** 2) >= real_power:

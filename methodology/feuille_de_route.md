@@ -331,7 +331,7 @@
     - BIS bulk : `data.bis.org/bulkdownload` · lib `github.com/bis-med-it/pysdmx`
     - Mitchell IHS online : `link.springer.com/referencework/10.1057/978-1-137-30568-8`
 
-## #15 — Diagnostics non-cycliques (toolkit de l'au-delà-des-cycles) — TODO {#item-15-diagnostics-non-cycliques}
+## #15 — Diagnostics non-cycliques (toolkit de l'au-delà-des-cycles) — IMPLÉMENTÉ {#item-15-diagnostics-non-cycliques}
 
 - **Problème.** La chaîne d'audits (CN_BIS K, WLD-WB K, G7-long/UK_BOE K,
   Wen 2005 falsifié) + safeguard #14 a démontré qu'**aucun cycle canonique
@@ -343,49 +343,126 @@
   cadres physiques alternatifs](../methodology_beyond_cycles.md) recense
   15 familles candidates ; il faut un toolkit minimal pour les comparer
   empiriquement sur les données CPV.
-- **Méthode.** Implémenter un module
-  `ecowave/cycles/alternative_dynamics.py` avec 7 diagnostics
-  statistiques compacts (familles Tier 1 du panorama) :
+- **Méthode (livrée).** Module
+  `ecowave/cycles/alternative_dynamics.py` avec **11 diagnostics
+  statistiques compacts** (Tier 1 du panorama étendu PR #22) :
 
-    1. **DFA / Hurst exponent** (famille C). `peng_dfa(series) → (H, fit_quality)`.
-       Détecte la longue mémoire.
-    2. **MF-DFA spectrum width** (famille B). `mfdfa_spectrum(series, q_range)
-       → (alpha_min, alpha_max, delta_alpha, tau_q_table)`. Multifractalité.
-    3. **Power spectrum slope** (famille A). `spectrum_slope(series, log_log_fit)
-       → (β, R²)`. Test 1/f^β pour SOC.
-    4. **Permutation entropy + statistical complexity** (famille I).
-       `permutation_entropy(series, order=3..6) → (H_perm, C_stat)`.
-    5. **Critical slowing down** (famille E). `critical_slowdown(series,
-       window) → (rolling_var, rolling_ac1, kendall_tau_trend, p_value)`.
-    6. **Lévy stable fit** (famille J). `levy_fit(returns) → (α, β, scale, loc)`.
-    7. **RMT spectrum analysis** (famille G). `rmt_analysis(panel) →
-       (eigenvalues, marchenko_pastur_band, bulk_deviating_modes)`.
+    1. **DFA / Hurst exponent** (famille C) — `hurst_dfa(series)`.
+    2. **MF-DFA spectrum width** (famille B) — `mfdfa_spectrum(series)`.
+    3. **Power spectrum slope 1/f^β** (famille A — SOC) — `spectrum_slope(series)`.
+    4. **Hill tail exponent** (famille A — queues loi de puissance) — `hill_tail_exponent(series)`.
+    5. **Permutation entropy + complexité LMC** (famille I) — `permutation_entropy_complexity(series)`.
+    6. **Critical slowing down** (famille E) — `critical_slowdown(series)`.
+    7. **Lévy stable α** (famille J) — `levy_stable_fit(series)`.
+    8. **K41 scaling ζ(6)/ζ(3)** (famille P — cascades turbulence) — `k41_scaling(series)`.
+    9. **MSD log-log slope** (famille R — diffusion anormale) — `msd_log_log(series)`.
+    10. **Tsallis q index** (famille T — non-extensivité) — `tsallis_q_gaussian(series)`.
+    11. **Reflexivity drift KS** (famille S — composante transversale) — `reflexivity_drift(series)`.
 
-- **Code.** Nouveau module `ecowave/cycles/alternative_dynamics.py` ;
-  nouvelle commande CLI `ecowave dx-diagnostics --as-of YYYY-MM
-  --horizons {all|wb|q|long|boe|bis|sh}` qui :
-    - applique les 7 diagnostics à chaque variable individuelle de chaque
-      horizon ;
-    - produit un sidecar JSON
-      `reports/dx_diagnostics_{as_of}_{horizon}.json` par horizon ;
+    **Panel-level** : `rmt_panel(group_panel)` (famille G — RMT) calcule
+    le spectre de covariance et compare à la bande Marchenko-Pastur.
+
+- **Code.** Module `ecowave/cycles/alternative_dynamics.py` + refactor de
+  `ecowave/cycles/surrogate.py` qui délègue aux nouveaux générateurs
+  `ecowave/cycles/surrogate_generators.py` (`ar1_surrogate_series`,
+  `phase_scramble_surrogate_series`). Nouvelle commande CLI
+  `ecowave dx-diagnostics --as-of YYYY-MM --horizons {wb|q|long|boe|bis|sh}`
+  qui :
+    - applique les 11 diagnostics à chaque variable individuelle de
+      chaque horizon (band-agnostique — pas d'axe `cycle`) ;
+    - applique le RMT panel-level à chaque (horizon, group) ;
+    - produit deux sidecars JSON par horizon :
+      `reports/dx_diagnostics_{as_of}_{horizon}.json` (per-variable) et
+      `reports/dx_rmt_{as_of}_{horizon}.json` (panel-level) ;
     - produit une page consolidée `docs/dx_diagnostics.md` avec
-      heatmaps (diagnostic × variable × horizon).
-- **Acceptance.** Pour chaque famille du panorama beyond_cycles, on peut
-  dire "tel diagnostic favorise / défavorise ce cadre sur les données
-  CPV". Chaque cellule du tableau de synthèse de la page
+      heatmaps emoji-codées (🟢 ≤ 0.01 · 🟡 0.01-0.05 · 🟠 0.05-0.10 ·
+      🔴 > 0.10), table de mapping vers les familles du panorama, et
+      section transversale `Réflexivité (famille S)` qui liste les
+      variables où le null AR(1) est rejeté sur le drift de
+      distribution.
+- **Acceptance.** Pour chaque famille du panorama Tier 1, on peut dire
+  "tel diagnostic favorise / défavorise ce cadre sur les données CPV".
+  Chaque cellule du tableau de synthèse de la page
   `methodology_beyond_cycles.md` devient complétable. Critère
-  fonctionnel : `dx_diagnostics.md` publie au moins 7 lignes (une par
-  diagnostic) × N colonnes (variables) sur l'horizon `long` (152 ans,
-  données les plus riches).
-- **Garde-fou méthodologique.** Comme pour les cycles, chaque diagnostic
-  Tier 1 doit être accompagné d'un **null hypothesis test avec
-  surrogates** (AR(1) bootstrap ou phase-scrambling Theiler 1992) à
-  α=0.05. Le diagnostic seul ne suffit pas — il doit être significatif
-  contre le null pour être publié comme survie. Reproduit la philosophie
-  CPV (Gate 1) sur le terrain non-cyclique.
-- **Estimation effort.** ~3-5 jours pour le module + 1 jour run +
-  documentation. À implémenter après validation du présent panorama
-  (Tier 1 confirmé / ajusté par sge).
+  fonctionnel : `dx_diagnostics.md` publie 11 lignes (une par
+  diagnostic) × N colonnes (variables) × 6 horizons.
+- **Garde-fou méthodologique.** Chaque diagnostic Tier 1 est accompagné
+  d'un null hypothesis test avec surrogates (AR(1) bootstrap ou
+  phase-scrambling Theiler 1992) à α=0.05. Tail-test choisi par
+  diagnostic : upper (Hurst, β, Δα, ζ, q, KS, τ_var), lower
+  (perm-entropy, α_Hill, α_Lévy), two-sided (MSD γ).
+- **Décision design : pas de découpage 4-cycles.** Les diagnostics
+  mesurent des propriétés structurelles globales des séries, pas
+  band-spécifiques. Le scaffold Kitchin/Juglar/Kuznets/Kondratieff
+  qu'on vient de falsifier n'est PAS réintroduit ici.
+- **Cohabitation Gate 1 ↔ diagnostics.** Les 4 cycles canoniques
+  restent la cible de falsification dans Gate 1/2/3. Item #15 ajoute un
+  étage parallèle sans toucher à la taxonomie cyclique.
+- **Tests.** 17 tests unitaires sur les 11 diagnostics
+  (`tests/test_alternative_dynamics.py`) + 8 tests de non-régression
+  sur les générateurs surrogate (`tests/test_surrogate_generators.py`)
+  qui garantissent que `ar1_bootstrap_null` et `phase_scramble_null`
+  restent seed-stables.
+- **Dépendances ajoutées.** `nolds==0.6.2`, `antropy==0.1.7` (rebuild
+  Docker requis).
+
+## #16 — Étude per-band vs band-agnostique (validation du design choice de #15) — TODO {#item-16-per-band-vs-band-agnostique}
+
+- **Problème.** L'item #15 a posé une décision design forte : "les
+  diagnostics sont band-agnostiques car réintroduire un axe `cycle ∈
+  {kitchin, juglar, kuznets, kondratieff}` recréerait le scaffold qu'on
+  vient de falsifier". Cette décision *n'a pas été testée empiriquement*.
+  Sans étude de comparaison, on affirme un design choice plutôt qu'on ne
+  le démontre. Reviewers et lecteurs sceptiques peuvent légitimement
+  demander : "et si on faisait quand même per-band, qu'est-ce qu'on
+  perdrait / gagnerait ?"
+- **Méthode.** Implémentation parallèle au module `alternative_dynamics.py`
+  d'un module `alternative_dynamics_per_band.py` qui applique un
+  sous-ensemble restreint de 4 diagnostics au **signal CF-bandpassé**
+  dans chacune des 4 bandes (Kitchin 3-5y, Juglar 7-11y, Kuznets 15-25y,
+  Kondratieff 40-60y) :
+
+    1. **`spectrum_slope` (β)** — restreint à la bande de fréquence, mesure
+       si la bande a sa propre loi de puissance interne.
+    2. **`critical_slowdown` (τ_var)** — variance roulante du signal
+       bandpassé, mesure si un tipping point cyclique approche.
+    3. **`levy_stable_fit` (α)** — fit Lévy sur les incréments du signal
+       filtré, mesure les queues du bruit dans la bande.
+    4. **`hurst_dfa` (H)** — diagnostic marginal mais inclus pour
+       complétude (sera probablement ≈ 0.5 par construction du filtre).
+
+    Les autres diagnostics (MF-DFA, K41, RMT, perm-entropy, MSD,
+    Tsallis, Hill, réflexivité) **ne font pas sens per-band** :
+    soit multi-scale par définition (K41, MF-DFA), soit panel (RMT),
+    soit transversaux (réflexivité), soit altérés par le filtre.
+
+- **Code.** Nouveau module `ecowave/cycles/alternative_dynamics_per_band.py`
+  qui réutilise les fonctions atomiques de `alternative_dynamics.py`
+  appliquées à `cf_bandpass(series, lo_years, hi_years)`. Nouvelle
+  commande CLI `ecowave dx-diagnostics-per-band --as-of YYYY-MM
+  --horizons {wb|q|long|boe|bis|sh}` produisant
+  `reports/dx_diagnostics_per_band_{as_of}_{horizon}.json` et page
+  `docs/dx_diagnostics_per_band.md` avec **table de comparaison directe
+  par variable** : colonnes = (raw, kitchin, juglar, kuznets,
+  kondratieff) × diagnostic, lignes = variables. Le lecteur voit
+  immédiatement si per-band ajoute de l'info.
+- **Acceptance.** Deux verdicts possibles, tous deux acceptables :
+  - **Cas A (probable a priori)** : per-band n'ajoute pas d'info
+    significative au-delà du band-agnostique. **Conclusion** : la
+    décision design de #15 est *validée empiriquement* — pas juste
+    affirmée. Le papier académique gagne une réponse falsifiabiliste à
+    l'objection "vous n'avez pas montré le contrefactuel".
+  - **Cas B (intéressant si observé)** : per-band révèle des structures
+    internes (ex: bande Kondratieff filtrée montre un CSD significatif
+    même quand Gate 1 rejette la band-power). **Conclusion** : nouvelle
+    question de recherche, à creuser dans Roadmap #17.
+- **Effort estimé.** ~2 jours : module (1 j) + tests (0.5 j) + run +
+  page rendering (0.5 j). À implémenter après merge de PR #23
+  (item #15).
+- **Garde-fou méthodologique.** L'étude #16 ne *remplace pas* l'étude
+  #15. Le module per-band est strictement parallèle, pas substitut. La
+  taxonomie cyclique n'est pas restaurée comme angle d'analyse principal
+  — uniquement comme angle de validation.
 
 ## Références
 

@@ -5,6 +5,88 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Diagnostics non-cycliques — toolkit Tier 1 (roadmap #15)
+
+Livraison du toolkit `ecowave dx-diagnostics` qui complète le panorama
+"au-delà des cycles" avec **11 diagnostics statistiques compacts** couvrant
+les familles Tier 1 :
+
+1. **DFA / Hurst** (famille C — longue mémoire) — `nolds`-free réimplémentation Peng et al. 1994.
+2. **MF-DFA Δα** (famille B — multifractalité) — Kantelhardt et al. 2002, q ∈ {-5,-3,-1,1,3,5}.
+3. **Slope spectrale 1/f^β** (famille A — SOC) — Welch + polyfit log-log.
+4. **Hill α_tail** (famille A — queues de loi de puissance) — Hill 1975.
+5. **Permutation entropy + complexité LMC** (famille I — information) — Bandt-Pompe + López-Ruiz-Mancini-Calbet.
+6. **Critical slowdown** (famille E — tipping point) — Kendall τ sur variance roulante, Dakos et al. 2008.
+7. **Lévy stable α** (famille J — vols de Lévy) — McCulloch 1986 quantile estimator.
+8. **K41 scaling ζ(6)/ζ(3)** (famille P — cascades turbulence) — Frisch 1995.
+9. **MSD γ** (famille R — diffusion anormale) — Metzler-Klafter 2000.
+10. **Tsallis q** (famille T — non-extensivité) — proxy kurtosis.
+11. **Reflexivity drift KS** (famille S — composante transversale Soros + Friston) — KS deux-échantillons entre les deux moitiés de la fenêtre.
+
+**Panel-level** : `rmt_panel` (famille G — RMT) calcule le spectre de
+covariance et compare à la bande Marchenko-Pastur.
+
+**Architecture** : module `ecowave/cycles/alternative_dynamics.py` (~1100
+lignes) + refactor de `ecowave/cycles/surrogate.py` qui délègue
+maintenant à `ecowave/cycles/surrogate_generators.py` (`ar1_surrogate_series`,
+`phase_scramble_surrogate_series`) en briques réutilisables. Le contrat
+de non-régression Gate 1 est vérifié par `tests/test_surrogate_generators.py`
+(seed-stable, p-values identiques avant/après refactor).
+
+**Null wrapper unifié** : chaque diagnostic atomique est scoré contre
+AR(1) ou phase-scramble selon ce qui fait sens physiquement (cf. tableau
+dans le module). Tail-test choisi par diagnostic : upper (Hurst, β, Δα,
+ζ, q, KS), lower (perm-entropy, α_Hill, α_Lévy), two-sided (MSD γ).
+
+**Décision design : pas de découpage 4-cycles.** Les diagnostics
+mesurent des propriétés **structurelles globales** des séries, pas
+band-spécifiques. Réintroduire un axe `cycle ∈ {kitchin, juglar, kuznets,
+kondratieff}` recréerait le scaffold cyclique précisément falsifié. La
+page `docs/dx_diagnostics.md` est structurée comme **diagnostic ×
+variable × horizon** (3 axes).
+
+**Lecture transversale réflexivité (famille S).** Conformément à PR #22,
+la famille S est traitée comme composante transversale obligatoire. Le
+diagnostic `reflexivity_drift` sert d'indicateur de validité des 10
+autres : quand il rejette le null, les statistiques structurelles
+(Hurst, β, Δα, …) sont valables uniquement sur la fenêtre analysée, pas
+comme lois universelles transhistoriques.
+
+**Dépendances ajoutées** : `nolds==0.6.2`, `antropy==0.1.7` dans
+`requirements.txt` (rebuild Docker requis). Diagnostics 3-7 et 8-11
+utilisent uniquement scipy/numpy déjà présents ; les libs externes sont
+là pour permettre un futur swap des implémentations custom (DFA,
+permutation entropy) vers les implémentations peer-reviewed si besoin.
+
+**Tests** : 17 tests unitaires sur les 11 diagnostics + 8 tests de
+non-régression sur les générateurs surrogate. Coverage des cas : bruit
+blanc (référence neutre), marche aléatoire (mémoire infinie / β=2 / H=1),
+distribution Pareto (heavy-tailed), série avec rupture de régime
+(réflexivité).
+
+**Sortie** : `reports/dx_diagnostics_{as_of}_{horizon}.json` (per-variable)
++ `reports/dx_rmt_{as_of}_{horizon}.json` (panel-level) + page
+`docs/dx_diagnostics.md` consolidée avec heatmaps emoji-codées et
+synthèse cross-horizon.
+
+**Cohabitation Gate 1 ↔ diagnostics non-cycliques.** Les 4 cycles
+canoniques (Kitchin/Juglar/Kuznets/Kondratieff) restent la cible de
+falsification dans Gate 1/2/3. Item #15 ajoute un étage parallèle qui
+ne touche pas à la taxonomie cyclique. Une décision data-driven d'ajout
+/ retrait de cycle (ex: Toynbee 60-120y ou retrait au profit de fBm)
+sera prise après les premiers runs, dans une PR séparée avec
+pré-enregistrement explicite.
+
+**Roadmap #16 pré-enregistré : étude per-band vs band-agnostique.** La
+décision design "pas de découpage 4-cycles" de l'item #15 sera *testée
+empiriquement* dans une PR ultérieure (item #16 dans la feuille de
+route) : appliquer 4 diagnostics (β, τ_var, α_Lévy, Hurst) au signal
+CF-bandpassé dans chacune des 4 bandes canoniques, puis comparer
+directement avec la version band-agnostique. Si per-band n'ajoute pas
+d'info, la décision design de #15 est validée empiriquement (pas juste
+affirmée). Si per-band révèle des structures internes, nouvelle question
+de recherche pour #17.
+
 ### Au-delà des cycles — extension à 21 familles + composante transversale de réflexivité
 
 Extension du panorama initial (15 → 21 familles) pour combler trois
