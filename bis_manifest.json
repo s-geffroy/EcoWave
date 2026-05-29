@@ -1,0 +1,42 @@
+{
+  "project": "cpv_bis_macroprudential_2026",
+  "schema_version": "0.5.1",
+  "as_of_month": "2026-05",
+  "start_year": 1970,
+  "samples_per_year": 4,
+  "horizon": "bis",
+  "note": "BIS Statistics Data Portal bulk downloads — quarterly macroprudential indicators on 9 emerging markets (BIS_EM) + 8 advanced economies (BIS_AE). Roadmap #13 Phase 2 (2026-05). Brings Brazil, China, India, Mexico, Korea, Turkey, South Africa, Russia, Indonesia onto the CPV panel — entirely absent from prior horizons. Tests the Borio-Drehmann credit-to-GDP gap (Basel III CCyB signal) under the dual-null Gate 1 framework.",
+  "datasets": [
+    {
+      "name": "BIS Credit-to-GDP gaps",
+      "file": "data_raw/bis/credit_gap.zip",
+      "license": "Open with attribution (non-commercial)",
+      "url": "https://data.bis.org/topics/CREDIT_GAPS",
+      "bulk_url": "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_col.zip",
+      "variables_provided": ["BIS_CRATIO (actual credit-to-GDP)", "BIS_CGAP (HP-filter gap, Borio-Drehmann)"]
+    },
+    {
+      "name": "BIS Residential Property Prices",
+      "file": "data_raw/bis/SPP_csv_col.zip",
+      "license": "Open with attribution (non-commercial)",
+      "url": "https://data.bis.org/topics/RPP",
+      "bulk_url": "https://data.bis.org/static/bulk/WS_SPP_csv_col.zip",
+      "variables_provided": ["BIS_RPP (nominal house price index)"]
+    },
+    {
+      "name": "BIS Total Credit to non-financial sector",
+      "file": "data_raw/bis/TC_csv_col.zip",
+      "license": "Open with attribution (non-commercial)",
+      "url": "https://data.bis.org/topics/TOTAL_CREDIT",
+      "bulk_url": "https://data.bis.org/static/bulk/WS_TC_csv_col.zip",
+      "variables_provided": ["BIS_TCRED (total credit % of GDP)"]
+    }
+  ],
+  "variable_codes": [
+    {"variable_code": "BIS_CGAP",   "cycle_targets": ["juglar", "kuznets"],            "notes": "Credit-to-GDP gap (Borio-Drehmann CCyB signal). Tracks credit booms relative to long-run HP-filtered trend. Basel III CCyB primary trigger."},
+    {"variable_code": "BIS_CRATIO", "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Credit-to-GDP actual ratio. Raw level for the credit cycle."},
+    {"variable_code": "BIS_RPP",    "cycle_targets": ["kuznets"],                       "notes": "Residential property prices (nominal). Kuznets construction-swing channel."},
+    {"variable_code": "BIS_TCRED",  "cycle_targets": ["juglar", "kuznets", "kondratieff"], "notes": "Total credit to private non-financial sector (% of GDP). Borio financial-cycle headline."}
+  ],
+  "groups": ["BIS_EM", "BIS_AE", "BR_BIS", "CN_BIS", "IN_BIS", "MX_BIS", "KR_BIS", "TR_BIS", "ZA_BIS", "RU_BIS", "ID_BIS"]
+}

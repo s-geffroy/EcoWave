@@ -5,6 +5,48 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #13 Phase 2 : BIS macroprudential — 9 EM + 8 AE quarterly
+
+Nouveau module `ecowave/cycles/bis_bulk.py`, nouveau manifest
+`bis_manifest.json`, nouvel horizon `bis` dans `position-cycles`.
+Apporte sur le panel CPV les **9 marchés émergents** (Brésil, Chine,
+Inde, Mexique, Corée, Turquie, Afrique du Sud, Russie, Indonésie) +
+8 économies avancées, **entièrement absents des horizons précédents**
+(WB groupes par tier de revenu, Path 5 = AE seulement, JST = 18 AE).
+Quarterly, 1970-2025, ~225 trimestres par groupe.
+
+**4 variables BIS ingérées** :
+- `BIS_CGAP` — credit-to-GDP gap (Borio-Drehmann CCyB signal, Basel III)
+- `BIS_CRATIO` — credit-to-GDP actual ratio
+- `BIS_RPP` — residential property prices
+- `BIS_TCRED` — total credit % of GDP
+
+**Résultats scientifiques fort** :
+
+| Cellule | p-value | Statut | Insight |
+|---|---|---|---|
+| BIS_EM Kitchin | 0.001 🟢 | survives | composite EM converge sur K3 |
+| BIS_EM Kuznets | 0.001 🟢 | survives | swing financier EM 1.5-7 ans |
+| BIS_EM Kondratieff | 0.965 🔴 | rejected | pas de K-wave EM |
+| **CN_BIS Kondratieff** | **0.025 🟡** | **survives — peak** | **credit cycle chinois K-wave détectable, min dans 13 ans** |
+| BIS_AE all 4 cycles | > 0.18 🔴 | all rejected | composite AE post-1970 plat (Great Moderation confirme Romer 1999, Stock-Watson 2003) |
+| ID_BIS Juglar | 0.021 🟡 | expansion | seul Juglar individuel net dans EM |
+| 6 EM Kitchin survive | p ≤ 0.044 | Kitchin EM-spécifique | cycle inventory EM-driven |
+
+Intégration site :
+- 11 lignes BIS ajoutées au dashboard home (BIS_EM, BIS_AE, BR/CN/IN/MX/KR/TR/ZA/RU/ID).
+- Note signée `cycle_position_2026_05_bis.md` sous section 1 de la nav.
+- `position-cycles --horizon bis` dans la CLI.
+- `home-synthesis` lit le sidecar `bis`.
+
+Téléchargement bootstrap des données :
+```bash
+mkdir -p data_raw/bis && cd data_raw/bis && \
+  curl -sL -o credit_gap.zip "https://data.bis.org/static/bulk/WS_CREDIT_GAP_csv_col.zip" && \
+  curl -sLO "https://data.bis.org/static/bulk/WS_SPP_csv_col.zip" && \
+  curl -sLO "https://data.bis.org/static/bulk/WS_TC_csv_col.zip"
+```
+
 ### Roadmap #13 Phases 0 + 1 : JST R6 élargi + Bank of England Millennium
 
 **Phase 0 — JST R6 élargi** (gain immédiat, zéro coût d'ingestion) :
