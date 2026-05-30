@@ -17,4 +17,4 @@ pytest==8.3.2
 ruff==0.5.7
 mkdocs-material==9.5.30
 nolds==0.6.2
-antropy==0.1.7
+antropy==0.1.8

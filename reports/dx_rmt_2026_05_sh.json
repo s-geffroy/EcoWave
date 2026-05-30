@@ -1,0 +1,17 @@
+[
+  {
+    "group_code": "WORLD_SH",
+    "n_observations": 125,
+    "n_variables": 2,
+    "eigenvalues": [
+      1.9223292060741644,
+      0.06167079392583581
+    ],
+    "mp_band_min": 0.7630177871865298,
+    "mp_band_max": 1.2689822128134702,
+    "n_deviating_upper": 1,
+    "n_deviating_lower": 1,
+    "bulk_share": 0.0,
+    "top_eigenvalue": 1.9223292060741644
+  }
+]
