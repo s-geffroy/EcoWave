@@ -79,6 +79,24 @@ measure for time series. *Physical Review Letters*, 88(17), 174102.
 locaux). Robuste au bruit, n'exige pas de stationarité. Diagnostic
 de choix pour la "Famille I — théorie de l'information".*
 
+### Beran (1994) {#beran-1994}
+
+Beran, J. (1994). *Statistics for long-memory processes*. Chapman &
+Hall. *Manuel textbook canonique des processus à longue mémoire :
+ARFIMA, fractional Gaussian noise, estimation Whittle/Geweke-
+Porter-Hudak, tests pour la mémoire fractionnaire. Référence de
+base pour l'item Roadmap #20 (benchmark ARFIMA+RS).*
+
+### Bhardwaj & Swanson (2006) {#bhardwaj-swanson-2006}
+
+Bhardwaj, G., & Swanson, N. R. (2006). An empirical investigation
+of the usefulness of ARFIMA models for predicting macroeconomic and
+financial time series. *Journal of Econometrics*, 131(1-2), 539–578.
+*Test exhaustif d'ARFIMA sur 21 datasets macro. Conclusion : ARFIMA
+domine les modèles short-memory aux horizons médians et longs (6+
+mois), pas aux horizons courts. Justification empirique du périmètre
+de Roadmap #20.*
+
 ### Bolt & van Zanden (2024) {#bolt-vanzanden-2024}
 
 Voir [Maddison Project Database (2023)](#maddison-2023).
@@ -114,6 +132,26 @@ ni Kuznets ni Kondratieff comme objets quantifiables.*
 Borio, C., & Drehmann, M. (2009). Assessing the risk of banking crises —
 revisited. *BIS Quarterly Review*, March 2009, 29–46.
 
+### Borio (2014) {#borio-2014}
+
+Borio, C. (2014). The financial cycle and macroeconomics: what have we
+learnt? *Journal of Banking & Finance*, 45, 182–198. *Article de
+référence sur le **cycle financier** (credit + housing prices),
+distinct du cycle d'activité (Burns-Mitchell). Pose le credit-to-GDP
+gap comme indicateur opérationnel. Référence pour l'implication Bâle
+IV de Roadmap #19 §4.2 — un Hurst-based credit cycle serait une
+mesure fidèle au cluster picture.*
+
+### Brock & Hommes (1998) {#brock-hommes-1998}
+
+Brock, W. A., & Hommes, C. H. (1998). Heterogeneous beliefs and routes
+to chaos in a simple asset pricing model. *Journal of Economic
+Dynamics & Control*, 22(8-9), 1235–1274. *Modèle d'agents
+hétérogènes à croyances révisables (chartistes vs fondamentalistes).
+Génère endogénement la longue mémoire, les queues lourdes, la
+volatility clustering. Bridge avec réflexivité (S) : les agents
+révisent leurs croyances en fonction de la performance observée.*
+
 ### Bry & Boschan (1971) {#bry-boschan-1971}
 
 Bry, G., & Boschan, C. (1971). *Cyclical analysis of time series: selected
@@ -121,10 +159,48 @@ procedures and computer programs*. NBER Technical Paper 20.
 
 ## C
 
+### Calvet & Fisher (2002) {#calvet-fisher-2002}
+
+Calvet, L. E., & Fisher, A. J. (2002). Multifractality in asset
+returns: theory and evidence. *Review of Economics and Statistics*,
+84(3), 381–406. *(Et version étendue : Calvet & Fisher (2004), How
+to forecast long-run volatility: regime switching and the estimation
+of multifractal processes, NBER WP 9839.)* **Le modèle canonique
+combinant multifractalité et regime-switching (MSM)**. Outperforme
+GARCH(1,1) et FIGARCH en out-of-sample sur les rendements financiers.
+Référence centrale pour l'item Roadmap #20 (benchmark de
+modélisation). Cadre principal de la "Famille B + Famille S" en
+modélisation paramétrique.
+
+### Calvet & Fisher (2004) {#calvet-fisher-2004}
+
+Calvet, L. E., & Fisher, A. J. (2004). Regime-switching and the
+estimation of multifractal processes. *Journal of Financial
+Econometrics*, 2(1), 49–83. *Méthodologie complète d'estimation
+GMM et Simulated Maximum Likelihood pour le MSM. Templates pour
+l'implémentation Python de l'item Roadmap #20.*
+
+### Calvet & Fisher (2008) {#calvet-fisher-2008}
+
+Calvet, L. E., & Fisher, A. J. (2008). *Multifractal volatility:
+theory, forecasting, and pricing*. Academic Press. *Manuel textbook
+de référence pour le MSM. Chapitre 3 contient la dérivation
+analytique complète pour l'implémentation de Roadmap #20.*
+
 ### Christiano & Fitzgerald (2003) {#christiano-fitzgerald-2003}
 
 Christiano, L. J., & Fitzgerald, T. J. (2003). The band pass filter.
 *International Economic Review*, 44(2), 435–465.
+
+### Corsi (2009) {#corsi-2009}
+
+Corsi, F. (2009). A simple approximate long-memory model of realized
+volatility. *Journal of Financial Econometrics*, 7(2), 174–196.
+*Le modèle **HAR (Heterogeneous Autoregressive)**, workhorse de la
+prévision de volatilité réalisée. Cascade daily/weekly/monthly
+approxime la longue mémoire par agrégation, sans paramètre
+fractionnaire. Très simple à estimer (OLS) et très compétitif en
+out-of-sample. Baseline pratique pour l'item Roadmap #20.*
 
 ### Crutchfield & Young (1989) {#crutchfield-young-1989}
 
@@ -160,6 +236,16 @@ Diebolt, C., & Doliger, C. (2008). New international evidence on the
 cyclical behaviour of output: Kondratieff and beyond. *Applied Economics*,
 40(13), 1675–1684.
 
+### Drehmann, Borio & Tsatsaronis (2012) {#drehmann-borio-tsatsaronis-2012}
+
+Drehmann, M., Borio, C., & Tsatsaronis, K. (2012). Characterising the
+financial cycle: don't lose sight of the medium term! *BIS Working
+Paper* 380. *Caractérisation empirique du cycle financier comme
+oscillation de 8-20 ans (vs business cycle 2-8 ans). Identifie 5
+features clés : amplitude > business cycle, fréquence < business
+cycle, corrélé aux crises bancaires, asymétrique, country-specific.
+Référence centrale pour l'analyse macroprudentielle.*
+
 ## F
 
 ### Frisch (1995) {#frisch-1995}
@@ -193,6 +279,16 @@ contemporaine de Kondratieff (1925). Garvy montre que les "cycles longs"
 de prix résultent de chocs exogènes (guerres, découvertes d'or) et non
 d'un mécanisme endogène ; le seul cycle dont l'évidence statistique
 résiste est le cycle court (Kitchin).*
+
+### Gneiting & Raftery (2007) {#gneiting-raftery-2007}
+
+Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules,
+prediction, and estimation. *Journal of the American Statistical
+Association*, 102(477), 359–378. *Référence canonique sur les
+**proper scoring rules** (CRPS, log score, Brier). Démonstration que
+CRPS est strictement propre et sensible aux queues. Métrique
+recommandée pour évaluer les forecasts à queues lourdes (cluster
+J + T + Hill). Métrique standard pour l'item Roadmap #20.*
 
 ### Ghashghaie et al. (1996) {#ghashghaie-1996}
 
@@ -263,6 +359,24 @@ du Nil. H > 0.5 = persistance ; H < 0.5 = anti-persistance.
 Cadre fondateur de la "Famille C — longue mémoire" — directement
 applicable aux séries macro avec ACF lag-1 ≈ 1.000 observées sur
 CPV.*
+
+### Hommes (2006) {#hommes-2006}
+
+Hommes, C. H. (2006). Heterogeneous agent models in economics and
+finance. In *Handbook of Computational Economics*, vol. 2 (pp.
+1109–1186). North-Holland. *Review systématique des modèles
+d'agents hétérogènes (HABM) : génèrent endogénement la longue
+mémoire, les queues lourdes, la volatility clustering par agrégation
+d'agents à mémoires/croyances différentes. Bridge avec réflexivité
+(S). Référence pour l'item Roadmap #20 (HABM en réserve V3).*
+
+### Hosking (1981) {#hosking-1981}
+
+Hosking, J. R. M. (1981). Fractional differencing. *Biometrika*,
+68(1), 165–176. *Définition et propriétés mathématiques du **fractional
+differencing** (1-B)^d pour d ∈ ℝ. Base théorique d'ARFIMA. Formule
+récursive d'implémentation directement utilisable pour Roadmap #20
+(composante longue mémoire).*
 
 ### Hodrick & Prescott (1997) {#hodrick-prescott-1997}
 
@@ -398,6 +512,26 @@ matrices aléatoires aux corrélations financières. La majorité du
 spectre eigenvalues correspond à du bruit (Marchenko-Pastur) ; seules
 quelques eigenvalues "bulk-deviating" portent du signal réel.
 "Famille G — RMT".*
+
+### Lo (2017) {#lo-2017}
+
+Lo, A. W. (2017). *Adaptive markets: financial evolution at the speed
+of thought*. Princeton University Press. *Cadre conceptuel englobant :
+marchés = écosystèmes évolutifs d'agents bornés rationnels avec
+adaptation sélective. Sous AMH, les régimes cognitifs (S) sont des
+équilibres temporaires dans la fitness landscape ; la multifractalité
+(B) reflète l'hétérogénéité des stratégies ; la longue mémoire (C)
+reflète la persistance des stratégies adaptées. **Méta-cadre unifiant
+le cluster CPV**.*
+
+### Lux & Marchesi (1999) {#lux-marchesi-1999}
+
+Lux, T., & Marchesi, M. (1999). Scaling and criticality in a
+stochastic multi-agent model of a financial market. *Nature*,
+397(6719), 498–500. *Modèle d'agents hétérogènes générant
+endogénement des stylized facts (queues lourdes, volatility
+clustering, scaling). Pose les fondations des HABM appliqués à la
+finance. Référence pour Roadmap #20 (HABM extensions).*
 
 ### Lenton & Williams (2013) {#lenton-williams-2013}
 
@@ -560,6 +694,17 @@ complex financial systems*. Princeton University Press. *Manuel
 fondateur des marchés financiers vus comme systèmes critiques avec
 précurseurs log-périodiques. Lois de puissance distributionnelles
 des crashes, dragon kings. "Famille A — SOC + lois de puissance".*
+
+### Sornette, Johansen & Bouchaud (1996) {#sornette-johansen-bouchaud-1996}
+
+Sornette, D., Johansen, A., & Bouchaud, J.-P. (1996). Stock market
+crashes, precursors and replicas. *Journal de Physique I*, 6(1),
+167–175. *Article fondateur de l'analyse log-périodique des
+précurseurs de crashs. Démontre une signature scale-invariante avec
+oscillations log-périodiques avant les grandes corrections. Pose le
+cadre de la LPPL (Log-Periodic Power Law) singularity développée
+plus tard. Référence pour la discussion Roadmap #19 §3 et §5.4 du
+working paper.*
 
 ### Sornette & Johansen (1999) {#sornette-johansen-1999}
 

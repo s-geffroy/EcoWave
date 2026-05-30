@@ -5,6 +5,61 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Implications du verdict — page conceptuelle + 3 items roadmap (#19-#21)
+
+Suite à la livraison du verdict empirique (cluster C+B+D+I+S, sprint
+#15+#27) le projet manquait d'une cartographie des *implications* du
+verdict — modélisation, prévision, politique, théorie. Cette
+livraison comble ce trou avec :
+
+**Page conceptuelle `docs/implications_of_cluster.md`** (~3 900 mots,
+5 sections + sign-off) intégrée à mkdocs sous "6. Working paper" :
+
+1. *Le verdict en clair* — rappel du cluster C+B+D+I+S, ce qui est
+   réfuté (SOC pur, CSD, chaos déterministe).
+2. *Implications pour la modélisation* — 5 familles candidates
+   informées par recherche bibliographique substantielle : MSM
+   (Calvet-Fisher), ARFIMA+RS (Bhardwaj-Swanson), HAR (Corsi),
+   MRW (Bacry-Muzy-Delour), HABM (Lux-Marchesi), AMH (Lo). *Aucun
+   modèle ne couvre les 5 piliers simultanément.*
+3. *Implications pour la prévision* — l'horizon compte (long-memory
+   dominate à 6+ mois), comparateurs canoniques (FOMC SEP, ECB BMPE,
+   SPF), métriques propres (CRPS Gneiting-Raftery, coverage 95 %,
+   tail coverage), régime-conditioning (pré/post-2008,
+   pré/COVID/post-COVID).
+4. *Implications pour la politique économique* — inflation targeting
+   et crédibilité monétaire, macroprudentiel/Bâle, VaR vs Expected
+   Shortfall, horizons de forecasting des autorités, réflexivité
+   communicationnelle.
+5. *Implications pour la théorie* — cycle → cascade, DSGE en
+   accusation, cycles narratifs vs mécanistes, synthèse théorique
+   manquante (Active inference + MRW + AMH ?).
+
+**Trois nouveaux items roadmap** dans `methodology/feuille_de_route.md` :
+
+- **#19** — Page conceptuelle (LIVRÉE par ce sprint).
+- **#20** — Benchmark de modélisation : MSM + HAR + ARFIMA+RS vs
+  baselines. Nouveau module `ecowave/forecasting/`, CLI
+  `ecowave forecast-benchmark`. ~15 jours d'effort. Acceptance :
+  au minimum 1 modèle du cluster doit battre random walk en
+  out-of-sample CRPS à 12 mois sur ≥ 50 % des variables testées.
+- **#21** — Bibliographie enrichie modélisation post-cluster. ~0.5
+  jour. LIVRÉE par ce sprint.
+
+**Bibliographie enrichie** (`docs/bibliographie.md`) avec **15
+nouvelles références** couvrant les 5 familles de modélisation du
+cluster :
+
+- Beran (1994), Bhardwaj-Swanson (2006), Borio (2014),
+  Brock-Hommes (1998), Calvet-Fisher (2002, 2004, 2008),
+  Corsi (2009), Drehmann-Borio-Tsatsaronis (2012),
+  Gneiting-Raftery (2007), Hommes (2006), Hosking (1981),
+  Lo (2017), Lux-Marchesi (1999), Sornette-Johansen-Bouchaud (1996).
+
+**Lien V2 papier** : la page `implications_of_cluster.md` fournit la
+matière pour la nouvelle section §6 du working paper V2
+*"Constructive replacement — implications et benchmark"*.
+
 ### Diagnostics non-cycliques — toolkit Tier 1 (roadmap #15)
 
 Livraison du toolkit `ecowave dx-diagnostics` qui complète le panorama
