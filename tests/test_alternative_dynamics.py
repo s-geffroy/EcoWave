@@ -82,6 +82,19 @@ def test_mfdfa_returns_finite_delta_alpha():
     assert res.statistic is None or np.isfinite(res.statistic)
 
 
+def test_mfdfa_handles_zero_variance_segment():
+    """Perfect linear ramp → linear detrend absorbs the trend → some
+    segments have zero residual variance. Without the 1e-12 floor,
+    ``0 ** (q/2)`` blows up for q < 0 and raises a RuntimeWarning."""
+    import warnings
+    ramp = pd.Series(np.arange(512, dtype=float) + np.sin(
+        np.arange(512) * 2 * np.pi / 17), index=np.arange(512))
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", category=RuntimeWarning)
+        res = mfdfa_spectrum(ramp, n_surrogates=20, seed=99)
+    assert res.statistic is None or np.isfinite(res.statistic)
+
+
 def test_spectrum_slope_white_near_zero():
     res = spectrum_slope(_white_noise(n=512), n_surrogates=50, seed=3)
     assert res.statistic is not None
