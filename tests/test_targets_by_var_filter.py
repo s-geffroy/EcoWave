@@ -69,9 +69,10 @@ def test_targets_by_var_restricts_composite_panel_columns(monkeypatch, tmp_path)
     seen_columns: list[list[str]] = []
     real_cp = runner_module._composite_panel
 
-    def spy(p, *, band=None, samples_per_year=1.0):
+    def spy(p, *, band=None, samples_per_year=1.0, differencing=False):
         seen_columns.append(list(p.columns))
-        return real_cp(p, band=band, samples_per_year=samples_per_year)
+        return real_cp(p, band=band, samples_per_year=samples_per_year,
+                        differencing=differencing)
 
     monkeypatch.setattr(runner_module, "_composite_panel", spy)
     _stub_persistence(monkeypatch)
@@ -110,9 +111,10 @@ def test_targets_by_var_none_uses_full_panel(monkeypatch, tmp_path):
     seen_columns: list[list[str]] = []
     real_cp = runner_module._composite_panel
 
-    def spy(p, *, band=None, samples_per_year=1.0):
+    def spy(p, *, band=None, samples_per_year=1.0, differencing=False):
         seen_columns.append(list(p.columns))
-        return real_cp(p, band=band, samples_per_year=samples_per_year)
+        return real_cp(p, band=band, samples_per_year=samples_per_year,
+                        differencing=differencing)
 
     monkeypatch.setattr(runner_module, "_composite_panel", spy)
     _stub_persistence(monkeypatch)
@@ -141,9 +143,10 @@ def test_targets_by_var_falls_back_when_no_matching_columns(monkeypatch, tmp_pat
     seen_columns: list[list[str]] = []
     real_cp = runner_module._composite_panel
 
-    def spy(p, *, band=None, samples_per_year=1.0):
+    def spy(p, *, band=None, samples_per_year=1.0, differencing=False):
         seen_columns.append(list(p.columns))
-        return real_cp(p, band=band, samples_per_year=samples_per_year)
+        return real_cp(p, band=band, samples_per_year=samples_per_year,
+                        differencing=differencing)
 
     monkeypatch.setattr(runner_module, "_composite_panel", spy)
     _stub_persistence(monkeypatch)

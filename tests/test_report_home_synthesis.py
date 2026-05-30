@@ -94,10 +94,11 @@ def test_sidecar_handles_empty_table(tmp_path):
     assert read_positions_sidecar(sidecar).empty
 
 
-def test_aggregate_row_order_covers_3_horizons():
+def test_aggregate_row_order_covers_all_horizons():
     horizons = {h for h, _ in AGGREGATE_ROW_ORDER}
-    assert horizons == {"wb", "q", "long"}
-    assert len(AGGREGATE_ROW_ORDER) == 20  # 8 + 6 + 6
+    assert horizons == {"wb", "q", "long", "boe", "bis", "sh"}
+    # 8 wb + 6 q + 6 long + 1 boe + 11 bis + 3 sh = 35
+    assert len(AGGREGATE_ROW_ORDER) == 35
     # Canonical WB ordering pinned by the user.
     wb_order = [g for h, g in AGGREGATE_ROW_ORDER if h == "wb"]
     assert wb_order == ["WLD", "G7", "OECD", "BRICS",
@@ -160,7 +161,7 @@ def test_format_pvalue_cell_maps_each_threshold_band():
     assert _format_pvalue_cell(float("nan")) == "—"
 
 
-def test_home_pvalues_table_renders_20_rows_with_4_cycle_columns():
+def test_home_pvalues_table_renders_one_row_per_aggregate():
     # Fixtures inject p-values across all 4 buckets for WLD.
     wb = build_position_table([
         _row("WLD", "kitchin", "contraction", ar1_p_value=0.002),  # 🟢
@@ -168,14 +169,16 @@ def test_home_pvalues_table_renders_20_rows_with_4_cycle_columns():
         _row("WLD", "kuznets", "rejected", ar1_p_value=0.054, separable=0),  # 🟠
         _row("WLD", "kondratieff", "rejected", ar1_p_value=0.444, separable=0),  # 🔴
     ])
-    md = render_home_pvalues_table({"wb": wb, "q": build_position_table([]),
-                                     "long": build_position_table([])}, "2026-05")
+    empty = build_position_table([])
+    md = render_home_pvalues_table(
+        {"wb": wb, "q": empty, "long": empty, "boe": empty,
+         "bis": empty, "sh": empty}, "2026-05")
     # Header has Agrégat + Source + 4 cycles = 6 cells / 7 pipes.
     header = next(l for l in md.split("\n") if l.startswith("| Agrégat"))
     assert header.count("|") == 7
-    # Body has 20 data rows (one per AGGREGATE_ROW_ORDER entry).
+    # Body has one data row per AGGREGATE_ROW_ORDER entry (data-driven).
     body_rows = [l for l in md.split("\n") if l.startswith("| `")]
-    assert len(body_rows) == 20
+    assert len(body_rows) == len(AGGREGATE_ROW_ORDER)
     # WLD row should carry the 4 colored cells in fixture order.
     wld = next(l for l in body_rows if l.startswith("| `WLD` |"))
     assert "🟢 0.002" in wld and "🟡 0.030" in wld
