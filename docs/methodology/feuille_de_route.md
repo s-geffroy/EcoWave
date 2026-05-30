@@ -571,6 +571,162 @@
   taxonomie cyclique n'est pas restaurée comme angle d'analyse principal
   — uniquement comme angle de validation.
 
+## #17 — Working paper (publication track) — V1 PUBLIÉE {#item-17-working-paper}
+
+- **Problème.** L'item #15 a livré le verdict empirique (cluster
+  C+B+D+I+S). Le verdict doit maintenant être *publié* sous forme
+  académique reproductible et défendable contre les objections
+  attendues. Sans un papier formel, le travail reste cantonné au site
+  documentaire ; il ne peut pas être cité, évalué par les pairs, ni
+  utilisé pour informer la politique économique au-delà du cercle CPV.
+- **Méthode V1 (livrée 2026-05).** Working paper en markdown intégré
+  au site MkDocs (`docs/papers/cpv_main_paper.md`, ~10 000 mots, 1 352
+  lignes) structuré en 6 sections + 3 annexes :
+
+    - §1 Introduction — stakes intellectuels (2008/2020 forecast
+      failures), lacunes des critiques antérieures (Garvy 1943,
+      Solomou 1987, Wen 2005), claims explicites et limites.
+    - §2 Méthodologie — chaque choix justifié point par point :
+      dual null (AR(1) + phase-scramble), consensus 4 méthodes,
+      universalité, safeguard #14 contre artefacts d'agrégation,
+      périmètre 11 familles / 14 diagnostics, décision design
+      band-agnostique (3 raisons), réflexivité transversale.
+    - §3 Données — 6 panels avec triple justification (couverture
+      temporelle + dimensionnelle + indépendance).
+    - §4 Résultats — réfutation 4 cycles, profil 14 diagnostics,
+      pattern cross-horizon, variables porteuses (concentration sur
+      monnaie/crédit historiques), RMT panel-level, cluster vainqueur.
+    - §5 Discussion — working hypothesis ("dynamique fractale non-
+      linéaire à longue mémoire avec dérive de régime cognitif"),
+      3 incompatibilités précises avec cycle-as-mechanism, **7
+      objections anticipées avec rebuttals détaillés** (BDS-triviality,
+      Hurst small-sample bias, per-horizon variance comme confondeur,
+      multiple-comparison sans correction, LPPL bubble compatibility,
+      reflexivity unfalsifiability, DSGE défense), **5 prédictions
+      falsifiables** pour stress-tester l'hypothèse.
+    - §6 Conclusion.
+    - 3 annexes : replication command Docker, panorama 21 familles,
+      pré-enregistrement Roadmap #16.
+
+- **Code.** Aucun nouveau code. Le papier est entièrement reproductible
+  via les sidecars JSON committés en PR #25 et la commande
+  `ecowave dx-diagnostics --as-of 2026-05`.
+
+- **Statut V1.** PR #27 mergée le 2026-05-30 (`07eaa82`). Publié sur
+  GitHub Pages sous la section nav "6. Working paper".
+
+- **V2 — roadmap vers submission journal.** Avant submission à un
+  journal académique (cibles : *Journal of Economic Methodology*,
+  *Real-World Economics Review*, *Physica A*, *Journal of Economic
+  Behavior & Organization*), il reste :
+
+    1. **Run 1 000-surrogate (vs 100 actuel)** — réplication statistique
+       avec n_surrogates ≥ 1 000 pour rigueur publication. Coût ~10×
+       le temps de run (estimation : 3-5 h sur tous horizons). Risque
+       méthodologique nul (juste plus de puissance statistique). PR
+       suivante : `feat/dx-diagnostics-1000-surrogate-replication`.
+    2. **Hurst bias-correction explicite** — appliquer Bryce-Sprague
+       (2012) sur les estimations DFA et republier les valeurs
+       corrigées. §5.3.2 du papier mentionne le calcul mais ne
+       l'inclut pas systématiquement.
+    3. **Résultats de Roadmap #16 (per-band study)** — si Cas A (per-
+       band n'ajoute rien), le papier gagne un argument empirique pour
+       le design choice band-agnostique. Si Cas B, le papier doit
+       être révisé pour intégrer la découverte.
+    4. **Co-auteurs académiques** — identifier 1-2 macroéconomistes ou
+       économétriciens disposés à co-signer, idéalement avec expertise
+       en analyse multi-fractale ou réflexivité.
+    5. **Tests des 5 prédictions §5.4** — résultats partiels suffisent
+       pour la V2 (au moins prédictions 2 et 3 testées sur données
+       existantes).
+
+- **Acceptance V2.** Papier ré-écrit en LaTeX (pandoc depuis MD source),
+  bibliographie BibTeX, prédictions §5.4 partiellement testées, run
+  1 000-surrogate intégré, statut prêt-submission.
+
+## #18 — Robustness extensions (prédictions falsifiables du papier §5.4) — TODO {#item-18-robustness-extensions}
+
+- **Problème.** Le papier §5.4 énonce 5 prédictions falsifiables pour
+  stress-tester l'hypothèse cluster. Ces prédictions doivent être
+  testées dans des PRs suivantes pour que la V2 du papier soit
+  défendable. Chacune correspond à un mini-sprint d'effort variable.
+
+- **Prédiction 1 — long-memory durability avant 1700.** Tester si
+  Hurst → 0.5 sur des séries pré-1700 (prix médiévaux, registres
+  bancaires Renaissance). Si oui, la longue mémoire est un artefact
+  post-déepening financier. Si non, c'est structural à toute économie
+  monétisée.
+
+    - **Source candidate.** Allen 2001 Real Wages dataset, Clark 2007
+      A Farewell to Alms (prix anglais 1209-1869), Hoffman et al.
+      Dawn of Modern Banking (Florence/Venise 1300+). Probable
+      ingestion manuelle (CSV depuis publications).
+    - **Code.** Nouveau module `ecowave/cycles/medieval_panel.py`,
+      manifest `medieval_manifest.json`, horizon `--horizon medieval`.
+    - **Effort estimé.** ~3 jours (ingestion ardue, série courte).
+
+- **Prédiction 2 — cross-panel robustness sur variables non-
+  financières.** Tester si le cluster (Hurst long memory, BDS
+  non-linéarité, reflexivity drift) apparaît sur des séries non-
+  financières : participation au marché du travail, scolarisation,
+  espérance de vie, consommation énergétique. Si le cluster est
+  *spécifique* à la finance / monnaie / crédit, c'est une découverte
+  *plus restreinte* (mais toujours intéressante). Si le cluster
+  apparaît sur les variables réelles aussi, c'est *structurel à toute
+  série macro*.
+
+    - **Source candidate.** OWID datasets (health, education, energy
+      per capita, life expectancy), ILO labour force participation,
+      UNESCO school enrollment. APIs publiques, ingestion automatique.
+    - **Code.** Nouveau module `ecowave/cycles/real_economy_panel.py`,
+      manifest `real_economy_manifest.json`, horizon `--horizon real`.
+    - **Effort estimé.** ~4 jours (3 sources, schémas hétérogènes).
+    - **C'est la prédiction la plus impactante pour la V2 du papier.**
+
+- **Prédiction 3 — multifractal vs monofractal discrimination.**
+  Avec un run MF-DFA 1 000-surrogate et `nolds.mfdfa` comme estimateur
+  canonique (au lieu de l'implémentation custom), tester si Δα > 0
+  reste statistiquement significatif sur les variables LH du panel
+  long. Si Δα → 0, le cluster picture se réduit à fractional Brownian
+  monofractal — plus faible.
+
+    - **Code.** Switch `mfdfa_spectrum` vers `nolds.mfdfa` ;
+      n_surrogates → 1 000 ; re-run sur horizon long uniquement
+      (suffisant pour discrimination).
+    - **Effort estimé.** ~1 jour (switch lib + re-run).
+
+- **Prédiction 4 — regime-conditioned forecast performance.**
+  Construire un benchmark forecasting comparant : (a) ARFIMA + regime-
+  switching + heavy-tail innovations, (b) cycle-conditioned baseline
+  (predict Juglar contraction in N years), (c) random walk. Test
+  out-of-sample sur 2020-2024 data. Si (a) bat (b) systématiquement,
+  le cluster picture gagne un argument pratique fort.
+
+    - **Code.** Nouveau module `ecowave/forecasting/regime_conditioned.py`,
+      pipeline d'évaluation `ecowave forecast-benchmark`. Sortie :
+      MAE / RMSE / coverage par horizon, par variable.
+    - **Effort estimé.** ~10 jours (le plus gros chantier — modélisation
+      ARFIMA + regime-switching non-triviale, intégration heavy-tail
+      innovations encore moins).
+    - **À reporter en V3 du papier** (trop substantielle pour V2).
+
+- **Prédiction 5 — reflexive split-point specificity.** Avec
+  `reflexivity_multi_window` étendue à 1 000 surrogates, tester si le
+  split-point dominant *clusterise* sur des dates pré-enregistrées
+  (1971 floating exchange rates pour vars financières, 1944 Bretton
+  Woods pour vars commerciales). Si oui, c'est une opérationnalisation
+  forte de la réflexivité Soros. Si non, c'est un bruit générique.
+
+    - **Code.** Aucun nouveau code. Re-run de `dx-diagnostics` avec
+      n_surrogates = 1 000 + analyse post-hoc des `per_window`
+      metadata dans les sidecars JSON.
+    - **Effort estimé.** ~1 jour (re-run + script d'analyse).
+
+- **Priorisation.** Pour V2 du papier (~3 mois), faire : Prédiction
+  3 (1 j) + Prédiction 5 (1 j) + Prédiction 2 (4 j) = 6 jours de
+  travail empirique + intégration dans le papier (2 jours) = ~8 jours
+  total. Prédictions 1 et 4 reportées en V3.
+
 ## Références
 
 - Bailey, D. H., & López de Prado, M. (2014). The deflated Sharpe ratio.
