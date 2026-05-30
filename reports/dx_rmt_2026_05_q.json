@@ -1,0 +1,47 @@
+[
+  {
+    "group_code": "G7Q",
+    "n_observations": 316,
+    "n_variables": 2,
+    "eigenvalues": [
+      1.0105369150428654,
+      0.9831339710330851
+    ],
+    "mp_band_min": 0.8472176570889047,
+    "mp_band_max": 1.1654405707591966,
+    "n_deviating_upper": 0,
+    "n_deviating_lower": 0,
+    "bulk_share": 1.0,
+    "top_eigenvalue": 1.0105369150428654
+  },
+  {
+    "group_code": "OECDQ",
+    "n_observations": 316,
+    "n_variables": 2,
+    "eigenvalues": [
+      1.0105369150428654,
+      0.9831339710330851
+    ],
+    "mp_band_min": 0.8472176570889047,
+    "mp_band_max": 1.1654405707591966,
+    "n_deviating_upper": 0,
+    "n_deviating_lower": 0,
+    "bulk_share": 1.0,
+    "top_eigenvalue": 1.0105369150428654
+  },
+  {
+    "group_code": "USA",
+    "n_observations": 266,
+    "n_variables": 2,
+    "eigenvalues": [
+      1.0074549709818144,
+      0.9850262320257037
+    ],
+    "mp_band_min": 0.8340968030876572,
+    "mp_band_max": 1.1809407908973053,
+    "n_deviating_upper": 0,
+    "n_deviating_lower": 0,
+    "bulk_share": 1.0,
+    "top_eigenvalue": 1.0074549709818144
+  }
+]

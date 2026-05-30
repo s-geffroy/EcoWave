@@ -1,0 +1,2260 @@
+[
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.2889519118234596,
+    "p_value": 0.8811881188118812,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 2.475737960866941,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.7007222122307464,
+    "p_value": 0.6138613861386139,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 16.102322216464326,
+    "p_value": 0.9207920792079208,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.8763905356143263,
+    "p_value": 0.019801980198019802,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.09933874687534461,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.1514629948364888,
+    "p_value": 0.40594059405940597,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.5188970759017435,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 0.6892240780187614,
+    "p_value": 0.2871287128712871,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.5364476056727769,
+    "p_value": 0.9405940594059405,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.8402255639097744,
+    "p_value": 0.06930693069306931,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.06163828511986702,
+    "p_value": 0.9702970297029703,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 4.107219034714337,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "UK_SH",
+    "variable_code": "SH_UK_COAL",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": 0.9327168367346939,
+    "p_value": 0.0594059405940594,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "per_window": {
+        "Bretton Woods": 0.6667852062588905,
+        "Nixon shock / floating FX": 0.9327168367346939,
+        "Volcker disinflation": 0.8783875338753387
+      },
+      "dominant_regime": "Nixon shock / floating FX",
+      "interpretation": "Per-window KS table identifies the dominant cognitive regime change in the series ; max-statistic null test controls multiple-comparison family-wise error"
+    },
+    "n_observations": 113
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.5261869756367632,
+    "p_value": 0.2376237623762376,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 1.7239618801778476,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.9260212158782943,
+    "p_value": 0.1782178217821782,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 25.605326812163185,
+    "p_value": 0.9900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.8445062090725217,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.11560636063183731,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.2639763050721955,
+    "p_value": 0.27722772277227725,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.6193052227930067,
+    "p_value": 0.019801980198019802,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 0.9543570553777606,
+    "p_value": 0.49504950495049505,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.37720909575164174,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.9607843137254902,
+    "p_value": 0.0297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.04657897985497515,
+    "p_value": 1.0,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 4.1661481060266,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COAL",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "no valid split point",
+      "per_window": {}
+    },
+    "n_observations": 103
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.124700795548012,
+    "p_value": 0.693069306930693,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for MF-DFA"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 0.8373541587519285,
+    "p_value": 0.9108910891089109,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 3.3753464321793625,
+    "p_value": 0.297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.9658718673287255,
+    "p_value": 0.5346534653465347,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.03317825980165766,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series shorter than 2× window"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "phase_scramble",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for K41"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for MSD"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 1.2928292850626828,
+    "p_value": 0.019801980198019802,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.96,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "phase_scramble",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for Lyapunov"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 2.3620082325377774,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_COTTON",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for multi-window"
+    },
+    "n_observations": 50
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.719670921151284,
+    "p_value": 0.0297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 0.29051153847203737,
+    "p_value": 0.7326732673267327,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.8075793101451034,
+    "p_value": 0.43564356435643564,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 34.59686236941307,
+    "p_value": 0.9801980198019802,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.7675980554208592,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.15550610643036064,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.6254462836741318,
+    "p_value": 0.0297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.7105556758677007,
+    "p_value": 0.0297029702970297,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 1.5393003975661568,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.46015267820491357,
+    "p_value": 0.9405940594059405,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.9814814814814815,
+    "p_value": 0.04950495049504951,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.049955721982144936,
+    "p_value": 1.0,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 4.852635525767742,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_INDPROD",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": 0.9833333333333333,
+    "p_value": 0.039603960396039604,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "per_window": {
+        "Nixon shock / floating FX": 0.9821428571428571,
+        "Volcker disinflation": 0.9833333333333333
+      },
+      "dominant_regime": "Volcker disinflation",
+      "interpretation": "Per-window KS table identifies the dominant cognitive regime change in the series ; max-statistic null test controls multiple-comparison family-wise error"
+    },
+    "n_observations": 108
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.853463485039883,
+    "p_value": 0.04950495049504951,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for MF-DFA"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.841488318776081,
+    "p_value": 0.40594059405940597,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 3.1272801262284995,
+    "p_value": 0.0297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.5060781983057902,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.23377972655291238,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series shorter than 2× window"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "phase_scramble",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for K41"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for MSD"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.7739678844307392,
+    "p_value": 0.5445544554455446,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.9310344827586207,
+    "p_value": 0.0891089108910891,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "phase_scramble",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for Lyapunov"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 3.4796785498228138,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_RAILFREIGHT",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "series too short for multi-window"
+    },
+    "n_observations": 57
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.7758519148289063,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 0.5957363901282839,
+    "p_value": 0.5148514851485149,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 2.131839864502482,
+    "p_value": 0.019801980198019802,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 2.1727162611971234,
+    "p_value": 0.019801980198019802,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.8162433273692469,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.13471738713909276,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.5219460602855632,
+    "p_value": 0.09900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 0.5,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.0506897540801987,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 0.9085133326698834,
+    "p_value": 0.32673267326732675,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 1.4125161631716343,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.472463768115942,
+    "p_value": 0.43564356435643564,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.08189623867086743,
+    "p_value": 0.4752475247524752,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 4.077469203406366,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_STEEL",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": 0.7894736842105263,
+    "p_value": 0.06930693069306931,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "per_window": {
+        "Great Depression": 0.7894736842105263
+      },
+      "dominant_regime": "Great Depression",
+      "interpretation": "Per-window KS table identifies the dominant cognitive regime change in the series ; max-statistic null test controls multiple-comparison family-wise error"
+    },
+    "n_observations": 91
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.1333284062504405,
+    "p_value": 0.9306930693069307,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 0.8294302382528089,
+    "p_value": 0.21782178217821782,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.4301659162277425,
+    "p_value": 0.7128712871287128,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 4.858091838434298,
+    "p_value": 0.297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.9611211850996497,
+    "p_value": 0.43564356435643564,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.03702253482366196,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.34966727162734423,
+    "p_value": 0.297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 1.7913966101694916,
+    "p_value": 0.3069306930693069,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.961965694081362,
+    "p_value": 0.6732673267326733,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 0.46299778629482896,
+    "p_value": 0.26732673267326734,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.9825125480645751,
+    "p_value": 0.297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.6569767441860465,
+    "p_value": 0.09900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.05335242333371711,
+    "p_value": 0.7425742574257426,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 2.1326079557232003,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WHEAT",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": null,
+    "p_value": null,
+    "null_method": "ar1",
+    "n_surrogates": 0,
+    "reject_null": 0,
+    "metadata": {
+      "reason": "no valid split point",
+      "per_window": {}
+    },
+    "n_observations": 87
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.3105132873317518,
+    "p_value": 0.06930693069306931,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 2.745340008383116,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 0.9737444295216833,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 3.4799485880648,
+    "p_value": 0.0891089108910891,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.8131044366264404,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.13793322102165237,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.13783983920448534,
+    "p_value": 0.44554455445544555,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 0.4935046540960138,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 0.42153945807058785,
+    "p_value": 0.8811881188118812,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 1.0303742532555251,
+    "p_value": 0.2376237623762376,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.33089500860585197,
+    "p_value": 0.297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.11784959975554139,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 4.957449877357776,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "US_SH",
+    "variable_code": "SH_US_WPI",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": 0.7946428571428571,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "per_window": {
+        "Great Depression": 0.32446021887015675,
+        "Bretton Woods": 0.3397877223178429,
+        "Nixon shock / floating FX": 0.6504182754182755,
+        "Volcker disinflation": 0.7946428571428571
+      },
+      "dominant_regime": "Volcker disinflation",
+      "interpretation": "Per-window KS table identifies the dominant cognitive regime change in the series ; max-statistic null test controls multiple-comparison family-wise error"
+    },
+    "n_observations": 167
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.6456955576769212,
+    "p_value": 0.0891089108910891,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 0.281863866035585,
+    "p_value": 0.6633663366336634,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.7519993066910076,
+    "p_value": 0.5841584158415841,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 8.413176565483466,
+    "p_value": 0.32673267326732675,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.7989923669073514,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.1398416985358925,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.9030701754385965,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.955279754666469,
+    "p_value": 0.5445544554455446,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 1.4795212187617264,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.959005999622595,
+    "p_value": 0.10891089108910891,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 0.9838709677419355,
+    "p_value": 0.04950495049504951,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.06961233733949705,
+    "p_value": 0.9306930693069307,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 5.344030194168267,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_COAL",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": 1.0,
+    "p_value": 0.0297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "per_window": {
+        "Bretton Woods": 0.9259259259259259,
+        "Nixon shock / floating FX": 0.9859154929577465,
+        "Volcker disinflation": 1.0
+      },
+      "dominant_regime": "Volcker disinflation",
+      "interpretation": "Per-window KS table identifies the dominant cognitive regime change in the series ; max-statistic null test controls multiple-comparison family-wise error"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "hurst_dfa",
+    "family": "C — longue mémoire",
+    "statistic": 1.9327024712608458,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "H > 0.5: long memory; H ≈ 0.5: random walk; H < 0.5: mean reversion"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "mfdfa_spectrum",
+    "family": "B — multifractalité",
+    "statistic": 1.3562925635843541,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "q_range": [
+        -5.0,
+        -3.0,
+        -1.0,
+        1.0,
+        3.0,
+        5.0
+      ],
+      "interpretation": "Δα > 0: multifractal; Δα ≈ 0: monofractal"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "spectrum_slope",
+    "family": "A — SOC (1/f^β)",
+    "statistic": 1.787433522738409,
+    "p_value": 0.49504950495049505,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "β ≈ 0: white noise; β ≈ 1: SOC / 1/f; β ≈ 2: Brownian"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "hill_tail_exponent",
+    "family": "A — queues de loi de puissance",
+    "statistic": 10.110617493661527,
+    "p_value": 0.4752475247524752,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "k_fraction": 0.1,
+      "interpretation": "α_Hill < 3: heavy-tailed (Pareto, SOC); α_Hill > 5: light-tailed (Gaussian-like)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "permutation_entropy_complexity",
+    "family": "I — information",
+    "statistic": 0.6378611356291667,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "order": 3,
+      "complexity_C": 0.21312503876768796,
+      "interpretation": "H_perm < 1 with C > 0.3: structured but non-periodic (edge of chaos, family I)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "critical_slowdown",
+    "family": "E — tipping point",
+    "statistic": 0.4618421052631579,
+    "p_value": 0.07920792079207921,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "window": 30,
+      "interpretation": "τ_var > 0 + p < 0.05: variance rising → approaching tipping point (Dakos 2008)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "levy_stable_fit",
+    "family": "J — vols de Lévy",
+    "statistic": 2.0,
+    "p_value": 1.0,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "estimator": "McCulloch 1986 quantile",
+      "interpretation": "α = 2: Gaussian; α ≈ 1.5: Lévy heavy-tailed; α < 1: Cauchy-like"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "k41_scaling",
+    "family": "P — cascades K41",
+    "statistic": 1.9591349485211713,
+    "p_value": 0.6831683168316832,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "ζ(6)/ζ(3) = 2: K41 monofractal; < 2: She-Levêque anomalous scaling (multifractal turbulence)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "msd_log_log",
+    "family": "R — diffusion anormale",
+    "statistic": 1.687269853661927,
+    "p_value": 0.009900990099009901,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "γ ≈ 1: normal diffusion; γ < 1: subdiffusion; γ > 1: superdiffusion (Lévy walk)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "tsallis_q_gaussian",
+    "family": "T — non-extensivité",
+    "statistic": 0.35746703702675786,
+    "p_value": 0.9702970297029703,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "q = 1: Gaussian (Boltzmann-Gibbs); q > 1.3: heavy-tailed q-Gaussian (non-extensive Tsallis statistics)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "reflexivity_drift",
+    "family": "S — réflexivité (transversal)",
+    "statistic": 1.0,
+    "p_value": 0.039603960396039604,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "interpretation": "KS > 0 + p < 0.05: distribution drift between halves → cognitive regime change (Soros 1987, Akerlof-Shiller 2009) — the 10 other diagnostics are valid only on the analysed window"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "lyapunov_exponent",
+    "family": "D — chaos déterministe (Tier 2)",
+    "statistic": 0.06440961913892046,
+    "p_value": 0.9504950495049505,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 0,
+    "metadata": {
+      "interpretation": "λ > 0 + p < 0.05: deterministic chaos signature (Rosenstein-Collins-De Luca 1993, family D)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "bds_independence",
+    "family": "D — non-linéarité IID (Tier 2)",
+    "statistic": 5.318420652606282,
+    "p_value": 0.009900990099009901,
+    "null_method": "phase_scramble",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "embedding_dim": 2,
+      "interpretation": "|BDS| > 2 + p < 0.05: nonlinear dependence rejecting IID (Brock-Dechert-Scheinkman 1996)"
+    },
+    "n_observations": 125
+  },
+  {
+    "group_code": "WORLD_SH",
+    "variable_code": "SH_WORLD_OIL",
+    "diagnostic": "reflexivity_multi_window",
+    "family": "S — réflexivité multi-régime (Tier 2)",
+    "statistic": 1.0,
+    "p_value": 0.0297029702970297,
+    "null_method": "ar1",
+    "n_surrogates": 100,
+    "reject_null": 1,
+    "metadata": {
+      "per_window": {
+        "Bretton Woods": 1.0,
+        "Nixon shock / floating FX": 1.0,
+        "Volcker disinflation": 0.9367088607594937
+      },
+      "dominant_regime": "Bretton Woods",
+      "interpretation": "Per-window KS table identifies the dominant cognitive regime change in the series ; max-statistic null test controls multiple-comparison family-wise error"
+    },
+    "n_observations": 125
+  }
+]
