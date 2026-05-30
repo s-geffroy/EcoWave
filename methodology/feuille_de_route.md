@@ -727,6 +727,191 @@
   travail empirique + intégration dans le papier (2 jours) = ~8 jours
   total. Prédictions 1 et 4 reportées en V3.
 
+## #19 — Page conceptuelle "Implications du verdict CPV" — LIVRÉE {#item-19-implications-cluster}
+
+- **Problème.** Le verdict empirique (cluster C+B+D+I+S) est *empirique*.
+  Il n'avait pas été *cartographié* dans ses implications pour la
+  modélisation, la prévision, la politique économique, et la théorie.
+  Un lecteur qui découvre le projet — chercheur, journaliste, policy
+  maker, étudiant — devait soit lire le working paper (~10k mots) soit
+  parcourir le toolkit lui-même pour comprendre *ce que ça veut dire*.
+- **Méthode (livrée 2026-05-30).** Page `docs/implications_of_cluster.md`
+  (~3900 mots, 5 sections + sign-off) :
+
+    1. Le verdict en clair (rappel du cluster C+B+D+I+S, ce qui est
+       réfuté).
+    2. Implications pour la modélisation (5 familles candidates :
+       MSM, ARFIMA+RS, HAR, MRW, HABM, AMH, active inference — couverture
+       du cluster, libs Python disponibles, effort).
+    3. Implications pour la prévision (horizon compte, comparateurs
+       canoniques, métriques propres, régime-conditioning).
+    4. Implications pour la politique économique (inflation targeting,
+       macroprudentiel/Bâle, VaR vs ES, horizons de forecasting,
+       réflexivité communicationnelle).
+    5. Implications pour la théorie (cycle → cascade, DSGE en accusation,
+       cycles narratifs vs mécanistes, synthèse théorique manquante,
+       AMH comme méta-cadre).
+    6. Conclusion + chantiers ouverts.
+
+- **Code.** Aucun. Pure documentation, intégrée à mkdocs sous la
+  section nav "Working paper".
+- **Acceptance.** Un lecteur comprend en 20 minutes ce que le verdict
+  CPV implique pour la modélisation, la prévision, la politique, et la
+  théorie sans avoir lu le working paper. Page rendue, mkdocs build
+  --strict passe.
+- **Liens** : la page elle-même
+  ([`implications_of_cluster.md`](../implications_of_cluster.md)) ;
+  PR de livraison ([feat/implications-of-cluster](https://github.com/s-geffroy/EcoWave/pulls?q=is%3Apr+head%3Afeat%2Fimplications-of-cluster)).
+
+## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — TODO {#item-20-modeling-benchmark}
+
+- **Problème.** Le verdict empirique CPV (cluster C+B+D+I+S) identifie
+  une signature structurelle. Reste à *construire un modèle* qui
+  reproduit la signature et démontre son utilité pratique pour la
+  prévision. Sans benchmark concret, la critique des cycles reste
+  destructrice ; il faut le pendant constructif. C'est aussi la matière
+  de la nouvelle §6 du working paper V2.
+
+- **Méthode.** Nouveau module `ecowave/forecasting/` avec 4 modèles
+  benchmark + pipeline d'évaluation :
+
+    1. **MSM (Markov-Switching Multifractal)** — Calvet-Fisher 2002,
+       2004, 2008. *Le candidat #1*. Implémentation candidate : port
+       Python du package R `MSM` (Lux 2008), ou réimplémentation custom
+       basée sur Calvet-Fisher 2008 *Multifractal Volatility* chap. 3.
+       Estimation par GMM (Lux 2008) ou Simulated Maximum Likelihood
+       (Calvet-Fisher 2004). Couvre B + S + queues lourdes simultanément.
+
+    2. **HAR (Heterogeneous Autoregressive)** — Corsi 2009. *Baseline
+       pratique*. Implémentation triviale : OLS sur (daily, weekly,
+       monthly) lags — ~30 lignes Python via `statsmodels`. Capture C
+       par construction d'agrégation. Si MSM ne bat pas HAR, MSM
+       n'apporte rien d'opérationnel.
+
+    3. **ARFIMA + Regime-Switching** — Granger-Joyeux 1980,
+       Bhardwaj-Swanson 2006. *Couverture maximale C + S*.
+       Implémentation : Hosking 1981 récursion pour la composante
+       fractionnaire (custom, ~20 lignes Python) +
+       `statsmodels.tsa.regime_switching.MarkovRegression`.
+
+    4. **Random walk + AR(1) baselines** — comparateurs canoniques.
+
+  Pipeline d'évaluation :
+
+    - **Split temporel** : train (1870-2019) / test (2020-2024) ; ou
+      pseudo-out-of-sample expanding window pour les variables
+      annuelles courtes.
+    - **Variables porteuses** : top 10 du cluster (LH_IMPORTS,
+      LH_EXPORTS, LH_MONEY, LH_EXP, LH_REV, LH_NARROW, LH_BANKDEBT,
+      BOE_MONEY, LH_MORT, LH_CREDIT) + panel contemporain (Q_GDP,
+      Q_CPI, Q_UNRATE pour USA, EA, JPN, GBR).
+    - **Horizons** : 1, 3, 6, 12, 24 mois (annuel : 1, 2, 5, 10 ans).
+    - **Métriques** : RMSE, MAE, CRPS (proper scoring rule sensible
+      aux queues — Gneiting-Raftery 2007), coverage 95 % (calibration
+      des forecast intervals), tail coverage (couverture aux 5 % de
+      réalisations les plus extrêmes).
+    - **Décomposition par régime** : pré-2008 vs post-2008, pré-COVID
+      vs COVID vs post-COVID. Si un modèle bat random walk en moyenne
+      mais sous-performe catastrophiquement en COVID, c'est *l'opposé*
+      d'un modèle utile.
+
+- **Code.** Nouveau dossier `ecowave/forecasting/` :
+
+    - `msm.py` — MSM implementation (estimation GMM ou SML).
+    - `har.py` — HAR Corsi 2009.
+    - `arfima_rs.py` — ARFIMA + regime-switching (Hosking récursion +
+      MarkovRegression).
+    - `baselines.py` — random walk, AR(1), ARMA(1,1).
+    - `benchmark.py` — pipeline d'évaluation et comparaison.
+    - `proper_scoring.py` — CRPS et coverage calculators.
+    - CLI : `ecowave forecast-benchmark --as-of YYYY-MM
+      --horizon-months 1,3,6,12,24 --models msm,har,arfima_rs,ar1,rw`
+      produit `reports/forecast_benchmark_{as_of}.json` + page
+      consolidée `docs/forecast_benchmark.md`.
+
+- **Tests.** Suite de validation sur dynamiques synthétiques connues :
+    - MRW généré (Bacry-Muzy-Delour 2001) → MSM devrait outperformer.
+    - fBm avec H connu → ARFIMA devrait outperformer.
+    - AR(1) pur → baselines devraient outperformer.
+    - Tests Mincer-Zarnowitz pour calibration des forecast biases.
+
+- **Effort estimé.** ~15 jours :
+    - HAR + baselines + proper_scoring : 3 j
+    - ARFIMA+RS : 4 j (Hosking récursion + intégration MarkovRegression)
+    - MSM : 5 j (le plus complexe — estimation GMM nontriviale)
+    - Pipeline benchmark + page rendering + tests : 3 j
+
+- **Acceptance.** Au minimum 1 modèle du cluster (MSM ou ARFIMA+RS)
+  doit battre le random walk en out-of-sample CRPS sur l'horizon 12
+  mois sur ≥ 50 % des variables testées. **Si aucun modèle ne bat
+  random walk**, le cluster picture perd un argument empirique
+  pratique (et le papier V2 doit l'admettre — l'honesty falsifiabiliste
+  s'applique aussi à notre propre cadre). **Si MSM bat random walk**,
+  le cluster picture gagne son pendant constructif et la nouvelle §6
+  du papier V2.
+
+- **Dépendances Python à ajouter.** `arch>=6.0` (GARCH variants),
+  potentiellement `rpy2` pour interop R si port MSM custom est trop
+  coûteux. `properscoring` pour CRPS.
+
+- **Lien V2 papier.** Ce chantier est la matière de la nouvelle §6
+  du working paper V2 : *"Constructive replacement — benchmark de
+  modélisation"*. Sans cet item, V2 n'est pas défendable.
+
+## #21 — Bibliographie enrichie : modélisation post-cluster — TODO {#item-21-modeling-bibliography}
+
+- **Problème.** La bibliographie actuelle (PR #22, PR #27) couvre bien
+  la *littérature de réfutation* (Garvy, Solomou, Wen) et la
+  *littérature physique fondatrice* (Mandelbrot, Bacry-Muzy-Delour,
+  Bouchaud). Elle est *pauvre* sur la *littérature de modélisation*
+  du cluster : MSM, HAR, ARFIMA+RS, agent-based heterogeneous models,
+  adaptive markets hypothesis, active inference. Sans ces références,
+  les items #19 et #20 ne peuvent pas être proprement attachés à la
+  littérature.
+
+- **Méthode.** Ajout de ~15 nouvelles entrées dans
+  `docs/bibliographie.md`, organisées en nouvelle section thématique
+  *"Modélisation du cluster — MSM, HAR, ARFIMA, agents hétérogènes,
+  AMH"*. Références canoniques :
+
+    - **Calvet & Fisher (2002)** *NBER WP 9839* — MSM seminal.
+    - **Calvet & Fisher (2004)** *J Financial Econometrics* — MSM
+      forecast.
+    - **Calvet & Fisher (2008)** *Multifractal Volatility*, Academic
+      Press — référence textbook.
+    - **Corsi (2009)** *J Financial Econometrics* — HAR canonical.
+    - **Bhardwaj & Swanson (2006)** *J Econometrics* — ARFIMA macro
+      forecast (21 datasets).
+    - **Hosking (1981)** *Biometrika* — fractional differencing
+      original.
+    - **Lux & Marchesi (1999)** *Nature* — HABM seminal.
+    - **Brock & Hommes (1998)** *J Economic Dynamics & Control* —
+      heterogeneous beliefs.
+    - **Hommes (2006)** *Handbook of Computational Economics* — review
+      HABM.
+    - **Lo (2017)** *Adaptive Markets*, Princeton — AMH textbook.
+    - **Gneiting & Raftery (2007)** *JASA* — proper scoring rules
+      (CRPS).
+    - **Beran (1994)** *Statistics for Long-Memory Processes*, Chapman
+      & Hall — référence textbook longue mémoire.
+    - **Borio (2014)** *J Banking & Finance* — financial cycle Borio.
+    - **Drehmann-Borio-Tsatsaronis (2012)** *BIS WP 380* —
+      characterising the financial cycle.
+    - **Sornette-Johansen-Bouchaud (1996)** *J. Phys. France* — log-
+      periodic crash precursors.
+
+- **Code.** Aucun. Pure documentation. Mais ces références sont citées
+  dans `implications_of_cluster.md` (item #19) et seront citées dans
+  les commentaires des modules de `ecowave/forecasting/` (item #20).
+
+- **Effort estimé.** ~0.5 jour.
+
+- **Acceptance.** `bibliographie.md` couvre les 5 familles de
+  modélisation du cluster (MSM, HAR, ARFIMA+RS, agent-based, adaptive
+  markets) avec au moins 2 références canoniques chacune. Toutes les
+  ancres `#author-year` cités dans `implications_of_cluster.md` sont
+  résolues. mkdocs build --strict passe.
+
 ## Références
 
 - Bailey, D. H., & López de Prado, M. (2014). The deflated Sharpe ratio.
