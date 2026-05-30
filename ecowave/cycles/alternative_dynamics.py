@@ -279,9 +279,15 @@ def _mfdfa_spectrum_width(z: np.ndarray) -> float:
                 coeffs = np.polyfit(x, seg, deg=1)
                 trend = np.polyval(coeffs, x)
                 var_seg.append(np.mean((seg - trend) ** 2))
-            var_arr = np.asarray(var_seg)
+            # Floor against zero-variance segments: when the linear detrend
+            # absorbs the entire segment (e.g. on a perfect ramp), var_seg
+            # contains 0 and `0 ** (q/2)` blows up for q < 0. The MF-DFA
+            # convention (Kantelhardt et al. 2002 §3) is to add a small
+            # regularisation; we use 1e-12 to stay well below any physical
+            # signal.
+            var_arr = np.maximum(np.asarray(var_seg), 1e-12)
             if q == 0:
-                fq.append(np.exp(0.5 * np.mean(np.log(var_arr + 1e-12))))
+                fq.append(np.exp(0.5 * np.mean(np.log(var_arr))))
             else:
                 fq.append(np.mean(var_arr ** (q / 2.0)) ** (1.0 / q))
         if len(fq) < 4:
