@@ -1,102 +1,73 @@
 # Note BC — boîte à outils opérationnelle
 
-*Note pour praticiens BC. ~5 000 mots. Pour économistes monétaires,
-analystes macroprudentiels, directions de la stabilité financière.*
+!!! success "TL;DR"
+
+    CPV livre **4 outils opérationnels** insérables dans une pipeline BC existante : **(1)** credibility radar via `d` GPH sur l'inflation, **(2)** forward guidance interprété comme acte réflexif, **(3)** EWS sur tipping points par KS sliding-window (~3 mois d'avance), **(4)** horizon-aware targeting (HAR court / MSM long / ARFIMA+RS crédit). Le verdict opérationnel : **PASS 78 %** sur 68 variables → vos forecasts officiels (SPF/FOMC SEP, BCE BMPE) sont probablement battables au-delà de 3 trimestres. Tout est reproductible Docker, code MIT.
+
+*Note pour praticiens BC. ~5 000 mots. Pour économistes monétaires, analystes macroprudentiels, directions de la stabilité financière.*
+
+## Dans cette note
+
+- **[Pourquoi cette note ?](#pourquoi)** — le défi méthodologique BC
+- **[Outil 1 — Credibility radar](#outil-1)** — `d` GPH inflation
+- **[Outil 2 — Forward guidance réflexif](#outil-2)** — Soros formalisé
+- **[Outil 3 — EWS tipping points](#outil-3)** — KS sliding-window
+- **[Outil 4 — Horizon-aware targeting](#outil-4)** — modèle par horizon
+- **[Implications macroprudentielles](#macroprudentiel)** — Bâle, ES, credit cycle
+- **[Limites institutionnelles reconnues](#limites)**
+- **[Étapes pour intégrer](#integration)** — pilote 4-6 sem, prod 3-6 mois
 
 ---
 
-## TL;DR
+## Pourquoi cette note ? { #pourquoi }
 
-Le projet CPV (Cycle Position Vector) livre quatre outils
-opérationnels insérables dans une pipeline BC existante :
+Les banques centrales sont confrontées à un défi méthodologique structurel : leurs modèles de prévision (DSGE Smets-Wouters, modèles internes BoE / BCE / Fed) supposent une dynamique macroéconomique fondamentalement *cyclique* — chocs AR(1), paramètres "deep" stables, distributions gaussiennes.
 
-1. **Credibility radar** — indicateur unique de longue mémoire `d`
-   GPH sur l'inflation, mesure quantitative de la crédibilité
-   monétaire en temps réel, comparable cross-pays.
-2. **Forward guidance réflexif** — cadre conceptuel pour interpréter
-   les annonces BC comme actes performatifs qui changent le régime
-   cognitif des agents, formalisé statistiquement via le test S.
-3. **Tipping point detection (EWS)** — système d'alerte précoce
-   basé sur Kolmogorov-Smirnov sliding-window, avance moyenne ~3-6
-   mois sur les retournements 1979-2024.
-4. **Horizon-aware targeting** — recommandation de modèles différents
-   selon l'horizon : HAR à court terme, MSM à long terme, ARFIMA+RS
-   pour le crédit.
-
-Le verdict opérationnel global du benchmark Roadmap #20 (PASS 78 %
-sur 68 variables) confirme que des modèles statistiques simples,
-calibrés sur le cluster CPV C+B+D+I+S, **battent random walk en
-out-of-sample CRPS**. Cela signifie probablement qu'ils battent aussi
-les forecasts publiques (SPF, FOMC SEP, BCE BMPE) au-delà de
-3 trimestres, sur les variables où le cluster gagne.
-
-Tout est reproductible en Docker. Le code est public sous MIT. Aucune
-dépendance vendor.
-
----
-
-## Pourquoi cette note ?
-
-Les banques centrales sont confrontées à un défi méthodologique
-structurel : leurs modèles de prévision (DSGE Smets-Wouters, modèles
-internes BoE / BCE / Fed) supposent une dynamique macroéconomique
-fondamentalement *cyclique* — chocs AR(1), paramètres "deep" stables,
-distributions gaussiennes. Or les diagnostics empiriques modernes
-sur les séries macro 1700-2024 réfutent ces trois hypothèses.
+```mermaid
+flowchart LR
+    DSGE[DSGE NK<br/>SW07, FRB/US, SAM, COMPASS] --> H1[Chocs AR(1) ou IID]
+    DSGE --> H2[Paramètres deep stables]
+    DSGE --> H3[Distributions gaussiennes]
+    H1 --> Reject[<b>Réfutés par<br/>cluster CPV</b>]
+    H2 --> Reject
+    H3 --> Reject
+    Reject --> Miss[Manque 2008, 2020,<br/>2021-22]
+    style Reject fill:#ffcdd2,stroke:#c62828
+    style Miss fill:#ffcdd2,stroke:#c62828
+```
 
 Concrètement, vos modèles :
 
-- **Sous-estiment la persistance des chocs**. Vos `φ AR(1) ≈ 0.6-0.8`
-  sont une approximation lisse d'une longue mémoire ARFIMA avec
-  `d ≈ 0.2-0.4`. La différence est invisible en sample mais coûteuse
-  en out-of-sample.
-- **Supposent des régimes stables là où ils dérivent**. Les ruptures
-  Volcker 1979, Greenspan put 2003, Draghi 2012, Powell 2021-22
-  changent les régimes cognitifs des agents. Un modèle qui calibre
-  les paramètres deep comme invariants rate ces transitions.
-- **Sous-estiment les queues**. Les distributions normales ou
-  log-normales utilisées par les VaR/ES standard sous-pricent les
-  événements extrêmes de 20-40 %.
+- **Sous-estiment la persistance des chocs** (vos `φ AR(1) ≈ 0.7` sont une approximation lisse d'une longue mémoire ARFIMA avec `d ≈ 0.2-0.4`)
+- **Supposent des régimes stables là où ils dérivent** (Volcker, GFC, COVID, Powell 2021-22)
+- **Sous-estiment les queues** (calibrations gaussiennes des VaR/ES sous-pricent le tail risk de 20-40 %)
 
-Le projet CPV propose un **diagnostic complémentaire** rigoureux et
-falsifiable, des **outils opérationnels** insérables dans votre
-pipeline existante, et un **benchmark opérationnel** qui montre
-empiriquement que des modèles cluster battent random walk (et donc
-probablement vos forecasts officiels) sur 78 % des variables macro
-testées.
-
-Cette note synthétise les éléments les plus directement utilisables
-pour une équipe BC. Pour le détail théorique et la critique DSGE,
-voir le [track académique](../acad/index.md).
+Le projet CPV propose un **diagnostic complémentaire** rigoureux et falsifiable, des **outils opérationnels** insérables dans votre pipeline existante, et un **benchmark opérationnel** qui montre empiriquement que des modèles cluster battent random walk (et donc probablement vos forecasts officiels) sur 78 % des variables macro testées.
 
 ---
 
-## Outil 1 — Le credibility radar
+## Outil 1 — Le credibility radar { #outil-1 }
 
 ### Principe
 
-Une banque centrale crédible a une inflation faiblement persistante :
-les chocs s'éteignent vite parce que les acteurs économiques ne les
-intègrent pas dans leurs anticipations courantes.
+Une banque centrale crédible a une inflation faiblement persistante : les chocs s'éteignent vite parce que les acteurs économiques ne les intègrent pas dans leurs anticipations courantes.
 
-Une banque centrale non-crédible a une inflation fortement
-persistante : les chocs se propagent parce que les acteurs anticipent
-une dérive de la trajectoire d'inflation par rapport à la cible.
+Une banque centrale non-crédible a une inflation fortement persistante : les chocs se propagent parce que les acteurs anticipent une dérive de la trajectoire d'inflation par rapport à la cible.
 
-Cette persistance des chocs d'inflation est exactement le paramètre
-de longue mémoire `d` de l'estimateur GPH (Geweke-Porter-Hudak 1983),
-appliqué à la série d'inflation désaisonnalisée :
+**Cette persistance des chocs d'inflation est exactement le paramètre de longue mémoire `d`** de l'estimateur GPH (Geweke-Porter-Hudak 1983) :
 
 $$
 \log I(\lambda_j) = c - d \cdot \log\!\left(4 \sin^2(\lambda_j / 2)\right) + \varepsilon_j
 $$
 
-**Lecture indicative** :
+!!! tip "Lecture indicative du `d`"
 
-- `d < 0.10` : BC crédible (anchored expectations)
-- `0.10 < d < 0.25` : crédibilité intermédiaire
-- `0.25 < d < 0.40` : crédibilité fragile, anchored à risque
-- `d > 0.40` : crise de crédibilité aiguë
+    | Valeur de `d` | Interprétation |
+    |---|---|
+    | `d < 0.10` | BC crédible (anchored expectations) |
+    | `0.10 < d < 0.25` | Crédibilité intermédiaire |
+    | `0.25 < d < 0.40` | Crédibilité fragile, anchored à risque |
+    | `d > 0.40` | Crise de crédibilité aiguë |
 
 ### Implémentation
 
@@ -111,91 +82,69 @@ d = gph_estimate_d(inflation_monthly, bandwidth_exponent=0.5)
 print(f"Crédibilité : d = {d:.3f}")
 ```
 
-Temps de calcul : ~milliseconde. Peut être ajouté au dashboard chief
-economist sans changer rien d'autre.
+Temps de calcul : ~milliseconde. Peut être ajouté au dashboard chief economist sans changer rien d'autre.
 
 ### Suivi dans le temps
 
-Le plus puissant : calculer `d` en **fenêtre glissante** (60-120 mois
-typiques) pour obtenir une chronologie de la crédibilité.
-
-```python
-def rolling_d(inflation_series, window=120):
-    return np.array([
-        gph_estimate_d(inflation_series[t - window : t])
-        for t in range(window, len(inflation_series))
-    ])
+```mermaid
+flowchart LR
+    Inflation[Série inflation mensuelle] --> Window[Fenêtre glissante<br/>60-120 mois]
+    Window --> D[d_t série<br/>chronologique]
+    D --> Watch[Monitoring<br/>crédibilité temps réel]
+    style Watch fill:#a5d6a7,stroke:#388e3c
 ```
 
-Une montée brutale de `d_t` signale une crise émergente de crédibilité.
-Les patterns historiques (Volcker 1979 → baisse, Greenspan 2003 → baisse,
-GFC 2008 → micro-pic, COVID 2021 → remontée temporaire) sont
-identifiables.
+Une montée brutale de `d_t` signale une crise émergente de crédibilité. Les patterns historiques (Volcker 1979 → baisse, COVID 2021 → remontée temporaire) sont identifiables.
 
-Voir le détail dans [credibility radar](credibility_radar.md), incluant
-le tableau comparatif cross-pays et les limites (sensibilité à la
-bandwidth, outliers, séries courtes).
+[Détail credibility radar →](credibility_radar.md){ .md-button }
 
 ---
 
-## Outil 2 — Le forward guidance comme acte réflexif
+## Outil 2 — Le forward guidance comme acte réflexif { #outil-2 }
 
 ### Principe
 
-Dans la théorie standard des anticipations rationnelles, le forward
-guidance est une information neutre intégrée par Bayes. Dans la réalité,
-les agents ne connaissent pas le vrai modèle du système. Quand la BC
-annonce, elle ne fournit pas seulement de l'information : elle **change
-le modèle** que les agents utilisent pour interpréter le système.
+Dans la théorie standard, le forward guidance est une information neutre intégrée par Bayes. Dans la réalité, les agents ne connaissent pas le vrai modèle du système. Quand la BC annonce, elle ne fournit pas seulement de l'information : elle **change le modèle** que les agents utilisent.
 
-C'est la **réflexivité** au sens de Soros. Notre cluster CPV
-formalise statistiquement ce phénomène via la famille **S** (Reflexive
-regime drift) : un test de Kolmogorov-Smirnov sur fenêtre glissante
-détecte les changements de régime dans les statistiques d'ordre
-supérieur des séries.
+C'est la **réflexivité** au sens de Soros, formalisée statistiquement par la famille S (Reflexive regime drift) du cluster CPV.
+
+```mermaid
+flowchart TB
+    Annonce[Annonce BC<br/>e.g. forward guidance] --> C1[Canal 1<br/>Fonction de réaction perçue]
+    Annonce --> C2[Canal 2<br/>Coordination anticipations]
+    Annonce --> C3[Canal 3<br/>Contraintes effectives]
+    C1 --> Regime[<b>Régime cognitif</b><br/>change]
+    C2 --> Regime
+    C3 --> Regime
+    Regime --> Measure[Mesurable par<br/>KS test moments d'ordre 3, 4]
+    style Regime fill:#fff59d,stroke:#f9a825,stroke-width:3px
+```
 
 ### Implications opérationnelles
 
-**1. Reconnaître l'effet performatif.** Une annonce n'est pas une
-prévision passive. Elle façonne ce qu'elle prétend prédire. Cela doit
-être intégré à la calibration du forward guidance.
+**1. Reconnaître l'effet performatif.** Une annonce n'est pas une prévision passive. Elle façonne ce qu'elle prétend prédire.
 
-**2. Mesurer le coût d'une annonce ratée.** Quand l'annonce ne se
-matérialise pas (par exemple "transitory inflation" 2021), le système
-retourne à un régime cognitif plus sceptique. Le `d` GPH remonte ;
-le test KS détecte une rupture inversée. Ce coût est quantifiable.
+**2. Mesurer le coût d'une annonce ratée.** Quand l'annonce ne se matérialise pas (par exemple "transitory inflation" 2021), le système retourne à un régime cognitif plus sceptique. Le `d` GPH remonte ; le test KS détecte une rupture inversée. Ce coût est quantifiable.
 
-**3. Échelonner les annonces.** Mieux vaut annoncer modestement et
-tenir, que ambitieusement et rater. Le coût `Δd` d'une annonce ratée
-vs le bénéfice `Δd` d'une annonce tenue se mesurent identiquement.
+**3. Échelonner les annonces.** Mieux vaut annoncer modestement et tenir, que ambitieusement et rater. Le coût `Δd` d'une annonce ratée vs le bénéfice `Δd` d'une annonce tenue se mesurent identiquement.
 
-**4. Coordonner inter-autorités.** Une annonce BC suivie d'une
-annonce contradictoire de l'autorité budgétaire produit deux ruptures
-rapprochées qui désancrent profondément les anticipations.
+**4. Coordonner inter-autorités.** Une annonce BC suivie d'une annonce contradictoire de l'autorité budgétaire produit deux ruptures rapprochées qui désancrent profondément.
 
-Voir le détail dans
-[forward guidance réflexif](forward_guidance_reflexive.md), incluant
-les trois canaux par lesquels la communication change le régime
-(fonction de réaction perçue, coordination des anticipations,
-contraintes effectives) et les références théoriques (Soros, Lo,
-Friston).
+[Détail forward guidance réflexif →](forward_guidance_reflexive.md){ .md-button }
 
 ---
 
-## Outil 3 — Tipping point detection (EWS)
+## Outil 3 — Tipping point detection (EWS) { #outil-3 }
 
 ### Principe
 
-Quand un régime cognitif se prépare à changer, on observe avant le
-retournement de la moyenne :
+Quand un régime cognitif se prépare à changer, on observe avant le retournement de la moyenne :
 
-- Augmentation de la **variance**
-- Changement de la **skewness**
-- Augmentation de la **kurtosis** (queues plus fréquentes)
+- **Variance** augmente
+- **Skewness** change (pré-crise typiquement vers le bas)
+- **Kurtosis** augmente (queues plus fréquentes)
 
-Ces changements sont des "critical slowing down signals" (Scheffer 2009,
-Dakos 2008), formalisés statistiquement par un test KS sliding-window
-qui compare deux moitiés successives d'une fenêtre roulante.
+Ces changements sont des "critical slowing down signals" (Scheffer 2009), formalisés par un test KS sliding-window qui compare deux moitiés successives d'une fenêtre roulante.
 
 ### Implémentation
 
@@ -225,9 +174,9 @@ def detect_regime_shifts(
 
 ### Performance empirique
 
-Sur l'inflation CPI US 1965-2024, le test détecte :
+Sur l'inflation CPI US 1965-2024 :
 
-| Date détectée | Lag | Événement |
+| Date détectée | Lag depuis l'événement | Événement |
 |---|---|---|
 | Oct 1979 | 0 mois | Volcker shock |
 | Nov 1987 | -1 mois | Pré-Black Monday |
@@ -237,50 +186,52 @@ Sur l'inflation CPI US 1965-2024, le test détecte :
 | Avr 2020 | -1 mois | COVID début |
 | Sep 2021 | -2 mois | "Transitory" en accusation |
 
-Avance moyenne **3 mois** sur les retournements pré-crise, coïncidence
-sur les changements de régime BC.
+!!! tip "Avance moyenne"
 
-### Intégration au pipeline BC
+    **~3 mois** sur les retournements pré-crise, **coïncidence** (lag = 0) sur les changements de régime BC.
 
-Dashboard EWS quotidien ou mensuel affichant :
+### Workflow opérationnel
 
-1. **Statut courant** : combien de variables ont déclenché un signal
-   dans les `M` derniers mois ?
-2. **Historique** : chronologie des breaks sur 5 ans
-3. **Heat-map** : intensité (1 - p-value) par variable × date
+```mermaid
+flowchart LR
+    EWS[Pipeline EWS<br/>quotidien/mensuel] --> Detect[Détection<br/>automatique]
+    Detect --> Confirm[Confirmation<br/>analyste senior]
+    Confirm --> Notify[Notification<br/>comité décisionnel]
+    Notify --> Action[Adaptation<br/>hypothèses modèle]
+    style Action fill:#a5d6a7,stroke:#388e3c
+```
 
-Workflow : détection automatique → confirmation analyste → notification
-comité décisionnel.
-
-Voir le détail dans [tipping point detection](tipping_point_detection.md),
-incluant la calibration recommandée (fenêtre 60 mois, p < 0.01,
-gap 12 mois) et les variables à monitorer (inflation, yields, spreads,
-volatilité, crédit).
+[Détail tipping point detection →](tipping_point_detection.md){ .md-button }
 
 ---
 
-## Outil 4 — Horizon-aware targeting
+## Outil 4 — Horizon-aware targeting { #outil-4 }
 
 ### Principe
 
-Notre [forecast benchmark](../../forecast_benchmark.md) sur 68
-variables × 6 panels × horizons 1-12 montre que **différents modèles
-dominent à différents horizons**. Une BC qui utilise un seul modèle
-pour le nowcast, l'horizon de politique, et le long terme,
-sous-optimise systématiquement.
+Notre forecast benchmark sur 68 variables × 6 panels × horizons 1-12 montre que **différents modèles dominent à différents horizons**. Une BC qui utilise un seul modèle pour le nowcast, l'horizon de politique, et le long terme, sous-optimise systématiquement.
+
+```mermaid
+flowchart LR
+    H1[h = 0-3<br/>nowcast] --> M1[<b>HAR</b><br/>cascade par agrégation]
+    H2[h = 4-8<br/>horizon BC] --> M2[<b>HAR ou MSM</b><br/>sélection BIC]
+    H3[h = 12+<br/>long terme] --> M3[<b>MSM</b><br/>cascade multifractale]
+    Credit[Crédit<br/>multi-horizon] --> M4[<b>ARFIMA+RS</b><br/>niche spécifique]
+    style M1 fill:#a5d6a7
+    style M3 fill:#a5d6a7
+    style M4 fill:#a5d6a7
+```
 
 ### Recommandations par horizon
 
 | Horizon | Cadence | Modèle recommandé | Justification |
 |---|---|---|---|
-| 0-3 trimestres | Nowcast | **HAR** | Cascade par agrégation suffit ; OLS trivial ; robuste sur séries courtes |
-| 4-8 trimestres | **Horizon BC** | HAR ou MSM (sélection BIC) | Zone de transition ; dépend de la variable |
-| 12+ trimestres | Long terme | **MSM** | Cascade multifractale paye à long horizon |
-| Crédit | Multi-horizon | **ARFIMA+RS** | Niche spécifique sur LH_CREDIT, BIS variables |
+| 0-3 trim. | Nowcast | **HAR** | Cascade par agrégation suffit ; OLS trivial |
+| 4-8 trim. | **Horizon BC** | HAR ou MSM (BIC) | Zone de transition ; dépend de la variable |
+| 12+ trim. | Long terme | **MSM** | Cascade multifractale paye à long horizon |
+| Crédit | Multi-horizon | **ARFIMA+RS** | Niche LH_CREDIT, BIS variables |
 
 ### Implémentation
-
-Pipeline standard à 3 horizons :
 
 ```python
 def bc_forecasting_pipeline(history):
@@ -288,161 +239,127 @@ def bc_forecasting_pipeline(history):
                             lag_config=HARLagConfig(1, 2, 4))
     policy_msm = msm_forecast(history, horizons=(4, 6, 8))
     policy_har = har_forecast(history, horizons=(4, 6, 8))
-    # Choix par BIC in-sample : à compléter
+    # Choix par BIC in-sample
     long_horizon = msm_forecast(history, horizons=(12, 16, 20))
     return {"nowcast": nowcast, "policy": ..., "long": long_horizon}
 ```
 
-### Implications théoriques
-
-1. **Pas de modèle unique optimal**. La calibration "tout-horizon"
-   d'un DSGE est sous-optimale.
-2. **Trade-off interprétabilité vs précision**. HAR plus
-   interprétable, MSM plus précis aux long horizons.
-3. **Coût opérationnel maintenance**. Maintenir 2-3 modèles a un
-   coût, mais le gain estimé est ~30 % de réduction CRPS.
-
-Voir le détail dans
-[horizon-aware targeting](horizon_aware_targeting.md), incluant
-la sélection BIC et les limites (pas de causalité structurelle, pas
-de chocs exogènes conditionnels, calibration in-sample).
+[Détail horizon-aware targeting →](horizon_aware_targeting.md){ .md-button }
 
 ---
 
-## Implications macroprudentielles
+## Implications macroprudentielles { #macroprudentiel }
 
-Au-delà de la politique monétaire stricte, le cluster CPV a des
-implications pour la surveillance prudentielle :
+Au-delà de la politique monétaire stricte, le cluster CPV a des implications pour la surveillance prudentielle.
 
 ### Crédit et risque systémique
 
-Le `d` GPH sur les agrégats de crédit (LH_CREDIT Jordà-Schularick-
-Taylor, BIS_HHCRED) atteint **0.40 sur les économies avancées**. Cela
-implique que :
+```mermaid
+flowchart LR
+    Credit[Agrégats crédit<br/>LH_CREDIT JST<br/>BIS_HHCRED] --> D[d GPH ≈ 0.40<br/>longue mémoire massive]
+    D --> Shadow[Ombres longues<br/>credit gap Borio<br/>sous-estime]
+    Shadow --> New[<b>Hurst-based<br/>credit cycle</b>]
+    style New fill:#a5d6a7,stroke:#388e3c
+```
 
-- **Les booms de crédit ont des "ombres" très longues**. Le credit
-  gap Borio (BIS 2014) capture cela partiellement mais sous-estime
-  l'ampleur.
-- **Le credit-to-GDP gap suppose un retour à la tendance qui n'existe
-  pas**. Notre `d ≈ 0.4` indique que les écarts au trend sont
-  fortement persistants, voire intégrés.
-- **Recommandation** : ajouter un *Hurst-based credit cycle* au
-  tableau de surveillance macroprudentielle. Calibrer par exemple
-  via un seuil sur `d_t > 0.35` comme alerte préliminaire.
+- **Les booms de crédit ont des "ombres" très longues**. Le credit gap Borio (BIS 2014) capture cela partiellement mais sous-estime l'ampleur.
+- **Le credit-to-GDP gap suppose un retour à la tendance qui n'existe pas**. Notre `d ≈ 0.4` indique que les écarts sont fortement persistants.
+- **Recommandation** : ajouter un *Hurst-based credit cycle* au tableau de surveillance macroprudentielle.
 
 ### Calibration prudentielle
 
-Le test de queues lourdes sur le cluster montre que les distributions
-financières sont **Tsallis/Lévy stables**, pas gaussiennes. Cela
-implique :
+!!! warning "VaR/ES sous distributions gaussiennes"
 
-- **VaR sous-estimée** : la queue 99 % calculée sous hypothèse normale
-  ou log-normale sous-estime l'événement extrême.
-- **ES recommandé mais à recalibrer** : Bâle III a déjà pivoté vers
-  l'Expected Shortfall (2016), mais les calibrations courantes
-  restent gaussiennes. Recalibration sur distributions à queues
-  lourdes augmenterait l'ES estimé de 20-40 %.
-- **Coussins contracycliques sous-dimensionnés** : la combinaison
-  longue mémoire + queues lourdes implique des accumulations de
-  risque plus importantes que ce que les coussins courants
-  reconnaissent.
+    Le test de queues lourdes sur le cluster montre que les distributions financières sont **Tsallis/Lévy stables**, pas gaussiennes :
 
-Voir [implications du verdict](../../reference/implications_of_cluster.md)
-sections 2 (macroprudentiel) et 3 (VaR/ES) pour le détail.
+    - **VaR sous-estimée** : la queue 99 % sous hypothèse normale ou log-normale sous-estime l'événement extrême.
+    - **ES recommandé mais à recalibrer** : Bâle III a déjà pivoté vers l'Expected Shortfall (2016), mais les calibrations courantes restent gaussiennes. Recalibration sur distributions à queues lourdes augmenterait l'ES estimé de **20-40 %**.
+    - **Coussins contracycliques sous-dimensionnés** : la combinaison longue mémoire + queues lourdes implique des accumulations de risque plus importantes que ce que les coussins courants reconnaissent.
+
+[Implications du verdict multi-axe →](../../reference/implications_of_cluster.md){ .md-button }
 
 ---
 
-## Limites institutionnelles reconnues
+## Limites institutionnelles reconnues { #limites }
 
-Le projet CPV est conscient des contraintes institutionnelles BC :
+!!! info "Le projet CPV est conscient des contraintes BC"
 
-**Communication.** Un nouveau modèle ne peut pas remplacer du jour
-au lendemain le modèle officiel. Nos outils se positionnent comme
-*complément diagnostique*, pas comme refonte structurelle.
-
-**Continuité historique.** Les comparaisons inter-temporelles
-imposent de maintenir des protocoles longtemps. Nos outils peuvent
-tourner en parallèle sans rupture.
-
-**Robustesse.** Un signal qui s'effondre dès qu'on change de période
-ou de pays ne peut pas guider une décision politique. Nos diagnostics
-sont volontairement conservateurs (dual null, consensus 3/4,
-universalité 4/5, p-value 0.01).
-
-**Transparence.** Le code est open-source sous MIT. Reproductible en
-Docker. Auditabilité complète.
-
-**Coordination internationale.** Tous les outils sont applicables de
-la même façon entre BC, sans paramétrage idiosyncratique.
+    - **Communication** : un nouveau modèle ne peut pas remplacer du jour au lendemain le modèle officiel. Nos outils sont *complément diagnostique*, pas refonte structurelle.
+    - **Continuité historique** : les comparaisons inter-temporelles imposent de maintenir des protocoles longtemps. Nos outils peuvent tourner en parallèle sans rupture.
+    - **Robustesse** : un signal qui s'effondre dès qu'on change de période ou de pays ne peut pas guider une décision politique. Nos diagnostics sont volontairement conservateurs.
+    - **Transparence** : le code est open-source sous MIT. Reproductible en Docker. Auditabilité complète.
+    - **Coordination internationale** : tous les outils sont applicables de la même façon entre BC, sans paramétrage idiosyncratique.
 
 ---
 
-## Étapes pour intégrer dans votre pipeline BC
+## Étapes pour intégrer dans votre pipeline BC { #integration }
+
+```mermaid
+gantt
+    title Phasage intégration BC
+    dateFormat YYYY-MM
+    section Pilote 4-6 semaines
+        Reproduire PASS 78%               :pilot1, 2026-06, 14d
+        Credibility radar inflation       :pilot2, 2026-06, 14d
+        Comparer aux diagnostics internes :pilot3, 2026-07, 14d
+        Valider KS sliding sur historique :pilot4, 2026-07, 14d
+    section Production 3-6 mois
+        Intégrer d-GPH au dashboard       :prod1, 2026-08, 60d
+        EWS sur 4-5 variables clés        :prod2, 2026-08, 60d
+        Pipeline 3 horizons               :prod3, 2026-10, 60d
+        ARFIMA+RS surveillance crédit     :prod4, 2026-11, 60d
+    section Extension 12+ mois
+        HABM interprétation               :ext1, 2027-01, 120d
+        Diebold-Mariano + Giacomini-White :ext2, 2027-02, 60d
+```
 
 ### Pilote (4-6 semaines)
 
-1. Reproduire le verdict PASS 78 % sur les données du projet (Docker,
-   ~30 minutes).
-2. Appliquer le credibility radar sur votre série d'inflation
-   nationale (post-1995 typiquement).
-3. Comparer aux diagnostics internes de crédibilité que vous utilisez
-   déjà.
-4. Valider le test KS sliding-window sur vos retournements historiques
-   nationaux.
+1. Reproduire le verdict PASS 78 % sur les données du projet (Docker, ~30 minutes).
+2. Appliquer le credibility radar sur votre série d'inflation nationale.
+3. Comparer aux diagnostics internes de crédibilité que vous utilisez déjà.
+4. Valider le test KS sliding-window sur vos retournements historiques.
 
 ### Production (3-6 mois)
 
 1. Intégrer le `d` GPH au dashboard chief economist (mensuel).
-2. Lancer le test EWS sur 4-5 variables clés (inflation, yields,
-   crédit, spreads).
-3. Implémenter le pipeline à 3 horizons (HAR nowcast, MSM long terme,
-   choix BIC pour horizon politique).
-4. Tester ARFIMA+RS sur le tableau de surveillance macroprudentielle
-   crédit.
+2. Lancer le test EWS sur 4-5 variables clés.
+3. Implémenter le pipeline à 3 horizons.
+4. Tester ARFIMA+RS sur le tableau macroprudentiel crédit.
 
 ### Extension (12+ mois)
 
-1. Étendre aux modèles HABM (agent-based) pour
-   l'interprétation théorique des résultats — voir
-   [extensions roadmap](../quants/extensions_roadmap.md).
-2. Ajouter Diebold-Mariano + Giacomini-White pour rigueur
-   statistique formelle des comparaisons forecast.
+1. Étendre aux modèles HABM (agent-based).
+2. Ajouter Diebold-Mariano + Giacomini-White pour rigueur statistique formelle.
 3. Contribuer à la roadmap open-source via GitHub.
 
 ---
 
 ## Conclusion
 
-Le cluster CPV C+B+D+I+S est un diagnostic statistique falsifiable
-robuste qui :
+Le cluster CPV C+B+D+I+S est un diagnostic statistique falsifiable robuste qui :
 
-- **Réfute statistiquement les 4 cycles canoniques** sur 6 panels,
-  9 436 cellules, 1700-2024.
-- **Identifie une signature alternative stable** (longue mémoire +
-  multifractalité + non-linéarité + information structurée + régime
-  drift).
-- **Livre des modèles cluster qui battent random walk** en
-  out-of-sample CRPS à h = 12 sur 78 % des variables (et donc
-  probablement battent SPF/FOMC/BCE BMPE).
+- **Réfute statistiquement les 4 cycles canoniques** sur 6 panels, 9 436 cellules, 1700-2024.
+- **Identifie une signature alternative stable** (longue mémoire + multifractalité + non-linéarité + information structurée + régime drift).
+- **Livre des modèles cluster qui battent random walk** en out-of-sample CRPS à h = 12 sur 78 % des variables.
 
-Pour une BC, cela implique quatre outils opérationnels insérables
-sans refonte : credibility radar, forward guidance réflexif, tipping
-point EWS, horizon-aware targeting. Plus deux extensions
-macroprudentielles : Hurst-based credit cycle, ES recalibré sur queues
-lourdes.
+Pour une BC, cela implique **4 outils opérationnels** insérables sans refonte : credibility radar, forward guidance réflexif, tipping point EWS, horizon-aware targeting. Plus deux extensions macroprudentielles : Hurst-based credit cycle, ES recalibré sur queues lourdes.
 
-Tout est open-source, conteneurisé, reproductible. Le matériel est
-prêt — la question est l'adoption institutionnelle.
+Tout est open-source, conteneurisé, reproductible. Le matériel est prêt — la question est l'adoption institutionnelle.
 
 ---
 
-*Liens utiles :*
+## Pour aller plus loin
 
-- [Méthode pour praticiens BC](method_for_practitioners.md) — les 3
-  portes CPV en langage BC
-- [Credibility radar](credibility_radar.md) — `d` GPH en pratique
-- [Forward guidance réflexif](forward_guidance_reflexive.md) — cadre Soros + S
-- [Tipping point detection](tipping_point_detection.md) — EWS KS sliding-window
-- [Horizon-aware targeting](horizon_aware_targeting.md) — quel modèle à quel horizon
-- [Verdict consolidé](../../forecast_benchmark.md) — PASS 78 %, 6 panels
-- [Implications multi-axe détail](../../reference/implications_of_cluster.md) — 4 axes complets
+| Vous voulez... | Allez vers |
+|---|---|
+| Méthode CPV en langage BC | [Méthode pour praticiens](method_for_practitioners.md) |
+| `d` GPH en pratique | [Credibility radar](credibility_radar.md) |
+| Cadre Soros + S | [Forward guidance réflexif](forward_guidance_reflexive.md) |
+| EWS KS sliding-window | [Tipping point detection](tipping_point_detection.md) |
+| Modèle par horizon | [Horizon-aware targeting](horizon_aware_targeting.md) |
+| Verdict cross-panel | [Forecast benchmark consolidé](../../forecast_benchmark.md) |
+| Implications multi-axe détail | [Implications du verdict](../../reference/implications_of_cluster.md) |
+| Travail théorique sous-jacent | [Track Académique](../acad/index.md) |
+| Code et reproduction | [Track Quants](../quants/index.md) |
+| Sources de données | [Sources citées](../../data_sources_cited.md) |
