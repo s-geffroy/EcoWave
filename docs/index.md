@@ -1,8 +1,18 @@
 # CPV — La macroéconomie n'est pas cyclique
 
-!!! success "TL;DR — en 3 lignes"
+!!! success "TL;DR"
 
-    Les **4 cycles canoniques** (Kitchin, Juglar, Kuznets, Kondratieff) **ne survivent pas** à un protocole falsifiable rigoureux sur 6 panels macro couvrant 1700-2024. À leur place émerge un cluster diagnostique stable C+B+D+I+S. Des modèles statistiques qui reproduisent cette signature **battent random walk sur 78 % des 68 variables testées**.
+    Les **4 cycles canoniques** (Kitchin, Juglar, Kuznets, Kondratieff) **ne survivent pas** à un protocole falsifiable rigoureux sur 6 panels macro couvrant 1700-2024.
+
+    À leur place émerge une **signature à 5 familles statistiques** présentes conjointement sur la quasi-totalité des séries macro :
+
+    - **C** — *long memory* (les chocs s'éteignent lentement, pas exponentiellement)
+    - **B** — *multifractalité* (la texture des fluctuations diffère selon l'échelle de temps)
+    - **D** — *non-linéarité* (cause et effet ne sont pas proportionnels)
+    - **I** — *information structurée* (prédictibilité partielle exploitable)
+    - **S** — *reflexive regime drift* (les régimes cognitifs glissent au cours du temps)
+
+    Trois modèles statistiques qui reproduisent cette signature (**MSM**, **ARFIMA + regime-switching**, **HAR**) **battent le random walk en out-of-sample CRPS sur 78 % des 68 variables testées**.
 
 ## Dans cette page
 

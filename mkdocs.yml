@@ -57,6 +57,11 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.arithmatex:
       generic: true
+  # Material icons (:material-book-open-variant:, :material-bank:, etc.)
+  # rendered as SVG via twemoji index + material's SVG generator.
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 # MathJax 3 — ES6 modules natifs, plus de polyfill.io requis.
 # Note : polyfill.io a été compromis en juin 2024 (supply-chain attack
