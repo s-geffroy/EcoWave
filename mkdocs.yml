@@ -67,7 +67,12 @@ nav:
       - Académique: tracks/acad/index.md
       - Banque centrale: tracks/bc/index.md
       - Quants: tracks/quants/index.md
-      - Public éclairé: tracks/public/index.md
+      - Public éclairé:
+          - tracks/public/index.md
+          - Le cycle est mort: tracks/public/the_cycle_is_dead.md
+          - Ce qui le remplace: tracks/public/what_replaces_it.md
+          - Pourquoi ça compte: tracks/public/why_it_matters.md
+          - "Essai phare (~2 500 mots)": tracks/public/note_public.md
   - Méthode (détail technique):
       - Vue d'ensemble: methodology/protocole_cpv.md
       - Trois portes de falsifiabilité: methodology/trois_portes.md

@@ -936,8 +936,10 @@
     - **Phase 1 — LIVRÉE** : refonte navigation + hub portail vide +
       4 stubs track + déplacement `implications_of_cluster.md` sous
       `docs/reference/`.
-    - **Phase 2 — TODO** : track Public (4 pages dont essai phare
-      ~2 500 mots).
+    - **Phase 2 — LIVRÉE** : track Public (4 pages, ~6 500 mots :
+      the_cycle_is_dead.md ~1 200, what_replaces_it.md ~1 500,
+      why_it_matters.md ~1 300, note_public.md essai phare
+      ~2 500).
     - **Phase 3 — TODO** : track Quants (6 pages dont note phare
       ~5 000 mots).
     - **Phase 4 — TODO** : track BC (6 pages dont note phare
