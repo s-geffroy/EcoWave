@@ -468,6 +468,158 @@ def generate_report(
     typer.echo(f"Report generated: {path}")
 
 
+@app.command("forecast-benchmark")
+def forecast_benchmark(
+    as_of: str = typer.Option("2026-05", "--as-of",
+                              help="Tag (YYYY-MM) for sidecar and page outputs."),
+    horizon_data: str = typer.Option(
+        "long", "--horizon-data",
+        help="Panel to benchmark on: 'wb', 'long', 'q', 'boe', 'bis' or 'sh'."),
+    horizons: str = typer.Option(
+        "1,3,6,12", "--horizons",
+        help="Comma-separated forecast horizons in cadence steps."),
+    models: str = typer.Option(
+        "rw,ar1,arma11,har,arfima_rs,msm", "--models",
+        help="Comma-separated subset of benchmark models."),
+    groups: str = typer.Option(
+        "", "--groups",
+        help="Comma-separated group codes. Defaults to a small subset per "
+             "panel for tractability."),
+    variables_limit: int = typer.Option(
+        8, "--variables-limit",
+        help="Maximum number of variables per group (top by length)."),
+    n_origins: int = typer.Option(6, "--n-origins"),
+    n_samples: int = typer.Option(200, "--n-samples"),
+    test_fraction: float = typer.Option(0.25, "--test-fraction"),
+    decision_horizon: int = typer.Option(
+        12, "--decision-horizon",
+        help="Horizon at which the acceptance criterion is evaluated."),
+    beat_threshold: float = typer.Option(0.5, "--beat-threshold"),
+    seed: int = typer.Option(0, "--seed"),
+    sidecar_path: str = typer.Option(
+        "", "--sidecar-path",
+        help="Override the JSON sidecar location."),
+    page_path: str = typer.Option(
+        "/app/docs/forecast_benchmark.md", "--page-path"),
+) -> None:
+    """Run the Roadmap #20 forecast benchmark and emit verdict + page."""
+    from ecowave.cycles.evidence import (
+        HORIZON_VARIABLE_SOURCE,
+        _load_annual_panel,
+        _load_quarterly_panel,
+        _load_variable_codes,
+    )
+    from ecowave.db import connect
+    from ecowave.forecasting.benchmark import (
+        ALL_MODEL_NAMES,
+        BenchmarkConfig,
+        evaluate_acceptance_criterion,
+        run_benchmark,
+    )
+    from ecowave.forecasting.har import HARLagConfig
+    from ecowave.forecasting.reporting import (
+        render_benchmark_page,
+        write_benchmark_sidecar,
+    )
+
+    horizon_groups_default: dict[str, list[str]] = {
+        "wb":   ["WLD", "HIC"],
+        "q":    ["USA", "EA"],
+        "long": ["ADV18", "G7"],
+        "boe":  ["UK_BOE"],
+        "bis":  ["BIS_AE", "BIS_EM"],
+        "sh":   ["US_SH", "WORLD_SH"],
+    }
+    if horizon_data not in HORIZON_VARIABLE_SOURCE:
+        raise typer.BadParameter(
+            f"--horizon-data must be one of {sorted(HORIZON_VARIABLE_SOURCE)}"
+        )
+    selected_groups = (
+        [g.strip() for g in groups.split(",") if g.strip()]
+        if groups.strip()
+        else horizon_groups_default[horizon_data]
+    )
+    horizons_tuple = tuple(int(h) for h in horizons.split(",") if h.strip())
+    models_tuple = tuple(m.strip() for m in models.split(",") if m.strip())
+    invalid_models = set(models_tuple) - set(ALL_MODEL_NAMES)
+    if invalid_models:
+        raise typer.BadParameter(
+            f"--models unknown: {sorted(invalid_models)} (valid: {ALL_MODEL_NAMES})"
+        )
+
+    manifest_path, kind = HORIZON_VARIABLE_SOURCE[horizon_data]
+    variable_codes = _load_variable_codes(manifest_path)
+    loader = _load_quarterly_panel if kind == "quarterly" else _load_annual_panel
+
+    settings = Settings.from_env()
+    con = connect(settings.db_path)
+    panels_for_benchmark: dict[str, dict[str, "np.ndarray"]] = {}  # type: ignore[name-defined]
+    for group in selected_groups:
+        panel = loader(con, group, variable_codes)
+        if panel.empty:
+            continue
+        sorted_columns = sorted(
+            panel.columns, key=lambda col: int(panel[col].dropna().size), reverse=True
+        )
+        kept_columns = sorted_columns[:variables_limit]
+        panels_for_benchmark[group] = {
+            column: panel[column].dropna().to_numpy(dtype=float)
+            for column in kept_columns
+        }
+    con.close()
+
+    if not panels_for_benchmark:
+        raise typer.BadParameter(
+            f"No data found for horizon-data={horizon_data} and "
+            f"groups={selected_groups}. Run `ecowave position-cycles "
+            f"--horizon {horizon_data}` first."
+        )
+
+    har_lag_config = HARLagConfig(1, 3, 12) if kind != "quarterly" else HARLagConfig(1, 2, 4)
+    config = BenchmarkConfig(
+        horizons=horizons_tuple,
+        models=models_tuple,
+        n_origins=n_origins,
+        n_samples=n_samples,
+        test_fraction=test_fraction,
+        seed=seed,
+        har_lag_config=har_lag_config,
+    )
+
+    typer.echo(
+        f"Running benchmark on {sum(len(v) for v in panels_for_benchmark.values())} "
+        f"variables across {len(panels_for_benchmark)} groups, "
+        f"{len(models_tuple)} models, {len(horizons_tuple)} horizons, "
+        f"{n_origins} origins…"
+    )
+    results = run_benchmark(panels_for_benchmark, config=config)
+    verdict = evaluate_acceptance_criterion(
+        results,
+        decision_horizon=decision_horizon,
+        beat_threshold=beat_threshold,
+    )
+
+    sidecar = (
+        Path(sidecar_path)
+        if sidecar_path
+        else Path(
+            f"/app/reports/forecast_benchmark_{as_of.replace('-','_')}_"
+            f"{horizon_data}.json"
+        )
+    )
+    write_benchmark_sidecar(
+        results, verdict, sidecar, as_of=as_of, horizon_data_code=horizon_data
+    )
+    render_benchmark_page(
+        results, verdict, Path(page_path), as_of=as_of, horizon_data_code=horizon_data
+    )
+    typer.echo(
+        f"Verdict: pass_rate={verdict.pass_rate:.0%} "
+        f"({'PASS' if verdict.passes else 'FAIL'}) at h={decision_horizon}. "
+        f"Sidecar → {sidecar}. Page → {page_path}."
+    )
+
+
 def main() -> None:
     app()
 

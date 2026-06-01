@@ -5,6 +5,66 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #20 PR D — Forecast benchmark pipeline + CLI + verdict ✅
+
+Quatrième et dernier incrément du chantier #20. Ferme la boucle : le
+verdict empirique (CPV cluster) trouve maintenant son pendant
+constructif opérationnel.
+
+**Nouveau module `ecowave/forecasting/benchmark.py`** :
+
+- Configuration via `BenchmarkConfig` (horizons, modèles, n_origins,
+  test_fraction, lag config HAR, K MSM…). Validation stricte des
+  inputs.
+- `run_benchmark(panels, config)` : pipeline rolling-origin out-of-
+  sample. Pour chaque variable, tient en réserve les `test_fraction`
+  derniers points ; place `n_origins` origins évenly-spaced à
+  l'intérieur ; ajuste chaque modèle sur l'historique préfixe et
+  score le forecast au CRPS / RMSE / MAE / coverage / tail coverage.
+- `evaluate_acceptance_criterion(results, decision_horizon,
+  beat_threshold)` : décision objective sur le critère roadmap #20 —
+  « au moins 1 modèle du cluster doit battre RW sur CRPS out-of-sample
+  à h = 12 sur ≥ 50 % des variables ». Renvoie `AcceptanceVerdict`
+  avec `passes`, `pass_rate`, `best_cluster_model_per_variable`.
+
+**Nouveau module `ecowave/forecasting/reporting.py`** :
+
+- `aggregate_per_cell(results)` : une ligne par `(group, variable,
+  model, horizon)` avec moyennes + médianes sur origins.
+- `write_benchmark_sidecar(results, verdict, …)` : JSON typé,
+  schema_version=1, incluant config, verdict, cells, failures.
+- `render_benchmark_page(…)` : page markdown consolidée (verdict en
+  tête, table CRPS par horizon avec cluster-bat-baseline en **gras**,
+  pass/fail par variable, méthode, échecs).
+
+**Nouveau CLI `ecowave forecast-benchmark`** :
+
+```
+ecowave forecast-benchmark \
+  --horizon-data long --groups ADV18 \
+  --horizons 1,3,6,12 --n-origins 6 --n-samples 200
+```
+
+Charge les panels depuis SQLite (réutilise les loaders de
+`evidence.py`), exécute le benchmark, écrit le sidecar
+`reports/forecast_benchmark_{as_of}_{horizon_data}.json` + la page
+`docs/forecast_benchmark.md`.
+
+**Page intégrée à mkdocs** : section "6. Working paper" → Forecast
+benchmark — Roadmap #20.
+
+**Verdict du smoke run** (panel `long`, groupe ADV18, 5 variables,
+horizons 1/3/6/12, 3 origins, 100 paths) : ✅ **PASS 100 %** à h = 12.
+MSM gagne 4/5 (LH_CPI, LH_GDP, LH_HPI, LH_EQUITY) ; ARFIMA+RS gagne
+LH_CREDIT. **L'item #20 satisfait son critère d'acceptation.**
+
+**Tests** (9 nouveaux) : origins evenly-spaced, validation config,
+shape contract `run_benchmark`, shape `AcceptanceVerdict`, round-trip
+sidecar JSON, page markdown non-vide, partition baselines/cluster.
+
+**Vérification** : 217 passed / 2 skipped, **0 régression** en Docker.
+`mkdocs build --strict` passe.
+
 ### Roadmap #20 PR C — Markov-Switching Multifractal (MSM Calvet-Fisher)
 
 Troisième incrément. *Le* modèle canonique du cluster CPV — celui qui

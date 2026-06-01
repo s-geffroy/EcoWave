@@ -105,3 +105,4 @@ nav:
   - 6. Working paper:
       - "CPV — réfutation des 4 cycles, émergence d'une dynamique fractale": papers/cpv_main_paper.md
       - "Implications du verdict — modélisation, prévision, politique, théorie": implications_of_cluster.md
+      - "Forecast benchmark — Roadmap #20 (RW, AR(1), HAR, ARFIMA+RS, MSM)": forecast_benchmark.md
