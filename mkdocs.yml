@@ -54,8 +54,10 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
 
+# MathJax 3 — ES6 modules natifs, plus de polyfill.io requis.
+# Note : polyfill.io a été compromis en juin 2024 (supply-chain attack
+# documentée par Sansec) ; toute référence à ce domaine a été retirée.
 extra_javascript:
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 # Refonte multi-track (Hub 4-tracks). Inversion narrative : le constructif
