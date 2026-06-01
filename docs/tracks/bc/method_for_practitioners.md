@@ -32,7 +32,7 @@ La réponse est falsifiable. Soit la cellule passe les trois portes,
 soit elle échoue à au moins une — et on sait laquelle, avec une
 p-value.
 
-## Pourquoi cela importe institutionnellement
+## Pourquoi cela importe institutionnellement { #importance }
 
 Si votre modèle de prévision macro suppose implicitement l'existence
 d'un cycle à une fréquence donnée (par exemple un cycle des affaires
@@ -50,7 +50,7 @@ vous concerne directement :
   les économistes économiques de long terme, mais sans validation
   statistique. À utiliser comme grille herméneutique uniquement.
 
-## Les trois portes en langage BC
+## Les trois portes en langage BC { #portes }
 
 ### Porte 1 — Dual null hypothesis test
 
@@ -105,7 +105,7 @@ des spillovers. Si vous coordonnez avec la Fed ou la BCE sur un
 diagnostic de cycle commun, la Porte 3 vous dit si ce diagnostic tient
 au-delà de votre périmètre.
 
-## Le verdict de ces portes
+## Le verdict de ces portes { #verdict }
 
 Sur les 6 panels que nous testons (Banque mondiale 1960-2024, panel
 trimestriel 1995-2024, histoire longue Maddison + Jordà-Schularick-
@@ -123,7 +123,7 @@ sur une dynamique fractale non-linéaire à mémoire longue*. Ce n'est
 pas la même chose, et ça a des conséquences que les outils CPV peuvent
 quantifier.
 
-## Ce qui reste utilisable de votre boîte à outils
+## Ce qui reste utilisable de votre boîte à outils { #existant }
 
 **Vos modèles DSGE ne sont pas à jeter**. Mais leurs hypothèses
 statistiques sous-jacentes doivent être révisées :
@@ -145,7 +145,7 @@ Concrètement, beaucoup de praticiens BC font déjà certains de ces
 ajustements localement (ad-hoc, par expérience). Notre cadre les
 rend systématiques et falsifiables.
 
-## Ce qui est nouveau et compatible
+## Ce qui est nouveau et compatible { #outils }
 
 **Les outils du track BC** (présentés dans les pages voisines) sont
 designés pour être *insérables* dans une pipeline BC existante :
@@ -164,7 +164,7 @@ designés pour être *insérables* dans une pipeline BC existante :
   recommandations sur quel modèle utiliser à quel horizon (HAR court,
   ARFIMA+RS long).
 
-## Les contraintes institutionnelles que nous reconnaissons
+## Les contraintes institutionnelles que nous reconnaissons { #contraintes }
 
 Travailler dans une BC impose des contraintes que la recherche
 universitaire peut ignorer :

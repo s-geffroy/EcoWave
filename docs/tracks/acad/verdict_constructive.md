@@ -1,11 +1,23 @@
 # Verdict constructif — cluster + benchmark
 
-> *Le cluster diagnostique stable C+B+D+I+S et sa validation
-> opérationnelle par benchmark out-of-sample. Présentation en ton
-> AER/JME : claims précis, méthode reproductible, falsifiabilité
-> explicite.*
+!!! success "TL;DR"
 
-## Claim principal
+    Présentation en ton AER/JME. **Claim principal** : la signature empirique des séries macro 1700-2024 est un cluster diagnostique C+B+D+I+S co-apparent sur > 60 % des 9 436 cellules, **incompatible** avec les 4 cycles canoniques et avec les hypothèses statistiques sous-jacentes au DSGE NK. 3 modèles cluster (MSM, ARFIMA+RS, HAR) battent random walk en OOS CRPS sur **78 % de 68 variables**. Trois inférences hiérarchiques (faible / intermédiaire / forte).
+
+## Dans cette page
+
+- **[Claim principal](#claim)** — formulation rigoureuse
+- **[Le cluster diagnostique](#cluster)** — distribution des rejets
+- **[Incompatibilité cycles canoniques](#incompatibilite)** — table 0/35 par cycle
+- **[Le benchmark opérationnel](#benchmark)** — protocole + résultats
+- **[La validité de l'inférence](#inference)** — 3 niveaux
+- **[Les 15 échecs](#failures)** — explications structurelles
+- **[Implications théoriques](#theoriques)** — 3 conséquences
+- **[Pour publier ces résultats](#publication)** — 3 pistes éditoriales
+
+---
+
+## Claim principal { #claim }
 
 **La signature statistique des séries macroéconomiques 1700-2024 est
 un cluster diagnostique stable composé de cinq familles : longue
@@ -18,7 +30,7 @@ littérature multifractale et long-memory qui reproduisent ce cluster
 battent random walk en out-of-sample CRPS à h = 12 sur 78 % de 68
 variables macro testées sur 6 panels.**
 
-## Le cluster diagnostique
+## Le cluster diagnostique { #cluster }
 
 Sur les 6 panels CPV (WB 1960-2024, panel trimestriel 1995-2024, long
 history Maddison + Jordà-Schularick-Taylor 1870-2024, Bank of England
@@ -62,7 +74,7 @@ dérive de régime cognitif**. Cette caractérisation est :
    chômage, équités, prix immobiliers, taux d'intérêt). Quelques
    exceptions discutées dans [failure modes](../quants/failure_modes.md).
 
-## L'incompatibilité avec les cycles canoniques
+## L'incompatibilité avec les cycles canoniques { #incompatibilite }
 
 Le triple-gate (dual null + consensus + universalité) **rejette
 systématiquement** les 4 cycles canoniques :
@@ -80,7 +92,7 @@ dès Gate 1 (dual null). Les rares survivants à Gate 1 échouent à Gate
 
 Détails : [`evidence_per_variable.md`](../../evidence_per_variable.md).
 
-## Le benchmark opérationnel
+## Le benchmark opérationnel { #benchmark }
 
 La signature est statistique ; elle nécessite une validation
 opérationnelle. Le benchmark Roadmap #20 (`ecowave forecast-benchmark`)
@@ -151,7 +163,7 @@ HAR ↔ trimestriel, ARFIMA+RS ↔ crédit) est stable.
 
 Détails : [`forecast_benchmark.md`](../../forecast_benchmark.md).
 
-## La validité de l'inférence
+## La validité de l'inférence { #inference }
 
 Le claim "le cluster bat RW sur 78 % des variables" est **opérationnel**.
 Cela laisse ouvert le claim théorique. Trois inférences plausibles :
@@ -169,7 +181,7 @@ Cela laisse ouvert le claim théorique. Trois inférences plausibles :
    verdict empirique du cluster + du verdict opérationnel du
    benchmark.*
 
-## Les 15 échecs
+## Les 15 échecs { #failures }
 
 22 % des variables ne sont pas battues par le cluster. L'analyse
 détaillée dans [failure modes](../quants/failure_modes.md) identifie
@@ -187,7 +199,7 @@ détaillée dans [failure modes](../quants/failure_modes.md) identifie
 Aucun de ces échecs n'est aléatoire ; tous ont une explication
 structurelle. Cela renforce plutôt qu'affaiblit le claim cluster.
 
-## Implications théoriques
+## Implications théoriques { #theoriques }
 
 Le verdict empirique impose 3 conséquences théoriques majeures :
 
@@ -231,7 +243,7 @@ identifiés :
 Aucun n'unifie les 5. C'est la *question théorique ouverte*. Discuté
 en détail dans [synthèse AMH](synthesis_amh.md).
 
-## Pour publier ces résultats
+## Pour publier ces résultats { #publication }
 
 Le matériel est prêt pour soumission académique. Trois pistes :
 

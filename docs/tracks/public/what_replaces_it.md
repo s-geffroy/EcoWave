@@ -1,9 +1,19 @@
 # Ce qui remplace les cycles
 
-> *Cinq propriétés statistiques. Une métaphore. Et un changement
-> radical de vision de la macroéconomie.*
+!!! success "TL;DR"
 
-## Cinq propriétés qui apparaissent partout
+    À la place des cycles, **5 propriétés statistiques** apparaissent **partout** dans les séries macro : **C** longue mémoire (les chocs s'éteignent lentement, comme dans un fleuve, pas un étang) ; **B** multifractalité (la texture des fluctuations diffère selon l'échelle, comme une côte rocheuse vue d'avion vs à pied) ; **D** non-linéarité (cause et effet ne sont pas proportionnels) ; **I** information structurée (prédictibilité partielle exploitable) ; **S** dérive de régime cognitif (les croyances changent le système — Soros). Métaphore unificatrice : la **cascade en turbulence**.
+
+## Dans cette page
+
+- **[Cinq propriétés](#cinq-proprietes)** — C, B, D, I, S détaillées
+- **[Une métaphore : la cascade](#cascade)** — turbulence K41
+- **[Pourquoi le cycle ne fonctionnait pas](#pourquoi)** — 3 raisons
+- **[La conséquence opérationnelle](#operationnel)** — modèles cascade
+
+---
+
+## Cinq propriétés qui apparaissent partout { #cinq-proprietes }
 
 Quand les quatre cycles canoniques ont été éliminés par notre
 protocole, il restait quelque chose dans les séries macroéconomiques.
@@ -107,7 +117,7 @@ Kolmogorov-Smirnov appliquée à des fenêtres glissantes. Les
 changements détectés correspondent souvent à des événements historiques
 identifiables (Volcker, Black Monday 1987, GFC 2008, COVID 2020).
 
-## Une métaphore : la cascade
+## Une métaphore : la cascade { #cascade }
 
 Comment se représenter le tout ? L'image utile est celle d'une
 **cascade en turbulence**.
@@ -133,7 +143,7 @@ le système a aussi des **régimes cognitifs**. Comme si, de temps en
 temps, la physique elle-même de la cascade changeait — parce que les
 acteurs économiques changent leurs croyances sur le système.
 
-## Pourquoi le cycle ne fonctionnait pas
+## Pourquoi le cycle ne fonctionnait pas { #pourquoi }
 
 L'image cyclique implique trois choses : une **fréquence privilégiée**,
 une **forme reproductible**, et une **horloge** qui régule. Aucune de
@@ -150,7 +160,7 @@ Le cycle est mort parce que la macroéconomie n'a pas d'horloge interne.
 Elle a quelque chose de plus intéressant : une **cascade fractale avec
 dérive cognitive**.
 
-## La conséquence opérationnelle
+## La conséquence opérationnelle { #operationnel }
 
 Si la macroéconomie est une cascade plutôt qu'une horloge, on peut
 **la modéliser**, et donc la **prévoir**. Pas avec des modèles

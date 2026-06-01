@@ -46,7 +46,7 @@ Hudak 1983) ou via l'estimateur local-Whittle.
 - `d` proche de **0.5** : frontière non-stationnarité, BC en perte
   totale de crédibilité.
 
-## La formalisation
+## La formalisation { #formalisation }
 
 L'estimateur GPH régresse le logarithme du périodogramme sur le
 logarithme de la fréquence pour les basses fréquences :
@@ -69,7 +69,7 @@ Implémentation : `gph_estimate_d(series, bandwidth_exponent=0.5)` dans
 Clipping automatique à `[-0.499, 0.499]` pour rester dans la zone de
 stationnarité.
 
-## Comment l'utiliser opérationnellement
+## Comment l'utiliser opérationnellement { #usage }
 
 ### Implémentation minimale
 
@@ -96,7 +96,7 @@ Sortie typique pour une économie en perte de crédibilité :
 d = 0.412
 ```
 
-### Lecture historique
+### Lecture historique { #historique }
 
 Le pouvoir interprétatif de `d` vient de sa capacité à montrer des
 **ruptures de crédibilité** historiques :
@@ -152,7 +152,7 @@ Un *régime drift* dans `d_t` (montée brutale) signale une crise de
 crédibilité émergente. C'est complémentaire de l'EWS détaillé dans
 [tipping point detection](tipping_point_detection.md).
 
-## Comparaison cross-pays
+## Comparaison cross-pays { #cross-pays }
 
 Tableau indicatif basé sur les données disponibles sur les panels CPV
 (notre estimation, à reproduire sur vos données internes BC) :
@@ -175,7 +175,7 @@ ou décision politique, recalculer avec vos données internes,
 désaisonnalisées avec votre méthode standard, et avec une bandwidth
 choisie après sensibility analysis.
 
-## Comment cela complète vos indicateurs existants
+## Comment cela complète vos indicateurs existants { #complement }
 
 Les BC utilisent déjà plusieurs proxies de crédibilité :
 
@@ -200,7 +200,7 @@ L'indicateur `d` GPH apporte :
   une rupture de régime, validable par les événements historiques
   (Volcker 1979, Brexit 2016, COVID 2020).
 
-## Limites à connaître
+## Limites à connaître { #limites }
 
 Le `d` GPH n'est pas magique :
 
@@ -215,7 +215,7 @@ Le `d` GPH n'est pas magique :
   pas un mécanisme. Cela complète, ne remplace pas, les modèles
   structurels DSGE.
 
-## Étapes pour intégrer dans votre pipeline BC
+## Étapes pour intégrer dans votre pipeline BC { #integration }
 
 1. **Pilote** (1-2 semaines) : calculer `d` sur votre série d'inflation
    nationale en historique (post-1995 typiquement). Comparer à votre

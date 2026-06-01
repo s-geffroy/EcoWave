@@ -39,7 +39,7 @@ flowchart TB
     style HubIndex fill:#a5d6a7,stroke:#388e3c
 ```
 
-## `types.py` — Le format pivot
+## `types.py` — Le format pivot { #pivot }
 
 ### `ProbabilisticForecast` (dataclass frozen)
 
@@ -61,7 +61,7 @@ Méthodes :
 
 Source : [`types.py`](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/types.py).
 
-## `proper_scoring.py` — Scoring rules
+## `proper_scoring.py` — Scoring rules { #scoring }
 
 ### Fonctions principales
 
@@ -94,7 +94,7 @@ F-test joint `(α, β) = (0, 1)`. Retourne `alpha`, `beta`,
 
 Source : [`proper_scoring.py`](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/proper_scoring.py).
 
-## `baselines.py` — RW, AR(1), ARMA(1, 1)
+## `baselines.py` — RW, AR(1), ARMA(1, 1) { #modeles }
 
 ```python
 random_walk_forecast(history, horizons, n_samples=1000, seed=0) -> ProbabilisticForecast
@@ -234,7 +234,7 @@ Métadonnées exposées : `msm_fit_ok`, `n_components`, `return_mode`
 
 Source : [`msm.py`](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/msm.py).
 
-## `benchmark.py` — Pipeline
+## `benchmark.py` — Pipeline { #pipeline }
 
 ### `BenchmarkConfig` (dataclass frozen)
 
@@ -298,7 +298,7 @@ verdict passe si `pass_rate ≥ beat_threshold`.
 
 Source : [`benchmark.py`](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/benchmark.py).
 
-## `reporting.py` — JSON + Markdown
+## `reporting.py` — JSON + Markdown { #reporting }
 
 ```python
 aggregate_per_cell(results: BenchmarkResults) -> list[dict]
@@ -347,7 +347,7 @@ qualitative, section reproduction.
 
 Source : [`consolidated_report.py`](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/consolidated_report.py).
 
-## Exemple end-to-end Python
+## Exemple end-to-end Python { #exemple }
 
 ```python
 from pathlib import Path

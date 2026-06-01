@@ -1,9 +1,20 @@
 # Le cycle est mort
 
-> *Comment nous avons testé sérieusement les quatre cycles canoniques, et
-> pourquoi aucun n'a survécu.*
+!!! success "TL;DR"
 
-## L'enseignement officiel
+    Depuis 1923, les manuels d'économie enseignent **4 cycles canoniques** : Kitchin (3-5 ans), Juglar (7-11 ans), Kuznets (15-25 ans), Kondratieff (40-60 ans). **Aucun de leurs auteurs n'a jamais publié un test statistique.** Quand on les teste rigoureusement (notre protocole 3 portes sur 9 436 cellules de 6 panels, 1700-2024), **aucun ne survit**. C'est un test reproductible, ouvert, falsifiable.
+
+## Dans cette page
+
+- **[L'enseignement officiel](#enseignement)** — les 4 cycles canoniques
+- **[Le problème](#probleme)** — pas de test statistique original
+- **[Notre protocole : 3 portes](#protocole)** — la démarche conservatrice
+- **[Le résultat](#resultat)** — 0 / 9 436 cellules
+- **[Pourquoi cette démolition est utile](#utilite)**
+
+---
+
+## L'enseignement officiel { #enseignement }
 
 Si vous avez ouvert un manuel d'économie, vous y avez croisé les quatre
 cycles canoniques. C'est l'un des rares contenus que tous les
@@ -29,7 +40,7 @@ historiques.
 
 C'est ce qu'on enseigne. Sauf que **ce n'est pas vrai**.
 
-## Le problème avec les cycles canoniques
+## Le problème avec les cycles canoniques { #probleme }
 
 Aucun de ces auteurs n'a jamais publié, à sa propre époque, un *test
 statistique* de l'existence de son cycle. Tous ont raisonné en
@@ -58,7 +69,7 @@ qu'un médicament fonctionne parce qu'on a vu trois patients aller mieux.
 On compare à un placebo, on contrôle les biais, on calcule des
 probabilités. La macroéconomie a longtemps fait sans cette discipline.
 
-## Notre protocole : trois portes de falsifiabilité
+## Notre protocole : trois portes de falsifiabilité { #protocole }
 
 Le projet CPV applique trois tests successifs sur chaque cycle candidat,
 sur chaque série économique, sur chaque ensemble de pays. Ces trois
@@ -103,7 +114,7 @@ pays à revenu intermédiaire supérieur, pays à revenu intermédiaire
 inférieur, pays à faible revenu). Si le cycle n'apparaît que pour les
 pays à haut revenu, ce n'est pas un cycle global — c'est un cycle local.
 
-## Le résultat
+## Le résultat { #resultat }
 
 Sur six panels macroéconomiques couvrant la période **1700 à 2024** :
 
@@ -135,7 +146,7 @@ structure, beaucoup de structure. Mais cette structure n'est pas
 Continuons sur la page suivante : [Ce qui remplace les
 cycles](what_replaces_it.md).
 
-## Pourquoi cette démolition est-elle utile ?
+## Pourquoi cette démolition est-elle utile ? { #utilite }
 
 Démontrer que les quatre cycles canoniques sont morts ne suffit pas à
 construire quelque chose de neuf. Mais c'est une **étape nécessaire** :

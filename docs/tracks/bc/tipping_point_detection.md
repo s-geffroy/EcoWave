@@ -37,7 +37,7 @@ des décisions de politique monétaire (qui se prennent typiquement à
 fréquence mensuelle ou trimestrielle), c'est une avance opérationnelle
 significative.
 
-## La logique
+## La logique { #logique }
 
 Quand un régime cognitif se prépare à changer, on observe typiquement :
 
@@ -56,7 +56,7 @@ statistique des bifurcations en théorie des systèmes dynamiques.
 Notre test S est une opérationnalisation conservatrice de cette
 intuition, calibrée pour usage BC.
 
-## L'algorithme
+## L'algorithme { #algo }
 
 Le test fonctionne en trois étapes :
 
@@ -73,7 +73,7 @@ suivent la même distribution. Si le KS rejette H0 avec p-value
 inférieure à un seuil `α` (typiquement 0.01 pour usage conservateur),
 signaler une rupture à l'instant `t - W/2`.
 
-## Implémentation Python
+## Implémentation Python { #python }
 
 ```python
 import numpy as np
@@ -120,7 +120,7 @@ def detect_regime_shifts(
     return breaks
 ```
 
-## Application aux données réelles : 1965-2024
+## Application aux données réelles : 1965-2024 { #donnees }
 
 Notre test sur la série d'inflation CPI US mensuelle 1965-2024
 (série FRED `CPIAUCSL` désaisonnalisée) détecte les ruptures
@@ -146,7 +146,7 @@ de régime BC (1979, 1982, 2022).
 détecte un **changement statistique**, pas une crise. L'interprétation
 en termes d'événement spécifique est manuelle.
 
-## Calibration recommandée pour usage BC
+## Calibration recommandée pour usage BC { #calibration }
 
 ### Fenêtre
 
@@ -185,7 +185,7 @@ Tester chaque variable séparément, puis croiser les signaux : une
 rupture confirmée par plusieurs variables a une crédibilité diagnostique
 plus forte.
 
-## Intégration au pipeline de décision
+## Intégration au pipeline de décision { #workflow }
 
 ### Dashboard EWS
 
@@ -221,7 +221,7 @@ imminent.
   jugement opaque.
 - **Open-source** : pas de dépendance à un vendor.
 
-## Limites et précautions
+## Limites et précautions { #limites }
 
 - **Pas de prévision**, juste détection : on ne sait pas vers quel
   régime on bascule, juste qu'on bascule.

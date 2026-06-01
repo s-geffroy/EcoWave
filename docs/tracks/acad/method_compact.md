@@ -1,10 +1,21 @@
 # Méthode CPV en langage théoricien
 
-> *Formalisation statistique du protocole CPV. Pour économistes qui
-> veulent en lire la rigueur méthodologique sans dépendre de la
-> documentation tutorielle.*
+!!! success "TL;DR"
 
-## Position dans la littérature
+    Formalisation statistique compacte du protocole CPV. Trois traditions convergentes : (1) **Box-Jenkins étendu** aux processus ARFIMA (Granger-Joyeux 1980, Hosking 1981, Beran 1994), (2) **Theiler-Vyushin-Kushner** pour null structurée (AR(1) bootstrap + phase-scrambling), (3) **Hamilton-Killick-Bry-Boschan** pour consensus multi-méthode. 3 portes : dual null + consensus 3/4 + universalité 4/5. Garde-fous Roadmap #14 (per-variable safeguard) + pré-différenciation Kondratieff. 14 diagnostics non-cycliques Tier 1+2.
+
+## Dans cette page
+
+- **[Position dans la littérature](#litterature)** — 3 traditions convergentes
+- **[Les trois portes formellement](#portes)** — Gates 1/2/3
+- **[Safeguard Roadmap #14](#safeguard)** — per-variable
+- **[Pré-différenciation Kondratieff](#kondratieff)**
+- **[14 diagnostics non-cycliques](#diagnostics)** — Tier 1+2
+- **[Design band-agnostic](#band-agnostic)**
+
+---
+
+## Position dans la littérature { #litterature }
 
 Le protocole CPV (Cycle Position Vector) s'inscrit dans trois
 traditions méthodologiques convergentes :
@@ -28,7 +39,7 @@ traditions méthodologiques convergentes :
    4 méthodes aux hypothèses génératives différentes permet de séparer
    le signal cyclique réel des artefacts spécifiques à chaque méthode.
 
-## Les trois portes formellement
+## Les trois portes formellement { #portes }
 
 ### Gate 1 — Dual null hypothesis test
 
@@ -79,7 +90,7 @@ WB. Pour chaque agrégat `g ∈ G`, on calcule la phase courante
 
 Code : `ecowave/cycles/universality.py`.
 
-## La safeguard Roadmap #14
+## La safeguard Roadmap #14 { #safeguard }
 
 Une faiblesse du protocole standard : la composite Gate 1 z-score puis
 moyenne. Sur des agrégats où une seule variable domine en variance, le
@@ -92,7 +103,7 @@ trois portes. Sinon le composite est marqué `aggregation_artifact`.
 
 Code : `ecowave/cycles/evidence.py` → `compute_per_variable_evidence`.
 
-## La pré-différenciation pour Kondratieff
+## La pré-différenciation pour Kondratieff { #kondratieff }
 
 Sur les bandes Kondratieff (40-60 ans) on observe que la simple
 band-power du composite est dominée par les **tendances de long
@@ -102,7 +113,7 @@ la tendance.
 
 Code : voir [`methodology_differencing_for_kondratieff.md`](../../methodology_differencing_for_kondratieff.md).
 
-## Les 14 diagnostics non-cycliques (Tier 1+2)
+## Les 14 diagnostics non-cycliques (Tier 1+2) { #diagnostics }
 
 En complément des 3 portes, le protocole calcule 14 statistiques
 diagnostiques non-cycliques regroupées en 11 familles théoriques (A
@@ -119,7 +130,7 @@ Code : `ecowave/cycles/alternative_dynamics.py`.
 
 Détail : voir [`dx_diagnostics.md`](../../dx_diagnostics.md).
 
-## Le band-agnostic design
+## Le band-agnostic design { #band-agnostic }
 
 Tous les diagnostics non-cycliques sont calculés **sans présupposer
 une bande fréquentielle cible**. Contrairement aux Gates 1-3 qui

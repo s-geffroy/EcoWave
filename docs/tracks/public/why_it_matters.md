@@ -1,10 +1,20 @@
 # Pourquoi ça compte
 
-> *Cinq implications concrètes pour la politique économique, le
-> risque, et la prévision — qui changent dès qu'on accepte que la
-> macroéconomie n'est pas cyclique.*
+!!! success "TL;DR"
 
-## 1 — La crédibilité des banques centrales devient mesurable
+    Accepter que la macroéconomie n'est pas cyclique change **5 choses concrètes** : (1) la **crédibilité monétaire** devient mesurable en temps réel via `d` GPH ; (2) les **booms de crédit ont des ombres très longues** que Bâle III sous-estime ; (3) le **VaR sous-estime les queues**, l'ES doit être recalibré sur Tsallis/Lévy (20-40 % plus élevé) ; (4) les **prévisions publiques** (SPF, FOMC, BMPE) sont battables au-delà de 3 trimestres ; (5) **DSGE n'est pas mort** mais doit être révisé structurellement.
+
+## Dans cette page
+
+- **[1 — Crédibilité monétaire mesurable](#implication-1)** — `d` GPH inflation
+- **[2 — Booms de crédit aux ombres longues](#implication-2)** — Bâle III sous-dimensionné
+- **[3 — VaR sous-estime les queues](#implication-3)** — ES recalibré 20-40 %
+- **[4 — Prévisions publiques battables](#implication-4)** — gap science/pratique
+- **[5 — DSGE à réviser structurellement](#implication-5)** — 3 modifications
+
+---
+
+## 1 — La crédibilité des banques centrales devient mesurable { #implication-1 }
 
 Les banques centrales (Fed, BCE, BoE) passent une grande partie de leur
 existence institutionnelle à essayer d'établir et de protéger leur
@@ -29,7 +39,7 @@ la Turquie depuis 2018 a un `d` qui s'est envolé.
 indépendamment des enquêtes d'opinion. Cela donne aux banques
 centrales un *outil de pilotage* qu'elles n'ont pas aujourd'hui.
 
-## 2 — Les booms de crédit ont des ombres longues — mesurables
+## 2 — Les booms de crédit ont des ombres longues — mesurables { #implication-2 }
 
 La crise financière globale de 2008 a appris (dans la douleur) que les
 booms de crédit accumulent du risque systémique qui peut prendre des
@@ -56,7 +66,7 @@ cycle* qui mesure directement la persistance, et qui anticipe mieux
 les crises systémiques que le credit gap actuel. Application directe à
 Bâle III et au calibrage des coussins de capital contracycliques.
 
-## 3 — La gestion des queues : VaR n'est pas un bon outil
+## 3 — La gestion des queues — VaR n'est pas un bon outil { #implication-3 }
 
 La régulation bancaire (Bâle II, Bâle III) repose largement sur la
 **Value-at-Risk** (VaR) : "avec 99 % de probabilité, la perte ne
@@ -85,7 +95,7 @@ sous-estiment le risque systémique. Le problème n'est pas la VaR (qui
 est encore largement utilisée) — c'est la *calibration* des
 distributions sous-jacentes, qui reste hypothétique.
 
-## 4 — Les prévisions macro publiques sont battables
+## 4 — Les prévisions macro publiques sont battables { #implication-4 }
 
 Le Survey of Professional Forecasters (SPF) de la Fed de Philadelphie,
 les Summary of Economic Projections (SEP) du FOMC, les Broad
@@ -110,7 +120,7 @@ prévision macro disponible aujourd'hui et la prévision macro
 effectivement utilisée par les institutions. Combler ce gap est un
 investissement à très haute rentabilité publique.
 
-## 5 — DSGE n'est pas mort, mais doit être révisé structurellement
+## 5 — DSGE n'est pas mort, mais doit être révisé structurellement { #implication-5 }
 
 Les modèles DSGE (Dynamic Stochastic General Equilibrium) sont la
 colonne vertébrale de la modélisation macro institutionnelle depuis
