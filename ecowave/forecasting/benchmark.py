@@ -49,7 +49,13 @@ DEFAULT_HORIZONS = (1, 3, 6, 12)
 DEFAULT_N_ORIGINS = 8
 DEFAULT_N_SAMPLES = 200
 DEFAULT_TEST_FRACTION = 0.25
-MIN_TRAIN_LENGTH = 64
+# Default minimum in-sample length for benchmark fits. Calibrated for
+# Calvet-Fisher MSM (requires ≥ 50 returns to identify the cascade
+# parameters) and HAR (one ``long`` lag of 12 + 4-row OLS buffer ≈ 32).
+# The :class:`BenchmarkConfig.min_train_length` field exposes this so
+# short annual panels (WB 1960-2024, SH 1960-2024) can be benchmarked
+# with a lower bound at the cost of less stable MSM fits.
+DEFAULT_MIN_TRAIN_LENGTH = 64
 
 
 @dataclass(frozen=True)
@@ -64,6 +70,7 @@ class BenchmarkConfig:
     seed: int = 0
     har_lag_config: HARLagConfig = field(default_factory=HARLagConfig)
     msm_components: int = 4
+    min_train_length: int = DEFAULT_MIN_TRAIN_LENGTH
 
     def __post_init__(self) -> None:
         if not self.horizons or any(horizon <= 0 for horizon in self.horizons):
@@ -80,6 +87,11 @@ class BenchmarkConfig:
             )
         if self.n_origins < 1:
             raise ValueError(f"n_origins must be ≥ 1; got {self.n_origins}")
+        if self.min_train_length < 32:
+            raise ValueError(
+                f"min_train_length must be ≥ 32 (HAR identification floor); "
+                f"got {self.min_train_length}"
+            )
 
 
 @dataclass(frozen=True)
@@ -183,11 +195,12 @@ def _origin_indices_for_series(
 
     The holdout span is the last ``test_fraction`` of the series. We
     place ``n_origins`` origins evenly-spaced inside that span, starting
-    no earlier than ``MIN_TRAIN_LENGTH`` observations into the past.
+    no earlier than ``config.min_train_length`` observations into the
+    past.
     """
     max_horizon = max(config.horizons)
     test_span_length = int(math.ceil(series_length * config.test_fraction))
-    test_start = max(MIN_TRAIN_LENGTH, series_length - test_span_length)
+    test_start = max(config.min_train_length, series_length - test_span_length)
     last_valid_origin = series_length - max_horizon
     if last_valid_origin <= test_start:
         return []
@@ -286,7 +299,7 @@ def run_benchmark(
             series_arr = np.asarray(series, dtype=float).ravel()
             finite_mask = np.isfinite(series_arr)
             series_arr = series_arr[finite_mask]
-            if series_arr.size < MIN_TRAIN_LENGTH + max_horizon:
+            if series_arr.size < config.min_train_length + max_horizon:
                 continue
             origins = _origin_indices_for_series(series_arr.size, config)
             for origin_index in origins:

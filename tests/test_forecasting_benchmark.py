@@ -63,6 +63,26 @@ def test_benchmark_config_rejects_unknown_model() -> None:
         BenchmarkConfig(models=("rw", "unknown_model"))
 
 
+def test_benchmark_config_rejects_min_train_length_below_floor() -> None:
+    with pytest.raises(ValueError, match="min_train_length"):
+        BenchmarkConfig(min_train_length=16)
+
+
+def test_origin_indices_respect_lowered_min_train_length() -> None:
+    """Short annual panels (e.g. WB 1960-2024 ≈ 65 obs) need a lower train floor."""
+    short_config = BenchmarkConfig(
+        horizons=(1, 3, 12),
+        n_origins=4,
+        test_fraction=0.25,
+        models=("rw",),
+        min_train_length=40,
+    )
+    origins = _origin_indices_for_series(series_length=65, config=short_config)
+    assert len(origins) > 0
+    assert min(origins) >= 40
+    assert max(origins) <= 65 - 12
+
+
 def test_run_benchmark_produces_one_row_per_model_horizon_origin() -> None:
     panels = {"GROUP_A": _make_synthetic_panel(seed=1, n_variables=2, length=200)}
     config = BenchmarkConfig(

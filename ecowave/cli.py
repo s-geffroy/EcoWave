@@ -491,6 +491,11 @@ def forecast_benchmark(
     n_origins: int = typer.Option(6, "--n-origins"),
     n_samples: int = typer.Option(200, "--n-samples"),
     test_fraction: float = typer.Option(0.25, "--test-fraction"),
+    min_train_length: int = typer.Option(
+        64, "--min-train-length",
+        help="Minimum in-sample length for benchmark fits. Lower "
+             "(40–50) for short annual panels (WB, SH) at the cost of "
+             "less stable MSM estimation. Floor: 32."),
     decision_horizon: int = typer.Option(
         12, "--decision-horizon",
         help="Horizon at which the acceptance criterion is evaluated."),
@@ -584,6 +589,7 @@ def forecast_benchmark(
         test_fraction=test_fraction,
         seed=seed,
         har_lag_config=har_lag_config,
+        min_train_length=min_train_length,
     )
 
     typer.echo(
