@@ -5,6 +5,52 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #22 Phase 5 — Track Académique (6 pages, ~12 000 mots, paper V2)
+
+Cinquième incrément. Le track académique livre la formalisation
+théorique du cluster CPV et le paper V2 avec dramaturgie constructive
+(verdict opérationnel d'abord, signature empirique ensuite, méthode
+puis réfutation des cycles comme conséquence). Audience : économistes
+académiques, DSGE community, philosophes de l'économie.
+
+**6 nouvelles pages sous `docs/tracks/acad/`** :
+
+- **`method_compact.md`** (~900 mots) — protocole CPV en langage
+  théoricien : Box-Jenkins étendu, Theiler-Vyushin-Kushner, Hamilton-
+  Killick-Bry-Boschan. Formalisation statistique du triple-gate.
+- **`verdict_constructive.md`** (~1 700 mots) — cluster + benchmark
+  en ton AER/JME. Distribution des rejets par famille, incompatibilité
+  cycles canoniques, robustesse 78 %, leaderboard, 3 inférences
+  hiérarchiques.
+- **`dsge_in_dock.md`** (~1 500 mots) — 3 modifications structurelles
+  requises (long-memory shocks, Markov layer paramètres deep,
+  distributions non-gaussiennes). Programme de recherche conjoint
+  4 axes, 2-3 ans, BC + universités.
+- **`synthesis_amh.md`** (~1 400 mots) — AMH (Lo 2017, couvre 4/5
+  piliers) + free-energy (Friston 2010, couvre 3/5) + MRW (Bacry-
+  Muzy-Delour 2001, couvre 2/5). Synthèse "MRW étendu à régimes de
+  free-energy" comme programme ouvert.
+- **`falsifiable_predictions.md`** (~1 500 mots) — 5 prédictions V1
+  §5.4 enrichies. Statut : prédiction 4 CONFIRMÉE par Roadmap #20,
+  prédictions 1, 5 TODO, prédictions 2, 3 PARTIELLES. Total restant
+  ~70 jours.
+- **`paper_v2_academic.md`** (~4 500 mots) — paper phare avec
+  dramaturgie constructive. 5 sections + annexes + 30+ références.
+  Abstract avec JEL codes, 7 objections anticipées avec réponses.
+  Conçu pour soumission AER/JME/QJE.
+
+**Mise à jour `mkdocs.yml`** — sous-navigation Académique avec les 6
+nouvelles pages.
+
+**Note sur la longueur du paper V2** : initialement planifié ~12 000
+mots, livré ~4 500. Le contenu complémentaire (~7 000 mots) est
+distribué sur les 5 pages supporting. Total track ~12 000 mots
+correspondant au plan. Le paper V2 fonctionne comme working paper
+publishable indépendamment.
+
+**Vérification** : mkdocs build --strict passe. 225 tests passing, 0
+régression.
+
 ### Roadmap #22 Phase 4 — Track Banque centrale (6 pages, ~15 000 mots)
 
 Quatrième incrément. Le track BC livre une boîte à outils opérationnelle

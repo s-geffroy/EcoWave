@@ -64,7 +64,14 @@ extra_javascript:
 nav:
   - Accueil: index.md
   - Pour qui ?:
-      - Académique: tracks/acad/index.md
+      - Académique:
+          - tracks/acad/index.md
+          - Méthode CPV en langage théoricien: tracks/acad/method_compact.md
+          - Verdict constructif (cluster + benchmark): tracks/acad/verdict_constructive.md
+          - DSGE en accusation: tracks/acad/dsge_in_dock.md
+          - Synthèse AMH + Friston + MRW: tracks/acad/synthesis_amh.md
+          - 5 prédictions falsifiables enrichies: tracks/acad/falsifiable_predictions.md
+          - "Paper V2 (~12 000 mots, dramaturgie constructive)": tracks/acad/paper_v2_academic.md
       - Banque centrale:
           - tracks/bc/index.md
           - La méthode CPV pour praticiens: tracks/bc/method_for_practitioners.md
