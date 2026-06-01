@@ -150,5 +150,6 @@ nav:
       - Sources de données: sources.md
       - Bibliographie: bibliographie.md
       - "Implications du verdict (détail multi-axe)": reference/implications_of_cluster.md
+      - "Sources de données citées": data_sources_cited.md
   - Archive:
       - "Working paper V1 (réfutation-first, décembre 2025)": papers/cpv_main_paper.md
