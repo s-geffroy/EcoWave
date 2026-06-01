@@ -621,10 +621,10 @@ et c'est ce que les cycles canoniques *ne sont pas*.
 - **Date de la note** : 2026-05-30
 - **Auteur** : Sylvain Geffroy
 - **Liens** :
-    - Working paper V1 : [`papers/cpv_main_paper.md`](papers/cpv_main_paper.md)
-    - Diagnostics empiriques : [`dx_diagnostics.md`](dx_diagnostics.md)
-    - Panorama des familles : [`methodology_beyond_cycles.md`](methodology_beyond_cycles.md)
-    - Feuille de route : [`methodology/feuille_de_route.md`](methodology/feuille_de_route.md)
+    - Working paper V1 : [`papers/cpv_main_paper.md`](../papers/cpv_main_paper.md)
+    - Diagnostics empiriques : [`dx_diagnostics.md`](../dx_diagnostics.md)
+    - Panorama des familles : [`methodology_beyond_cycles.md`](../methodology_beyond_cycles.md)
+    - Feuille de route : [`methodology/feuille_de_route.md`](../methodology/feuille_de_route.md)
 - **Sidecars JSON** : `reports/dx_diagnostics_2026_05_*.json` (12
   fichiers, 4.5 MB) et `reports/dx_rmt_2026_05_*.json`.
 - **Reproductibilité** : `docker compose run --rm --entrypoint ecowave ecowave dx-diagnostics --as-of 2026-05 --horizons wb,q,long,boe,bis,sh --n-surrogates 100 --seed 0`.

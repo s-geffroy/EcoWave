@@ -760,8 +760,10 @@
   théorie sans avoir lu le working paper. Page rendue, mkdocs build
   --strict passe.
 - **Liens** : la page elle-même
-  ([`implications_of_cluster.md`](../implications_of_cluster.md)) ;
+  ([`implications_of_cluster.md`](../reference/implications_of_cluster.md)) ;
   PR de livraison ([feat/implications-of-cluster](https://github.com/s-geffroy/EcoWave/pulls?q=is%3Apr+head%3Afeat%2Fimplications-of-cluster)).
+  *Note : la page a été déplacée sous `docs/reference/` lors de la
+  refonte hub multi-track (Roadmap #22, Phase 1).*
 
 ## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — TODO {#item-20-modeling-benchmark}
 
@@ -911,6 +913,47 @@
   markets) avec au moins 2 références canoniques chacune. Toutes les
   ancres `#author-year` cités dans `implications_of_cluster.md` sont
   résolues. mkdocs build --strict passe.
+
+## #22 — Refonte hub multi-track (acad / BC / quants / public) — EN COURS {#item-22-hub-multitrack}
+
+- **Problème.** Le site et le papier V1 sont *réfutation-first* — ils
+  ouvrent sur la démolition des 4 cycles puis dérivent le cluster. Or
+  maintenant que le pendant constructif est livré (cluster diagnostique
+  empirique + benchmark Roadmap #20 PASS 78 % opérationnel), la
+  dramaturgie naturelle est *constructive-first* : "voici une méthode
+  qui marche, et au passage les 4 cycles sont morts". De plus, les 4
+  audiences cibles (économistes académiques, banquiers centraux, quants,
+  public éclairé) ont des langues et des questions différentes — un
+  site monolithique sert mal chacune.
+- **Méthode.** Refonte en *Hub 4-tracks*. Page d'accueil = portail
+  track-selector. Quatre tracks parallèles `docs/tracks/{acad,bc,quants,public}/`,
+  chacun avec ses pages thématiques et son document phare. Inversion
+  narrative dans la nav mkdocs : Accueil → Pour qui ? → Méthode →
+  Verdict → **Réfutation comme appendice** → Référence → Archive V1.
+  Conservation totale du code Python, des tests, des sidecars, des
+  pages méthodologiques détaillées.
+- **Plan d'exécution** : chantier long en 6 phases incrémentales :
+    - **Phase 1 — LIVRÉE** : refonte navigation + hub portail vide +
+      4 stubs track + déplacement `implications_of_cluster.md` sous
+      `docs/reference/`.
+    - **Phase 2 — TODO** : track Public (4 pages dont essai phare
+      ~2 500 mots).
+    - **Phase 3 — TODO** : track Quants (6 pages dont note phare
+      ~5 000 mots).
+    - **Phase 4 — TODO** : track BC (6 pages dont note phare
+      ~5 000 mots).
+    - **Phase 5 — TODO** : track Acad (6 pages dont paper V2 ~12 000
+      mots avec dramaturgie constructive).
+    - **Phase 6 — TODO** : hub crossover + dashboard live verdict.
+- **Code.** Pas de code Python — pure documentation. Toutefois la
+  Phase 6 peut introduire un petit module `ecowave/forecasting/`
+  pour pull le verdict consolidé dans `docs/index.md` automatiquement
+  à chaque build.
+- **Acceptance.** À chaque phase : `mkdocs build --strict` passe, suite
+  pytest reste à 225+ passing, 0 régression. Critère qualitatif final :
+  un lecteur entre par sa cible et trouve son contenu sans repasser
+  par la réfutation. Le verdict PASS 78 % est dans le premier écran de
+  la page d'accueil.
 
 ## Références
 

@@ -1,156 +1,103 @@
-# CPV — Cycle Position Vector
+# CPV — la macroéconomie n'est pas cyclique
 
-> **Résumé.** Le projet *Cycle Position Vector* (CPV) est un pipeline de
-> recherche reproductible qui décompose les séries macroéconomiques en
-> quatre cycles canoniques (Kitchin, Juglar, Kuznets, Kondratieff) et publie,
-> pour chaque agrégat de pays, une étiquette de phase soumise à trois portes
-> de falsifiabilité (existence du cycle vs bruit rouge ; consensus de quatre
-> méthodes hétérogènes ; universalité cross-groupes). Le code, les données
-> et les figures sont régénérables d'une seule commande Docker.
-
-## Où en sommes-nous ?
-
-Tableau de bord par agrégat : 20 lignes (8 WB + 6 Path 5 trimestriel +
-6 histoire longue) × 4 cycles × {phase, tendance, prochain extremum}.
-Cellules `—` lorsque la Porte 1 (dual null, α = 0.05) a rejeté le cycle
-sur l'agrégat correspondant — fidèle au principe **"le protocole publie
-ses échecs"**. Chaque cellule est traçable à une ligne SQLite
-`cycle_positions` ; aucune valeur agrégée artificiellement entre datasets.
-
---8<-- "_includes/home_synthesis_table.md"
-
-### Poids de preuve — quelle p-value faudrait-il pour passer Gate 1 ?
-
-Le tableau précédent est binaire : "cycle survit à α=0.05 ou non". La
-matrice ci-dessous publie les p-values brutes — un lecteur qui veut
-appliquer un seuil plus strict (Bonferroni-correcté, α ≈ 0.0014 sur les
-36 cellules WB) ou plus permissif (convention macro, α = 0.10) peut
-lire directement la cellule. Les cas borderline (`p` entre 0.05 et
-0.10, codés 🟠) sont les plus instructifs pour la suite du programme
-de recherche : ils auraient survécu à une convention macro standard.
-
---8<-- "_includes/home_pvalues_table.md"
-
-Lecture transversale détaillée, commentaire par cycle et panels étendus :
-[Synthèse multi-horizons](reports/cycle_position_synthesis.md).
-
-<figure markdown>
-  ![Heatmap des phases — panel Banque mondiale, mai 2026](figures/cycle_phase_heatmap_2026_05_wb.png){ width="100%" loading="lazy" }
-  <figcaption>
-    <strong>Figure 1.</strong> Phase de consensus CPV par agrégat × bande
-    cyclique, panel Banque mondiale (1960-2024), as-of mai 2026.
-  </figcaption>
-</figure>
-
-<details markdown>
-<summary>Méthodologie de la heatmap (run + portes appliquées)</summary>
-
-Chaque cellule est colorée par l'étiquette publiée après application des
-trois portes de falsifiabilité ; `rejected` indique l'échec de la Porte 1
-(le cycle ne se distingue pas d'un bruit AR(1) + scramble de phase),
-`disputed` indique l'échec de la Porte 2 (moins de 3 méthodes votantes sur
-4 en accord). Run :
-`position-cycles --horizon wb --null dual --n-surrogates 1000`.
-
-</details>
-
-## Vue d'ensemble
-
-Quatre cycles, quatre méthodes votantes, trois portes de validation, neuf
-agrégats. Pour chaque combinaison (groupe, cycle), le pipeline rend public
-une phase parmi six étiquettes : `expansion`, `peak`, `contraction`,
-`trough`, `disputed`, `rejected` (échec de la porte d'existence).
-
-| Cycle | Période canonique | Phénomène économique | Référence princeps |
-|---|---|---|---|
-| **Kitchin** | 3–5 ans | Cycle d'inventaire | Kitchin (1923) |
-| **Juglar** | 7–11 ans | Cycle d'investissement fixe | Juglar (1862) ; Schumpeter (1939) |
-| **Kuznets** | 15–25 ans | Vague infrastructure / démographie | Kuznets (1930) |
-| **Kondratieff** | 40–60 ans | Onde techno-économique longue | Kondratieff (1925) ; Korotayev & Tsirel (2010) |
-
-## Les trois portes de falsifiabilité
-
-Une phase n'est publiée pour une cellule (agrégat, cycle, mois) que si les
-**trois portes** réussissent :
-
-1. **Existence (Porte 1)** — la puissance dans la bande doit battre un null
-   conservatif (AR(1) bootstrap + scramble de phase ; *dual null*) à un seuil
-   α = 0.05.
-2. **Consensus (Porte 2)** — ≥ 3 méthodes sur 4 (D / E / F / G) doivent
-   converger sur la même étiquette.
-3. **Universalité (Porte 3)** — ≥ 4 agrégats de revenu sur 5 (WLD / HIC / UMC
-   / LMC / LIC) doivent partager la phase modale pour qu'un cycle soit
-   qualifié de « global » plutôt que de « régional ».
-
-Les cellules qui échouent à la Porte 1 sont publiées `rejected` ; celles qui
-passent la Porte 1 mais échouent la Porte 2 sont publiées `disputed`. Le
-protocole **publie ses échecs** — c'est ce qui le distingue de la littérature
-classique sur les vagues longues (cf. [Garde-fous](methodology/garde_fous.md)).
-
-## Les quatre méthodes votantes
-
-| Code | Méthode | Référence |
-|---|---|---|
-| **D** | Détection de ruptures PELT | Killick *et al.* (2012) |
-| **E** | Markov-switching AR(1) | Hamilton (1989) |
-| **F** | Filtre Christiano-Fitzgerald + phase de Hilbert | Christiano & Fitzgerald (2003) |
-| **G** | Datation de retournements Bry-Boschan / Harding-Pagan | Bry & Boschan (1971) ; Harding & Pagan (2002) |
-
-Les quatre méthodes incarnent des **hypothèses génératives très
-hétérogènes** : un consensus à 3/4 indique qu'aucun artéfact méthodologique
-unique ne pilote le résultat. La survie sous la Porte 1 montre qu'aucun
-bruit auto-corrélé ne pilote le résultat non plus. Survey complet et
-matrice de décision sur [Méthodes de décomposition](methodology/methodes_decomposition.md).
-
-## Bilan de falsifiabilité — mai 2026
-
-Sur le panel Banque mondiale (1960-2024, 9 agrégats × 4 bandes, 36 cellules,
-1000 surrogates par cellule, dual null) :
-
-| Cycle | Cellules en `rejected` | Phase modale | Cellules `disputed` |
-|---|---:|---|---:|
-| Kitchin | 8 / 9 | — | 0 |
-| Juglar | 5 / 9 | contraction | 1 |
-| Kuznets | 9 / 9 | — | 0 |
-| Kondratieff | 9 / 9 | — | 0 |
-
-Sur le panel d'histoire longue (Maddison Project 2023 + Jordà-Schularick-Taylor R6,
-1870-2022, 6 agrégats × 4 bandes), la K-wave émerge sur ADV18 et EU4
-(`disputed` au pic, φ ≈ 0 ; amplitude ≈ moitié des pics K3/K4 historiques) ;
-voir [Kondratieff K5](reports/kondratieff_adv18_eu4_2026.md). La divergence
-Juglar US/ANGLO (expansion, pic ~2024) vs NORDIC (contraction profonde,
-creux fin-2023) est documentée sur [Juglar 2022-2026](reports/juglar_us_anglo_nordic_2026.md).
-
-## Démarrage rapide
-
-```bash
-docker compose build
-docker compose run --rm --entrypoint ecowave ecowave init-db
-docker compose run --rm --entrypoint ecowave ecowave position-cycles \
-  --as-of 2026-05 --null dual --n-surrogates 1000
-```
-
-Données ingérées automatiquement depuis l'API Banque mondiale. Pour la
-fenêtre 1870-2022, ajouter `--horizon long --manifest /app/long_history_manifest.json` ;
-les fichiers Maddison et JST R6 doivent avoir été téléchargés au préalable
-(`scripts/download_macrohistory.sh`).
-
-## Navigation
-
-1. [**Où en sommes-nous ?**](reports/cycle_position_synthesis.md) — position
-   actuelle des 4 cycles, par horizon et en synthèse.
-2. [**Pourquoi ? — Cycles canoniques**](cycles/kitchin.md) — Kitchin /
-   Juglar / Kuznets / Kondratieff.
-3. [**Comment ? — Protocole CPV**](methodology/protocole_cpv.md) —
-   spécification, portes, méthodes.
-4. [**Preuves détaillées**](reports/panel_banque_mondiale_2026.md) — notes
-   signées + analyses approfondies + validation EWS.
-5. [**Données & références**](groupes.md) — groupes, sources, bibliographie.
+> **La macroéconomie est une cascade multifractale non-linéaire à mémoire
+> longue avec dérive de régime cognitif.** Nous l'avons démontré
+> empiriquement (cluster diagnostique C+B+D+I+S, 9 436 cellules, 6 panels)
+> et validé opérationnellement (benchmark out-of-sample **PASS 78 %** vs
+> random walk sur 68 variables).
 
 ---
 
-*Schéma de base de données : 0.5.0. Dépôt :
-[s-geffroy/EcoWave](https://github.com/s-geffroy/EcoWave).
-Méthodes empruntées à : Christiano & Fitzgerald (2003) ; Hamilton (1989) ;
-Killick et al. (2012) ; Harding & Pagan (2002) ; Theiler et al. (1992) ;
-Torrence & Compo (1998).*
+## En une page
+
+**Le verdict empirique** — Les quatre cycles canoniques (Kitchin, Juglar,
+Kuznets, Kondratieff) ne survivent pas à un protocole falsifiable
+rigoureux. Sur 6 panels macro couvrant 1700–2024, le triple-gate
+Gate 1 (dual null AR(1) + phase-scramble) + Gate 2 (consensus 4 méthodes)
++ Gate 3 (universalité cross-aggregates) **rejette systématiquement la
+mécanique cyclique**.
+
+**Ce qui émerge à la place** — un cluster diagnostique stable de cinq
+familles statistiques :
+
+- **C** — *long memory* (ACF lag-1 ≈ 1)
+- **B** — *multifractalité* (singularity spectrum non trivial)
+- **D** — *non-linéarité* (BDS, dependence statistic)
+- **I** — *information structurée* (entropie, permutation, sample)
+- **S** — *reflexive regime drift* (régime cognitif glissant)
+
+**La preuve opérationnelle** — le benchmark Roadmap #20 montre que les
+modèles qui reproduisent ce cluster (MSM Calvet-Fisher, ARFIMA+RS
+Bhardwaj-Swanson, HAR Corsi) **battent le random walk en out-of-sample
+CRPS à horizon 12 sur 52 / 68 variables macro** (78 %, robuste à
+n_origins = 12). Les baselines AR(1) / ARMA(1,1) ne gagnent jamais
+quand un modèle du cluster est compétent.
+
+| Modèle cluster | Wins | Part |
+|---|---|---|
+| MSM (Calvet-Fisher) | 23 | 43 % |
+| HAR (Corsi 2009) | 16 | 30 % |
+| ARFIMA + regime-switching | 14 | 26 % |
+
+---
+
+## Choisir son point d'entrée
+
+Le site est organisé par **audience cible** plutôt que par ordre logique
+de la recherche. Choisis ta porte d'entrée — chaque track parle ta
+langue et termine par un document phare.
+
+<div class="grid cards" markdown>
+
+-   :material-school: **[Académique →](tracks/acad/index.md)**
+
+    DSGE en accusation, AMH comme méta-cadre, Friston-MRW-AMH comme
+    synthèse théorique manquante. *Document phare : paper V2 ~12 000 mots*.
+
+-   :material-bank: **[Banque centrale →](tracks/bc/index.md)**
+
+    Crédibilité monétaire via `d`-GPH, forward guidance réflexif,
+    EWS sur tipping points, ARFIMA+RS pour horizons longs.
+    *Document phare : note BC ~5 000 mots*.
+
+-   :material-code-tags: **[Quants →](tracks/quants/index.md)**
+
+    MSM / ARFIMA+RS / HAR specs et code, reproduction du PASS 78 %,
+    API publique `ecowave.forecasting`, failure modes.
+    *Document phare : note quants ~5 000 mots*.
+
+-   :material-book-open-variant: **[Public éclairé →](tracks/public/index.md)**
+
+    Le cycle est mort — voici ce qui le remplace. Vulgarisation
+    accessible sans bagage technique. *Document phare : essai
+    ~2 500 mots*.
+
+</div>
+
+---
+
+## Si tu cherches le détail technique
+
+- **[Méthode (détail technique)](methodology/protocole_cpv.md)** — les
+  trois portes de falsifiabilité, les méthodes de décomposition,
+  l'indicateur composite, les garde-fous anti-pseudoscience.
+- **[Verdict (preuves détaillées)](forecast_benchmark.md)** — le
+  benchmark consolidé multi-panels, les synthèses par horizon, les
+  notes signées par panel.
+- **[Réfutation des cycles (appendice historique)](cycles/kitchin.md)** —
+  où va chacun des 4 cycles canoniques quand on le teste sérieusement.
+- **[Référence](groupes.md)** — groupes agrégés, sources de données,
+  bibliographie complète, implications détaillées du verdict.
+- **[Working paper V1](papers/cpv_main_paper.md)** — version
+  réfutation-first de décembre 2025, archivée. Le pivot constructif est
+  V2 multi-track (en cours de livraison).
+
+---
+
+!!! info "Reproductibilité"
+
+    Le code Python est entièrement conteneurisé. Un seul `docker
+    compose run --rm ecowave forecast-benchmark-consolidate` régénère
+    le verdict consolidé à partir des sidecars JSON par panel. Tous
+    les chiffres affichés sur cette page sont citables avec leur
+    `as_of`. Voir [reproduction (Quants)](tracks/quants/index.md).
