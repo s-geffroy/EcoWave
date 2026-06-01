@@ -1,37 +1,20 @@
-# CPV — la macroéconomie n'est pas cyclique
+# CPV — La macroéconomie n'est pas cyclique
 
-> **La macroéconomie est une cascade multifractale non-linéaire à mémoire
-> longue avec dérive de régime cognitif.** Nous l'avons démontré
-> empiriquement (cluster diagnostique C+B+D+I+S, 9 436 cellules, 6 panels)
-> et validé opérationnellement (benchmark out-of-sample **PASS 78 %** vs
-> random walk sur 68 variables).
+!!! success "TL;DR — en 3 lignes"
+
+    Les **4 cycles canoniques** (Kitchin, Juglar, Kuznets, Kondratieff) **ne survivent pas** à un protocole falsifiable rigoureux sur 6 panels macro couvrant 1700-2024. À leur place émerge un cluster diagnostique stable C+B+D+I+S. Des modèles statistiques qui reproduisent cette signature **battent random walk sur 78 % des 68 variables testées**.
+
+## Dans cette page
+
+- **[Le verdict](#le-verdict)** — chiffres clés, leaderboard, lien vers le détail
+- **[La méthode](#la-methode-en-un-coup-d-oeil)** — diagramme des 3 portes falsifiables
+- **[La signature qui émerge](#la-signature-cluster-cbdis)** — les 5 familles statistiques
+- **[Comment le cluster est validé](#le-pipeline-benchmark)** — pipeline benchmark out-of-sample
+- **[Choisir son point d'entrée](#choisir-son-point-dentree)** — 4 tracks par audience cible
 
 ---
 
-## En une page
-
-**Le verdict empirique** — Les quatre cycles canoniques (Kitchin, Juglar,
-Kuznets, Kondratieff) ne survivent pas à un protocole falsifiable
-rigoureux. Sur 6 panels macro couvrant 1700–2024, le triple-gate
-Gate 1 (dual null AR(1) + phase-scramble) + Gate 2 (consensus 4 méthodes)
-+ Gate 3 (universalité cross-aggregates) **rejette systématiquement la
-mécanique cyclique**.
-
-**Ce qui émerge à la place** — un cluster diagnostique stable de cinq
-familles statistiques :
-
-- **C** — *long memory* (ACF lag-1 ≈ 1)
-- **B** — *multifractalité* (singularity spectrum non trivial)
-- **D** — *non-linéarité* (BDS, dependence statistic)
-- **I** — *information structurée* (entropie, permutation, sample)
-- **S** — *reflexive regime drift* (régime cognitif glissant)
-
-**La preuve opérationnelle** — le benchmark Roadmap #20 montre que les
-modèles qui reproduisent ce cluster (MSM Calvet-Fisher, ARFIMA+RS
-Bhardwaj-Swanson, HAR Corsi) **battent le random walk en out-of-sample
-CRPS à horizon 12** sur la majorité des variables macro testées. Les
-baselines AR(1) / ARMA(1,1) ne gagnent jamais quand un modèle du
-cluster est compétent.
+## Le verdict
 
 <!-- BEGIN: AUTO-VERDICT -->
 
@@ -45,70 +28,175 @@ cluster est compétent.
 
 <!-- END: AUTO-VERDICT -->
 
-Pour le détail panel par panel et la robustesse, voir
-[verdict consolidé](forecast_benchmark.md). Pour reproduire en local
-en une commande Docker, voir
-[benchmark reproductible](tracks/quants/benchmark_reproducible.md).
+!!! info "Comment lire le verdict"
+
+    Le **pass rate** est la fraction des variables où **au moins un** modèle du cluster (MSM, HAR, ARFIMA+RS) bat le **random walk** en out-of-sample CRPS à horizon 12. Le seuil falsifiable est 50 %. Avec 78 %, on est largement au-dessus.
+    Aucune baseline stationnaire (AR(1), ARMA(1,1)) ne gagne quand un modèle cluster est compétent.
+
+[Voir le verdict consolidé multi-panels →](forecast_benchmark.md){ .md-button }
+[Reproduire en Docker →](tracks/quants/benchmark_reproducible.md){ .md-button }
+
+---
+
+## La méthode en un coup d'œil { #la-methode-en-un-coup-d-oeil }
+
+Trois portes successives. Une cellule (cycle × variable × agrégat) doit passer **les trois** pour être déclarée valide.
+
+```mermaid
+flowchart TD
+    A([Série macro<br/>panel × variable]) --> B{Gate 1<br/>Dual null<br/>AR(1) + phase-scramble}
+    B -->|p ≥ 0.05<br/>sur un des deux| Z1([❌ Rejet<br/>Cycle non détecté])
+    B -->|p < 0.05<br/>sur les deux| C{Gate 2<br/>Consensus<br/>4 méthodes}
+    C -->|< 3/4 d'accord| Z2([❌ Rejet<br/>Cycle disputed])
+    C -->|≥ 3/4 d'accord| D{Gate 3<br/>Universalité<br/>5 agrégats}
+    D -->|< 4/5 d'accord| Z3([❌ Rejet<br/>Cycle régional])
+    D -->|≥ 4/5 d'accord| Y([✅ Cycle universel<br/>publié])
+    style Y fill:#a5d6a7,stroke:#388e3c
+    style Z1 fill:#ffcdd2,stroke:#c62828
+    style Z2 fill:#ffcdd2,stroke:#c62828
+    style Z3 fill:#ffcdd2,stroke:#c62828
+```
+
+**Verdict sur les 6 panels CPV (1700-2024, 9 436 cellules testées)** :
+
+| Cycle candidat | Survie aux 3 portes |
+|---|---|
+| Kitchin (3-5 ans) | **0** cellule |
+| Juglar (7-11 ans) | **0** cellule |
+| Kuznets (15-25 ans) | **0** cellule |
+| Kondratieff (40-60 ans) | **0** cellule |
+
+[Détail méthode trois portes →](methodology/trois_portes.md){ .md-button }
+
+---
+
+## La signature cluster C+B+D+I+S
+
+À la place des cycles, **5 familles statistiques émergent conjointement** sur ≥ 60 % des cellules. C'est la nouvelle image de la dynamique macroéconomique.
+
+```mermaid
+flowchart LR
+    C[<b>C</b><br/>Long memory<br/>d GPH > 0<br/>~85%]
+    B[<b>B</b><br/>Multifractalité<br/>Δα > 0<br/>~70%]
+    D[<b>D</b><br/>Non-linéarité<br/>BDS test<br/>~75%]
+    I[<b>I</b><br/>Information<br/>Entropies<br/>~80%]
+    S[<b>S</b><br/>Régime drift<br/>KS sliding<br/>~60%]
+    Cluster(["<b>Cluster CPV</b><br/>C+B+D+I+S<br/>conjoint sur ≥60%"])
+    C --> Cluster
+    B --> Cluster
+    D --> Cluster
+    I --> Cluster
+    S --> Cluster
+    style Cluster fill:#90caf9,stroke:#1565c0,stroke-width:3px
+```
+
+!!! tip "Métaphore unificatrice — la cascade"
+
+    Imaginez l'eau qui dégringole d'une chute : régulière en haut, agitée en grandes vagues à mi-chute, brisée en mille tourbillons en bas. Il y a **transfert d'énergie** entre échelles. C'est l'image de la **turbulence Kolmogorov K41** — et c'est l'image qui remplace l'horloge cyclique en macroéconomie.
+
+[Verdict constructif (acad) →](tracks/acad/verdict_constructive.md){ .md-button }
+[Cluster expliqué (public) →](tracks/public/what_replaces_it.md){ .md-button }
+
+---
+
+## Le pipeline benchmark
+
+La signature statistique est validée **opérationnellement** par un benchmark out-of-sample : on compare 6 modèles sur 68 variables réelles et on regarde quels modèles battent random walk.
+
+```mermaid
+flowchart LR
+    H[Historique<br/>panel × variable] --> Split[Hold-out<br/>25% terminal]
+    Split --> Origins[n_origins = 12<br/>rolling-origin]
+    Origins --> Models[6 modèles<br/>RW · AR(1) · ARMA(1,1)<br/>HAR · ARFIMA+RS · MSM]
+    Models --> Forecast[ProbabilisticForecast<br/>n_samples × horizons]
+    Forecast --> Score[Scoring propre<br/>CRPS · coverage<br/>tail · bias]
+    Score --> Verdict([Verdict<br/>PASS / FAIL<br/>par variable])
+    style Verdict fill:#a5d6a7,stroke:#388e3c
+```
+
+| Modèle | Spécialité empirique |
+|---|---|
+| **MSM** Calvet-Fisher | Panels longs (Bank of England, long-history) |
+| **HAR** Corsi | Quarterly contemporain (q USA + EA) |
+| **ARFIMA+RS** Bhardwaj-Swanson | Variables de crédit |
+
+[Catalogue détaillé des modèles →](tracks/quants/models_catalog.md){ .md-button }
+[Pipeline complet →](tracks/quants/note_quants.md){ .md-button }
 
 ---
 
 ## Choisir son point d'entrée
 
-Le site est organisé par **audience cible** plutôt que par ordre logique
-de la recherche. Choisis ta porte d'entrée — chaque track parle ta
-langue et termine par un document phare.
+```mermaid
+flowchart TD
+    Hub((Hub CPV))
+    Hub --> Pub[📖 <b>Public éclairé</b><br/>Journalistes, étudiants, curieux<br/>~6 500 mots accessibles]
+    Hub --> BC[🏦 <b>Banque centrale</b><br/>Praticiens BC, régulateurs<br/>4 outils opérationnels]
+    Hub --> Quants[💻 <b>Quants</b><br/>Data scientists, prévisionnistes<br/>Code, API, benchmark]
+    Hub --> Acad[🎓 <b>Académique</b><br/>Économistes, DSGE community<br/>Paper V2 + théorie]
+    style Hub fill:#fff59d,stroke:#f9a825,stroke-width:3px
+```
 
 <div class="grid cards" markdown>
 
--   :material-school: **[Académique →](tracks/acad/index.md)**
+-   :material-book-open-variant:{ .lg .middle } **[Public éclairé](tracks/public/index.md)**
 
-    DSGE en accusation, AMH comme méta-cadre, Friston-MRW-AMH comme
-    synthèse théorique manquante. *Document phare : paper V2 ~12 000 mots*.
+    ---
 
--   :material-bank: **[Banque centrale →](tracks/bc/index.md)**
+    *Pour journalistes, lecteurs de presse économique, étudiants, curieux.*
 
-    Crédibilité monétaire via `d`-GPH, forward guidance réflexif,
-    EWS sur tipping points, ARFIMA+RS pour horizons longs.
-    *Document phare : note BC ~5 000 mots*.
+    Le cycle est mort, voici ce qui le remplace. Sans jargon, avec analogies physiques.
 
--   :material-code-tags: **[Quants →](tracks/quants/index.md)**
+    **Doc phare** : essai ~2 500 mots prêt à être lu d'une vue.
 
-    MSM / ARFIMA+RS / HAR specs et code, reproduction du PASS 78 %,
-    API publique `ecowave.forecasting`, failure modes.
-    *Document phare : note quants ~5 000 mots*.
+-   :material-bank:{ .lg .middle } **[Banque centrale](tracks/bc/index.md)**
 
--   :material-book-open-variant: **[Public éclairé →](tracks/public/index.md)**
+    ---
 
-    Le cycle est mort — voici ce qui le remplace. Vulgarisation
-    accessible sans bagage technique. *Document phare : essai
-    ~2 500 mots*.
+    *Pour praticiens BC, économistes monétaires, analystes macroprudentiels.*
+
+    Credibility radar, forward guidance réflexif, EWS tipping points, horizon-aware targeting.
+
+    **Doc phare** : note ~5 000 mots.
+
+-   :material-code-tags:{ .lg .middle } **[Quants](tracks/quants/index.md)**
+
+    ---
+
+    *Pour data scientists, quants, forecasters, équipes risque.*
+
+    Catalogue MSM/ARFIMA+RS/HAR, reproduction du PASS 78 %, API publique, failure modes.
+
+    **Doc phare** : note ~5 000 mots.
+
+-   :material-school:{ .lg .middle } **[Académique](tracks/acad/index.md)**
+
+    ---
+
+    *Pour économistes théoriciens, DSGE community, doctorants.*
+
+    DSGE en accusation, AMH + Friston + MRW comme méta-cadre, 5 prédictions falsifiables.
+
+    **Doc phare** : paper V2 ~4 500 mots.
 
 </div>
 
 ---
 
-## Si tu cherches le détail technique
+## Si tu cherches autre chose
 
-- **[Méthode (détail technique)](methodology/protocole_cpv.md)** — les
-  trois portes de falsifiabilité, les méthodes de décomposition,
-  l'indicateur composite, les garde-fous anti-pseudoscience.
-- **[Verdict (preuves détaillées)](forecast_benchmark.md)** — le
-  benchmark consolidé multi-panels, les synthèses par horizon, les
-  notes signées par panel.
-- **[Réfutation des cycles (appendice historique)](cycles/kitchin.md)** —
-  où va chacun des 4 cycles canoniques quand on le teste sérieusement.
-- **[Référence](groupes.md)** — groupes agrégés, sources de données,
-  bibliographie complète, implications détaillées du verdict.
-- **[Working paper V1](papers/cpv_main_paper.md)** — version
-  réfutation-first de décembre 2025, archivée. Le pivot constructif est
-  V2 multi-track (en cours de livraison).
+| Question | Où aller |
+|---|---|
+| Naviguer par profil ou par question | [Comment naviguer](how_to_navigate.md) |
+| Un terme technique précis | [Glossaire](glossary.md) |
+| Le détail méthodologique technique | [Méthode CPV](methodology/protocole_cpv.md) |
+| Le verdict par panel | [Forecast benchmark consolidé](forecast_benchmark.md) |
+| La réfutation détaillée par cycle | [Réfutation des cycles](cycles/kitchin.md) |
+| Tous les groupes/sources/bibliographie | [Référence](groupes.md) |
+| La version originale réfutation-first | [Working paper V1](papers/cpv_main_paper.md) |
 
 ---
 
-!!! info "Reproductibilité"
+!!! note "Reproductibilité"
 
-    Le code Python est entièrement conteneurisé. Un seul `docker
-    compose run --rm ecowave forecast-benchmark-consolidate` régénère
-    le verdict consolidé à partir des sidecars JSON par panel. Tous
-    les chiffres affichés sur cette page sont citables avec leur
-    `as_of`. Voir [reproduction (Quants)](tracks/quants/index.md).
+    Tout le code Python est conteneurisé Docker. Un seul `docker compose run --rm ecowave forecast-benchmark-consolidate` régénère le verdict consolidé à partir des sidecars JSON par panel. Tous les chiffres affichés sur cette page sont citables avec leur `as_of`. Voir [reproduction (Quants)](tracks/quants/benchmark_reproducible.md).
