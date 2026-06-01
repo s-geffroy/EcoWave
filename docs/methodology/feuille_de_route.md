@@ -765,7 +765,7 @@
   *Note : la page a été déplacée sous `docs/reference/` lors de la
   refonte hub multi-track (Roadmap #22, Phase 1).*
 
-## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — TODO {#item-20-modeling-benchmark}
+## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — LIVRÉ ✅ {#item-20-modeling-benchmark}
 
 - **Problème.** Le verdict empirique CPV (cluster C+B+D+I+S) identifie
   une signature structurelle. Reste à *construire un modèle* qui
@@ -914,7 +914,7 @@
   ancres `#author-year` cités dans `implications_of_cluster.md` sont
   résolues. mkdocs build --strict passe.
 
-## #22 — Refonte hub multi-track (acad / BC / quants / public) — EN COURS {#item-22-hub-multitrack}
+## #22 — Refonte hub multi-track (acad / BC / quants / public) — LIVRÉ ✅ {#item-22-hub-multitrack}
 
 - **Problème.** Le site et le papier V1 sont *réfutation-first* — ils
   ouvrent sur la démolition des 4 cycles puis dérivent le cluster. Or
