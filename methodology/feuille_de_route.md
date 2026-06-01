@@ -763,9 +763,14 @@
   ([`implications_of_cluster.md`](../implications_of_cluster.md)) ;
   PR de livraison ([feat/implications-of-cluster](https://github.com/s-geffroy/EcoWave/pulls?q=is%3Apr+head%3Afeat%2Fimplications-of-cluster)).
 
-## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — EN COURS (PR A LIVRÉE) {#item-20-modeling-benchmark}
+## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — LIVRÉ ✅ {#item-20-modeling-benchmark}
 
-**Statut.** Chantier découpé en 4 PRs incrémentaux :
+**Statut final.** Chantier livré en 4 PRs incrémentaux. **Verdict du
+smoke run** sur le panel `long` / groupe ADV18 / horizon de décision 12
+ans : **PASS 100 %**. MSM gagne 4/5 variables (LH_CPI, LH_GDP, LH_HPI,
+LH_EQUITY) ; ARFIMA+RS gagne LH_CREDIT. L'acceptance criterion
+(« au moins 1 modèle du cluster bat random walk en out-of-sample CRPS
+à h = 12 sur ≥ 50 % des variables ») est satisfait.
 
 - **PR A — LIVRÉE** : `ecowave/forecasting/` (skeleton, `types`,
   `proper_scoring` CRPS/coverage/MZ, `baselines` RW+AR(1)+ARMA(1,1),
@@ -778,9 +783,11 @@
   multifractale à K composantes, ML par filtre forward Hamilton sur
   ``2^K`` états, simulation par composantes indépendantes).
   11 tests nouveaux ; 208 tests totaux, 0 régression.
-- **PR D — TODO** : pipeline `benchmark.py` + CLI
-  `ecowave forecast-benchmark` + page `docs/forecast_benchmark.md` +
-  verdict acceptance criterion.
+- **PR D — LIVRÉE** : `benchmark.py` (pipeline rolling-origin OOS,
+  `AcceptanceVerdict`), `reporting.py` (sidecar JSON + rendu
+  markdown), CLI `ecowave forecast-benchmark`, page intégrée à mkdocs
+  sous "6. Working paper". 9 tests nouveaux ; 217 tests totaux, 0
+  régression. Smoke run sur le panel `long` → PASS 100 %.
 
 
 - **Problème.** Le verdict empirique CPV (cluster C+B+D+I+S) identifie
