@@ -774,7 +774,10 @@
 - **PR B — LIVRÉE** : `fractional.py` (Hosking + GPH) +
   `arfima_rs.py` (ARFIMA(0, d, 0) + Markov regime-switching à 2 états
   via statsmodels). 17 tests nouveaux ; 197 tests totaux, 0 régression.
-- **PR C — TODO** : `msm.py` (Calvet-Fisher 2002, estimation GMM ou SML).
+- **PR C — LIVRÉE** : `msm.py` (Calvet-Fisher 2002 — cascade
+  multifractale à K composantes, ML par filtre forward Hamilton sur
+  ``2^K`` états, simulation par composantes indépendantes).
+  11 tests nouveaux ; 208 tests totaux, 0 régression.
 - **PR D — TODO** : pipeline `benchmark.py` + CLI
   `ecowave forecast-benchmark` + page `docs/forecast_benchmark.md` +
   verdict acceptance criterion.
