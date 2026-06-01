@@ -5,6 +5,57 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #20 PR A — Forecasting module skeleton + baselines + HAR
+
+Premier incrément de l'item #20 (benchmark de modélisation). Pose la
+plomberie partagée par toutes les familles de modèles (PR B : ARFIMA+RS ;
+PR C : MSM ; PR D : pipeline CLI + page de résultats).
+
+**Nouveau module `ecowave/forecasting/`** :
+
+- `types.py` — dataclass `ProbabilisticForecast`, le format pivot que
+  tous les modèles renvoient (matrice Monte Carlo
+  `(n_samples, n_horizons)` sur le niveau, plus métadonnées). Sample-
+  based : suffisant pour CRPS empirique, coverage, tail coverage sans
+  hypothèse paramétrique.
+- `proper_scoring.py` — règles d'évaluation propres : CRPS empirique
+  (identité Gneiting-Raftery 2007 `E|X - y| − ½ E|X - X'|`,
+  implémentation O(n log n) via la formule rank-based pour la
+  Gini-mean-difference), `coverage_indicator` central 95 %,
+  `tail_coverage_indicator` gauche/droite (5 % par défaut), bundle
+  `ForecastScores`, Mincer-Zarnowitz F-test joint `(α, β) = (0, 1)`.
+- `baselines.py` — random walk avec Gaussian innovations, AR(1) avec
+  fallback automatique vers RW si `|φ| ≥ 0.999`, ARMA(1, 1) via
+  `statsmodels.SARIMAX` avec fallback AR(1) en cas d'échec de
+  convergence.
+- `har.py` — Heterogeneous Autoregressive Corsi 2009 avec config
+  `HARLagConfig(short, medium, long)`. Défaut `(1, 3, 12)` calibré
+  mensuel ; le pipeline (PR D) le réglera par panel. Construction
+  rolling-mean propre avec alignement shift-by-1 pour éviter le
+  look-ahead.
+
+**Tests** (26 nouveaux, tous passants) :
+
+- `test_forecasting_types.py` — invariants shape/horizon, mean &
+  quantile, slicing par horizon.
+- `test_forecasting_proper_scoring.py` — CRPS empirique vs closed-form
+  Gaussien (tolérance MC 5 %), CRPS → MAE pour distribution
+  dégénérée, MZ ne rejette pas un forecast unbiased, rejette
+  `(α, β) = (1, 0.5)`.
+- `test_forecasting_baselines.py` — point forecast RW = dernier niveau,
+  variance prédictive croît linéairement avec h, AR(1) récupère
+  φ = 0.7 sur synthétique, ARMA(1,1) shape contract.
+- `test_forecasting_har.py` — rolling mean naive vs cumsum,
+  récupération des coefficients (β_short, β_medium, β_long) =
+  (0.8, 0.1, 0.05) sur cascade synthétique, refus d'historique trop
+  court.
+
+**Vérification** : suite complète `pytest` → 180 passed, 2 skipped, 0
+régression en Docker.
+
+PR A de la séquence roadmap #20 (~3 jours d'effort). Prochains PRs :
+B (ARFIMA + regime-switching), C (MSM), D (pipeline + CLI + page).
+
 ### Implications du verdict — page conceptuelle + 3 items roadmap (#19-#21)
 
 Suite à la livraison du verdict empirique (cluster C+B+D+I+S, sprint
