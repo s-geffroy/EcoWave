@@ -5,6 +5,45 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #20 PR B — ARFIMA(0, d, 0) + Markov regime-switching
+
+Deuxième incrément de l'item #20. Premier modèle du cluster qui combine
+explicitement deux familles de la signature C+B+D+I+S : C (longue
+mémoire via le paramètre fractionnaire ``d``) et S (régime cognitif
+glissant via une chaîne de Markov à 2 états sur le résidu
+fractionnaire-différencié). C'est la formulation de Bhardwaj-Swanson
+(2006) qui a été testée sur 21 séries macro et y a battu ARMA + AR.
+
+**Nouveau module** :
+
+- `ecowave/forecasting/fractional.py` — primitives propres et
+  testables : `hosking_coefficients` (récursion `ψ_k = ψ_{k-1} · (k-1-d)/k`),
+  `fractional_difference` / `fractional_integrate` (convolution
+  tronquée), `gph_estimate_d` (régression Geweke-Porter-Hudak du log-
+  périodogramme sur les basses fréquences, clipping à `[-0.499, 0.499]`
+  pour préserver la stationnarité).
+- `ecowave/forecasting/arfima_rs.py` — pipeline en 5 étapes : GPH →
+  Hosking diff → MarkovRegression à 2 régimes (mean + variance
+  switching) → simulation chaîne de Markov + tirage Gaussien
+  conditionnel par régime → reconstruction des niveaux par récursion
+  inverse `X_t = Y_t − Σ ψ_k · X_{t-k}`. Fallback gracieux vers
+  ARFIMA(0, d, 0) single-regime si MarkovRegression ne converge pas
+  (flag `regime_fit_ok=False` exposé pour le pipeline PR D).
+
+**Tests** (17 nouveaux, tous passants) :
+
+- `test_forecasting_fractional.py` (9) — coefficients Hosking vs
+  binomial `(-1)^k · (d choose k)` à 4 termes, roundtrip
+  diff→integrate ≈ identity (atol 1e-9), GPH récupère d = 0.3 sur
+  série ARFIMA simulée de longueur 5 000 (tolérance 0.15), clipping
+  des cas non-stationnaires, refus de bandwidth > n/2.
+- `test_forecasting_arfima_rs.py` (8) — shape contract, d récupéré
+  sur ARFIMA simulé (tolérance 0.15), fallback single-regime via
+  `ARFIMARSConfig(n_regimes=1)`, refus historique < 32, variance
+  prédictive monotone croissante en h.
+
+**Vérification** : 197 passed / 2 skipped, **0 régression** en Docker.
+
 ### Roadmap #20 PR A — Forecasting module skeleton + baselines + HAR
 
 Premier incrément de l'item #20 (benchmark de modélisation). Pose la
