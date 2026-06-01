@@ -1,65 +1,135 @@
-# Track banque centrale
+# Banque centrale
 
-> *Pour praticiens de la politique monétaire, économistes BC, analystes
-> macroprudentiels.* Si vous calibrez un modèle DSGE pour votre comité
-> de politique monétaire, projetez des forecasts d'inflation à 8 trimestres,
-> ou supervisez des stress tests bancaires, **cette page est écrite pour
-> vous**.
+!!! success "TL;DR"
 
-## La proposition opérationnelle
+    Pour praticiens BC, économistes monétaires, analystes macroprudentiels. CPV livre **4 outils opérationnels insérables dans une pipeline BC existante** :
+    1. **Credibility radar** — mesurer la crédibilité monétaire en temps réel via `d` GPH sur l'inflation
+    2. **Forward guidance réflexif** — interpréter les annonces BC comme actes performatifs
+    3. **EWS tipping points** — détecter les changements de régime avec ~3 mois d'avance
+    4. **Horizon-aware targeting** — choisir le bon modèle selon l'horizon (HAR court, MSM long, ARFIMA+RS crédit)
 
-1. **La crédibilité monétaire est mesurable** par le paramètre de longue
-   mémoire `d` GPH appliqué à l'inflation. Pays avec `d > 0.5` sur
-   l'inflation : crédibilité plus faible. Volcker 1979–82 a **cassé** la
-   persistance — c'est l'opérationnalisation empirique d'un changement
-   de régime cognitif (S). Une BC qui tracke `d` sur sa série
-   d'inflation tracke en temps réel sa propre crédibilité.
-2. **Le forward guidance est un acte réflexif**, pas un signal
-   informatif neutre. Soros' reflexivity rejoint ici notre famille S :
-   la communication d'une BC *change* le régime cognitif que les agents
-   utilisent pour anticiper. Cela ne disqualifie pas le forward guidance,
-   mais impose de le **modéliser comme tel**.
-3. **Le ciblage de l'inflation doit être horizon-aware.** La longue
-   mémoire dans l'inflation rend les forecasts AR(1) inadéquats au-delà
-   de 3 trimestres. Notre benchmark Roadmap #20 montre que ARFIMA+RS
-   bat random walk à h = 12 ans sur les variables long-mémoire ; HAR
-   les bat à h = 1–3 trimestres. Une BC qui calibre son horizon
-   monétaire (h = 6–8 trimestres typiquement) doit utiliser **les
-   deux familles**, pas une seule.
-4. **Les tipping points de régime sont détectables.** Le diagnostic S
-   (Kolmogorov-Smirnov sliding-window sur les statistiques d'ordre
-   supérieur) signale les changements de régime cognitif avec une
-   avance moyenne empirique de 3-6 mois (sur historique 1960–2024).
-   Application directe : système d'alerte précoce sur les retournements
-   macro.
-5. **Les booms de crédit ont des ombres très longues.** Le `d` GPH sur
-   `LH_CREDIT` (Jordà-Schularick-Taylor 1870–2020) atteint 0.40 sur
-   ADV18 — proche de la borne d'intégration fractionnaire. Le
-   credit-to-GDP gap de Borio (BIS 2014) est un proxy utile mais incomplet ;
-   un *Hurst-based credit cycle* extraperait directement la persistance
-   et anticiperait mieux l'accumulation de risque systémique.
+## Dans cette page
 
-## Contenu (en cours de livraison)
+- **[Les 4 outils en un schéma](#les-4-outils)** — diagramme synthétique
+- **[Le contenu de la track](#contenu)** — 6 pages thématiques
+- **[Implications macroprudentielles](#macroprudentiel)** — Hurst credit cycle, ES recalibré
+- **[Contraintes institutionnelles reconnues](#contraintes)**
 
-| Page | Statut |
+---
+
+## Les 4 outils { #les-4-outils }
+
+```mermaid
+flowchart TB
+    BC([Pipeline BC])
+    BC --> T1[Credibility radar<br/>d GPH inflation<br/>→ crédibilité mesurée]
+    BC --> T2[Forward guidance<br/>réflexif<br/>→ effet performatif quantifié]
+    BC --> T3[EWS tipping points<br/>KS sliding window<br/>→ alerte 3 mois d'avance]
+    BC --> T4[Horizon-aware targeting<br/>HAR court · MSM long<br/>→ meilleur forecast par horizon]
+    style BC fill:#fff59d,stroke:#f9a825,stroke-width:3px
+```
+
+Chaque outil **complète** votre boîte à outils existante. Aucun ne nécessite une refonte structurelle du modèle DSGE officiel.
+
+---
+
+## Contenu de la track { #contenu }
+
+<div class="grid cards" markdown>
+
+-   :material-school:{ .lg .middle } **[Méthode pour praticiens](method_for_practitioners.md)**
+
+    ---
+
+    Le protocole CPV en langage BC : ce qui est nouveau, ce qui complète vos outils, contraintes institutionnelles reconnues.
+
+    **Lecture** : ~25 min · ~2 500 mots
+
+-   :material-radar:{ .lg .middle } **[Credibility radar](credibility_radar.md)**
+
+    ---
+
+    `d` GPH inflation comme mesure quantitative de la crédibilité monétaire. Lecture historique (Volcker, Brexit, COVID). Tableau cross-pays. Implémentation Python.
+
+    **Lecture** : ~28 min · ~2 800 mots
+
+-   :material-message-text:{ .lg .middle } **[Forward guidance réflexif](forward_guidance_reflexive.md)**
+
+    ---
+
+    Cadre Soros + S, 3 canaux par lesquels la communication change le régime cognitif des agents.
+
+    **Lecture** : ~22 min · ~2 200 mots
+
+-   :material-alert-octagon:{ .lg .middle } **[Tipping point detection (EWS)](tipping_point_detection.md)**
+
+    ---
+
+    EWS basé sur KS sliding-window. Performance empirique inflation US 1965-2024 (~3 mois d'avance). Workflow opérationnel.
+
+    **Lecture** : ~24 min · ~2 400 mots
+
+-   :material-target-variant:{ .lg .middle } **[Horizon-aware targeting](horizon_aware_targeting.md)**
+
+    ---
+
+    HAR pour nowcast, MSM pour long terme, ARFIMA+RS pour crédit. Pipeline standard BC à 3 horizons.
+
+    **Lecture** : ~21 min · ~2 100 mots
+
+-   :material-file-document:{ .lg .middle } **[Note phare BC](note_bc.md)**
+
+    ---
+
+    Synthèse opérationnelle praticien rigoureux. TL;DR, 4 outils détaillés, implications macroprudentielles, étapes d'intégration.
+
+    **Lecture** : ~50 min · ~5 000 mots
+
+</div>
+
+---
+
+## Implications macroprudentielles { #macroprudentiel }
+
+```mermaid
+flowchart LR
+    BIS[BIS macroprudentiel<br/>crédit · housing] --> D[d GPH ≈ 0.4<br/>longue mémoire]
+    D --> H[Hurst-based<br/>credit cycle]
+    H --> Better[Meilleure mesure<br/>du risque<br/>accumulé]
+    style Better fill:#a5d6a7,stroke:#388e3c
+```
+
+Le `d` GPH sur les agrégats de crédit (LH_CREDIT JST, BIS_HHCRED) atteint **≈ 0.40** sur les économies avancées — proche de la borne d'intégration fractionnaire. Implication :
+
+- **Les booms de crédit ont des "ombres" très longues**.
+- **Le credit-to-GDP gap Borio sous-estime** l'ampleur réelle du risque.
+- Un **Hurst-based credit cycle** complète le tableau prudentiel.
+
+De plus, le test de queues lourdes (Hill, Lévy stable) suggère que **l'Expected Shortfall sous distributions gaussiennes sous-estime ES de 20-40 %**.
+
+[Voir le détail dans la note phare →](note_bc.md){ .md-button }
+
+---
+
+## Contraintes institutionnelles reconnues { #contraintes }
+
+!!! warning "Le projet CPV est conscient des contraintes BC"
+
+    - **Communication** : nos outils sont *complément diagnostique*, pas refonte
+    - **Continuité historique** : peuvent tourner en parallèle sans rupture
+    - **Robustesse** : protocoles volontairement conservateurs (dual null, consensus 3/4, universalité 4/5, p < 0.01)
+    - **Transparence** : code open-source MIT, reproductible Docker, auditable
+    - **Coordination internationale** : applicables uniformément cross-BC
+
+---
+
+## Pour aller plus loin
+
+| Vous voulez... | Allez vers |
 |---|---|
-| Méthode CPV pour praticiens BC | *à venir* |
-| Credibility radar — `d`-GPH inflation par pays | *à venir* |
-| Forward guidance comme acte réflexif | *à venir* |
-| Tipping point detection (EWS régime drift) | *à venir* |
-| Horizon-aware targeting (ARFIMA+RS vs HAR) | *à venir* |
-| **Note BC (~5 000 mots, langue praticien)** | *en cours* |
-
-## En attendant
-
-- La **[page implications du verdict (multi-axe)](../../reference/implications_of_cluster.md)**
-  contient les sections 1 (politique monétaire) et 2 (macroprudentiel)
-  qui préfigurent la note BC.
-- La **[méthode trois portes](../../methodology/trois_portes.md)**
-  documente le triple-gate falsifiable.
-- Le **[forecast benchmark consolidé](../../forecast_benchmark.md)**
-  livre le verdict opérationnel PASS 78 % cross-panel.
-- La **[bibliographie](../../bibliographie.md)** liste les références
-  pertinentes (Borio 2014 financial cycle ; Drehmann-Borio-Tsatsaronis
-  2012 credit gap ; Bhardwaj-Swanson 2006 ARFIMA macro forecasting ;
-  Calvet-Fisher pour volatilité long-horizon).
+| Voir le verdict opérationnel | [Forecast benchmark consolidé](../../forecast_benchmark.md) |
+| Reproduire en Docker | [Benchmark reproductible (Quants)](../quants/benchmark_reproducible.md) |
+| Vulgariser pour collègues non-techniques | [Track Public éclairé](../public/index.md) |
+| Le travail académique sous-jacent | [Track Académique](../acad/index.md) |
+| Implications du verdict multi-axe | [Implications du verdict](../../reference/implications_of_cluster.md) |
+| Sources de données | [Sources citées](../../data_sources_cited.md) |

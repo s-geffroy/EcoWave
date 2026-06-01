@@ -1,68 +1,167 @@
-# Track académique
+# Académique
 
-> *Pour économistes théoriciens, DSGE community, philosophes de
-> l'économie.* Le projet CPV est une réfutation falsifiable du paradigme
-> cycle + équilibre intertemporel, doublée d'une signature empirique
-> alternative robuste. Ce track est écrit pour qui veut **lire les preuves
-> avec un regard critique** et **engager la discussion théorique** sur le
-> remplaçant.
+!!! success "TL;DR"
 
-## Les claims
+    Pour économistes théoriciens, DSGE community, philosophes de l'économie. CPV est une **réfutation falsifiable** du paradigme cycle + équilibre intertemporel, doublée d'une **signature empirique alternative robuste** (cluster C+B+D+I+S sur 9 436 cellules). Le benchmark out-of-sample valide 3 modèles qui reproduisent cette signature (MSM, ARFIMA+RS, HAR) qui battent random walk sur **78 % de 68 variables**. Conséquence : **DSGE New-Keynesian standard doit être révisé structurellement** (chocs ARFIMA, Markov layer paramètres deep, queues Tsallis/Lévy).
 
-1. **Les quatre cycles canoniques sont statistiquement morts.** Le
-   triple-gate (Gate 1 dual null + Gate 2 consensus + Gate 3
-   universalité) les rejette systématiquement sur 9 436 cellules,
-   6 panels macro, 1700–2024. La datation pédagogique de
-   Korotayev-Tsirel 2010 ne survit pas à la dual null AR(1) +
-   phase-scramble.
-2. **L'image statistiquement adéquate est un cluster diagnostique
-   stable C + B + D + I + S.** Longue mémoire, multifractalité,
-   non-linéarité, information structurée, dérive de régime cognitif —
-   conjointement, à toutes les fréquences pertinentes.
-3. **Le cluster a un pendant constructif opérationnel.** Le benchmark
-   Roadmap #20 montre PASS 78 % out-of-sample CRPS à h = 12 (52 / 68
-   variables, 6 panels) pour les modèles qui reproduisent le cluster
-   (MSM, ARFIMA+RS, HAR). Random walk n'est pas battu par les baselines
-   stationnaires (AR(1), ARMA(1,1)) — il l'est par les modèles cluster.
-4. **DSGE doit être révisé structurellement.** Chocs AR(1) → ARFIMA ;
-   paramètres "deep" stables → layer Markov ; distributions gaussiennes
-   → queues Tsallis/Lévy. Sans ces trois modifications, le NK-DSGE
-   continuera de rater 2008, 2020, 2022.
-5. **L'Adaptive Markets Hypothesis de Lo, le free-energy de Friston, et
-   le MRW de Bacry-Muzy-Delour sont les trois candidats pour la
-   synthèse théorique manquante.** Aucun ne couvre seul les cinq
-   piliers ; un cadre unifié reste à construire.
+## Dans cette page
 
-## Contenu (en cours de livraison)
+- **[Les 5 claims principaux](#claims)** — résumé des résultats falsifiables
+- **[Les 6 pages de la track](#contenu)** — structure du parcours
+- **[La synthèse théorique manquante](#synthese)** — AMH + Friston + MRW
+- **[5 prédictions falsifiables](#predictions)** — état de la réplication
 
-| Page | Statut |
+---
+
+## Les 5 claims principaux { #claims }
+
+```mermaid
+flowchart TD
+    C1[Claim 1<br/>4 cycles canoniques<br/>statistiquement morts]
+    C2[Claim 2<br/>Cluster C+B+D+I+S<br/>signature empirique stable]
+    C3[Claim 3<br/>Benchmark cluster<br/>bat RW à 78%]
+    C4[Claim 4<br/>DSGE requiert<br/>3 modifications structurelles]
+    C5[Claim 5<br/>AMH + Friston + MRW<br/>candidats synthèse]
+
+    C1 --> Verdict([Reproductible<br/>via protocole 3 portes])
+    C2 --> Verdict
+    C3 --> Verdict
+    C4 --> Programme([Programme de recherche<br/>BC + universités<br/>2-3 ans])
+    C5 --> Programme
+
+    style Verdict fill:#a5d6a7,stroke:#388e3c,stroke-width:3px
+    style Programme fill:#fff59d,stroke:#f9a825,stroke-width:3px
+```
+
+| # | Claim | Statut |
+|---|---|---|
+| 1 | Kitchin/Juglar/Kuznets/Kondratieff échouent au triple-gate sur 6 panels | **Démontré** (0 / 9 436 cellules survivent) |
+| 2 | Cluster C+B+D+I+S co-apparaît sur ≥ 60 % des cellules | **Démontré** (14 diagnostics Tier 1+2) |
+| 3 | 3 modèles cluster battent RW out-of-sample CRPS sur 78 % des variables | **Démontré** (PASS 78 %, robuste à n_origins) |
+| 4 | DSGE requiert 3 modifications structurelles | **Argumenté** (programme 2-3 ans documenté) |
+| 5 | AMH + Friston + MRW = candidats synthèse théorique | **Ouvert** (aucun n'unifie seul les 5 piliers) |
+
+---
+
+## Contenu de la track { #contenu }
+
+<div class="grid cards" markdown>
+
+-   :material-function:{ .lg .middle } **[Méthode compacte](method_compact.md)**
+
+    ---
+
+    Protocole CPV en langage théoricien : Box-Jenkins étendu, Theiler-Vyushin-Kushner, Hamilton-Killick-Bry-Boschan. Formalisation statistique du triple-gate.
+
+    **Lecture** : ~10 min · ~900 mots
+
+-   :material-trophy:{ .lg .middle } **[Verdict constructif](verdict_constructive.md)**
+
+    ---
+
+    Cluster + benchmark en ton AER/JME. Distribution des rejets par famille, incompatibilité cycles canoniques, robustesse 78 %, 3 inférences hiérarchiques.
+
+    **Lecture** : ~17 min · ~1 700 mots
+
+-   :material-gavel:{ .lg .middle } **[DSGE en accusation](dsge_in_dock.md)**
+
+    ---
+
+    3 modifications structurelles requises (long-memory shocks, Markov layer paramètres deep, distributions non-gaussiennes). Programme de recherche conjoint 2-3 ans.
+
+    **Lecture** : ~15 min · ~1 500 mots
+
+-   :material-graph-outline:{ .lg .middle } **[Synthèse AMH](synthesis_amh.md)**
+
+    ---
+
+    AMH (Lo 2017, couvre 4/5 piliers) + free-energy (Friston 2010, couvre 3/5) + MRW (Bacry-Muzy-Delour 2001, couvre 2/5). Programme ouvert.
+
+    **Lecture** : ~14 min · ~1 400 mots
+
+-   :material-test-tube:{ .lg .middle } **[5 prédictions falsifiables](falsifiable_predictions.md)**
+
+    ---
+
+    Statut : prédiction 4 CONFIRMÉE par Roadmap #20, prédictions 1, 5 TODO, prédictions 2, 3 PARTIELLES. Total restant ~70 jours.
+
+    **Lecture** : ~15 min · ~1 500 mots
+
+-   :material-file-document-multiple:{ .lg .middle } **[Paper V2 académique](paper_v2_academic.md)**
+
+    ---
+
+    Paper phare avec dramaturgie constructive. Abstract + JEL codes + 5 sections + annexes + 30+ références. Conçu pour soumission AER/JME/QJE.
+
+    **Lecture** : ~45 min · ~4 500 mots
+
+</div>
+
+---
+
+## La synthèse théorique manquante { #synthese }
+
+Aucun cadre théorique unique ne **prédit conjointement** les 5 piliers à partir de premiers principes. Les candidats :
+
+```mermaid
+flowchart TB
+    Cluster[<b>Cluster CPV</b><br/>C + B + D + I + S]
+    Cluster --> AMH[<b>AMH</b> Lo 2017<br/>4/5 piliers<br/>méta-cadre conceptuel]
+    Cluster --> Friston[<b>Free-energy</b> Friston 2010<br/>3/5 piliers<br/>formalisation forte]
+    Cluster --> MRW[<b>MRW</b> Bacry-Muzy-Delour 2001<br/>2/5 piliers<br/>formalisation précise]
+    AMH --> Open([Programme ouvert<br/>3-5 ans<br/>synthèse à formaliser])
+    Friston --> Open
+    MRW --> Open
+    style Open fill:#ffe0b2,stroke:#ef6c00,stroke-width:3px
+```
+
+**Proposition** : *MRW étendu à régimes de free-energy* — processus log-multifractal dont les paramètres sont conditionnellement Markoviens au régime cognitif suivant une dynamique d'active inference.
+
+[Détail dans la synthèse →](synthesis_amh.md){ .md-button }
+
+---
+
+## 5 prédictions falsifiables { #predictions }
+
+```mermaid
+gantt
+    title État des 5 prédictions falsifiables CPV
+    dateFormat YYYY
+    section Pred 1
+        Durabilité longue mémoire pré-1700  :p1, 2026, 90d
+    section Pred 2
+        Robustesse non-financière (OWID)  :active, p2, 2026, 60d
+    section Pred 3
+        Multifractale vs monofractale  :active, p3, 2026, 45d
+    section Pred 4
+        Forecast régime-conditionnel  :done, p4, 2026, 30d
+    section Pred 5
+        Split-point spécificité  :p5, 2026, 30d
+```
+
+Statut détaillé :
+
+| Prédiction | Statut | Effort restant |
+|---|---|---|
+| 1 — Durabilité longue mémoire (pré-1700) | TODO | 25-35 jours |
+| 2 — Robustesse non-financière | PARTIAL | 18 jours |
+| 3 — Multifractale > monofractale | PARTIAL | 10 jours |
+| 4 — Forecast régime-conditionnel | **CONFIRMÉE** (Roadmap #20) | 7 jours (queues lourdes) |
+| 5 — Split-point spécifique | TODO | 5 jours |
+
+[Détail dans la page prédictions →](falsifiable_predictions.md){ .md-button }
+
+---
+
+## Pour aller plus loin
+
+| Vous voulez... | Allez vers |
 |---|---|
-| Méthode CPV en langage théoricien | *à venir* |
-| Verdict constructif (cluster + benchmark, ton AER/JME) | *à venir* |
-| DSGE en accusation : modifications structurelles requises | *à venir* |
-| Synthèse Friston + MRW + AMH comme méta-cadre | *à venir* |
-| Les 5 prédictions falsifiables enrichies | *à venir* |
-| **Paper V2 académique (~12 000 mots, dramaturgie constructive)** | *en cours* |
-
-## En attendant
-
-- Le **[working paper V1](../../papers/cpv_main_paper.md)** (réfutation-first,
-  décembre 2025, ~10 000 mots) est consultable. La V2 hérite de ses
-  §5.3 (rebuttals anticipés) et §5.4 (5 prédictions falsifiables).
-- La **[méthode détaillée](../../methodology/protocole_cpv.md)** est
-  pleinement documentée — Gate 1/2/3, dual null, consensus, garde-fous.
-- Le **[panorama des 21 familles](../../methodology_beyond_cycles.md)**
-  cartographie l'espace théorique des cadres physiques alternatifs.
-- La **[bibliographie complète](../../bibliographie.md)** liste les
-  références canoniques (Calvet-Fisher 2002, 2004, 2008 ; Bhardwaj-
-  Swanson 2006 ; Corsi 2009 ; Bacry-Muzy-Delour 2001 ; Lo 2017 ;
-  Hosking 1981 ; Granger-Joyeux 1980).
-
-## Pour discuter / réfuter
-
-Le protocole est conçu pour publier ses échecs. La page
-[diagnostics non-cycliques](../../dx_diagnostics.md) liste les
-14 statistiques diagnostiques Tier 1+2 et leurs p-values par cellule.
-Si un cycle survit à votre propre version du Gate 1 dual null sur un
-jeu de données reproductible, **nous sommes très intéressés par votre
-réplication**.
+| Voir le verdict opérationnel chiffré | [Forecast benchmark consolidé](../../forecast_benchmark.md) |
+| Reproduire les résultats | [Benchmark reproductible (Quants)](../quants/benchmark_reproducible.md) |
+| Implications BC opérationnelles | [Track Banque centrale](../bc/index.md) |
+| Vulgariser sans jargon | [Track Public éclairé](../public/index.md) |
+| Le working paper V1 archivé | [Paper V1 (réfutation-first, déc 2025)](../../papers/cpv_main_paper.md) |
+| Méthode complète détaillée | [Protocole CPV](../../methodology/protocole_cpv.md) |
+| Panorama des 21 familles | [Au-delà des cycles](../../methodology_beyond_cycles.md) |
+| Sources de données citées | [Sources](../../data_sources_cited.md) |
