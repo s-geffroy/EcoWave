@@ -5,6 +5,43 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #20 PR C — Markov-Switching Multifractal (MSM Calvet-Fisher)
+
+Troisième incrément. *Le* modèle canonique du cluster CPV — celui qui
+combine **B** (multifractalité via la cascade de multiplicateurs),
+**C** (longue mémoire imitée par décroissance géométrique des taux de
+switching à travers les composantes) et queues lourdes (mélange de
+régimes de variance) à partir d'une seule histoire générative.
+
+**Nouveau module `ecowave/forecasting/msm.py`** :
+
+- **Spécification** : ``r_t = σ_t z_t`` avec ``σ_t = σ̄ · sqrt(M_{1,t}
+  ⋯ M_{K,t})``. Chaque multiplicateur ``M_{k,t} ∈ {m_0, 2 − m_0}`` est
+  une chaîne de Markov à 2 états ; switching ``γ_k = 1 − (1 − γ_1)^{b^{k−1}}``
+  géométrique avec ``b > 1``. Quatre paramètres ``(m_0, σ̄, b, γ_1)``.
+- **Estimation** : ML par filtre forward Hamilton sur l'espace
+  combiné ``2^K`` ; ``K = 4`` (16 états) est le sweet spot. Grille de
+  starting points puis L-BFGS-B avec box constraints. Fallback
+  gracieux (single random-walk) si toutes les optimisations divergent
+  — flag ``msm_fit_ok`` exposé.
+- **Simulation** : tirage de l'état initial de chaque chemin depuis
+  la distribution filtrée terminale, puis chaînes indépendantes par
+  composante (exponentiellement moins cher que la chaîne jointe).
+  Reconstruction des niveaux : log-returns cumulés (si série > 0) ou
+  first differences cumulés.
+
+**Tests** (11 nouveaux, tous passants) :
+
+- Configuration : refus de ``n_components ∉ [2, 6]``.
+- Internals : ``γ_k`` croît avec ``k``, ``E[σ²]`` non-conditionnel
+  = ``σ̄²`` exact, matrice de transition lignes-stochastique,
+  log-vraisemblance finie sur chemin MSM simulé.
+- Public : shape contract, refus historique < 50, refus NaN, refus
+  horizons ≤ 0, variance prédictive monotone croissante en h,
+  robustesse à un historique pathologique.
+
+**Vérification** : 208 passed / 2 skipped, **0 régression** en Docker.
+
 ### Roadmap #20 PR B — ARFIMA(0, d, 0) + Markov regime-switching
 
 Deuxième incrément de l'item #20. Premier modèle du cluster qui combine
