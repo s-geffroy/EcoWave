@@ -1,10 +1,21 @@
 # Forward guidance comme acte réflexif
 
-> *Pourquoi la communication d'une banque centrale change le régime
-> cognitif dans lequel les agents anticipent — et comment le modéliser
-> formellement via la famille S du cluster CPV.*
+!!! success "TL;DR"
 
-## Le problème conceptuel
+    Dans la théorie standard, le forward guidance est une information neutre intégrée par Bayes. **En réalité**, les agents ne connaissent pas le vrai modèle du système : l'annonce BC **change le modèle** que les agents utilisent. C'est la **réflexivité** de Soros, formalisée par la famille S du cluster CPV via KS sliding-window sur les statistiques d'ordre supérieur. Trois canaux : fonction de réaction perçue, coordination des anticipations, contraintes effectives. 4 implications pour la communication BC.
+
+## Dans cette page
+
+- **[Le problème conceptuel](#probleme)** — anticipations rationnelles vs réflexivité
+- **[Formalisation S](#formalisation)** — KS sliding-window
+- **[3 canaux de changement de régime](#canaux)**
+- **[4 implications pour la communication BC](#implications)**
+- **[Implémentation Python](#implementation)**
+- **[Limites conceptuelles](#limites)**
+
+---
+
+## Le problème conceptuel { #probleme }
 
 Dans la théorie standard des anticipations rationnelles, les agents
 économiques :

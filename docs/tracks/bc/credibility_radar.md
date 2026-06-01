@@ -1,10 +1,23 @@
 # Credibility radar
 
-> *Comment mesurer la crédibilité d'une banque centrale en temps réel
-> via le paramètre de longue mémoire `d` GPH appliqué à l'inflation.
-> Un seul indicateur, mensuel, comparable cross-pays, falsifiable.*
+!!! success "TL;DR"
 
-## L'intuition
+    **Une banque centrale crédible a une inflation faiblement persistante** : les chocs s'éteignent vite parce que les agents n'anticipent pas une dérive de la cible. Cette persistance est exactement le paramètre `d` GPH. Interprétation : `d < 0.10` crédible, `d > 0.40` crise. Implémentation : une ligne Python, ~milliseconde. Volcker 1979 → `d` chute de 0.40 à 0.10 ; Brexit/COVID 2016-22 → `d` remonte. Mesure directe sans dépendance aux enquêtes.
+
+## Dans cette page
+
+- **[L'intuition](#intuition)** — pourquoi `d` mesure la crédibilité
+- **[La formalisation GPH](#formalisation)** — équation et code
+- **[Comment l'utiliser opérationnellement](#usage)**
+- **[Lecture historique](#historique)** — Volcker, Brexit, COVID
+- **[Comparaison cross-pays](#cross-pays)** — tableau indicatif
+- **[Comment ça complète vos indicateurs existants](#complement)**
+- **[Limites à connaître](#limites)**
+- **[Étapes pour intégrer dans votre pipeline BC](#integration)**
+
+---
+
+## L'intuition { #intuition }
 
 Une banque centrale **crédible** est celle dont les acteurs
 économiques *croient* la cible d'inflation, sans attendre la preuve
