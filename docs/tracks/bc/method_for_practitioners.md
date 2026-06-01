@@ -1,10 +1,22 @@
 # La méthode CPV pour les praticiens
 
-> *Comment lire le protocole CPV quand on travaille dans une banque
-> centrale. Ce qui est nouveau, ce qui est compatible avec vos outils
-> existants, et ce qui mérite votre attention.*
+!!! success "TL;DR"
 
-## Ce qui est nouveau
+    Pour praticiens BC : CPV est un **complément diagnostique** rigoureux et falsifiable, pas une refonte de votre modèle officiel. Le protocole **3 portes** (dual null + consensus 4 méthodes + universalité 4/5) teste les cycles canoniques sur 6 panels. Verdict : Kitchin/Juglar/Kuznets/Kondratieff échouent systématiquement. Implication pratique : vos modèles DSGE qui supposent AR(1) chocs, paramètres deep stables, distributions gaussiennes sous-estiment 3 effets clés (persistance, régimes, queues).
+
+## Dans cette page
+
+- **[Ce qui est nouveau](#nouveau)** — le triple-gate falsifiable
+- **[Pourquoi cela importe institutionnellement](#importance)** — impact sur vos modèles
+- **[Les trois portes en langage BC](#portes)** — détail méthodologique
+- **[Le verdict de ces portes](#verdict)** — 0 / 9 436 cellules survivent
+- **[Ce qui reste utilisable](#existant)** — vos outils + nos diagnostics
+- **[Ce qui est nouveau et compatible](#outils)** — 4 outils insérables
+- **[Contraintes institutionnelles reconnues](#contraintes)**
+
+---
+
+## Ce qui est nouveau { #nouveau }
 
 Le protocole CPV introduit **trois portes de falsifiabilité** sur les
 mécanismes cycliques classiques. Aucun cadre BC standard ne fait

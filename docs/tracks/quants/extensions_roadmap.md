@@ -1,10 +1,53 @@
 # Extensions roadmap
 
-> *Modèles, scoring rules, et infrastructure à ajouter pour pousser le
-> verdict au-delà des 78 % actuels et tester des hypothèses cluster
-> plus fines.*
+!!! success "TL;DR"
 
-## Modèles à ajouter
+    **10+ chantiers** classés par priorité pour pousser le verdict au-delà des 78 % actuels. Top priorités : (1) **Diebold-Mariano + Giacomini-White** pour rigueur statistique (5 j), (2) **parallélisation origins** pour scaling (3 j), (3) **MRW continu** Bacry-Muzy-Delour (5 j), (4) **HABM** Lux-Marchesi pour explication mécaniste (10 j). Total effort estimé : ~60-80 jours pour le cluster complet.
+
+## Dans cette page
+
+- **[Modèles à ajouter](#nouveaux-modeles)** — HABM, MRW, AMH-ensemble, active inference
+- **[Modèles déjà implémentés à raffiner](#raffinement)** — MSM K élargi, SML, ARFIMA(p,d,q)
+- **[Scoring rules à ajouter](#scoring)** — Energy, Variogram, quantile-weighted CRPS
+- **[Pipeline / infrastructure](#pipeline)** — parallélisation, rolling-window
+- **[Cadre d'évaluation théorique](#evaluation)** — Diebold-Mariano, Giacomini-White
+- **[Priorités suggérées](#priorites)** — matrice effort × impact
+
+---
+
+## Priorités suggérées { #priorites }
+
+```mermaid
+gantt
+    title Chantiers extensions roadmap
+    dateFormat YYYY-MM-DD
+    axisFormat %m
+    section Priorité 1
+        Diebold-Mariano + Giacomini-White (5j)  :crit, dm, 2026-07-01, 5d
+    section Priorité 2
+        Parallélisation origins (3j)             :crit, par, 2026-07-07, 3d
+    section Priorité 3
+        MRW continu Bacry-Muzy-Delour (5j)       :mrw, 2026-07-10, 5d
+    section Priorité 4
+        HABM Lux-Marchesi (10j)                  :habm, 2026-07-15, 10d
+    section Priorité 5
+        Quantile-weighted CRPS (2j)              :qcrps, 2026-07-25, 2d
+    section Priorité 6
+        MSM SML pour K=6+ (3j)                   :sml, 2026-07-27, 3d
+```
+
+| Priorité | Item | Effort | Impact |
+|---|---|---|---|
+| **1** | Diebold-Mariano + Giacomini-White | 5 j | Crédibilité statistique du verdict |
+| **2** | Parallélisation origins | 3 j | n_origins=20-30 facilement |
+| **3** | MRW continu | 5 j | Test : régime-switching apporte-t-il vraiment ? |
+| **4** | HABM | 10 j | Mécanique sous-jacente du cluster |
+| **5** | Quantile-weighted CRPS | 2 j | Focus risque systémique |
+| **6** | MSM SML pour K=6+ | 3 j | Calibration stable sur panels longs |
+
+---
+
+## Modèles à ajouter { #nouveaux-modeles }
 
 ### Heterogeneous Agent-Based Models (HABM)
 
@@ -86,7 +129,7 @@ mise à jour minimisant free-energy variationnel.
 nombreux). Probablement une étude exploratoire dans un module séparé
 avant de l'intégrer au benchmark.
 
-## Modèles déjà implémentés à raffiner
+## Modèles déjà implémentés à raffiner { #raffinement }
 
 ### MSM : étendre K
 
@@ -122,7 +165,7 @@ on pourrait sélectionner par BIC sur des candidats `{(1, 3, 12),
 
 Effort : ~2 jours.
 
-## Scoring rules à ajouter
+## Scoring rules à ajouter { #scoring }
 
 ### Energy Score (multivariate generalization de CRPS)
 
@@ -151,7 +194,7 @@ matche mieux nos préoccupations risque systémique.
 
 **Effort** : ~2 jours.
 
-## Pipeline / infrastructure
+## Pipeline / infrastructure { #pipeline }
 
 ### Parallélisation des origins
 
@@ -191,7 +234,7 @@ robuste à la non-stationnarité historique que rolling-origin.
 **Effort** : ~7 jours. Nouveau script CLI
 `forecast-benchmark-decade-cv`.
 
-## Cadre théorique d'évaluation
+## Cadre théorique d'évaluation { #evaluation }
 
 ### Test de Diebold-Mariano
 

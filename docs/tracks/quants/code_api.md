@@ -1,22 +1,42 @@
 # API publique `ecowave.forecasting`
 
-> *Référence des fonctions et dataclasses exportées. Chaque entrée
-> pointe vers le code source sur GitHub.*
+!!! success "TL;DR"
 
-## Vue d'ensemble du package
+    Module Python conteneurisé Docker, sous licence MIT. **`ProbabilisticForecast`** est le format pivot — tous les modèles le retournent. Pipeline composable : 6 modèles individuels → benchmark rolling-origin → scoring propre → sidecar JSON → consolidation cross-panel.
 
-```
-ecowave/forecasting/
-├── types.py                   # ProbabilisticForecast (pivot)
-├── proper_scoring.py          # CRPS empirique, coverage, MZ
-├── baselines.py               # RW, AR(1), ARMA(1,1)
-├── har.py                     # HAR Corsi 2009
-├── fractional.py              # Hosking + GPH primitives
-├── arfima_rs.py               # ARFIMA(0, d, 0) + Markov RS
-├── msm.py                     # MSM Calvet-Fisher 2002
-├── benchmark.py               # Pipeline rolling-origin
-├── reporting.py               # Sidecar JSON + page markdown
-└── consolidated_report.py     # Cross-panel aggregation
+## Dans cette page
+
+- **[Architecture du package](#architecture)** — diagramme des 10 modules
+- **[Format pivot `ProbabilisticForecast`](#pivot)** — interface commune
+- **[Scoring propre](#scoring)** — CRPS, coverage, MZ
+- **[6 modèles](#modeles)** — baselines + cluster
+- **[Pipeline benchmark](#pipeline)** — orchestration + verdict
+- **[Reporting + consolidation](#reporting)** — sidecar + page markdown
+- **[Exemple end-to-end Python](#exemple)**
+
+---
+
+## Architecture du package { #architecture }
+
+```mermaid
+flowchart TB
+    Types[<b>types.py</b><br/>ProbabilisticForecast<br/>format pivot] --> Models
+    subgraph Models [Modèles forecast]
+        Baselines[baselines.py<br/>RW, AR(1), ARMA]
+        HAR[har.py<br/>Corsi 2009]
+        Fractional[fractional.py<br/>Hosking + GPH]
+        ARFIMA[arfima_rs.py]
+        MSM[msm.py]
+    end
+    Fractional --> ARFIMA
+    Models --> Bench[<b>benchmark.py</b><br/>Pipeline rolling-origin]
+    Scoring[<b>proper_scoring.py</b><br/>CRPS · coverage · MZ] --> Bench
+    Bench --> Reporting[<b>reporting.py</b><br/>Sidecar JSON + markdown]
+    Reporting --> Consolidated[<b>consolidated_report.py</b><br/>Cross-panel]
+    Consolidated --> HubIndex[<b>hub_index.py</b><br/>Live verdict sync]
+    style Types fill:#fff59d,stroke:#f9a825
+    style Bench fill:#90caf9,stroke:#1565c0
+    style HubIndex fill:#a5d6a7,stroke:#388e3c
 ```
 
 ## `types.py` — Le format pivot

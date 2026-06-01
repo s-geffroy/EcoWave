@@ -1,10 +1,34 @@
 # Failure modes
 
-> *Le verdict est PASS 78 % — donc 22 % d'échecs.* Cette page analyse
-> honnêtement les 15 variables (sur 68) où aucun modèle cluster ne bat
-> random walk en out-of-sample CRPS à h = 12.
+!!! success "TL;DR"
 
-## Liste exhaustive des variables battues par RW
+    PASS 78 % = 22 % d'échecs (15/68 variables). **Aucun n'est aléatoire** : 4 patterns structurels identifiés. (1) **Taux d'intérêt administrés** ZIRP × 5 ; (2) **Séries courtes annuelles** n_obs < 80 × 6 ; (3) **Agrégats avec chocs exogènes** × 4 ; (4) **Séries historiques US sectorielles** × 3. Chaque pattern a une solution candidate documentée. Random walk reste l'optimum opérationnel pour ces cas spécifiques.
+
+## Dans cette page
+
+- **[Liste exhaustive](#liste)** — 15 variables battues par RW
+- **[Pattern 1 — Taux d'intérêt](#pattern-1)** — politiques BC + ZIRP
+- **[Pattern 2 — Séries courtes annuelles](#pattern-2)** — MSM mal identifié
+- **[Pattern 3 — Chocs structurels exogènes](#pattern-3)** — agrégats commerce/invest
+- **[Pattern 4 — Séries historiques US](#pattern-4)** — Wen 2005
+- **[Ce que ces 15 échecs ne signifient pas](#interpretation)**
+- **[Implications pratiques](#implications)**
+
+---
+
+## Distribution des échecs par pattern
+
+```mermaid
+pie title 15 échecs / 68 variables = 22 %
+    "Taux administrés ZIRP" : 5
+    "Séries courtes annuelles" : 6
+    "Agrégats chocs exogènes" : 4
+    "Séries historiques US" : 3
+```
+
+---
+
+## Liste exhaustive { #liste }
 
 Extrait des sidecars consolidés (n_origins=12, as_of=2026-05) :
 
@@ -26,7 +50,7 @@ Extrait des sidecars consolidés (n_origins=12, as_of=2026-05) :
 | `sh` | US_SH::SH_US_STEEL | ARFIMA+RS | Acier US, série Wen 2005 |
 | `sh` | US_SH::SH_US_INDPROD | ARFIMA+RS | Production industrielle US |
 
-## Pattern n°1 — Taux d'intérêt
+## Pattern 1 — Taux d'intérêt administrés { #pattern-1 }
 
 **5 variables sur 15** (`Q_YIELD` × 2, `LH_YIELD`, `BOE_STIR`,
 `BIS_CRATIO` partiellement) sont des **taux d'intérêt** ou directement
@@ -47,7 +71,7 @@ RW capture mieux le plateau ZIRP.
 ruptures de politique. Ou prior bayésien sur les taux qui contraint
 l'évolution à respecter les annonces BC.
 
-## Pattern n°2 — Variables courtes annuelles (wb, sh)
+## Pattern 2 — Variables courtes annuelles (wb, sh) { #pattern-2 }
 
 **6 variables sur 15** sont sur le panel `wb` (1960-2024) ou `sh`
 (annuels, ~50-60 obs après nettoyage). Ces séries n'ont pas assez de
@@ -68,7 +92,7 @@ ne résout pas le problème d'identification.
 - MSM avec K = 3 (8 états) pour les séries courtes.
 - HAR avec `(1, 2, 5)` pour respecter la dimension d'échantillon.
 
-## Pattern n°3 — Commerce international et investissement agrégé
+## Pattern 3 — Commerce international et investissement agrégé { #pattern-3 }
 
 **4 variables sur 15** (`CY_TRD` × 2, `CY_INV` × 2, `EA::Q_INV`,
 `BIS_HHCRED`) sont des agrégats de **commerce** ou
@@ -87,7 +111,7 @@ majeurs), MSM probablement gagne. Sur les périodes traversant 1 ou
 **À explorer** : modèle avec composante structural break détectée
 endogène (à la Hamilton 2018 + Bai-Perron).
 
-## Pattern n°4 — Séries historiques US sectorielles (sh)
+## Pattern 4 — Séries historiques US sectorielles (sh) { #pattern-4 }
 
 **3 variables sur 15** sont les trois séries du panel `sh`
 (fret rail, acier, production industrielle). Ce sont précisément les
@@ -105,7 +129,7 @@ opérationnellement utile — bien que statistiquement valide.
 - Analyse Gate 1 dual null sur ces 3 séries spécifiquement — survivent-
   elles, contre toute attente ?
 
-## Ce que ces 15 échecs ne signifient pas
+## Ce que ces 15 échecs ne signifient pas { #interpretation }
 
 Il est tentant de dire : "le cluster perd sur 22 % des variables donc
 le cluster est faux". Ce serait incorrect pour trois raisons :
@@ -123,7 +147,7 @@ le cluster est faux". Ce serait incorrect pour trois raisons :
    échecs. Le résultat opérationnel reste : *quand un modèle bat RW,
    c'est un modèle cluster ; sinon, c'est RW*.
 
-## Implication pour la pratique
+## Implications pour la pratique { #implications }
 
 Si vous voulez utiliser nos modèles pour de la prévision opérationnelle :
 

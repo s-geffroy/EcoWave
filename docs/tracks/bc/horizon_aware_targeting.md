@@ -1,11 +1,21 @@
 # Horizon-aware targeting
 
-> *Pourquoi une banque centrale qui cible l'inflation à 8 trimestres
-> ne doit pas utiliser le même modèle que celui qu'elle utilise pour
-> son nowcast trimestriel. Les modèles cluster ont des performances
-> très différentes selon l'horizon.*
+!!! success "TL;DR"
 
-## Le problème
+    Différents modèles dominent à différents horizons. **HAR** pour nowcast (h = 0-3), **HAR ou MSM** pour horizon BC (h = 4-8, choix par BIC), **MSM** pour long terme (h ≥ 12), **ARFIMA+RS** pour variables de crédit. Une BC qui utilise un seul modèle "tout-horizon" sous-optimise systématiquement. Gain estimé : ~30 % de réduction CRPS sur variables où cluster gagne. Implémentation Python en pipeline standard 3-horizons.
+
+## Dans cette page
+
+- **[Le problème](#probleme)** — horizon unique = sous-optimisation
+- **[Verdict empirique par horizon](#verdict)** — domination par horizon
+- **[Recommandations opérationnelles](#recommandations)**
+- **[Implémentation BC pratique](#implementation)** — pipeline 3-horizons
+- **[Conséquences théoriques](#theorie)**
+- **[Limites et précautions](#limites)**
+
+---
+
+## Le problème { #probleme }
 
 Les banques centrales fonctionnent avec un **horizon de politique
 monétaire** typiquement compris entre 6 et 8 trimestres (18 à 24 mois).

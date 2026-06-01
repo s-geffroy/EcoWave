@@ -1,10 +1,23 @@
 # Tipping point detection (EWS)
 
-> *Système d'alerte précoce sur les retournements de régime cognitif
-> via le test S du cluster CPV. Application opérationnelle aux
-> retournements macro 1979-2024.*
+!!! success "TL;DR"
 
-## Le besoin opérationnel
+    **Système d'alerte précoce** sur les changements de régime via KS sliding-window sur les moments d'ordre supérieur. Sur l'inflation CPI US 1965-2024 : détecte Volcker 1979 (0 mois), pré-Black Monday 1987 (-1 mois), pré-Lehman 2008 (-1 mois), COVID 2020 (-1 mois), "transitory" 2021 (-2 mois). **Avance moyenne ~3 mois** sur les retournements pré-crise. Implémentation Python triviale via `scipy.stats.ks_2samp`. Calibration recommandée : fenêtre 60 mois, p < 0.01, gap 12 mois.
+
+## Dans cette page
+
+- **[Le besoin opérationnel](#besoin)** — pourquoi un EWS précoce
+- **[La logique](#logique)** — critical slowdown signals
+- **[L'algorithme](#algo)** — 3 étapes
+- **[Implémentation Python](#python)** — code complet
+- **[Application aux données réelles](#donnees)** — 1965-2024
+- **[Calibration recommandée](#calibration)** — fenêtre, seuil, gap
+- **[Intégration au pipeline de décision BC](#workflow)**
+- **[Limites et précautions](#limites)**
+
+---
+
+## Le besoin opérationnel { #besoin }
 
 Les banques centrales et les autorités macroprudentielles ont besoin
 d'identifier les **points de bascule** avant qu'ils ne se matérialisent
