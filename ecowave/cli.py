@@ -662,6 +662,35 @@ def forecast_benchmark_consolidate(
     )
 
 
+@app.command("render-hub-index")
+def render_hub_index_cli(
+    as_of: str = typer.Option("2026-05", "--as-of"),
+    reports_dir: str = typer.Option("/app/reports", "--reports-dir"),
+    index_path: str = typer.Option("/app/docs/index.md", "--index-path"),
+    panels: str = typer.Option(
+        "wb,q,long,boe,bis,sh", "--panels",
+        help="Comma-separated panel codes to consolidate for the verdict block."),
+    beat_threshold: float = typer.Option(0.5, "--beat-threshold"),
+) -> None:
+    """Refresh the AUTO-VERDICT block of the hub home page from sidecars."""
+    from ecowave.forecasting.hub_index import render_hub_index_from_reports
+
+    panel_codes = tuple(p.strip() for p in panels.split(",") if p.strip())
+    summary = render_hub_index_from_reports(
+        reports_dir=Path(reports_dir),
+        index_path=Path(index_path),
+        as_of=as_of,
+        panel_codes=panel_codes,
+        beat_threshold=beat_threshold,
+    )
+    typer.echo(
+        f"Hub index refreshed: pass rate {summary.aggregate_pass_rate:.0%} "
+        f"({'PASS' if summary.passes else 'FAIL'}) on "
+        f"{summary.total_passing}/{summary.total_variables} variables. "
+        f"Index → {index_path}."
+    )
+
+
 def main() -> None:
     app()
 

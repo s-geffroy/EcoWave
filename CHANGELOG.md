@@ -5,6 +5,59 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #22 Phase 6 — Hub crossover + live verdict ✅ — Chantier #22 LIVRÉ
+
+Sixième et dernier incrément du chantier de refonte. Le hub multi-track
+ferme la boucle : glossaire cross-track, guide de navigation, CLI live
+qui resynchronise le verdict de la page d'accueil avec les sidecars
+JSON.
+
+**Nouvelles pages cross-track** :
+
+- **`docs/glossary.md`** — glossaire des termes techniques utilisés
+  sur tous les tracks (CRPS, MSM, ARFIMA+RS, HAR, dual null, GPH, S,
+  Hosking recursion, etc.). Chaque entrée renvoie aux pages détaillées
+  où le terme est traité dans son contexte.
+- **`docs/how_to_navigate.md`** — guide de navigation par profil
+  (journaliste/étudiant → Public ; économiste académique → Acad ;
+  praticien BC → BC ; quant → Quants) et par question. Hiérarchie de
+  profondeur sur 5 niveaux. Section pour contribuer.
+
+**Live verdict module** :
+
+- **`ecowave/forecasting/hub_index.py`** — module qui lit les sidecars
+  consolidés et resynchronise le bloc `AUTO-VERDICT` de
+  `docs/index.md` in place via markers HTML-comment. Pas de
+  re-rendu de toute la page — uniquement le bloc verdict.
+- **CLI `ecowave render-hub-index`** — lit les 6 sidecars de
+  `reports/forecast_benchmark_*.json`, consolide, et met à jour
+  `docs/index.md`. À utiliser après chaque ré-exécution du benchmark.
+- **Marqueurs** ajoutés dans `docs/index.md` : `<!-- BEGIN: AUTO-VERDICT -->`
+  et `<!-- END: AUTO-VERDICT -->` autour du bloc verdict.
+
+**Tests** (4 nouveaux) : verdict block content (PASS/FAIL, leaderboard),
+in-place replacement préservant le reste, refus markers absents,
+end-to-end from sidecars.
+
+**Mise à jour `mkdocs.yml`** — ajoute "Comment naviguer" et
+"Glossaire" en première section visible après l'Accueil.
+
+**Vérification** : mkdocs build --strict passe. **229 tests passing**
+(4 nouveaux), 0 régression. CLI testé sur les vrais sidecars : pass
+rate 78 % correctement écrit dans `docs/index.md`.
+
+**Chantier #22 LIVRÉ — récap** :
+
+| Phase | Track | Pages | Mots |
+|---|---|---|---|
+| 1 | Fondations (mkdocs nav + hub) | 5 | ~2 000 |
+| 2 | Public éclairé | 4 | ~6 500 |
+| 3 | Quants | 6 | ~15 000 |
+| 4 | Banque centrale | 6 | ~15 000 |
+| 5 | Académique (+ paper V2) | 6 | ~12 000 |
+| 6 | Hub crossover + live | 2 + CLI | ~3 500 |
+| **Total** | | **29 pages + module** | **~54 000 mots** |
+
 ### Roadmap #22 Phase 5 — Track Académique (6 pages, ~12 000 mots, paper V2)
 
 Cinquième incrément. Le track académique livre la formalisation

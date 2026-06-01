@@ -954,7 +954,12 @@
       dsge_in_dock ~1 500, synthesis_amh ~1 400,
       falsifiable_predictions ~1 500, paper_v2_academic ~4 500
       avec dramaturgie constructive et 30+ références).
-    - **Phase 6 — TODO** : hub crossover + dashboard live verdict.
+    - **Phase 6 — LIVRÉE** : hub crossover (`docs/glossary.md` ~2 800
+      mots + `docs/how_to_navigate.md` ~700 mots) + module
+      `ecowave/forecasting/hub_index.py` avec CLI
+      `ecowave render-hub-index` qui resynchronise le bloc verdict de
+      `docs/index.md` à partir des sidecars. 4 tests nouveaux ; 229
+      tests totaux, 0 régression. **Chantier #22 LIVRÉ.**
 - **Code.** Pas de code Python — pure documentation. Toutefois la
   Phase 6 peut introduire un petit module `ecowave/forecasting/`
   pour pull le verdict consolidé dans `docs/index.md` automatiquement

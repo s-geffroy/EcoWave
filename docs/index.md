@@ -29,15 +29,26 @@ familles statistiques :
 **La preuve opérationnelle** — le benchmark Roadmap #20 montre que les
 modèles qui reproduisent ce cluster (MSM Calvet-Fisher, ARFIMA+RS
 Bhardwaj-Swanson, HAR Corsi) **battent le random walk en out-of-sample
-CRPS à horizon 12 sur 52 / 68 variables macro** (78 %, robuste à
-n_origins = 12). Les baselines AR(1) / ARMA(1,1) ne gagnent jamais
-quand un modèle du cluster est compétent.
+CRPS à horizon 12** sur la majorité des variables macro testées. Les
+baselines AR(1) / ARMA(1,1) ne gagnent jamais quand un modèle du
+cluster est compétent.
+
+<!-- BEGIN: AUTO-VERDICT -->
+
+✅ **Verdict consolidé** : PASS — pass rate 78 % sur 53 / 68 variables (6 panels, as_of = 2026-05).
 
 | Modèle cluster | Wins | Part |
 |---|---|---|
 | MSM (Calvet-Fisher) | 23 | 43 % |
 | HAR (Corsi 2009) | 16 | 30 % |
 | ARFIMA + regime-switching | 14 | 26 % |
+
+<!-- END: AUTO-VERDICT -->
+
+Pour le détail panel par panel et la robustesse, voir
+[verdict consolidé](forecast_benchmark.md). Pour reproduire en local
+en une commande Docker, voir
+[benchmark reproductible](tracks/quants/benchmark_reproducible.md).
 
 ---
 
