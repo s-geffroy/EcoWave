@@ -5,6 +5,59 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Forecast benchmark — verdict consolidé multi-panels ✅ PASS 78 %
+
+Suite à PR D (#35) qui a livré l'exécutable et au fix #36 qui a
+débloqué le panel WB, le full benchmark a été lancé sur les 6 panels
+(wb, q, long, boe, bis, sh). Nouveau module + CLI pour agréger les
+sidecars en un seul verdict.
+
+**Verdict global** : **PASS 78 %** — 52/67 variables battues par au
+moins un modèle du cluster sur 6 panels.
+
+| panel | pass rate | n vars | best cluster |
+|---|---|---|---|
+| wb | 60 % | 10 | MSM 4 · HAR 2 |
+| q | 93 % | 14 | HAR 8 · ARFIMA+RS 5 |
+| long | 69 % | 16 | MSM 7 · HAR 2 · ARFIMA+RS 2 |
+| boe | 88 % | 8 | MSM 6 · HAR 1 |
+| bis | 83 % | 12 | MSM 6 · ARFIMA+RS 3 · HAR 1 |
+| sh | 71 % | 7 | ARFIMA+RS 2 · MSM 2 · HAR 1 |
+
+**Leaderboard global** : MSM 25 (48 %) · HAR 15 (29 %) · ARFIMA+RS
+12 (23 %). Aucune baseline (RW, AR(1), ARMA(1,1)) ne gagne quand un
+modèle du cluster est compétent.
+
+**Nouveau module `ecowave/forecasting/consolidated_report.py`** :
+
+- `ConsolidatedSummary` + `PanelSummary` dataclasses.
+- `consolidate_benchmark_sidecars(reports_dir, as_of, panel_codes,
+  beat_threshold)` — charge les sidecars schema_version=1, valide
+  l'horizon de décision commun, signale les panels manquants sans
+  fail.
+- `render_consolidated_page` — page markdown avec verdict global,
+  table par panel, leaderboard, lecture qualitative (MSM ↔ longs,
+  HAR ↔ trimestriel, ARFIMA+RS ↔ crédit), section reproduction.
+
+**Nouveau CLI** :
+
+```
+ecowave forecast-benchmark-consolidate [--as-of YYYY-MM] \
+  [--reports-dir DIR] [--panels wb,q,long,boe,bis,sh] \
+  [--beat-threshold 0.5]
+```
+
+Page écrite à `docs/forecast_benchmark.md` (remplace la version
+mono-panel de PR D).
+
+**Tests** (6 nouveaux) : agrégation cross-panel correcte, missing
+panels gérés gracieusement, leaderboard trié par wins, refus
+schema_version != 1, refus decision_horizons hétérogènes, page
+markdown contient les sections attendues.
+
+**Vérification** : 225 passed / 2 skipped, **0 régression**. mkdocs
+build --strict passe.
+
 ### Roadmap #20 PR D — Forecast benchmark pipeline + CLI + verdict ✅
 
 Quatrième et dernier incrément du chantier #20. Ferme la boucle : le
