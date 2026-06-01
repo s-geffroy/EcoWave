@@ -5,6 +5,47 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #22 Phase 1 — Refonte hub multi-track (acad / BC / quants / public)
+
+Premier incrément du chantier de refonte (item #22). Le site et le
+papier étaient *réfutation-first* — la phase de démolition restait la
+colonne vertébrale alors que la phase de reconstruction (cluster CPV +
+benchmark PASS 78 %) est maintenant solide. Cette phase pose les
+fondations de l'inversion narrative.
+
+**Refonte structurelle** :
+
+- **`mkdocs.yml`** — nouvelle `nav` hub-first : Accueil → Pour qui ?
+  (4 tracks) → Méthode → Verdict → **Réfutation comme appendice
+  historique** → Référence → Archive (paper V1).
+- **`docs/index.md`** — refonte totale en hub portail track-selector.
+  Lead synthétique en 3 lignes (cluster + PASS 78 %). 4 cartes
+  Material Design pointant vers les tracks. Lien rapide vers méthode,
+  verdict, réfutation, référence, archive V1.
+- **`docs/tracks/{acad,bc,quants,public}/index.md`** — 4 stubs avec
+  positionnement audience-specific, claims principaux, table de contenu
+  à venir, liens vers les pages déjà existantes pertinentes pour
+  chaque audience.
+- **`docs/reference/implications_of_cluster.md`** — la page
+  conceptuelle multi-axe livrée par Roadmap #19 déplacée sous
+  `reference/` (chaque track linkera vers les sections pertinentes).
+  Lien dans `feuille_de_route.md` mis à jour.
+
+**Conservation totale** : code Python, tests (225 passing), sidecars
+JSON, pages méthodologie détaillées, pages cycles, pages reports,
+études de cas, paper V1 — tous inchangés.
+
+**Phases suivantes** :
+- Phase 2 — track Public (essai phare ~2 500 mots)
+- Phase 3 — track Quants (note phare ~5 000 mots)
+- Phase 4 — track BC (note phare ~5 000 mots)
+- Phase 5 — track Acad (paper V2 ~12 000 mots avec dramaturgie
+  constructive)
+- Phase 6 — hub crossover + dashboard live verdict
+
+**Vérification** : `mkdocs build --strict` passe. Suite pytest : 225
+passed / 2 skipped, **0 régression**.
+
 ### Forecast benchmark — verdict consolidé multi-panels ✅ PASS 78 %
 
 Suite à PR D (#35) qui a livré l'exécutable et au fix #36 qui a

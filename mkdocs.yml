@@ -1,5 +1,5 @@
 site_name: CPV — Cycle Position Vector
-site_description: Décomposition multi-cycles falsifiable des indicateurs macroéconomiques
+site_description: La macroéconomie comme dynamique fractale non-linéaire à mémoire longue avec dérive de régime cognitif — démontrée empiriquement, validée opérationnellement.
 site_url: https://s-geffroy.github.io/EcoWave/
 repo_url: https://github.com/s-geffroy/EcoWave
 repo_name: s-geffroy/EcoWave
@@ -58,27 +58,17 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
+# Refonte multi-track (Hub 4-tracks). Inversion narrative : le constructif
+# (méthode qui marche, benchmark PASS 78 %) précède la réfutation des cycles.
+# Voir methodology/feuille_de_route.md item #22.
 nav:
   - Accueil: index.md
-  - 1. Où en sommes-nous ?:
-      - Synthèse multi-horizons: reports/cycle_position_synthesis.md
-      - Panel Banque mondiale (1960-2024): reports/cycle_position_2026_05_wb.md
-      - Panel trimestriel (Path 5): reports/cycle_position_2026_05_q.md
-      - Histoire longue (1870-2022): reports/cycle_position_2026_05_long.md
-      - Bank of England Millennium (1700-2016): reports/cycle_position_2026_05_boe.md
-      - BIS macroprudential (EM + AE, 1970-2025): reports/cycle_position_2026_05_bis.md
-      - "Sectoral history (FRED+OWID+BEIS, test Wen 2005)": reports/cycle_position_2026_05_sh.md
-      - "Test direct Wen 2005 (Phase 3)": case_study_wen_2005_test.md
-      - Évidence par variable (Wen/Solomou): evidence_per_variable.md
-      - "Étude de cas — CN_BIS K (artefact d'agrégation)": case_study_cn_bis_kondratieff.md
-      - "Étude de cas — WLD-WB K (trends agrégées)": case_study_wld_wb_kondratieff.md
-      - "Étude de cas — G7-long & UK_BOE K (artefact redistribué)": case_study_g7_long_uk_boe_kondratieff.md
-  - 2. Pourquoi ? — Cycles canoniques:
-      - Kitchin (3–5 ans): cycles/kitchin.md
-      - Juglar (7–11 ans): cycles/juglar.md
-      - Kuznets (15–25 ans): cycles/kuznets.md
-      - Kondratieff (40–60 ans): cycles/kondratieff.md
-  - 3. Comment ? — Protocole CPV:
+  - Pour qui ?:
+      - Académique: tracks/acad/index.md
+      - Banque centrale: tracks/bc/index.md
+      - Quants: tracks/quants/index.md
+      - Public éclairé: tracks/public/index.md
+  - Méthode (détail technique):
       - Vue d'ensemble: methodology/protocole_cpv.md
       - Trois portes de falsifiabilité: methodology/trois_portes.md
       - Méthodes de décomposition: methodology/methodes_decomposition.md
@@ -91,18 +81,35 @@ nav:
       - "Garde-fou per-variable Roadmap #14 (anti-aggregation)": methodology_safeguard_roadmap_14.md
       - "Au-delà des cycles — cadres physiques alternatifs": methodology_beyond_cycles.md
       - "Diagnostics non-cycliques (Tier 1 — toolkit)": dx_diagnostics.md
-  - 4. Preuves détaillées:
+  - Verdict (preuves détaillées):
+      - "Forecast benchmark consolidé (PASS 78 %)": forecast_benchmark.md
+      - Synthèse multi-horizons: reports/cycle_position_synthesis.md
+      - Panel Banque mondiale (1960-2024): reports/cycle_position_2026_05_wb.md
+      - Panel trimestriel (Path 5): reports/cycle_position_2026_05_q.md
+      - Histoire longue (1870-2022): reports/cycle_position_2026_05_long.md
+      - Bank of England Millennium (1700-2016): reports/cycle_position_2026_05_boe.md
+      - BIS macroprudential (EM + AE, 1970-2025): reports/cycle_position_2026_05_bis.md
+      - "Sectoral history (FRED+OWID+BEIS, test Wen 2005)": reports/cycle_position_2026_05_sh.md
+      - Évidence par variable (Wen/Solomou): evidence_per_variable.md
       - Panel Banque mondiale (note signée): reports/panel_banque_mondiale_2026.md
       - Panel trimestriel (note signée): reports/panel_trimestriel_2026.md
       - Histoire longue (note signée): reports/histoire_longue_2026.md
       - Juglar — US/ANGLO vs NORDIC: reports/juglar_us_anglo_nordic_2026.md
       - Kondratieff K5 — ADV18/EU4: reports/kondratieff_adv18_eu4_2026.md
       - Validation EWS (holdout): reports/validation_ews.md
-  - 5. Données & références:
+  - Réfutation des cycles (appendice historique):
+      - Kitchin (3–5 ans): cycles/kitchin.md
+      - Juglar (7–11 ans): cycles/juglar.md
+      - Kuznets (15–25 ans): cycles/kuznets.md
+      - Kondratieff (40–60 ans): cycles/kondratieff.md
+      - "Test direct Wen 2005 (Phase 3)": case_study_wen_2005_test.md
+      - "Étude de cas — CN_BIS K (artefact d'agrégation)": case_study_cn_bis_kondratieff.md
+      - "Étude de cas — WLD-WB K (trends agrégées)": case_study_wld_wb_kondratieff.md
+      - "Étude de cas — G7-long & UK_BOE K (artefact redistribué)": case_study_g7_long_uk_boe_kondratieff.md
+  - Référence:
       - Groupes agrégés: groupes.md
       - Sources de données: sources.md
       - Bibliographie: bibliographie.md
-  - 6. Working paper:
-      - "CPV — réfutation des 4 cycles, émergence d'une dynamique fractale": papers/cpv_main_paper.md
-      - "Implications du verdict — modélisation, prévision, politique, théorie": implications_of_cluster.md
-      - "Forecast benchmark — Roadmap #20 (RW, AR(1), HAR, ARFIMA+RS, MSM)": forecast_benchmark.md
+      - "Implications du verdict (détail multi-axe)": reference/implications_of_cluster.md
+  - Archive:
+      - "Working paper V1 (réfutation-first, décembre 2025)": papers/cpv_main_paper.md
