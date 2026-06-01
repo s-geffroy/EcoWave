@@ -949,8 +949,11 @@
       forward_guidance_reflexive ~2 200, tipping_point_detection
       ~2 400, horizon_aware_targeting ~2 100, note_bc note phare
       ~5 000).
-    - **Phase 5 — TODO** : track Acad (6 pages dont paper V2 ~12 000
-      mots avec dramaturgie constructive).
+    - **Phase 5 — LIVRÉE** : track Acad (6 pages, ~12 000 mots
+      total : method_compact ~900, verdict_constructive ~1 700,
+      dsge_in_dock ~1 500, synthesis_amh ~1 400,
+      falsifiable_predictions ~1 500, paper_v2_academic ~4 500
+      avec dramaturgie constructive et 30+ références).
     - **Phase 6 — TODO** : hub crossover + dashboard live verdict.
 - **Code.** Pas de code Python — pure documentation. Toutefois la
   Phase 6 peut introduire un petit module `ecowave/forecasting/`
