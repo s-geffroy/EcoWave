@@ -626,6 +626,42 @@ def forecast_benchmark(
     )
 
 
+@app.command("forecast-benchmark-consolidate")
+def forecast_benchmark_consolidate(
+    as_of: str = typer.Option("2026-05", "--as-of"),
+    reports_dir: str = typer.Option("/app/reports", "--reports-dir"),
+    panels: str = typer.Option(
+        "wb,q,long,boe,bis,sh", "--panels",
+        help="Comma-separated panel codes to consolidate."),
+    beat_threshold: float = typer.Option(0.5, "--beat-threshold"),
+    page_path: str = typer.Option(
+        "/app/docs/forecast_benchmark.md", "--page-path"),
+) -> None:
+    """Aggregate per-panel benchmark sidecars into a single docs page."""
+    from ecowave.forecasting.consolidated_report import (
+        consolidate_benchmark_sidecars,
+        render_consolidated_page,
+    )
+
+    panel_codes = tuple(p.strip() for p in panels.split(",") if p.strip())
+    summary = consolidate_benchmark_sidecars(
+        reports_dir=Path(reports_dir),
+        as_of=as_of,
+        panel_codes=panel_codes,
+        beat_threshold=beat_threshold,
+    )
+    render_consolidated_page(summary, Path(page_path))
+    typer.echo(
+        f"Consolidated verdict: aggregate pass rate "
+        f"{summary.aggregate_pass_rate:.0%} "
+        f"({'PASS' if summary.passes else 'FAIL'}) on "
+        f"{summary.total_passing}/{summary.total_variables} variables "
+        f"across {len(summary.panels)} panels "
+        f"(missing: {list(summary.missing_panels) or 'none'}). "
+        f"Page → {page_path}."
+    )
+
+
 def main() -> None:
     app()
 
