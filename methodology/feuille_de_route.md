@@ -771,7 +771,9 @@
   `proper_scoring` CRPS/coverage/MZ, `baselines` RW+AR(1)+ARMA(1,1),
   `har` Corsi 2009 avec config lag). 26 tests passants ; 180 tests
   totaux, 0 régression.
-- **PR B — TODO** : `arfima_rs.py` (Hosking récursion + MarkovRegression).
+- **PR B — LIVRÉE** : `fractional.py` (Hosking + GPH) +
+  `arfima_rs.py` (ARFIMA(0, d, 0) + Markov regime-switching à 2 états
+  via statsmodels). 17 tests nouveaux ; 197 tests totaux, 0 régression.
 - **PR C — TODO** : `msm.py` (Calvet-Fisher 2002, estimation GMM ou SML).
 - **PR D — TODO** : pipeline `benchmark.py` + CLI
   `ecowave forecast-benchmark` + page `docs/forecast_benchmark.md` +
