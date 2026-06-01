@@ -65,7 +65,14 @@ nav:
   - Accueil: index.md
   - Pour qui ?:
       - Académique: tracks/acad/index.md
-      - Banque centrale: tracks/bc/index.md
+      - Banque centrale:
+          - tracks/bc/index.md
+          - La méthode CPV pour praticiens: tracks/bc/method_for_practitioners.md
+          - Credibility radar (d-GPH inflation): tracks/bc/credibility_radar.md
+          - Forward guidance réflexif: tracks/bc/forward_guidance_reflexive.md
+          - Tipping point detection (EWS): tracks/bc/tipping_point_detection.md
+          - Horizon-aware targeting: tracks/bc/horizon_aware_targeting.md
+          - "Note phare (~5 000 mots)": tracks/bc/note_bc.md
       - Quants:
           - tracks/quants/index.md
           - Catalogue des modèles: tracks/quants/models_catalog.md

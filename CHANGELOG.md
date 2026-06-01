@@ -5,6 +5,49 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #22 Phase 4 — Track Banque centrale (6 pages, ~15 000 mots)
+
+Quatrième incrément. Le track BC livre une boîte à outils opérationnelle
+insérable dans une pipeline BC existante : credibility radar `d`
+GPH, forward guidance comme acte réflexif, EWS tipping points par KS
+sliding-window, horizon-aware targeting (HAR court / MSM long).
+
+**6 nouvelles pages sous `docs/tracks/bc/`** :
+
+- **`method_for_practitioners.md`** (~2 500 mots) — protocole CPV en
+  langage BC : ce qui est nouveau, ce qui complète vos outils
+  existants, contraintes institutionnelles reconnues (communication,
+  continuité, robustesse, transparence, coordination internationale).
+- **`credibility_radar.md`** (~2 800 mots) — indicateur `d` GPH sur
+  l'inflation comme mesure quantitative de la crédibilité monétaire.
+  Lecture historique (Volcker 1979, Greenspan 2003, COVID 2020-22).
+  Tableau cross-pays indicatif. Implémentation Python complète,
+  recommandations de calibration BC.
+- **`forward_guidance_reflexive.md`** (~2 200 mots) — cadre Soros
+  réflexivité + Markov regime drift S. 3 canaux par lesquels la
+  communication BC change le régime cognitif (fonction de réaction
+  perçue, coordination, contraintes effectives). 4 implications
+  opérationnelles pour le calibrage MPC.
+- **`tipping_point_detection.md`** (~2 400 mots) — EWS basé sur KS
+  sliding-window. Performance empirique sur inflation CPI US
+  1965-2024 (avance moyenne 3 mois). Calibration recommandée
+  (fenêtre 60 mois, p < 0.01, gap 12 mois). Workflow opérationnel BC
+  (détection → confirmation → notification → action).
+- **`horizon_aware_targeting.md`** (~2 100 mots) — pourquoi 3 modèles
+  différents selon l'horizon. HAR pour nowcast, MSM pour long terme,
+  ARFIMA+RS pour crédit. Implémentation pipeline standard BC.
+- **`note_bc.md`** (~5 000 mots) — note phare praticien rigoureux.
+  TL;DR, pourquoi cette note, 4 outils détaillés, implications
+  macroprudentielles (Hurst-based credit cycle, ES recalibré),
+  limites institutionnelles reconnues, étapes d'intégration (pilote,
+  production, extension).
+
+**Mise à jour `mkdocs.yml`** — sous-navigation Banque centrale avec
+les 6 nouvelles pages.
+
+**Vérification** : mkdocs build --strict passe. 225 tests passing, 0
+régression.
+
 ### Roadmap #22 Phase 3 — Track Quants (6 pages, ~15 000 mots)
 
 Troisième incrément. Le track Quants livre la documentation technique
