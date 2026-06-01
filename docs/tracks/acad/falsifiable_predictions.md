@@ -1,9 +1,22 @@
 # Cinq prédictions falsifiables enrichies
 
-> *Les 5 prédictions de la V1 §5.4, enrichies avec progression
-> empirique post-Roadmap #20 et tests opérationnels à mener.*
+!!! success "TL;DR"
 
-## Le cadre falsifiabilité
+    5 prédictions du paper V1 §5.4. Statut : **Prédiction 4 CONFIRMÉE** par Roadmap #20 (forecast régime-conditionnel = PASS 78 %). Prédiction 1 (durabilité longue mémoire pré-1700) et 5 (split-point spécifique) TODO. Prédictions 2 (robustesse non-financière) et 3 (multifractale > monofractale) PARTIELLES. Effort total restant : ~70 jours.
+
+## Dans cette page
+
+- **[Cadre falsifiabilité](#cadre)** — Popper, pré-enregistrement
+- **[Prédiction 1 — Durabilité longue mémoire](#pred-1)** — TODO
+- **[Prédiction 2 — Robustesse non-financière](#pred-2)** — PARTIAL
+- **[Prédiction 3 — Multifractale > monofractale](#pred-3)** — PARTIAL
+- **[Prédiction 4 — Forecast régime-conditionnel](#pred-4)** — **CONFIRMÉE**
+- **[Prédiction 5 — Split-point spécificité](#pred-5)** — TODO
+- **[Synthèse — programme falsifiabilité](#synthese)**
+
+---
+
+## Le cadre falsifiabilité { #cadre }
 
 Le cluster CPV C+B+D+I+S est une **hypothèse de travail**, pas un
 théorème. Comme tout cadre scientifique, il doit faire des prédictions
@@ -13,7 +26,7 @@ La V1 du paper (§5.4) liste 5 prédictions. La V2 — Roadmap #20 ayant
 livré le benchmark opérationnel — peut désormais évaluer une partie
 de ces prédictions ; les autres restent ouvertes.
 
-## Prédiction 1 — Durabilité de la longue mémoire
+## Prédiction 1 — Durabilité de la longue mémoire { #pred-1 }
 
 ### Formulation V1
 
@@ -57,7 +70,7 @@ walk).
 
 ~20-30 jours pour l'ingestion + 5 jours pour les tests.
 
-## Prédiction 2 — Robustesse cross-panel sur variables non-financières
+## Prédiction 2 — Robustesse cross-panel sur variables non-financières { #pred-2 }
 
 ### Formulation V1
 
@@ -106,7 +119,7 @@ significatif vs variables financières.
 
 ~15 jours pour l'ingestion OWID + 3 jours pour le benchmark.
 
-## Prédiction 3 — Multifractale plutôt que monofractale
+## Prédiction 3 — Multifractale plutôt que monofractale { #pred-3 }
 
 ### Formulation V1
 
@@ -153,7 +166,7 @@ majorité, suggérant un monofractal.
 
 ~10 jours pour l'extension du MF-DFA et l'analyse bootstrap.
 
-## Prédiction 4 — Forecast performance régime-conditionnelle
+## Prédiction 4 — Forecast performance régime-conditionnelle { #pred-4 }
 
 ### Formulation V1
 
@@ -199,7 +212,7 @@ Procédure :
 
 ~7 jours.
 
-## Prédiction 5 — Spécificité des split-points réflexifs
+## Prédiction 5 — Spécificité des split-points réflexifs { #pred-5 }
 
 ### Formulation V1
 
@@ -243,7 +256,7 @@ ruptures sont aléatoires plutôt que cognitives.
 
 ~5 jours pour le test + interprétation historique.
 
-## Synthèse — programme falsifiabilité
+## Synthèse — programme falsifiabilité { #synthese }
 
 | Prédiction | Statut | Effort restant | Priorité |
 |---|---|---|---|

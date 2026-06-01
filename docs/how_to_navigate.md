@@ -1,10 +1,34 @@
 # Comment naviguer ce site
 
-> *Le hub multi-track CPV est organisé par audience. Cette page vous
-> aide à trouver l'entrée appropriée selon votre profil et votre
-> question.*
+!!! success "TL;DR"
 
-## Choisir son point d'entrée par profil
+    Le hub multi-track CPV est organisé par **audience cible** (Public éclairé, Académique, Banque centrale, Quants) plutôt que par ordre logique de recherche. Choisissez votre porte d'entrée selon votre profil ou votre question. 5 niveaux de profondeur disponibles (survol 5 min → recherche académique mois/années).
+
+## Dans cette page
+
+- **[Choisir par profil](#par-profil)** — 4 audiences
+- **[Choisir par question](#par-question)** — 8 questions fréquentes
+- **[Cross-tracks recommandés](#cross-tracks)** — combinaisons par profil
+- **[Hiérarchie de profondeur](#profondeur)** — 5 niveaux
+- **[Pour contribuer](#contribuer)** — GitHub MIT
+- **[Pour signaler une erreur](#signaler)**
+
+```mermaid
+flowchart TD
+    You((Vous)) --> Q{Quel est votre profil ?}
+    Q -->|Journaliste, étudiant, curieux| Public[📖 Public éclairé]
+    Q -->|Économiste académique, doctorant| Acad[🎓 Académique]
+    Q -->|Praticien BC, régulateur| BC[🏦 Banque centrale]
+    Q -->|Quant, data scientist, ingénieur| Quants[💻 Quants]
+    style Public fill:#a5d6a7
+    style Acad fill:#90caf9
+    style BC fill:#fff59d
+    style Quants fill:#ffe0b2
+```
+
+---
+
+## Choisir son point d'entrée par profil { #par-profil }
 
 ### Vous êtes journaliste, étudiant, ou lecteur curieux
 
@@ -76,7 +100,7 @@ les failure modes. Six pages :
    analysés
 6. [Note phare Quants](tracks/quants/note_quants.md) — ~5 000 mots
 
-## Choisir son point d'entrée par question
+## Choisir son point d'entrée par question { #par-question }
 
 ### "Les 4 cycles canoniques sont-ils statistiquement valides ?"
 
@@ -136,7 +160,7 @@ AMH + Friston + MRW comme programme ouvert. Voir :
 
 - [Synthèse AMH](tracks/acad/synthesis_amh.md) (Académique)
 
-## Cross-tracks recommandés
+## Cross-tracks recommandés { #cross-tracks }
 
 Selon votre profil de départ, certains tracks complémentaires sont
 recommandés :
@@ -151,7 +175,7 @@ recommandés :
 | Régulateur | BC | Quants pour les outils techniques |
 | Théoricien physique | Académique | Quants pour validation empirique |
 
-## Hiérarchie de profondeur
+## Hiérarchie de profondeur { #profondeur }
 
 Le site propose plusieurs niveaux de profondeur :
 
@@ -185,7 +209,7 @@ Le site propose plusieurs niveaux de profondeur :
 - [Synthèse théorique manquante](tracks/acad/synthesis_amh.md)
 - [5 prédictions falsifiables](tracks/acad/falsifiable_predictions.md)
 
-## Pour contribuer
+## Pour contribuer { #contribuer }
 
 Le projet est open-source sous MIT sur
 [GitHub](https://github.com/s-geffroy/EcoWave). Les contributions
@@ -204,7 +228,7 @@ externes sont bienvenues :
 Tous les tests sont conteneurisés Docker (`docker compose run --rm
 --entrypoint pytest ecowave` doit afficher 225+ passed).
 
-## Pour signaler une erreur ou une omission
+## Pour signaler une erreur ou une omission { #signaler }
 
 Ouvrir une issue sur
 [GitHub](https://github.com/s-geffroy/EcoWave/issues) avec le titre

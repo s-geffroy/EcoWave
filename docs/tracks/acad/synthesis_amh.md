@@ -1,10 +1,21 @@
 # Synthèse AMH — Friston + MRW + AMH comme méta-cadre
 
-> *Trois candidats pour la synthèse théorique manquante. Aucun n'unifie
-> seul les 5 piliers C+B+D+I+S, mais leur combinaison esquisse un
-> cadre potentiel à formaliser.*
+!!! success "TL;DR"
 
-## Le problème théorique
+    Aucun cadre théorique unique ne prédit les 5 piliers C+B+D+I+S à partir de premiers principes. Trois candidats : **AMH** (Lo 2017, couvre 4/5 piliers, méta-cadre conceptuel), **Free-energy** (Friston 2010, couvre 3/5 piliers avec formalisation forte), **MRW** (Bacry-Muzy-Delour 2001, couvre 2/5 avec formalisation mathématique précise). Proposition : *MRW étendu à régimes de free-energy* — programme ouvert ~3-5 ans pour équipe doctorale.
+
+## Dans cette page
+
+- **[Le problème théorique](#probleme)** — pourquoi aucun cadre seul ne suffit
+- **[Candidat 1 — AMH Lo](#amh)** — couvre 4/5 piliers
+- **[Candidat 2 — Free-energy Friston](#friston)** — couvre 3/5
+- **[Candidat 3 — MRW Bacry-Muzy-Delour](#mrw)** — couvre 2/5
+- **[Synthèse à construire](#synthese)** — programme ouvert
+- **[Pourquoi cette synthèse vaut la peine](#valeur)**
+
+---
+
+## Le problème théorique { #probleme }
 
 Le cluster empirique C+B+D+I+S est stable et reproductible. Il
 n'existe **aucun cadre théorique unique** qui le prédise à partir de
@@ -24,7 +35,7 @@ Plus précisément : on cherche un cadre qui prédise *conjointement* :
 Trois candidats théoriques se présentent. Aucun ne couvre seul les 5
 piliers, mais leur **combinaison** esquisse un méta-cadre.
 
-## Candidat 1 — Adaptive Markets Hypothesis (Lo)
+## Candidat 1 — Adaptive Markets Hypothesis (Lo) { #amh }
 
 **Référence** : Lo, A. (2017). *Adaptive Markets: Financial Evolution
 at the Speed of Thought*. Princeton.
@@ -77,7 +88,7 @@ Handbook* récapitule l'état de la littérature. Les modèles HABM
 (Heterogeneous Agent-Based Models) sont l'implémentation
 opérationnelle d'AMH.
 
-## Candidat 2 — Free-Energy Principle (Friston)
+## Candidat 2 — Free-Energy Principle (Friston) { #friston }
 
 **Référence** : Friston, K. (2010). The free-energy principle: a
 unified brain theory? *Nature Reviews Neuroscience*.
@@ -122,7 +133,7 @@ Les applications macro de Friston sont encore rares. Les
 contributions récentes : Friston-Costa-Stephan 2024 ("Active
 inference and economics"), Hosokawa 2023 ("Free energy economics").
 
-## Candidat 3 — Multifractal Random Walk (MRW)
+## Candidat 3 — Multifractal Random Walk (MRW) { #mrw }
 
 **Référence** : Bacry, E., Muzy, J.-F., Delour, J. (2001).
 Multifractal Random Walk. *Physical Review E*.
@@ -164,7 +175,7 @@ mathématique extrêmement précise pour les 2 piliers couverts.
 Le MRW reste un cadre canonique pour la multifractalité financière.
 Sa généralisation à la macroéconomie est ouverte.
 
-## Synthèse : un cadre potentiel non-encore-formalisé
+## Synthèse : un cadre potentiel non-encore-formalisé { #synthese }
 
 En combinant les trois cadres, on obtient un méta-cadre potentiel
 qui couvre les 5 piliers :
@@ -195,7 +206,7 @@ cognitif `s_t` qui suit une dynamique d'active inference.
 Cela n'a (à notre connaissance) **jamais été formalisé**. C'est un
 programme de recherche ouvert.
 
-## Pourquoi cette synthèse vaut la peine
+## Pourquoi cette synthèse vaut la peine { #valeur }
 
 Si elle aboutit, une telle synthèse :
 

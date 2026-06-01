@@ -1,8 +1,14 @@
 # Glossaire
 
-> *Termes techniques utilisés cross-track sur le site. Chaque entrée
-> renvoie aux pages détaillées où le terme est traité dans son
-> contexte.*
+!!! success "TL;DR"
+
+    Glossaire des termes techniques utilisés cross-track. Organisation alphabétique. Chaque entrée pointe vers une page détaillée. Termes les plus consultés : [CRPS](#crps-continuous-ranked-probability-score) · [Cluster C+B+D+I+S](#cluster-cbdis) · [Dual null](#dual-null) · [GPH](#gph-geweke-porter-hudak-1983) · [MSM](#msm-markov-switching-multifractal) · [ProbabilisticForecast](#probabilisticforecast).
+
+## Index rapide
+
+- [A](#a) · [B](#b) · [C](#c) · [D](#d) · [E](#e) · [F](#f) · [G](#g) · [H](#h) · [I](#i) · [J](#j) · [K](#k) · [L](#l) · [M](#m) · [N](#n) · [O](#o) · [P](#p) · [Q](#q) · [R](#r) · [S](#s) · [T](#t) · [U](#u) · [V](#v) · [W](#w)
+
+---
 
 ## A
 

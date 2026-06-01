@@ -29,7 +29,7 @@ pour le scenario à long terme (5-10 ans). C'est un compromis pratique,
 mais notre benchmark Roadmap #20 suggère que **c'est sous-optimal** :
 différents modèles dominent à différents horizons.
 
-## Le verdict empirique du benchmark
+## Le verdict empirique du benchmark { #verdict }
 
 Notre [forecast benchmark consolidé](../../forecast_benchmark.md) sur
 68 variables × 6 panels × horizons 1, 3, 6, 12, montre :
@@ -46,7 +46,7 @@ trimestrielle), c'est la zone de transition entre HAR et MSM. Selon
 la nature de la variable (financière vs réelle, courte mémoire vs
 longue mémoire), un modèle ou l'autre est préférable.
 
-## Recommandations opérationnelles
+## Recommandations opérationnelles { #recommandations }
 
 ### Pour le nowcasting (h ∈ [0, 3])
 
@@ -136,7 +136,7 @@ forecast_credit = arfima_rs_forecast(
 )
 ```
 
-## Implémentation BC pratique
+## Implémentation BC pratique { #implementation }
 
 ### Pipeline standard à 3 horizons
 
@@ -201,7 +201,7 @@ def select_by_bic(history, candidate_models):
 et `n_parameters` directement — c'est une extension Roadmap.
 Voir [extensions roadmap](../quants/extensions_roadmap.md).)
 
-## Conséquences théoriques
+## Conséquences théoriques { #theorie }
 
 Le fait que **différents modèles dominent à différents horizons** a
 des implications théoriques importantes pour la BC :
@@ -221,7 +221,7 @@ des implications théoriques importantes pour la BC :
    prédictif estimé empiriquement à ~30 % de réduction de CRPS sur
    les variables où le cluster gagne.
 
-## Limites et précautions
+## Limites et précautions { #limites }
 
 - **Pas de causalité structurelle**. Les modèles statistiques (HAR,
   MSM, ARFIMA+RS) ne fournissent pas de mécanisme causal. Pour

@@ -41,7 +41,7 @@ participants' thinking affects the situation to which it relates."*
 Le système économique n'est pas extérieur aux croyances sur lui ; il
 est **partiellement constitué** par elles.
 
-## La formalisation statistique : régime drift S
+## La formalisation statistique : régime drift S { #formalisation }
 
 Le cluster CPV contient une famille **S** (Reflexive regime drift)
 détectée par un test de Kolmogorov-Smirnov appliqué sur des fenêtres
@@ -72,7 +72,7 @@ Toutes ces ruptures correspondent à des **moments où la communication
 de la BC a fondamentalement changé le cadre cognitif** dans lequel les
 acteurs interprétaient le système.
 
-## Trois canaux par lesquels le forward guidance change le régime
+## Trois canaux par lesquels le forward guidance change le régime { #canaux }
 
 ### Canal 1 — Changement de la fonction de réaction perçue
 
@@ -118,7 +118,7 @@ de la distribution des fluctuations changent. Le KS détecte la rupture
 parce que la **forme** des chocs s'est modifiée, pas seulement
 l'amplitude.
 
-## Implications pratiques pour la communication BC
+## Implications pratiques pour la communication BC { #implications }
 
 ### 1. Reconnaître l'effet performatif
 
@@ -166,7 +166,7 @@ rapprochées, ce qui désancre profondément.
 Implication : la coordination inter-autorités est mesurable
 empiriquement par le nombre et le timing des ruptures détectées par S.
 
-## Implémentation pratique
+## Implémentation pratique { #implementation }
 
 Le test KS sliding-window n'est pas (encore) dans l'API publique
 `ecowave.forecasting`. Mais une implémentation minimale est triviale :
@@ -198,7 +198,7 @@ def detect_regime_shifts(series, window_months=60, min_gap_months=12):
 Cette implémentation peut être ajoutée à votre pipeline de monitoring
 BC pour détecter en temps quasi-réel les changements de régime.
 
-## Limites conceptuelles
+## Limites conceptuelles { #limites }
 
 Le cadre réflexif a des limites qu'il faut reconnaître :
 

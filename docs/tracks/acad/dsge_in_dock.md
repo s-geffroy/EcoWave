@@ -1,11 +1,21 @@
 # DSGE en accusation
 
-> *Trois modifications structurelles requises pour rendre les
-> modèles New-Keynesian DSGE compatibles avec la signature empirique
-> C+B+D+I+S. Pourquoi ces modifications ne sont pas optionnelles, et
-> pourquoi DSGE n'est cependant pas mort.*
+!!! success "TL;DR"
 
-## Les trois hypothèses statistiques en cause
+    Le DSGE New-Keynesian standard (SW07, FRB/US, SAM, COMPASS) repose sur 3 hypothèses statistiques que le cluster réfute : **chocs AR(1)/IID** contradicting C, **paramètres deep stables** contradicting S, **distributions gaussiennes** contradicting D + queues lourdes. **DSGE n'est pas mort** — il doit être **généralisé** : (1) chocs ARFIMA, (2) Markov layer sur paramètres deep, (3) distributions Tsallis/Lévy. Programme de recherche 2-3 ans pour BC + universités. Coût significatif mais ROI justifiable (politique monétaire, comparabilité internationale, macroprudentiel, crédibilité scientifique).
+
+## Dans cette page
+
+- **[Les 3 hypothèses en cause](#hypotheses)** — chocs, paramètres, distributions
+- **[Pourquoi DSGE n'est cependant pas mort](#pas-mort)** — généralisation
+- **[Le programme de recherche conjoint](#programme)** — 4 axes, 2-3 ans
+- **[Pourquoi cela vaut le coût](#cout)** — 4 raisons
+- **[Argument contre refonte totale](#refonte)** — généraliser plutôt que remplacer
+- **[Implications pour les PhDs](#phd)** — cours, séminaires, thèses
+
+---
+
+## Les trois hypothèses statistiques en cause { #hypotheses }
 
 Le DSGE New-Keynesian moderne (Smets-Wouters 2003 → SW07 → SAM ECB
 → FRB/US → COMPASS BoE → similar at most major central banks) repose
@@ -117,7 +127,7 @@ avec `q` (Tsallis non-extensivity) ou `α` (Lévy index) estimés
 empiriquement. Les implémentations existent mais ne sont pas
 encore standard.
 
-## Pourquoi DSGE n'est cependant pas mort
+## Pourquoi DSGE n'est cependant pas mort { #pas-mort }
 
 Les trois modifications ci-dessus sont **structurelles** mais elles
 ne tuent pas le DSGE. Elles le **généralisent**. Les versions
@@ -144,7 +154,7 @@ Le DSGE *amélioré* reste un cadre légitime pour la modélisation
 structurelle. Ce qui est mort, c'est le DSGE *naïf* qui suppose AR(1)
 + paramètres stables + Gauss.
 
-## Le programme de recherche conjoint
+## Le programme de recherche conjoint { #programme }
 
 Pour réaliser ces modifications, un programme de recherche
 banques centrales + universités est nécessaire :
@@ -203,7 +213,7 @@ variables.
 **Total** : 2-3 ans pour un programme bien orchestré, avec coordination
 BC + équipes universitaires.
 
-## Pourquoi cela vaut le coût
+## Pourquoi cela vaut le coût { #cout }
 
 Le coût opérationnel de moderniser un modèle DSGE est substantiel.
 Pourquoi le payer ?
@@ -223,7 +233,7 @@ Pourquoi le payer ?
    → meilleurs coussins de capital → moins de défaillances bancaires.
    Le coût social est facile à justifier.
 
-## Argument contre une refonte totale
+## Argument contre une refonte totale { #refonte }
 
 L'argument alternatif serait d'**abandonner DSGE** au profit d'un cadre
 entièrement nouveau (HABM, ABM, active inference). Mais :
@@ -241,7 +251,7 @@ C'est l'argument du "généraliser plutôt que remplacer". Notre
 position : généraliser DSGE est la voie raisonnable. Remplacer
 totalement est un objectif de long terme, pas une urgence.
 
-## Implications pour les programmes de PhD
+## Implications pour les programmes de PhD { #phd }
 
 Les modifications proposées suggèrent un programme de formation
 doctorale :
