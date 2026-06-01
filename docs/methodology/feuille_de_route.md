@@ -944,8 +944,11 @@
       total : models_catalog ~2 500, benchmark_reproducible ~2 000,
       code_api ~3 000, extensions_roadmap ~2 500, failure_modes
       ~2 000, note_quants essai phare ~5 000).
-    - **Phase 4 — TODO** : track BC (6 pages dont note phare
-      ~5 000 mots).
+    - **Phase 4 — LIVRÉE** : track BC (6 pages, ~15 000 mots :
+      method_for_practitioners ~2 500, credibility_radar ~2 800,
+      forward_guidance_reflexive ~2 200, tipping_point_detection
+      ~2 400, horizon_aware_targeting ~2 100, note_bc note phare
+      ~5 000).
     - **Phase 5 — TODO** : track Acad (6 pages dont paper V2 ~12 000
       mots avec dramaturgie constructive).
     - **Phase 6 — TODO** : hub crossover + dashboard live verdict.
