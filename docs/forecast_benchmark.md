@@ -6,18 +6,18 @@ Tested against the random-walk baseline across the full panel set (World Bank, q
 
 ## Verdict global
 
-✅ **PASS** — aggregate pass rate 78% on 52 / 67 variables across 6 panels.
+✅ **PASS** — aggregate pass rate 78% on 53 / 68 variables across 6 panels.
 
 ## Verdicts par panel
 
 | panel | période | pass rate | n vars | verdict | best cluster |
 |---|---|---|---|---|---|
 | `wb` | World Bank (1960-2024, annuel) | 60% | 10 | ✅ PASS | msm (4) · har (2) |
-| `q` | Quarterly contemporain (1995-2024) | 93% | 14 | ✅ PASS | har (8) · arfima_rs (5) |
-| `long` | Maddison + JST (1870-2024, annuel) | 69% | 16 | ✅ PASS | msm (7) · arfima_rs (2) · har (2) |
-| `boe` | Bank of England Millennium (1700-2016) | 88% | 8 | ✅ PASS | msm (6) · har (1) |
+| `q` | Quarterly contemporain (1995-2024) | 79% | 14 | ✅ PASS | arfima_rs (7) · har (4) |
+| `long` | Maddison + JST (1870-2024, annuel) | 88% | 16 | ✅ PASS | msm (8) · har (4) · arfima_rs (2) |
+| `boe` | Bank of England Millennium (1700-2016) | 88% | 8 | ✅ PASS | har (4) · msm (3) |
 | `bis` | BIS macroprudentiel (1970-2024, trim.) | 83% | 12 | ✅ PASS | msm (6) · arfima_rs (3) · har (1) |
-| `sh` | Sectoral history (FRED+OWID+BEIS) | 71% | 7 | ✅ PASS | arfima_rs (2) · msm (2) · har (1) |
+| `sh` | Sectoral history (FRED+OWID+BEIS) | 62% | 8 | ✅ PASS | arfima_rs (2) · msm (2) · har (1) |
 
 ## Leaderboard des modèles du cluster
 
@@ -25,9 +25,9 @@ Nombre total de variables où chaque modèle du cluster est *le* meilleur compé
 
 | modèle | total wins | part |
 |---|---|---|
-| `msm` | 25 | 48% |
-| `har` | 15 | 29% |
-| `arfima_rs` | 12 | 23% |
+| `msm` | 23 | 43% |
+| `har` | 16 | 30% |
+| `arfima_rs` | 14 | 26% |
 
 ## Lecture qualitative
 
@@ -53,4 +53,4 @@ done
 docker compose run --rm ecowave forecast-benchmark-consolidate
 ```
 
-Per-panel sidecars : ``reports/forecast_benchmark_2026_05_{panel}.json``. Page générée à 2026-06-01T16:40:15+00:00 par `ecowave forecast-benchmark-consolidate`.
+Per-panel sidecars : ``reports/forecast_benchmark_2026_05_{panel}.json``. Page générée à 2026-06-01T16:56:33+00:00 par `ecowave forecast-benchmark-consolidate`.
