@@ -63,6 +63,8 @@ extra_javascript:
 # Voir methodology/feuille_de_route.md item #22.
 nav:
   - Accueil: index.md
+  - Comment naviguer: how_to_navigate.md
+  - Glossaire: glossary.md
   - Pour qui ?:
       - Académique:
           - tracks/acad/index.md
