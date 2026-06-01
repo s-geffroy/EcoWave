@@ -66,7 +66,14 @@ nav:
   - Pour qui ?:
       - Académique: tracks/acad/index.md
       - Banque centrale: tracks/bc/index.md
-      - Quants: tracks/quants/index.md
+      - Quants:
+          - tracks/quants/index.md
+          - Catalogue des modèles: tracks/quants/models_catalog.md
+          - Benchmark reproductible: tracks/quants/benchmark_reproducible.md
+          - API publique ecowave.forecasting: tracks/quants/code_api.md
+          - Extensions roadmap: tracks/quants/extensions_roadmap.md
+          - Failure modes (22 % d'échecs): tracks/quants/failure_modes.md
+          - "Note phare (~5 000 mots)": tracks/quants/note_quants.md
       - Public éclairé:
           - tracks/public/index.md
           - Le cycle est mort: tracks/public/the_cycle_is_dead.md

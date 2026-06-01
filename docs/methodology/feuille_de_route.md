@@ -940,8 +940,10 @@
       the_cycle_is_dead.md ~1 200, what_replaces_it.md ~1 500,
       why_it_matters.md ~1 300, note_public.md essai phare
       ~2 500).
-    - **Phase 3 — TODO** : track Quants (6 pages dont note phare
-      ~5 000 mots).
+    - **Phase 3 — LIVRÉE** : track Quants (6 pages, ~15 000 mots
+      total : models_catalog ~2 500, benchmark_reproducible ~2 000,
+      code_api ~3 000, extensions_roadmap ~2 500, failure_modes
+      ~2 000, note_quants essai phare ~5 000).
     - **Phase 4 — TODO** : track BC (6 pages dont note phare
       ~5 000 mots).
     - **Phase 5 — TODO** : track Acad (6 pages dont paper V2 ~12 000

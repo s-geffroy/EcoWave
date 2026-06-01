@@ -5,6 +5,52 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #22 Phase 3 — Track Quants (6 pages, ~15 000 mots)
+
+Troisième incrément. Le track Quants livre la documentation technique
+reproductible : spécifications des 6 modèles, guide pas-à-pas du
+benchmark, référence API publique, roadmap d'extensions, analyse
+honnête des 15 / 68 variables où le cluster perd, note phare.
+
+**6 nouvelles pages sous `docs/tracks/quants/`** :
+
+- **`models_catalog.md`** (~2 500 mots) — spécifications précises des 6
+  modèles (RW, AR(1), ARMA(1,1), HAR Corsi 2009, ARFIMA+RS Bhardwaj-
+  Swanson 2006, MSM Calvet-Fisher 2002). Paramètres, hypothèses, code
+  paths, quand utiliser quoi par panel.
+- **`benchmark_reproducible.md`** (~2 000 mots) — pas-à-pas Docker
+  pour atteindre PASS 78 %. Setup, ingestion, exécution séquentielle
+  des 6 panels, consolidation, lecture des sidecars JSON, comparaison
+  des verdicts attendus vs réels.
+- **`code_api.md`** (~3 000 mots) — référence API publique du module
+  `ecowave.forecasting`. ProbabilisticForecast pivot, fonctions
+  forecast par modèle, scoring rules, benchmark + reporting +
+  consolidation. Exemple end-to-end Python complet.
+- **`extensions_roadmap.md`** (~2 500 mots) — chantiers techniques :
+  HABM Lux-Marchesi (10j), MRW Bacry-Muzy-Delour (5j), AMH-ensemble
+  (7j), active inference Friston (15-20j), Diebold-Mariano (2j),
+  Giacomini-White (3j), parallélisation origins (3j), rolling-window
+  calibration (5j), nouvelles scoring rules (energy, variogram,
+  quantile-weighted CRPS).
+- **`failure_modes.md`** (~2 000 mots) — analyse exhaustive des 15
+  variables (sur 68) où aucun modèle cluster ne bat RW. 4 patterns
+  identifiés : taux administrés ZIRP, séries courtes annuelles,
+  agrégats commerce/investissement avec chocs structurels, séries
+  historiques US sectorielles. Aucun échec n'est aléatoire — tous ont
+  une explication structurelle.
+- **`note_quants.md`** (~5 000 mots) — note phare technique
+  reproductible. TL;DR, motivation benchmark, 6 modèles, interface
+  commune sample-based, pipeline rolling-origin, verdict 78 % avec
+  robustesse à `n_origins` et seed, failure modes, reproduction
+  Docker, API publique, limites connues (forecast unconditional,
+  pas de cross-variable, pas de DM p-value), implications praticien.
+
+**Mise à jour `mkdocs.yml`** — sous-navigation Quants avec les 6
+nouvelles pages.
+
+**Vérification** : mkdocs build --strict passe. 225 tests passing, 0
+régression.
+
 ### Roadmap #22 Phase 2 — Track Public éclairé (4 pages, ~6 500 mots)
 
 Deuxième incrément. Le track public livre la **dramaturgie
