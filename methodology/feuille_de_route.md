@@ -763,7 +763,20 @@
   ([`implications_of_cluster.md`](../implications_of_cluster.md)) ;
   PR de livraison ([feat/implications-of-cluster](https://github.com/s-geffroy/EcoWave/pulls?q=is%3Apr+head%3Afeat%2Fimplications-of-cluster)).
 
-## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — TODO {#item-20-modeling-benchmark}
+## #20 — Benchmark de modélisation : MSM + HAR + ARFIMA+RS — EN COURS (PR A LIVRÉE) {#item-20-modeling-benchmark}
+
+**Statut.** Chantier découpé en 4 PRs incrémentaux :
+
+- **PR A — LIVRÉE** : `ecowave/forecasting/` (skeleton, `types`,
+  `proper_scoring` CRPS/coverage/MZ, `baselines` RW+AR(1)+ARMA(1,1),
+  `har` Corsi 2009 avec config lag). 26 tests passants ; 180 tests
+  totaux, 0 régression.
+- **PR B — TODO** : `arfima_rs.py` (Hosking récursion + MarkovRegression).
+- **PR C — TODO** : `msm.py` (Calvet-Fisher 2002, estimation GMM ou SML).
+- **PR D — TODO** : pipeline `benchmark.py` + CLI
+  `ecowave forecast-benchmark` + page `docs/forecast_benchmark.md` +
+  verdict acceptance criterion.
+
 
 - **Problème.** Le verdict empirique CPV (cluster C+B+D+I+S) identifie
   une signature structurelle. Reste à *construire un modèle* qui
