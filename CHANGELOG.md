@@ -5,6 +5,40 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Roadmap #22 Phase 2 — Track Public éclairé (4 pages, ~6 500 mots)
+
+Deuxième incrément. Le track public livre la **dramaturgie
+narrative** complète sans jargon — utilisable comme entrée principale
+pour journalistes, étudiants, lecteurs curieux. Ouvre la voie pour les
+tracks plus techniques.
+
+**4 nouvelles pages sous `docs/tracks/public/`** :
+
+- **`the_cycle_is_dead.md`** (~1 200 mots) — historique de l'enseignement
+  des 4 cycles canoniques (Kitchin 1923, Juglar 1862, Kuznets 1930,
+  Kondratieff 1925), problème méthodologique (aucun test statistique
+  original), notre protocole en 3 portes accessibles, verdict sur
+  9 436 cellules / 6 panels / 1700-2024 : aucun cycle ne survit.
+- **`what_replaces_it.md`** (~1 500 mots) — les 5 propriétés du cluster
+  C+B+D+I+S expliquées avec analogies (fleuve vs étang pour C, côte
+  rocheuse pour B, cause-effet pour D, entropie pour I, réflexivité
+  Soros pour S), métaphore unificatrice de la cascade en turbulence
+  K41.
+- **`why_it_matters.md`** (~1 300 mots) — 5 implications concrètes
+  (crédibilité monétaire mesurable, credit gap sous-estimé, VaR mal
+  calibré, prévisions publiques battables, DSGE à réviser
+  structurellement).
+- **`note_public.md`** (~2 500 mots) — essai phare prêt à être lu
+  d'une vue. Tresse les 3 pages précédentes en récit narratif :
+  histoire racontée pendant un siècle → notre démonstration →
+  cinq propriétés émergentes → cascade comme métaphore → benchmark
+  PASS 78 % comme validation opérationnelle → 5 implications.
+
+**Mise à jour `mkdocs.yml`** — sous-navigation Public éclairé avec
+les 4 nouvelles pages. mkdocs build --strict passe.
+
+**Vérification** : 225 tests passing en Docker, 0 régression.
+
 ### Roadmap #22 Phase 1 — Refonte hub multi-track (acad / BC / quants / public)
 
 Premier incrément du chantier de refonte (item #22). Le site et le
