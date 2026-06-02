@@ -80,21 +80,69 @@ window is consistent with the interpretation that the positive
 results reflect post-crisis trend behaviour rather than an
 underlying 40--60y oscillation.
 
-\subsection{Per-variable Kondratieff on BoE Millennium (status)}
+\subsection{Per-variable Kondratieff on BoE Millennium}
 
-A per-variable Kondratieff test on the Bank of England Millennium
-panel (\(\approx 130\) UK annual series, 1700--2016) requires the
-panel itself to be ingested into the project's SQLite store first.
-At the time of writing the BoE ingestion is on the project's
-roadmap but the per-variable run is not yet committed; we
-therefore omit the table that would otherwise appear here.
-The companion \path{scripts/wen_replication.py} script generalises
-trivially to any panel of annual series in raw-CSV form, and the
-BoE per-variable verdict will be added in a follow-up commit
-together with the same \(p\)-value tabulation as the sectoral
-panel above. Until then the BoE Kondratieff claim of
-Section~\ref{sec:results} should be read as conditional on the
-JST R6 result of the next subsection.
+Table~\ref{tab:boe_kondratieff_p} reports the AR(1) bootstrap
+\(p_1\) of Gate~\ref{gate:1} for the ten Bank of England
+Millennium variables long enough to support a Kondratieff
+(40--60y) test (\(N>240\) annual observations). The numbers
+come from the raw long-format CSV
+(\path{data_raw/boe/annual.csv}) via
+\path{scripts/boe_kondratieff_per_variable.py}; source:
+\path{reports/boe_per_variable.json}.
+
+\begin{table}[h]
+\centering
+\caption{Per-variable Kondratieff test on the Bank of England
+Millennium panel, 1700--2016. \(p_1\) on \(B=500\) AR(1)
+surrogates. Cells with \(p_1<0.05\) shown in bold.}
+\label{tab:boe_kondratieff_p}
+\small
+\begin{tabularx}{\linewidth}{@{}X c c@{}}
+\toprule
+\textbf{Variable (panel period)} & \(\boldsymbol{p_1}\) & \textbf{Gate~\ref{gate:1}} \\
+\midrule
+Real GDP (1700--2016)                & 0.643 & rejected \\
+Composite real GDP, long (1700--2016)& 0.669 & rejected \\
+CPI (1700--2016)                     & 0.615 & rejected \\
+Wholesale price index (1700--2016)   & 0.212 & rejected \\
+Bank Rate (1700--2016)               & 0.778 & rejected \\
+Consols long-term yield (1703--2016) & 0.102 & rejected \\
+Public debt / GDP (1700--2016)       & \textbf{0.004} & \textbf{passes} \\
+Share prices (1700--2016)            & 0.986 & rejected \\
+Population GB/NI (1700--2016)        & 0.291 & rejected \\
+Unemployment rate (1760--2016)       & 0.088 & rejected \\
+\midrule
+\textbf{Survival rate at \(\alpha=0.05\)} & \multicolumn{2}{r}{1/10} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+One of ten Kondratieff-eligible BoE variables passes
+Gate~\ref{gate:1} at the unadjusted significance level: the
+public-debt-to-GDP ratio, with \(p_1=0.004\). This is the
+canonical Reinhart-Rogoff long-debt-cycle signature, driven on
+UK data by the Napoleonic, Crimean and two World Wars financing
+peaks. The same variable also passes the Kuznets band
+(\(p_1=0.006\)). Both passings are consistent with prior
+literature on UK fiscal cycles
+\citep{reinhart_rogoff2009} and are properly understood as
+\emph{debt-financing} cycles tied to exogenous war shocks, not
+as evidence for the existence of a universal endogenous 40--60y
+periodicity.
+
+Across the full BoE Gate~\ref{gate:1} run (16 variables \(\times\)
+4 cycle bands, 58 testable cells), three cells pass unadjusted:
+public debt / GDP on Kuznets (\(p_1=0.006\)) and Kondratieff
+(\(p_1=0.004\)), and the unemployment rate on Juglar
+(\(p_1=0.006\)). Under Benjamini-Hochberg adjustment at FDR
+0.05 (critical threshold \(p^* = 0.05/58 \approx 0.00086\)),
+none of the three survives. The expected number of unadjusted
+positives under the joint null is 2.9; observing three is
+consistent with sampling noise. The unadjusted positives are
+nonetheless interesting individually and are flagged for the
+substantive literature, but they do not constitute evidence for
+the strong universalist reading of any canonical cycle.
 
 \subsection{Benjamini-Hochberg FDR-adjusted verdict}
 

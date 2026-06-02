@@ -1,0 +1,621 @@
+{
+  "version": "v1",
+  "csv": "/app/data_raw/boe/annual.csv",
+  "start_year": 1700,
+  "n_surrogates": 500,
+  "seed": 0,
+  "bands": {
+    "kitchin": [
+      3.0,
+      5.0
+    ],
+    "juglar": [
+      7.0,
+      11.0
+    ],
+    "kuznets": [
+      15.0,
+      25.0
+    ],
+    "kondratieff": [
+      40.0,
+      60.0
+    ]
+  },
+  "variables": [
+    "BOE_CPI",
+    "BOE_CREDIT",
+    "BOE_DEBTGDP",
+    "BOE_EQUITY",
+    "BOE_GDP",
+    "BOE_GDP_LONG",
+    "BOE_HPI",
+    "BOE_INV",
+    "BOE_MONEY",
+    "BOE_POP",
+    "BOE_PRD",
+    "BOE_RCONS",
+    "BOE_STIR",
+    "BOE_UNRATE",
+    "BOE_WPI",
+    "BOE_YIELD"
+  ],
+  "cells": [
+    {
+      "variable": "BOE_CPI",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.0658682634730539,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CPI",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.9241516966067864,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CPI",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.7844311377245509,
+      "p_coh": 0.9860279441117764,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CPI",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.6147704590818364,
+      "p_coh": 0.8782435129740519,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 137,
+      "panel_period": "1880--2016",
+      "p1": 1.0,
+      "p_coh": 0.7624750499001997,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 137,
+      "panel_period": "1880--2016",
+      "p1": 0.48902195608782434,
+      "p_coh": 0.8902195608782435,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 137,
+      "panel_period": "1880--2016",
+      "p1": 0.18363273453093812,
+      "p_coh": 0.9481037924151696,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 137,
+      "panel_period": "1880--2016",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 4*hi_years"
+    },
+    {
+      "variable": "BOE_DEBTGDP",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.5449101796407185,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_DEBTGDP",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.8542914171656687,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_DEBTGDP",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.005988023952095809,
+      "p_coh": 0.9820359281437125,
+      "reject_existence": false
+    },
+    {
+      "variable": "BOE_DEBTGDP",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.003992015968063872,
+      "p_coh": 0.8203592814371258,
+      "reject_existence": false
+    },
+    {
+      "variable": "BOE_EQUITY",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.42714570858283435,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_EQUITY",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.22954091816367264,
+      "p_coh": 0.9900199600798403,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_EQUITY",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.998003992015968,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_EQUITY",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.9860279441117764,
+      "p_coh": 0.6487025948103793,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.8762475049900199,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.7904191616766467,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.9800399201596807,
+      "p_coh": 0.7884231536926147,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.6427145708582834,
+      "p_coh": 0.6147704590818364,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP_LONG",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.9840319361277445,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP_LONG",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.8303393213572854,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP_LONG",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.9740518962075848,
+      "p_coh": 0.7465069860279441,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_GDP_LONG",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.6686626746506986,
+      "p_coh": 0.5708582834331337,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_HPI",
+      "cycle": "kitchin",
+      "n_obs": 172,
+      "panel_period": "1845--2016",
+      "p1": 0.9840319361277445,
+      "p_coh": 0.9720558882235529,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_HPI",
+      "cycle": "juglar",
+      "n_obs": 172,
+      "panel_period": "1845--2016",
+      "p1": 0.7145708582834331,
+      "p_coh": 0.8562874251497006,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_HPI",
+      "cycle": "kuznets",
+      "n_obs": 172,
+      "panel_period": "1845--2016",
+      "p1": 0.08982035928143713,
+      "p_coh": 0.9500998003992016,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 172,
+      "panel_period": "1845--2016",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 4*hi_years"
+    },
+    {
+      "variable": "BOE_INV",
+      "cycle": "kitchin",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": 0.3153692614770459,
+      "p_coh": 0.908183632734531,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_INV",
+      "cycle": "juglar",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": 0.05389221556886228,
+      "p_coh": 0.6027944111776448,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_INV",
+      "cycle": "kuznets",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": 0.46706586826347307,
+      "p_coh": 0.8822355289421158,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_INV",
+      "cycle": "kondratieff",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 4*hi_years"
+    },
+    {
+      "variable": "BOE_MONEY",
+      "cycle": "kitchin",
+      "n_obs": 173,
+      "panel_period": "1844--2016",
+      "p1": 1.0,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_MONEY",
+      "cycle": "juglar",
+      "n_obs": 173,
+      "panel_period": "1844--2016",
+      "p1": 0.6427145708582834,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_MONEY",
+      "cycle": "kuznets",
+      "n_obs": 173,
+      "panel_period": "1844--2016",
+      "p1": 1.0,
+      "p_coh": 0.3033932135728543,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_MONEY",
+      "cycle": "kondratieff",
+      "n_obs": 173,
+      "panel_period": "1844--2016",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 4*hi_years"
+    },
+    {
+      "variable": "BOE_POP",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.9461077844311377,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_POP",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.6826347305389222,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_POP",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.9960079840319361,
+      "p_coh": 0.7964071856287425,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_POP",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.29141716566866266,
+      "p_coh": 0.6227544910179641,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_PRD",
+      "cycle": "kitchin",
+      "n_obs": 161,
+      "panel_period": "1856--2016",
+      "p1": 0.9101796407185628,
+      "p_coh": 0.29141716566866266,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_PRD",
+      "cycle": "juglar",
+      "n_obs": 161,
+      "panel_period": "1856--2016",
+      "p1": 0.9540918163672655,
+      "p_coh": 0.20958083832335328,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_PRD",
+      "cycle": "kuznets",
+      "n_obs": 161,
+      "panel_period": "1856--2016",
+      "p1": 0.9441117764471058,
+      "p_coh": 0.9940119760479041,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_PRD",
+      "cycle": "kondratieff",
+      "n_obs": 161,
+      "panel_period": "1856--2016",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 4*hi_years"
+    },
+    {
+      "variable": "BOE_RCONS",
+      "cycle": "kitchin",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": 1.0,
+      "p_coh": 0.5588822355289421,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_RCONS",
+      "cycle": "juglar",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": 0.7365269461077845,
+      "p_coh": 0.8163672654690619,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_RCONS",
+      "cycle": "kuznets",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": 0.41916167664670656,
+      "p_coh": 0.5169660678642715,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_RCONS",
+      "cycle": "kondratieff",
+      "n_obs": 187,
+      "panel_period": "1830--2016",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 4*hi_years"
+    },
+    {
+      "variable": "BOE_STIR",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.17165668662674652,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_STIR",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.530938123752495,
+      "p_coh": 0.9321357285429142,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_STIR",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 1.0,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_STIR",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.7784431137724551,
+      "p_coh": 0.7584830339321357,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_UNRATE",
+      "cycle": "kitchin",
+      "n_obs": 257,
+      "panel_period": "1760--2016",
+      "p1": 0.5748502994011976,
+      "p_coh": 0.3852295409181637,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_UNRATE",
+      "cycle": "juglar",
+      "n_obs": 257,
+      "panel_period": "1760--2016",
+      "p1": 0.005988023952095809,
+      "p_coh": 0.7664670658682635,
+      "reject_existence": false
+    },
+    {
+      "variable": "BOE_UNRATE",
+      "cycle": "kuznets",
+      "n_obs": 257,
+      "panel_period": "1760--2016",
+      "p1": 0.9461077844311377,
+      "p_coh": 0.6027944111776448,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_UNRATE",
+      "cycle": "kondratieff",
+      "n_obs": 257,
+      "panel_period": "1760--2016",
+      "p1": 0.08782435129740519,
+      "p_coh": 0.8223552894211577,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_WPI",
+      "cycle": "kitchin",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.8882235528942116,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_WPI",
+      "cycle": "juglar",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 1.0,
+      "p_coh": 0.7105788423153693,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_WPI",
+      "cycle": "kuznets",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.7465069860279441,
+      "p_coh": 0.8023952095808383,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_WPI",
+      "cycle": "kondratieff",
+      "n_obs": 317,
+      "panel_period": "1700--2016",
+      "p1": 0.21157684630738524,
+      "p_coh": 0.9301397205588823,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 314,
+      "panel_period": "1703--2016",
+      "p1": 0.4151696606786427,
+      "p_coh": 0.5489021956087824,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_YIELD",
+      "cycle": "juglar",
+      "n_obs": 314,
+      "panel_period": "1703--2016",
+      "p1": 0.3413173652694611,
+      "p_coh": 0.906187624750499,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 314,
+      "panel_period": "1703--2016",
+      "p1": 0.3373253493013972,
+      "p_coh": 0.0998003992015968,
+      "reject_existence": true
+    },
+    {
+      "variable": "BOE_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 314,
+      "panel_period": "1703--2016",
+      "p1": 0.10179640718562874,
+      "p_coh": 0.18762475049900199,
+      "reject_existence": true
+    }
+  ]
+}
