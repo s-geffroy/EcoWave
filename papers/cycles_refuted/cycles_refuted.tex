@@ -1,0 +1,97 @@
+\documentclass[review,12pt,authoryear]{elsarticle}
+
+% ===== Packages =====
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black,
+  pdftitle={Cycles Refuted: A Pre-Registered Three-Gate Falsification of Kitchin, Juglar, Kuznets and Kondratieff},
+  pdfauthor={S. Geffroy},
+  pdfsubject={Empirical macroeconomics, econophysics, cycles}
+}
+
+% ===== Bibliography (natbib + bibtex; elsarticle native) =====
+% elsarticle auto-loads natbib because of the `authoryear' option.
+% A .bbl file is built by bibtex from references.bib.
+\bibliographystyle{elsarticle-harv}
+
+% ===== Custom macros =====
+\newcommand{\Hurst}{H}
+\newcommand{\pvalue}{p}
+\newcommand{\AR}[1]{\mathrm{AR}(#1)}
+\newcommand{\Cls}[1]{\texttt{\detokenize{#1}}}
+\providecommand{\path}{}
+\renewcommand{\path}[1]{\texttt{\detokenize{#1}}}
+
+% Theorem-style boxes for predictions / gates
+\newtheorem{gate}{Gate}
+\newtheorem{prediction}{Pre-registered Prediction}
+
+% ===== Front matter =====
+\journal{Physica A: Statistical Mechanics and its Applications}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Cycles Refuted: A Pre-Registered Three-Gate Falsification of
+the Kitchin, Juglar, Kuznets and Kondratieff Cycles across Six
+Macroeconomic Panels, 1700--2024}
+
+\author[ew]{Sylvain Geffroy\corref{cor1}}
+\ead{sylvain.geffroy@gmail.com}
+\cortext[cor1]{Corresponding author.}
+\affiliation[ew]{organization={EcoWave Project (independent)},
+                  city={Paris}, country={France}}
+
+\input{sections/00_abstract.tex}
+
+\begin{keyword}
+business cycles \sep Kondratieff waves \sep Kitchin cycle \sep
+pre-registration \sep falsifiability \sep surrogate data \sep
+econophysics \sep AR(1) bootstrap \sep phase randomization
+\MSC[2020] 62M10 \sep 62F03 \sep 91B84
+\end{keyword}
+
+\end{frontmatter}
+
+% ===== Body =====
+\input{sections/01_introduction.tex}
+\input{sections/02_data.tex}
+\input{sections/03_methods.tex}
+\input{sections/04_criteria.tex}
+\input{sections/05_results.tex}
+\input{sections/06_pointers.tex}
+\input{sections/07_conclusion.tex}
+
+% ===== Bibliography =====
+\bibliography{references}
+
+% ===== Appendices =====
+\appendix
+\input{appendices/A_data_provenance.tex}
+\input{appendices/B_methods_formulae.tex}
+\input{appendices/C_acceptance_preregistration.tex}
+\input{appendices/D_per_variable_evidence.tex}
+
+\end{document}

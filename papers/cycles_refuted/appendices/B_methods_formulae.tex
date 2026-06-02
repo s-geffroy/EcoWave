@@ -1,0 +1,147 @@
+\section{Methods: formulae, parameters and implementation}
+\label{app:methods}
+
+This appendix records the precise functional form, parameter choice
+and code location of each estimator used in the cascade. Every
+algorithm has a unit test in \path{ecowave/tests/}; references to
+the test files are given in-line.
+
+\subsection{Christiano-Fitzgerald asymmetric band-pass}
+
+For an empirical band \([\omega_L,\omega_H]\), the
+Christiano-Fitzgerald \citep{christiano_fitzgerald2003} filter
+yields the optimal band-pass approximation under an AR(1) data
+generating process. The filtered series is
+\begin{equation}
+\hat y^{\mathrm{CF}}_t = \sum_{j=-(T-t)}^{t-1} B_{t,j}\, y_{t-j},
+\qquad B_{t,j} \;=\; \frac{1}{2\pi}\int_{\omega_L}^{\omega_H}
+e^{-i\omega j}\,d\omega + \tilde B_{t,j},
+\end{equation}
+where \(\tilde B_{t,j}\) is the endpoint correction.
+Implementation: \path{ecowave/cycles/decompose.py:cf_bandpass} (built on
+\texttt{statsmodels.tsa.filters.cf\_filter}). Endpoint reliability:
+the last \(\lfloor (\omega_H^{-1})/2\rfloor\) periods are flagged
+in the output table as \texttt{endpoint\_caveat=1} and excluded
+from Gate~\ref{gate:2} consensus votes.
+
+\paragraph{Hilbert instantaneous phase.}
+The instantaneous phase of the filtered series is
+\(\varphi_t = \arg(\hat y^{\mathrm{CF}}_t + i\mathcal{H}[\hat y^{\mathrm{CF}}_t])\),
+where \(\mathcal{H}\) is the Hilbert transform. The four phase
+labels (expansion, peak, contraction, trough) follow the standard
+quadrant mapping \(\varphi\mapsto\lfloor 4(\varphi+\pi)/(2\pi)\rfloor
+\bmod 4\). Implementation: \path{ecowave/cycles/phase.py:classify_phase}.
+Test: \path{tests/test_cycles_phase.py}.
+
+\subsection{Continuous Morlet wavelet}
+
+The continuous wavelet transform of \(y\) is
+\begin{equation}
+W(s,\tau) \;=\; \frac{1}{\sqrt{s}}\int y(t)\,\psi^{\ast}\!\left(\frac{t-\tau}{s}\right)\,dt,
+\end{equation}
+with the Morlet mother wavelet
+\(\psi(t)=\pi^{-1/4}e^{i\omega_0 t}e^{-t^2/2}\) and parameters
+\(\omega_0=6.0,\Delta j=0.125\) following the Torrence-Compo
+defaults \citep{torrence_compo1998}. The band-power in a canonical
+cycle band is the integral of \(|W(s,\tau)|^2\) over scales
+\(s\in[\omega_H^{-1},\omega_L^{-1}]\). Implementation: PyWavelets
+\texttt{cmor} via \path{ecowave/cycles/decompose.py:morlet_wavelet}.
+
+\subsection{Hamilton-style Markov-switching AR(1)}
+
+The two-regime hidden-Markov AR(1) model
+\begin{equation}
+y_t = \mu_{s_t} + \phi_{s_t}(y_{t-1} - \mu_{s_t}) + \sigma_{s_t}\epsilon_t,
+\qquad
+s_t\in\{0,1\},\quad
+\Pr(s_t=j|s_{t-1}=i)=P_{ij},
+\end{equation}
+following \citet{hamilton1989} is fitted by EM (Baum-Welch) on the
+log-differenced series. The dwell-time of each regime is compared to
+the canonical cycle band; a vote at Gate~\ref{gate:2} is cast for
+the band whose period brackets the median dwell-time. Implementation:
+\path{ecowave/waves/model_e_markov.py} (built on
+\texttt{statsmodels.tsa.regime\_switching.MarkovAutoregression}).
+Test: \path{tests/test_model_e_markov.py}.
+
+\subsection{PELT changepoint detection}
+
+The PELT algorithm \citep{killick_fearnhead_eckley2012} solves the
+penalised optimisation
+\begin{equation}
+\hat{\{\tau_k\}} \;=\; \arg\min_{\{\tau_k\}} \sum_{k=0}^{K}
+\mathcal{C}(y_{\tau_k+1{:}\tau_{k+1}}) \;+\; \beta K,
+\end{equation}
+with \(\mathcal{C}\) the L2 segment-cost and \(\beta\) the BIC
+penalty. The detected changepoints are converted to dwell-times and
+a Gate~\ref{gate:2} vote is cast for the matching cycle band.
+Implementation: \path{ecowave/waves/model_d_regime.py} (built on
+the \texttt{ruptures} Python package, \texttt{Pelt(model="l2")}).
+Test: \path{tests/test_model_d.py}.
+
+\subsection{Bry-Boschan/Harding-Pagan turning points}
+
+The classical Bry-Boschan procedure \citep{bry_boschan1971,harding_pagan2002}
+identifies peaks and troughs by a censored local-extremum rule. We
+adopt the Harding-Pagan minimum-phase duration of five quarters (or
+two years on annual data) and the minimum-cycle duration of fifteen
+months. Implementation:
+\path{ecowave/waves/model_g_bryboschan.py:_detect_turning_points}.
+Test: \path{tests/test_model_g.py}.
+
+\subsection{Dual-null surrogate test}
+
+\paragraph{Null~1: AR(1) bootstrap.}
+\begin{algorithmic}[1]
+\State Fit \(\hat\phi,\hat\mu,\hat\sigma\) on \(y\) by OLS.
+\For{\(b=1,\ldots,B=1000\)}
+  \State Draw \(\epsilon^{(b)}_t\sim\mathcal{N}(0,\hat\sigma^2)\),
+         \(t=1,\ldots,T\).
+  \State Simulate \(y^{(b)}_t = \hat\mu + \hat\phi(y^{(b)}_{t-1}-\hat\mu)+\epsilon^{(b)}_t\).
+  \State Compute band-power \(P_b\) of \(y^{(b)}\) on the canonical band.
+\EndFor
+\State Reject Null~1 iff empirical band-power \(P_0\) exceeds the
+\(95\)th percentile of \(\{P_b\}_{b=1}^B\).
+\end{algorithmic}
+Implementation: \path{ecowave/cycles/surrogate_generators.py:fit_ar1,simulate_ar1}.
+
+\paragraph{Null~2: Theiler phase-randomisation.}
+\begin{algorithmic}[1]
+\State Compute \(\hat y_k = \mathcal{F}[y]_k\) (DFT, \(k=0,\ldots,T-1\)).
+\For{\(b=1,\ldots,B=1000\)}
+  \State Draw new phases \(\theta^{(b)}_k\sim\mathrm{Uniform}[0,2\pi)\)
+         independently for \(k=1,\ldots,T/2\), set \(\theta^{(b)}_0=0\)
+         and impose conjugate symmetry
+         \(\theta^{(b)}_{T-k}=-\theta^{(b)}_k\).
+  \State Compute \(y^{(b)} = \mathcal{F}^{-1}\!\left[|\hat y_k|\,
+         e^{i\theta^{(b)}_k}\right]\) (real by construction).
+  \State Compute band-power \(P_b\) of \(y^{(b)}\) on the canonical band.
+\EndFor
+\State Reject Null~2 iff \(P_0\) exceeds the \(95\)th percentile of \(\{P_b\}\).
+\end{algorithmic}
+The conjugate-symmetry constraint \citep{theiler_et_al1992} ensures
+real-valued surrogates. Implementation:
+\path{ecowave/cycles/surrogate.py:phase_scramble_null}.
+
+\paragraph{Combined dual null.}
+The cell-level \(p\)-value is \(p_\mathrm{dual} = \max(p_1,p_2)\) where
+\(p_1\), \(p_2\) are the empirical \(p\)-values under Null~1 and
+Null~2. A cell is admitted at Gate~\ref{gate:1} iff \(p_\mathrm{dual}<0.05\).
+Implementation: \path{ecowave/cycles/surrogate.py:dual_null}.
+Test: \path{tests/test_surrogate_generators.py} (reproducibility of
+AR(1) simulation seed; coverage of phase-scramble at \(B\) values
+\(\{100,500,1000\}\)).
+
+\subsection{Calibration of the protocol on synthetic data}
+
+The protocol's type-I error and power are calibrated on synthetic
+panels. (i) On pure AR(1) panels with \(\phi\in\{0.3,0.6,0.9\}\)
+and \(T\in\{60,150,300\}\), the empirical Gate~\ref{gate:1} false
+positive rate is within two standard errors of \(0.05\) over
+\(N=1000\) replicates. (ii) On AR(1) panels with an embedded cosine
+at the canonical Kondratieff period (\(50\)y) and signal-to-noise
+ratio \(1.0\), the empirical power is \(0.83\), above the
+pre-registered \(0.8\) threshold. (iii) On the original NBER
+business-cycle dating chronology, the Bry-Boschan estimator
+reproduces the published turning points exactly. The calibration
+report is in \path{reports/calibration_v1.json}.

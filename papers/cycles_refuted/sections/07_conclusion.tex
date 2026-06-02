@@ -1,0 +1,71 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+We submitted the four canonical economic cycles---Kitchin, Juglar,
+Kuznets and Kondratieff---to a pre-registered three-gate falsifiable
+protocol applied across six independent macroeconomic panels spanning
+1700--2024. The cycles were armed with four heterogeneous estimators
+and tested against a conservative dual null. None of the four
+periodicities survives the cascade on more than a small minority of
+panels, and Kondratieff is the most fragile: when the per-variable
+safeguard of \citet{wen2005} is enforced, zero individual variables
+survive on the long-history panels. The few apparent survivals on
+income-aggregate composites are diagnosed as compositing artefacts.
+
+The result reproduces, under a falsifiable design, the empirical
+consensus of four successive waves of scepticism:
+\citet{garvy1943} on Kondratieff, \citet{klotz_neal1973} and
+\citet{solomou1987} on Kuznets and Kondratieff, \citet{romer1999} and
+\citet{stock_watson2003} on Juglar, and \citet{wen2005} on Kitchin.
+The negative result is therefore not a methodological failure---it
+is the quantitative confirmation of a long-standing
+empirical consensus that has been built piecemeal across the
+twentieth century and that, until now, has lacked a unifying
+pre-registered protocol.
+
+Two methodological lessons follow. First, claims about canonical
+periodicities should be treated as conjectures and tested against
+conservative nulls on the strongest data available, not asserted on
+the basis of visual inspection of low-pass-filtered composites.
+Second, the well-known compositing artefact \citep{wen2005} is the
+single largest source of false positives in the literature; a
+per-variable safeguard should be a standard requirement.
+
+The substantive question that motivates this paper---\emph{what is
+the empirical structure of macroeconomic fluctuations?}---admits an
+answer that is statistically robust, theoretically well-founded and
+pre-registered, but lies outside the cycle paradigm. It is sketched
+in Section~\ref{sec:pointers} and developed in a companion paper.
+The Kitchin, Juglar, Kuznets and Kondratieff cycles are not
+empirically supported as universal macroeconomic phenomena; the
+profession's modelling effort should move beyond them.
+
+\section*{Pre-registration and replication}
+
+The protocol thresholds, cycle bands and surrogate counts used here
+were frozen in source code at project inception
+(\path{ecowave/cycles/bands.py:CYCLE_BANDS}, immutable
+\texttt{MappingProxyType}). The complete pipeline---data ingestion,
+Gate~1--3 evaluation, per-variable safeguard---runs end-to-end in a
+Docker container in under thirty minutes. The container, the data
+manifests with SHA-256 checksums, and the figure-generation scripts
+are available on request to the corresponding author and will be
+deposited in a Zenodo archive upon journal acceptance.
+
+\section*{Acknowledgements}
+
+This work was developed in the EcoWave research project. The author
+thanks the contributors to the J\`ord\`a-Schularick-Taylor
+Macrohistory Database, the Bank of England's OBRA team, and the
+Bank for International Settlements for the public availability of
+the data on which this study rests.
+
+\section*{Declaration of competing interests}
+
+The author declares no competing interests.
+
+\section*{Data availability}
+
+All data are derived from public-domain or academically-licensed
+sources listed in Appendix~\ref{app:data} with full provenance and
+SHA-256 checksums.

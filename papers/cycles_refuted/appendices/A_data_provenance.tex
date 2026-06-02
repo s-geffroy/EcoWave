@@ -1,0 +1,123 @@
+\section{Data provenance and reproducibility}
+\label{app:data}
+
+This appendix documents the six panels of Section~\ref{sec:data} at
+the level of detail needed to defend the empirical claim against a
+hostile reviewer: source URL, version, access date, SHA-256
+checksum, licence, pre-processing decisions, and cross-source
+consistency checks. Every panel is reproducible end-to-end inside the
+project Docker image.
+
+\subsection{Panel inventory}
+
+\paragraph{World Bank Open Data (WB).}
+World Development Indicators \citep{wb_wdi}, annual frequency,
+1960--2024, 45 macroeconomic series (real GDP, gross fixed capital
+formation, domestic credit, CPI inflation, current-account balance,
+\emph{etc.}). Aggregates: WLD (world), HIC (high-income), UMC
+(upper-middle-income), LMC (lower-middle-income), LIC
+(low-income), G7, and BRICS. Licence: CC~BY~4.0. Access date:
+2024-11. SHA-256 of bulk download in
+\path{ecowave/db.py:raw_files}.
+
+\paragraph{Quarterly macroeconomic data (Q).}
+FRED \citep{fred}, Eurostat and OECD, quarterly, 1995--2024, four
+economies (USA, EA, JPN, GBR), sixty series (real GDP, CPI, 10-year
+sovereign yield, unemployment rate, domestic credit, real
+residential property prices). Licence: FRED public-domain, Eurostat
+and OECD academic-citation. Monthly FRED inputs are aggregated to
+quarterly by simple averaging. Access date: 2024-11.
+
+\paragraph{Jord\`a-Schularick-Taylor R6 (JST).}
+\citet{jorda_schularick_taylor2017}, release 6 (2024), annual,
+1870--2020, eighteen advanced economies, 45 series including real
+GDP, domestic credit, household debt, real house prices, equity
+indices, 10-year sovereign yields, and the broad money stock.
+Licence: academic citation required. Real-valued nominal series are
+deflated by the panel's own CPI. SHA-256 in \path{long_history_manifest.json}.
+
+\paragraph{Bank of England Millennium (BoE Mill.).}
+\citet{boe_millennium} OBRA database, annual 1086--2016, with
+quarterly coverage from 1700; \(\approx 130\) series (real GDP,
+CPI, Bank Rate, unemployment, domestic credit, real GDP per
+capita). Splices are documented in the BoE methodology paper and
+are propagated verbatim. Licence: citation required.
+
+\paragraph{Bank for International Settlements (BIS).}
+\citet{bis_credit}, quarterly, 1970--2024, seventeen advanced and
+emerging economies. Two flagship variables: credit-to-GDP
+\citep{borio2014}, and real residential property prices. Licence:
+citation required.
+
+\paragraph{Sectoral historical panel (Sectoral).}
+Eleven historical series (US rail freight ton-miles 1830+, UK pig
+iron production 1750+, world coal output 1820+, US/UK cotton and
+wheat output 1700+, etc.) drawn from FRED, the UK Department for
+Business, Energy \& Industrial Strategy (BEIS), and Our World in
+Data (OWID, MIT-licensed). The panel exists specifically to
+reproduce \citet{wen2005}'s test on dedicated sectoral series.
+
+\subsection{Pre-processing decisions}
+
+\paragraph{Deflation and log-difference.}
+Nominal series are deflated by the relevant CPI or GDP deflator
+before any cycle test. The transformation applied to each variable
+(\texttt{log\_diff}, \texttt{level} or \texttt{share\_of\_gdp}) is
+recorded in the per-panel manifest JSON; the choice is fixed
+\emph{ex ante} and does not vary across cycles.
+
+\paragraph{Splicing and gap-filling.}
+Splices follow the published methodology of the source (BoE OBRA,
+JST R6). Gaps shorter than two annual or four quarterly periods
+are linearly interpolated; longer gaps are left as missing and
+excluded from cycle tests on a per-cell basis. Imputation rates
+are below 1\,\% on all panels except BoE pre-1700 quarterly, which
+is not used in this paper.
+
+\paragraph{Z-score normalisation windows.}
+Surrogate-bootstrap test statistics use the empirical mean and
+variance of the variable on the pre-registered window. Two windows
+are reported: 1990--2006 (pre-crisis structural), and 1990--2019
+(post-2008 robustness). The verdict is invariant.
+
+\subsection{Cross-source consistency}
+
+To ensure that source-specific quirks do not drive the verdict, we
+run the cascade independently on overlapping windows.
+
+\begin{table}[h]
+\centering
+\caption{Cross-source consistency tests on overlapping windows.
+Pass-rate is the fraction of (variable, cycle) cells where the two
+sources return the same gate-pass/fail outcome. Pre-registered
+tolerance: \(\pm 5\%\).}
+\label{tab:cross_source}
+\small
+\begin{tabular}{@{}l l c c@{}}
+\toprule
+\textbf{Overlap} & \textbf{Period} & \textbf{Pass-rate} & \textbf{In tol.?} \\
+\midrule
+JST vs.\ BoE (UK) & 1870--2016 & 96.3\,\% & \checkmark \\
+BIS vs.\ JST (G7 credit) & 1970--2020 & 95.1\,\% & \checkmark \\
+WB vs.\ JST (DE, FR, IT, JP, UK, US) & 1960--2020 & 94.8\,\% & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reproducible pipeline}
+
+The full ingestion, gate-evaluation and per-variable safeguard
+pipeline is implemented in the EcoWave Python package and runs
+end-to-end in \(\approx 30\) minutes inside the Docker container
+shipped with this paper (\path{papers/cycles_refuted/Dockerfile}).
+The five steps are: (i) build the LaTeX image, (ii) run the unit
+tests, (iii) ingest the six panels into a versioned SQLite store
+fingerprinted by SHA-256, (iv) run Gates~1--3 with the per-variable
+safeguard, (v) consolidate the results into the JSON sidecars that
+populate the tables and figures of this paper.
+
+Every result reported in Section~\ref{sec:results} is traceable to
+a JSON sidecar in \path{ecowave/reports/} that records the panel,
+the variable, the cycle band, the dual-null \(p\)-values, the
+consensus vote count, the universality count, and the verdict.
+The sidecars conform to the versioned schema \texttt{cycle\_verdict\_v1}.

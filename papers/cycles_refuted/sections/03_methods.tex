@@ -1,0 +1,109 @@
+\section{Methods: fitting cycles, and the null they must beat}
+\label{sec:methods}
+
+We give the canonical cycles every reasonable opportunity to survive.
+This section sketches the fitting arsenal and the null hypotheses they
+are tested against. Formulae, parameter choices, implementation
+references and unit-test pointers appear in Appendix~\ref{app:methods}.
+
+\subsection{Cycle-fitting estimators}
+
+A single cycle-detection method invites the rebuttal that the result is
+an artefact of the method itself. We therefore commit, \emph{ex ante},
+to four estimators drawn from four different families of statistical
+assumption.
+
+\paragraph{(a)~Christiano-Fitzgerald band-pass.}
+The Christiano-Fitzgerald (2003) asymmetric filter
+\citep{christiano_fitzgerald2003} is full-sample, optimal in mean
+square for AR(1)-style processes, and dominates the symmetric
+Baxter-King filter at the endpoints. The instantaneous phase is
+extracted via the Hilbert transform.
+
+\paragraph{(b)~Continuous Morlet wavelet.}
+The continuous wavelet transform with a Morlet mother
+(\(\omega_0=6.0\), \(\Delta j=0.125\)) is the standard tool for
+time-frequency localisation \citep{torrence_compo1998,
+grinsted_moore_jevrejeva2004} and is used here to compute the band-power
+inside each canonical cycle band.
+
+\paragraph{(c)~Markov-switching AR(1).}
+Following \citet{hamilton1989}, a two-regime hidden-Markov model is
+fitted by EM to the log-differenced series. A cycle is consistent with
+periodic regime transitions whose dwell-time matches the canonical band.
+
+\paragraph{(d)~PELT changepoints.}
+The PELT algorithm of \citet{killick_fearnhead_eckley2012} detects
+piecewise-constant mean shifts at \(O(n)\) cost under a BIC penalty,
+providing an estimator orthogonal to the spectral and regime-switching
+families.
+
+\paragraph{(e)~Bry-Boschan turning points.}
+The Bry-Boschan procedure \citep{bry_boschan1971} revived by
+\citet{harding_pagan2002} identifies peaks and troughs from a censored
+local-extremum rule (minimum phase duration: 5 quarters or 2 years),
+giving a deterministic, non-parametric cycle estimator.
+
+Estimators (a)--(d) are used as votes in the Gate~2 consensus
+(Section~\ref{sec:criteria}); (e) is reported for cross-comparison.
+The four-method consensus is intentionally over-determined: each
+estimator embodies a generative hypothesis incompatible with the
+others. If a cycle is real, all four should agree; if a cycle is an
+artefact of one estimator, three should disagree.
+
+\subsection{Two methods we do not use, and why}
+\label{sec:methods_excluded}
+
+\paragraph{Hodrick-Prescott filter.}
+HP is excluded as a cycle-detection tool because
+\citet{hamilton2018} shows that it introduces spurious cyclical
+patterns even in pure random-walk data. Allowing HP into the consensus
+would prejudice the test \emph{in favour} of the cycles---the opposite
+of falsifiability.
+
+\paragraph{Empirical Mode Decomposition (EMD/EEMD).}
+EMD suffers from mode-mixing: a single intrinsic-mode function can
+absorb multiple physical frequencies, making the decomposition
+non-unique and non-falsifiable in our sense. The pre-registration
+forbids non-unique decompositions.
+
+\subsection{Null hypotheses: a dual-null surrogate test}
+\label{sec:dual_null}
+
+A statistically robust rejection of a cycle requires the band-power
+to fail to dominate \emph{both} of the following nulls
+\citep{theiler_et_al1992,schreiber_schmitz2000}.
+
+\paragraph{Null~1: AR(1) bootstrap.}
+We fit \(y_t = \mu + \phi(y_{t-1}-\mu) + \epsilon_t\) and simulate
+\(B=1000\) independent realisations of identical length, mean,
+variance and persistence. The empirical band-power is compared to
+the 95th percentile of the surrogate band-powers.
+
+\paragraph{Null~2: Phase-randomised (Theiler) surrogate.}
+A Fast Fourier Transform of the series yields amplitudes
+\(|\hat y_k|\) and phases \(\arg\hat y_k\); we draw a new phase
+sequence uniformly on \([0,2\pi)\), enforce conjugate symmetry to
+keep the inverse FFT real, and invert. The surrogate preserves the
+empirical power spectrum but destroys cycle-level coherence.
+
+\paragraph{The combined criterion.}
+A cell is admitted at Gate~1 only if the empirical band-power
+\emph{simultaneously} dominates Null~1 and Null~2 at \(\alpha=0.05\)
+on \(B=1000\) surrogates. Failure to dominate \emph{either} null
+yields a rejection. The dual-null is conservative by construction.
+
+\subsection{Pre-registered bands}
+
+The cycle bands are frozen in source code from the project's
+inception\footnote{\path{ecowave/cycles/bands.py:CYCLE_BANDS} is
+exported as an immutable \texttt{MappingProxyType}; a unit test
+asserts immutability.}: Kitchin~\(3\text{--}5\)y
+\citep{kitchin1923,wen2005,diebolt_doliger2008},
+Juglar~\(7\text{--}11\)y \citep{juglar1862,schumpeter1939},
+Kuznets~\(15\text{--}25\)y \citep{kuznets1930,korotayev_tsirel2010},
+Kondratieff~\(40\text{--}60\)y
+\citep{kondratieff1925,modelski1987,korotayev_tsirel2010}. We do
+not adjust these bands \emph{post hoc}; the only band-related
+robustness check we permit is the inclusion of a quarterly panel
+to mitigate Nyquist concerns on Kitchin (Section~\ref{sec:data}).

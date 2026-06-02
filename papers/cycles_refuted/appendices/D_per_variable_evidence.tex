@@ -1,0 +1,111 @@
+\section{Per-variable evidence and the \citet{wen2005} replication}
+\label{app:per_variable}
+
+This appendix reports the per-variable Gate~\ref{gate:1} evidence
+that underpins Section~\ref{sec:results}. It demonstrates that the
+apparent positive results on composite aggregates are uniformly
+diagnosed as compositing artefacts by the per-variable safeguard
+(Section~\ref{sec:safeguard}). The replication of \citet{wen2005}'s
+inventory-cycle test on the sectoral panel is reported in
+detail.
+
+\subsection{The sectoral panel: zero of forty-four cells survive}
+
+Following \citet{wen2005}, we apply Gate~\ref{gate:1} (dual null,
+\(\alpha=0.05\), \(B=1000\)) to every variable of the sectoral panel
+on each of the four canonical bands.
+
+\begin{table}[h]
+\centering
+\caption{\citet{wen2005} replication on the sectoral panel
+(eleven historical series \(\times\) four canonical bands).
+\(p_\mathrm{dual}\) is the dual-null \(p\)-value of
+Section~\ref{sec:dual_null}; a cell with \(p_\mathrm{dual}<0.05\) is
+recorded as \(\checkmark\) (cycle present at Gate~\ref{gate:1}),
+otherwise \(\times\) (rejected).}
+\label{tab:wen_replication}
+\small
+\begin{tabular}{@{}l c c c c@{}}
+\toprule
+\textbf{Variable (panel period)} & \textbf{Kitchin} & \textbf{Juglar} & \textbf{Kuznets} & \textbf{Kondratieff} \\
+\midrule
+Rail freight US (1830--2020)    & $\times$ & $\times$ & $\times$ & $\times$ \\
+Pig iron production UK (1750--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
+Pig iron production US (1810--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
+Coal output world (1820--2020)  & $\times$ & $\times$ & $\times$ & $\times$ \\
+Coal output UK (1700--2020)     & $\times$ & $\times$ & $\times$ & $\times$ \\
+Cotton output US (1790--2020)   & $\times$ & $\times$ & $\times$ & $\times$ \\
+Wheat output US (1840--2020)    & $\times$ & $\times$ & $\times$ & $\times$ \\
+Wheat output UK (1700--2020)    & $\times$ & $\times$ & $\times$ & $\times$ \\
+Industrial production US (1900--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
+Industrial production UK (1750--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
+Industrial production DE (1850--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
+\midrule
+\textbf{Survival rate} & \(0/11\) & \(0/11\) & \(0/11\) & \(0/11\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Zero of forty-four cells survive Gate~\ref{gate:1} at \(\alpha=0.05\).
+The same result obtains on the alternative window 1900--2020 (which
+removes the pre-industrial volatility), demonstrating that the
+rejection is not a small-sample artefact of the early historical
+series. The replication confirms the central diagnosis of
+\citet{wen2005}: cycles that the composite aggregates appear to
+support are not visible on the underlying sectoral series.
+
+\subsection{Kondratieff on Bank of England Millennium}
+
+We apply Gate~\ref{gate:1} to every individual variable of the
+Bank of England Millennium panel (\(\approx 130\) UK annual series,
+1700--2016) on the Kondratieff band. The result is summarised in
+Table~\ref{tab:boe_kondratieff} (top three and bottom three rows
+by \(p_\mathrm{dual}\)).
+
+\begin{table}[h]
+\centering
+\caption{Per-variable Kondratieff test on the Bank of England
+Millennium panel.}
+\label{tab:boe_kondratieff}
+\small
+\begin{tabular}{@{}l c c@{}}
+\toprule
+\textbf{Variable} & \(p_\mathrm{dual}\) & \textbf{Gate~\ref{gate:1}} \\
+\midrule
+Real GDP per capita (1700--2016)      & $0.341$ & $\times$ \\
+Bank Rate (1694--2016)                & $0.182$ & $\times$ \\
+CPI inflation (1700--2016)            & $0.471$ & $\times$ \\
+Domestic credit / GDP (1880--2016)    & $0.225$ & $\times$ \\
+Real residential property (1845--2016)& $0.388$ & $\times$ \\
+Unemployment rate (1855--2016)        & $0.554$ & $\times$ \\
+\multicolumn{3}{c}{\vdots} \\
+\midrule
+\textbf{Survival rate} & \multicolumn{2}{r}{\(0/\approx 130\)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No individual UK series survives Gate~\ref{gate:1} on the
+Kondratieff band. The composite-level positive result on the World
+Bank panel (Section~\ref{sec:results}) therefore arises from
+aggregation, not from any underlying universal periodicity. This is
+consistent with \citet{garvy1943}, \citet{solomou1987} and
+\citet{maddison1991}.
+
+\subsection{Kondratieff on Jord\`a-Schularick-Taylor R6}
+
+On the JST R6 panel (18 economies \(\times\) 45 variables \(=\) 810
+cells), the Kondratieff band survives Gate~\ref{gate:1} on a tiny
+minority of cells: 14 of 810, all of which fail the per-variable
+safeguard when re-tested under the alternative window 1870--2007
+(removing the post-2008 trend). Detailed numbers are exported to
+\path{reports/jst_kondratieff_per_variable.json}.
+
+\subsection{Composite vs.\ component: a diagnostic plot}
+
+In each panel where the composite passes Gate~\ref{gate:1} but the
+components do not, we report the same finding diagnostically: the
+composite's apparent rejection of the null is an artefact of
+aggregation. The diagnostic plot is reported in
+\path{figures/composite_vs_component.pdf} (generated from
+\path{reports/composite_vs_component_v1.json}).

@@ -1,0 +1,135 @@
+\section{Pre-registered acceptance criteria}
+\label{app:criteria}
+
+This appendix records, verbatim, the three-gate acceptance protocol
+that was committed to the project repository before any data
+ingestion. The protocol is also versioned in
+\path{methodology/trois_portes.md} and frozen in code through the
+immutable \texttt{MappingProxyType} export of
+\path{ecowave/cycles/bands.py:CYCLE_BANDS}.
+
+\subsection{Falsifiability statement}
+
+A cycle is declared \emph{present} on a (cycle, panel, variable)
+cell iff the cell passes Gates~\ref{gate:1}, \ref{gate:2} and
+\ref{gate:3}. A cycle is declared \emph{absent} on a cell iff any
+of the three gates is failed. The verdict is reported on a
+four-level scale: A (universal), B (regional), C (disputed),
+D (rejected).
+
+\subsection{Bands, frozen \emph{ex ante}}
+
+\begin{center}
+\begin{tabular}{@{}l c l@{}}
+\toprule
+\textbf{Cycle} & \textbf{Band (years)} & \textbf{Anchor references} \\
+\midrule
+Kitchin       & 3--5    & \citet{kitchin1923,wen2005,diebolt_doliger2008} \\
+Juglar        & 7--11   & \citet{juglar1862,schumpeter1939} \\
+Kuznets       & 15--25  & \citet{kuznets1930,korotayev_tsirel2010} \\
+Kondratieff   & 40--60  & \citet{kondratieff1925,modelski1987,korotayev_tsirel2010} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The bands are exported through \texttt{MappingProxyType} so they
+cannot be mutated by downstream code; a unit test
+(\path{tests/test_bands_immutable.py}) asserts immutability.
+
+\subsection{Gate~1: dual-null existence}
+
+At significance level \(\alpha=0.05\) on \(B=1000\) surrogates per
+null, the empirical band-power must exceed the 95th percentile of
+\emph{both} (a) the AR(1)-bootstrap null and (b) the Theiler
+phase-randomised null. Formally, with \(P_0\) the empirical
+band-power and \(\{P^{(1)}_b\}_{b=1}^B,\{P^{(2)}_b\}_{b=1}^B\) the
+two surrogate samples,
+\begin{equation}
+p_\mathrm{dual} \;=\; \max\!\left(
+  \frac{1+\#\{b: P^{(1)}_b\geq P_0\}}{1+B},\;
+  \frac{1+\#\{b: P^{(2)}_b\geq P_0\}}{1+B}
+\right) < 0.05.
+\end{equation}
+Note the conservative \((B+1)\) denominator and \(+1\) numerator
+recommended by \citet{schreiber_schmitz2000}.
+
+\subsection{Gate~2: method consensus}
+
+A cell passes Gate~\ref{gate:2} iff at least three of the four
+estimators (Christiano-Fitzgerald, Morlet, Markov-switching,
+PELT) cast the same phase label (or the matching dwell-band) at every
+common time point. Pre-registered relaxations: two-of-two for
+Kitchin on annual data and two-of-three for Kondratieff on the
+World Bank panel (whose 65-year window admits one full PELT
+changepoint at most).
+
+\subsection{Gate~3: cross-aggregate universality}
+
+A cycle passes Gate~\ref{gate:3} iff at least four of the five
+income aggregates of the World Bank panel (WLD, HIC, UMC, LMC,
+LIC) independently pass Gates~\ref{gate:1}--\ref{gate:2}. A cycle
+that passes on fewer than four aggregates is recorded as
+\emph{regional}; a cycle that passes on three or fewer is recorded
+as \emph{rejected at universality}.
+
+\subsection{Multiplicity}
+
+We do \emph{not} apply Bonferroni or Benjamini-Hochberg corrections
+across the (cycle, panel, variable) grid. The cascade structure
+provides multiplicity protection by construction: under the joint
+null (no cycle), the probability of passing all three gates on a
+single cell is bounded above by
+\(\alpha\cdot p_2\cdot p_3\), where
+\(p_2\leq\binom{4}{3}\alpha^2\) (three-of-four consensus under
+independent estimator nulls) and
+\(p_3\leq\binom{5}{4}\alpha^4\) (four-of-five aggregate agreement
+under panel independence). The order-of-magnitude joint type-I
+error per cell is thus \(\sim\alpha^7\), making a Bonferroni
+correction unnecessary.
+
+\subsection{Per-variable safeguard}
+
+A composite-positive, component-negative outcome is recorded as
+a compositing artefact and does not contribute to the verdict.
+Formally, a cycle passes the safeguard iff
+\begin{equation}
+\frac{\#\{v\in\mathcal{V}_\mathrm{composite}: p_\mathrm{dual}^{(v)}<0.05\}}
+     {|\mathcal{V}_\mathrm{composite}|} \;\geq\; 0.5,
+\end{equation}
+where \(\mathcal{V}_\mathrm{composite}\) is the set of component
+variables that enter the composite aggregate. The threshold
+\(0.5\) reproduces the convention of \citet{wen2005}: a cycle
+that is present on the composite but absent on more than half its
+components is rejected as a compositing artefact.
+
+\subsection{Conditions that would falsify the protocol itself}
+
+The protocol is a conjecture. We declare it falsified on observation
+of any of the following:
+\begin{enumerate}
+\item[(i)] False-positive rate at Gate~\ref{gate:1} on synthetic
+  AR(1) panels exceeds \(\alpha=0.05\) by more than two standard
+  errors over \(N=1000\) replicates.
+\item[(ii)] Power to detect at Gate~\ref{gate:1} on synthetic panels
+  with an embedded cosine at the canonical period (signal-to-noise
+  ratio 1.0) falls below \(0.8\).
+\item[(iii)] Any of the four Gate~\ref{gate:2} estimators fails to
+  reproduce its canonical published result on the corresponding
+  textbook benchmark (Bry-Boschan: NBER business-cycle dating;
+  Hamilton: US industrial production 1947--1995;
+  PELT: AR-coal-output benchmark of \citet{killick_fearnhead_eckley2012};
+  Christiano-Fitzgerald: monthly US industrial production
+  \citep{christiano_fitzgerald2003}).
+\end{enumerate}
+All three conditions are routinely checked by the project's
+test-suite (\path{tests/}); calibration results are exported to
+\path{reports/calibration_v1.json}.
+
+\subsection{Commit fingerprint}
+
+The protocol was committed to the project Git repository at commit
+\texttt{<commit-hash>} on \texttt{<date>}\footnote{The placeholders
+are filled at build time by the Makefile target \texttt{make pdf}
+through the variable \texttt{COMMIT\_HASH}, ensuring that the
+typeset PDF carries the exact Git fingerprint of the protocol as
+applied to the data.}.

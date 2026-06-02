@@ -5,6 +5,67 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Working paper LaTeX "Cycles Refuted" — V1 ✅
+
+Premier papier académique formel du projet, livré sous forme PDF
+construit en LaTeX (elsarticle.cls, anglais, cible *Physica A* /
+*Journal of Economic Behavior \& Organization*). Périmètre étroit
+par design : démontrer que les quatre cycles canoniques (Kitchin,
+Juglar, Kuznets, Kondratieff) ne survivent pas à un protocole
+falsifiable pré-enregistré sur six panels (1700-2024) et pointer
+vers le cluster alternatif C+B+D+I+S (sans le développer — papier
+compagnon distinct).
+
+- **`papers/cycles_refuted/cycles_refuted.tex`** — corps principal
+  (elsarticle, biblio elsarticle-harv via natbib + bibtex). Front
+  matter complet : abstract, keywords, MSC 62M10/62F03/91B84.
+- **`papers/cycles_refuted/sections/`** — sept sections (Abstract,
+  Introduction, Data, Methods, Acceptance Criteria, Results,
+  Pointers, Conclusion). Corps ~15 pages.
+- **`papers/cycles_refuted/appendices/`** — quatre annexes de
+  blindage technique : (A) provenance des données + SHA-256 +
+  licences, (B) formules de chaque estimateur + pseudo-code des
+  surrogates + calibration synthétique, (C) pré-enregistrement
+  des critères des trois portes + falsification du protocole
+  lui-même, (D) replication de Wen (2005) per-variable (0/44
+  cellules sur le panel sectoriel).
+- **`papers/cycles_refuted/references.bib`** — 109 entrées BibTeX
+  catégorisées par domaine (cycle-canon, critiques empiriques,
+  méthodes, surrogate, longue mémoire, multifractalité, RMT,
+  réflexivité, DSGE, données). Toutes avec DOI/ISBN/URL où
+  pertinent. Inclut les 13 références critiques ajoutées pour
+  défense face à reviewer (She-Lev{\^e}que 1994, McCulloch 1986,
+  Bryce-Sprague 2012, Smets-Wouters 2003/2007, Brock-Dechert-
+  Scheinkman 1996, Bandt-Pompe 2002, Marchenko-Pastur 1967,
+  Hamilton 2018, Harding-Pagan 2002, Killick-Fearnhead-Eckley
+  2012, Christiano-Fitzgerald 2003, Torrence-Compo 1998,
+  Theiler et al.\ 1992, Schreiber-Schmitz 2000).
+- **`papers/cycles_refuted/Dockerfile`** — image Docker basée
+  sur `texlive/texlive:latest` + Python 3 + requests. Build
+  reproductible sans installation locale (conforme à la
+  contrainte projet "always use docker container, never install
+  in local").
+- **`papers/cycles_refuted/Makefile`** — cibles `make pdf`,
+  `make validate` (DOI/ISBN), `make consistency` (cite ↔ .bib),
+  `make clean`, `make distclean`.
+- **`papers/cycles_refuted/scripts/validate_bib.py`** —
+  résolution HEAD de chaque DOI, validation checksum ISBN-10/13,
+  HEAD URL. Mode `--strict` pour CI.
+- **`papers/cycles_refuted/scripts/check_bib_consistency.py`** —
+  parcourt toutes les `\cite{}` du .tex (et tous les
+  `\input{...}` transitifs) et croise avec les clés .bib.
+  Résultat actuel : **0 citation orpheline**, 57 entrées
+  bibliographiques non citées (références-panorama gardées
+  volontairement dans le .bib comme bibliographie de référence
+  générale).
+- **`papers/cycles_refuted/latexmkrc`** — config latexmk pour
+  bibtex (natbib natif elsarticle).
+- **`papers/cycles_refuted/README.md`** — quickstart et layout.
+
+**Build vérifié** : `make pdf` produit `cycles_refuted.pdf`
+(40 pages, 506 KB) dans le container Docker en \(\approx\) 90 s.
+Zéro citation/référence non résolue dans le log.
+
 ### Pages "langage de tous les jours" + spec API contract-first ✅
 
 Deux ajouts indépendants :

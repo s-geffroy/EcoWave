@@ -1,0 +1,85 @@
+\section{Data}
+\label{sec:data}
+
+A central concern of any cycle-falsification claim is data quality:
+weak rejection of a cycle on a short or noisy series proves little.
+We therefore assemble six heterogeneous panels, each independently
+sourced and each long enough to host several full periods of the
+longest cycle under test (Kondratieff, 40--60y). Cross-panel
+agreement and cross-source consistency over overlapping windows
+are explicit gates of the protocol (Section~\ref{sec:criteria}).
+Appendix~\ref{app:data} lists every variable with source URL,
+licence, access date and SHA-256 checksum, and documents
+pre-processing decisions (deflation, log-difference, splicing,
+gap-filling).
+
+\subsection{Six panels, 1700--2024}
+
+Table~\ref{tab:panels} summarises the six panels. Three observations
+are worth highlighting.
+
+\begin{table*}[t]
+\centering
+\caption{The six macroeconomic panels used in this study. Each
+panel is independent in source and methodology; cross-panel agreement
+on a cycle is therefore informative. Full provenance with checksums
+and licences appears in Appendix~\ref{app:data}.}
+\label{tab:panels}
+\small
+\begin{tabular}{@{}l l l l l@{}}
+\toprule
+\textbf{Panel} & \textbf{Window} & \textbf{Frequency} & \textbf{Variables} & \textbf{Source} \\
+\midrule
+WB        & 1960--2024 & annual   & GDP, credit, CPI, etc. (45)       & \citet{wb_wdi} \\
+Q         & 1995--2024 & quarterly& GDP, CPI, 10y yield, credit (60)  & \citet{fred}; Eurostat; OECD \\
+JST R6    & 1870--2020 & annual   & 45 macro \& financial vars, 18 econ. & \citet{jorda_schularick_taylor2017} \\
+BoE Mill. & 1700--2016 & annual   & UK macro \& financial (130)       & \citet{boe_millennium} \\
+BIS       & 1970--2024 & quarterly& Credit-to-GDP gap, HPI (17 econ.) & \citet{bis_credit} \\
+Sectoral  & 1700--2020 & annual   & Rail freight, pig iron, etc.\ (11) & FRED + BEIS + OWID \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Coverage of the longest band.}
+The Kondratieff band (40--60y) requires at least \(\approx 2.5\) full
+periods for a Gate~1 dual-null test to have meaningful power
+\citep{torrence_compo1998}. Only the Bank of England Millennium panel
+(316y of annual UK data) and the Jord\`a-Schularick-Taylor R6 panel
+(150y, eighteen advanced economies) provide that coverage. Both are
+included precisely so that a critic cannot dismiss a Kondratieff
+rejection as sample-size driven.
+
+\paragraph{Frequency for the shortest band.}
+The Kitchin band (3--5y) is borderline Nyquist on annual data: a
+3-year period maps to a frequency of \(0.333\,\mathrm{y}^{-1}\), within
+a factor 1.5 of the annual Nyquist limit. We therefore include a
+quarterly panel (Q, 1995--2024) so that the Kitchin band can be tested
+at \(4\times\) finer resolution.
+
+\paragraph{Composites versus components.}
+The empirical literature contains a recurring artefact whereby a
+composite aggregate exhibits a cycle that none of its component
+variables exhibits individually \citep{wen2005}. Our protocol enforces
+a per-variable safeguard (Section~\ref{sec:criteria}) and the
+sectoral panel exists precisely to test cycles on raw, unaggregated
+historical series (rail freight, pig iron, cotton, wheat, etc.).
+
+\subsection{Reproducibility}
+\label{sec:repro}
+
+Every raw payload is fingerprinted with SHA-256 and stored in the
+project SQLite catalogue (\path{ecowave/db.py:raw_files}). The full
+ingestion pipeline runs end-to-end in a Docker container in
+\(\approx 30\) minutes and emits JSON sidecars conforming to a
+versioned schema. Appendix~\ref{app:data} reports cross-source
+consistency on overlapping windows (JST vs.\ BoE on UK 1870--2016;
+BIS vs.\ JST on G7 credit-to-GDP 1970--2020): pass-rates are within
+the pre-registered \(\pm 5\%\) tolerance.
+
+\subsection{Licences and ethics}
+
+All sources are public-domain or licensed for academic
+redistribution (World Bank CC~BY~4.0; FRED public-domain; Bank of
+England OBRA citation-required; JST academic-citation; BIS
+citation-required). No proprietary or personally identifying data
+are used. Licence texts are listed in Appendix~\ref{app:data}.

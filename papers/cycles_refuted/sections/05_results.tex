@@ -1,0 +1,107 @@
+\section{Results}
+\label{sec:results}
+
+We apply the three-gate protocol to every cell of the
+\(\{\text{Kitchin, Juglar, Kuznets, Kondratieff}\}\times\{\text{six
+panels}\}\) grid; the income-stratified Gate~\ref{gate:3} is run on
+the WB panel whose income aggregates are well-defined. The
+per-variable safeguard (Section~\ref{sec:safeguard}) is enforced
+throughout.
+
+\subsection{Headline verdict}
+
+\paragraph{No cycle is universal.}
+Across the cascade, no canonical cycle simultaneously passes
+Gates~\ref{gate:1}--\ref{gate:3} on more than two of the six panels.
+Kitchin survives on the World Bank composite (WLD), driven by the
+Asian inventory-cycle signature documented by \citet{wen2005}, but
+collapses to component-level non-significance under the safeguard.
+Juglar survives on the long-history panels (JST R6 and BoE) before
+1945, consistent with \citet{romer1999} and \citet{stock_watson2003}:
+the post-war Great Moderation has erased the inter-war Juglar
+signature. Kuznets fails on all annual panels and reaches Gate~\ref{gate:2}
+only on the quarterly USA series, driven by post-1960 residential
+construction swings rather than a generic 15--25y cycle. Kondratieff
+is the most fragile of the four: no individual variable on any
+panel survives the per-variable safeguard.
+
+\paragraph{Composite-aggregation artefacts are pervasive.}
+Where the composite passes Gate~\ref{gate:1} but the component
+variables do not, we record a compositing artefact. This pattern
+accounts for the bulk of the apparent positive results in the
+literature and is exactly the diagnosis of \citet{wen2005} on
+inventory cycles. Section~\ref{sec:wen_replication} reproduces that
+test on a sectoral panel and on JST R6 in detail.
+
+\paragraph{Robustness across panels.}
+The verdict is invariant to source: applying the cascade to the
+overlapping window of BoE and JST R6 (1870--2016, UK) yields the
+same A/B/C/D pattern within the pre-registered \(\pm 5\%\)
+agreement tolerance.
+
+\subsection{Verdict by cycle}
+
+\paragraph{Kitchin (3--5y).}
+The composite-level result on the WB panel is positive
+(\(p_\text{dual}=0.002\) on world GDP, dominated by the post-2000
+Asian inventory swing). Under the per-variable safeguard, the
+positive result disappears: no individual non-financial component
+of the WB composite survives Gate~\ref{gate:1}. On the sectoral
+panel (eleven historical series), zero of forty-four cells survive.
+The verdict reproduces \citet{wen2005}: an inventory cycle exists
+on dedicated inventory variables but is invisible on macro
+composites.
+
+\paragraph{Juglar (7--11y).}
+On the post-1960 WB panel, the Juglar band fails Gate~\ref{gate:1}
+on all but one income aggregate (\(p_\text{dual}>0.2\)). On the
+long-history panels (BoE 1700+, JST R6 1870--2020), the Juglar band
+passes Gates~\ref{gate:1}--\ref{gate:2} on G7 and ANGLO subsamples
+but collapses when restricted to post-1945, reproducing the
+\citet{romer1999} Great Moderation result.
+
+\paragraph{Kuznets (15--25y).}
+Universally rejected on all annual panels at Gate~\ref{gate:1}
+(\(p_\text{dual}>0.2\)) except the WLD composite which is
+borderline (\(p\approx0.05\)). The quarterly USA and GBR series pass
+Gate~\ref{gate:2} on residential construction variables, consistent
+with \citet{klotz_neal1973}'s and \citet{solomou1987}'s view that
+Kuznets ``long swings'' are at most a regional construction-cycle
+phenomenon, not a universal macroeconomic cycle.
+
+\paragraph{Kondratieff (40--60y).}
+The composite-level test on the WB panel shows world GDP, HIC and
+OECD aggregates with \(p_\text{dual}=0.001\), apparently passing
+Gate~\ref{gate:1}. The per-variable safeguard, however, eliminates
+the result: zero individual variables on JST R6 (45 variables \(\times\)
+18 economies = 810 cells) survive Gate~\ref{gate:1} on the Kondratieff
+band, and zero individual UK variables on BoE 1700--2016 do either.
+The composite positives are entirely driven by aggregation noise of
+the post-1945 rising trend, which a 60-year window cannot
+distinguish from a Kondratieff upswing. This conclusion is consistent
+with \citet{garvy1943}, \citet{solomou1987} and \citet{maddison1991}.
+
+\subsection{Per-variable replication of \citet{wen2005}}
+\label{sec:wen_replication}
+
+To test composite-aggregation artefacts head-on we reproduce
+\citet{wen2005}'s setup on the sectoral panel: eleven historical
+series (rail freight, pig iron, coal, cotton, wheat, etc.), four
+cycle bands, dual-null Gate~\ref{gate:1} with \(B=1000\) surrogates.
+The result, summarised in Appendix~\ref{app:per_variable}, is that
+\emph{zero of forty-four} cells survive Gate~\ref{gate:1}---a 0\%
+survival rate. The only positive results in the literature on these
+sectoral series \citep{wen2005}'s inventory-cycle finding excepted)
+arise from time-aggregation or composite formation. The safeguard
+detects them and rejects them.
+
+\subsection{What survives}
+
+The cascade is not vacuous: it accepts the existence of an
+inventory-style 3--5y cycle on dedicated inventory variables
+(consistent with the original RBC literature
+\citep{wen2005}) and the existence of a regional residential
+construction cycle on post-1960 US and UK quarterly data
+(consistent with \citet{klotz_neal1973}). No canonical cycle of
+the four-cycle taxonomy survives as a \emph{universal} macroeconomic
+phenomenon.
