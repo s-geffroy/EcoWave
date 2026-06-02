@@ -60,16 +60,24 @@ the data \citep{schreiber_schmitz2000}.
 A cell passes Gate~\ref{gate:2} iff at least three of four
 estimators (Christiano-Fitzgerald, Morlet, Markov-switching,
 PELT) concur on the dominant phase at every common time point.
-The four estimators are not statistically independent: pairwise
-phase agreement on null AR(1) panels is in the range
-\([0.42, 0.61]\) (Christiano-Fitzgerald vs.\ Morlet pair: 0.61;
-Markov-switching vs.\ PELT pair: 0.54). The ``3-of-4'' rule
-therefore does not deliver the four-fold independence factor
-that would justify a Bonferroni-style multiplicity argument; we
-report Benjamini-Hochberg adjusted \(p\)-values on the full grid
-of Gate~\ref{gate:1} tests in
-Appendix~\ref{app:per_variable} as a complementary
-perspective.
+The four estimators are not statistically independent.
+On null AR(1) panels (\(\phi=0.5\), \(T=150\), \(N=200\)
+replicates), the empirical pairwise phase agreement between
+Christiano-Fitzgerald-Hilbert and a Bry-Boschan-style
+sign-of-velocity proxy is \(0.79\) (mean; median \(0.79\); see
+\path{reports/estimator_pairwise_v1.json} and
+\path{scripts/measure_estimator_agreement.py}). This is an
+overestimate of inter-method independence for the full four-method
+consensus, but it provides the right order of magnitude: the
+estimators share enough of the same slope-following structure
+that the ``3-of-4'' rule cannot deliver the four-fold
+independence factor that would justify a Bonferroni-style
+multiplicity argument. We therefore report Benjamini-Hochberg
+adjusted \(p\)-values on the full grid of Gate~\ref{gate:1}
+tests in Appendix~\ref{app:per_variable} as a complementary
+robustness perspective, using the
+\path{ecowave.cycles.surrogate.benjamini_hochberg_adjust}
+utility shipped with the project.
 
 \paragraph{Pre-registered relaxations.}
 Two consensus relaxations are declared in advance and grounded

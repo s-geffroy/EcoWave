@@ -237,6 +237,50 @@ def wavelet_bandpower_null(series: pd.Series, lo_years: float, hi_years: float,
                       method="AR(1) bootstrap on wavelet band-power")
 
 
+def benjamini_hochberg_adjust(p_values: np.ndarray | list[float],
+                                alpha: float = 0.05) -> dict:
+    """Benjamini-Hochberg (1995) FDR-adjusted p-values and rejection set.
+
+    Returns a dict with:
+      ``p_adjusted``  — array of BH-adjusted p-values (same order as input).
+      ``rejected``    — boolean array, True where the cell is significant
+                        at the controlled false-discovery rate ``alpha``.
+      ``threshold``   — the largest raw p-value that still passes the BH
+                        step-up procedure, or 0.0 if nothing passes.
+
+    Reference: Benjamini, Y. & Hochberg, Y. (1995). Controlling the False
+    Discovery Rate: A Practical and Powerful Approach to Multiple Testing.
+    JRSS B 57, 289–300.
+    """
+    p = np.asarray(p_values, dtype=float)
+    n = p.size
+    if n == 0:
+        return {"p_adjusted": p.copy(), "rejected": np.zeros(0, dtype=bool),
+                "threshold": 0.0}
+    order = np.argsort(p)
+    p_sorted = p[order]
+    ranks = np.arange(1, n + 1)
+    bh = p_sorted * n / ranks
+    # Step-up monotone correction:
+    bh_monotone = np.minimum.accumulate(bh[::-1])[::-1]
+    p_adj_sorted = np.minimum(bh_monotone, 1.0)
+    # Determine threshold: largest k such that p_(k) <= k/n * alpha.
+    crit = ranks / n * alpha
+    pass_mask = p_sorted <= crit
+    if pass_mask.any():
+        k_max = int(np.max(np.where(pass_mask)[0])) + 1
+        threshold = float(p_sorted[k_max - 1])
+    else:
+        threshold = 0.0
+    rejected_sorted = p_sorted <= threshold
+    # Back to original order.
+    p_adj = np.empty(n)
+    rejected = np.empty(n, dtype=bool)
+    p_adj[order] = p_adj_sorted
+    rejected[order] = rejected_sorted
+    return {"p_adjusted": p_adj, "rejected": rejected, "threshold": threshold}
+
+
 def dual_null(series: pd.Series, lo_years: float, hi_years: float,
               samples_per_year: float = 1.0,
               n_surrogates: int = 1000, alpha: float = 0.05,
