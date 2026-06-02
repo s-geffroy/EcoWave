@@ -36,13 +36,17 @@ restate the limits of this finding before discussing details:
   scoped to the question of \emph{linear sinusoidal universality};
   whether a non-sinusoidal regime-switching cycle is present is a
   different empirical question that requires different tooling.
-\item Some bona-fide cyclical components do pass the protocol: a
-  3--5y inventory cycle is detected on dedicated sectoral
-  inventory series (Section~\ref{sec:wen_replication}), and a
-  Kuznets-band 15--25y residential construction cycle is detected
-  on quarterly USA and GBR housing variables. These passages are
-  consistent with \citet{wen2005} and \citet{klotz_neal1973} and
-  we accept them.
+\item Some bona-fide cyclical components do pass the protocol
+  at the unadjusted significance level: a 3--5y emerging-market
+  credit signature on the quarterly BIS panel (KR, CN, MX, ZA,
+  TR, RU, ID across credit-to-GDP gap, credit-to-GDP ratio,
+  total credit, household and business credit; 25 of 93
+  testable Kitchin cells, see paragraphs below), and a 7--11y
+  Juglar signature on quarterly unemployment in GBR, JPN and
+  the G7Q/OECDQ aggregates. Neither survives Benjamini-Hochberg
+  adjustment at FDR 0.05 in our present runs (where the
+  surrogate floor at \(B=300\) exceeds the BH threshold), but
+  the substantive concentration is informative.
 \end{itemize}
 
 \subsection{Verdict by cycle}
@@ -74,11 +78,42 @@ the Kitchin band under BH-FDR
 diagnosis---inventory cycles on dedicated inventory series, not
 on macro composites---is reproduced.
 
+On the quarterly panel (15 groups: USA, EA, GBR, JPN, G7Q,
+OECDQ and the BIS emerging-market country aggregates), 25 of
+93 testable Kitchin cells pass Gate~\ref{gate:1} unadjusted
+(median \(p_1=0.21\), 5.3-fold excess over null expectation).
+The pattern is sharp: the BIS credit aggregates (credit-to-GDP
+gap, credit-to-GDP ratio, total credit, business credit,
+household credit, residential property prices) on the
+emerging-market panel concentrate the bulk of the unadjusted
+positives, with smallest \(p_1\) at the surrogate floor
+(\(B=300\)) on Korea, China, Mexico, South Africa, Russia and
+Turkey credit variables. Unemployment rates across the
+advanced-economy aggregates (G7Q, OECDQ, GBR, JPN) also pass at
+\(p_1\approx 0.01\). Under BH-FDR at FDR 0.05 over the 148-cell
+quarterly grid (\(p^* \approx 3\cdot 10^{-4}\) versus surrogate
+floor \(1/(B+1)\approx 3\cdot 10^{-3}\)), no cell survives, but
+the substantive concentration on EM credit and advanced-economy
+unemployment is consistent with the modern BIS financial-cycle
+\citep{borio2014,drehmann_borio_tsatsaronis2012} and
+inventory-cycle \citep{wen2005} literatures.
+
 \paragraph{Juglar (7--11y).}
 On the WB grid, zero of forty testable Juglar cells passes
 Gate~\ref{gate:1} at the unadjusted significance level (median
 \(p_1=0.50\)). On BoE Millennium, only UK unemployment passes
 the unadjusted gate (\(p_1=0.006\)).
+
+On the quarterly panel, 12 of 55 testable Juglar cells pass
+unadjusted (median \(p_1=0.17\), 4.3-fold excess over null).
+The substantive pattern echoes Juglar's original formulation:
+unemployment rates pass on GBR (\(p_1=0.003\)), JPN, G7Q and
+OECDQ; the long-term bond yield on USA and EA also passes.
+Emerging-market credit aggregates on South Africa, Mexico and
+Korea pass as well, indicating that the Juglar band is
+populated by both the canonical advanced-economy
+unemployment / yield channel and the BIS emerging-market
+financial-cycle channel.
 
 On the JST R6 per-variable grid (18 advanced economies,
 605 testable Juglar cells), 58 cells pass Gate~\ref{gate:1} at
@@ -184,9 +219,8 @@ accounts, not in our panel) is left to future work.
 
 \subsection{What survives, what does not}
 
-Across the four panels we are able to test (WB, BoE Millennium,
-JST R6, sectoral; quarterly was not run in this revision), the
-cascade is not vacuous. At the unadjusted significance level it
+Across the five panels we are able to test (WB, BoE Millennium,
+JST R6, sectoral, quarterly), the cascade is not vacuous. At the unadjusted significance level it
 identifies (i) a Juglar concentration on bilateral exchange
 rates and investment in JST advanced economies (1.9-fold excess
 over null), (ii) a Kuznets concentration on housing, demographic

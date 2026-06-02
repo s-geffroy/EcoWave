@@ -1,0 +1,4004 @@
+{
+  "version": "v1",
+  "db": "/app/db/ecowave.db",
+  "samples_per_year": 4,
+  "n_surrogates": 300,
+  "seed": 0,
+  "groups_run": [
+    "USA",
+    "EA",
+    "GBR",
+    "JPN",
+    "G7Q",
+    "OECDQ",
+    "BR_BIS",
+    "CN_BIS",
+    "IN_BIS",
+    "KR_BIS",
+    "MX_BIS",
+    "RU_BIS",
+    "TR_BIS",
+    "ZA_BIS",
+    "ID_BIS"
+  ],
+  "bands": {
+    "kitchin": [
+      3.0,
+      5.0
+    ],
+    "juglar": [
+      7.0,
+      11.0
+    ],
+    "kuznets": [
+      15.0,
+      25.0
+    ],
+    "kondratieff": [
+      40.0,
+      60.0
+    ]
+  },
+  "cells": [
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": 0.1362126245847176,
+      "p_coh": 0.9966777408637874,
+      "reject_existence": true
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 80"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": 0.08305647840531562,
+      "p_coh": 0.32558139534883723,
+      "reject_existence": true
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": 0.9767441860465116,
+      "p_coh": 0.15614617940199335,
+      "reject_existence": true
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": 0.4152823920265781,
+      "p_coh": 0.4152823920265781,
+      "reject_existence": true
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": 0.08305647840531562,
+      "p_coh": 0.32558139534883723,
+      "reject_existence": true
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "BR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.15614617940199335,
+      "reject_existence": false
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": 0.016611295681063124,
+      "p_coh": 0.3289036544850498,
+      "reject_existence": false
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 120,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": 0.016611295681063124,
+      "p_coh": 0.03986710963455149,
+      "reject_existence": false
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 80"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 79,
+      "panel_period": "2006--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 83,
+      "panel_period": "2005--2025",
+      "p1": 0.036544850498338874,
+      "p_coh": 0.8039867109634552,
+      "reject_existence": false
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 83,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 83,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 83,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": 0.016611295681063124,
+      "p_coh": 0.03986710963455149,
+      "reject_existence": false
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "CN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 160,
+      "panel_period": "1985--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 106,
+      "panel_period": "1999--2025",
+      "p1": 0.7541528239202658,
+      "p_coh": 0.11627906976744186,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 106,
+      "panel_period": "1999--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 106,
+      "panel_period": "1999--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 106,
+      "panel_period": "1999--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_GDP",
+      "cycle": "kitchin",
+      "n_obs": 124,
+      "panel_period": "1995--2026",
+      "p1": 0.23920265780730898,
+      "p_coh": 0.10963455149501661,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_GDP",
+      "cycle": "juglar",
+      "n_obs": 124,
+      "panel_period": "1995--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_GDP",
+      "cycle": "kuznets",
+      "n_obs": 124,
+      "panel_period": "1995--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 124,
+      "panel_period": "1995--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_HPI",
+      "cycle": "kitchin",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": 0.920265780730897,
+      "p_coh": 0.9368770764119602,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_HPI",
+      "cycle": "juglar",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": 0.09966777408637874,
+      "p_coh": 0.8970099667774086,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_HPI",
+      "cycle": "kuznets",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_INV",
+      "cycle": "kitchin",
+      "n_obs": 112,
+      "panel_period": "1995--2023",
+      "p1": 0.5681063122923588,
+      "p_coh": 0.6046511627906976,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_INV",
+      "cycle": "juglar",
+      "n_obs": 112,
+      "panel_period": "1995--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_INV",
+      "cycle": "kuznets",
+      "n_obs": 112,
+      "panel_period": "1995--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_INV",
+      "cycle": "kondratieff",
+      "n_obs": 112,
+      "panel_period": "1995--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_PRD",
+      "cycle": "kitchin",
+      "n_obs": 123,
+      "panel_period": "1995--2025",
+      "p1": 0.11627906976744186,
+      "p_coh": 0.2292358803986711,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_PRD",
+      "cycle": "juglar",
+      "n_obs": 123,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_PRD",
+      "cycle": "kuznets",
+      "n_obs": 123,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_PRD",
+      "cycle": "kondratieff",
+      "n_obs": 123,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": 0.11627906976744186,
+      "p_coh": 0.16943521594684385,
+      "reject_existence": true
+    },
+    {
+      "group": "EA",
+      "variable": "Q_YIELD",
+      "cycle": "juglar",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": 0.006644518272425249,
+      "p_coh": 0.6212624584717608,
+      "reject_existence": false
+    },
+    {
+      "group": "EA",
+      "variable": "Q_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "EA",
+      "variable": "Q_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CPI",
+      "cycle": "kitchin",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.9833887043189369,
+      "p_coh": 0.19933554817275748,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CPI",
+      "cycle": "juglar",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.9833887043189369,
+      "p_coh": 0.6843853820598007,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CPI",
+      "cycle": "kuznets",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CPI",
+      "cycle": "kondratieff",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": 0.5913621262458472,
+      "p_coh": 0.20930232558139536,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": 0.19269102990033224,
+      "p_coh": 0.16611295681063123,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_GDP",
+      "cycle": "kitchin",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.34219269102990035,
+      "p_coh": 0.53156146179402,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_GDP",
+      "cycle": "juglar",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.6644518272425249,
+      "p_coh": 0.5149501661129569,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_GDP",
+      "cycle": "kuznets",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_HPI",
+      "cycle": "kitchin",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": 0.5415282392026578,
+      "p_coh": 0.24584717607973422,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_HPI",
+      "cycle": "juglar",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": 0.1362126245847176,
+      "p_coh": 0.946843853820598,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_HPI",
+      "cycle": "kuznets",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_INV",
+      "cycle": "kitchin",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": 0.11627906976744186,
+      "p_coh": 0.9169435215946844,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_INV",
+      "cycle": "juglar",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": 0.15614617940199335,
+      "p_coh": 0.5348837209302325,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_INV",
+      "cycle": "kuznets",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_INV",
+      "cycle": "kondratieff",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_PRD",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.11627906976744186,
+      "p_coh": 0.5415282392026578,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_PRD",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.717607973421927,
+      "p_coh": 0.6943521594684385,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_PRD",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_PRD",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_UNRATE",
+      "cycle": "kitchin",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.7740863787375415,
+      "reject_existence": false
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_UNRATE",
+      "cycle": "juglar",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.8637873754152824,
+      "reject_existence": false
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_UNRATE",
+      "cycle": "kuznets",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_UNRATE",
+      "cycle": "kondratieff",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": 0.17940199335548174,
+      "p_coh": 0.6212624584717608,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_YIELD",
+      "cycle": "juglar",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": 0.06976744186046512,
+      "p_coh": 0.3554817275747508,
+      "reject_existence": true
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "G7Q",
+      "variable": "Q_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CPI",
+      "cycle": "kitchin",
+      "n_obs": 280,
+      "panel_period": "1955--2025",
+      "p1": 0.9933554817275747,
+      "p_coh": 0.13953488372093023,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CPI",
+      "cycle": "juglar",
+      "n_obs": 280,
+      "panel_period": "1955--2025",
+      "p1": 0.9833887043189369,
+      "p_coh": 0.840531561461794,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CPI",
+      "cycle": "kuznets",
+      "n_obs": 280,
+      "panel_period": "1955--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CPI",
+      "cycle": "kondratieff",
+      "n_obs": 280,
+      "panel_period": "1955--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 250,
+      "panel_period": "1963--2025",
+      "p1": 0.5514950166112956,
+      "p_coh": 0.46179401993355484,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 250,
+      "panel_period": "1963--2025",
+      "p1": 0.17275747508305647,
+      "p_coh": 0.006644518272425249,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 250,
+      "panel_period": "1963--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 250,
+      "panel_period": "1963--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_GDP",
+      "cycle": "kitchin",
+      "n_obs": 284,
+      "panel_period": "1955--2026",
+      "p1": 0.132890365448505,
+      "p_coh": 0.36212624584717606,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_GDP",
+      "cycle": "juglar",
+      "n_obs": 284,
+      "panel_period": "1955--2026",
+      "p1": 0.5946843853820598,
+      "p_coh": 0.9933554817275747,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_GDP",
+      "cycle": "kuznets",
+      "n_obs": 284,
+      "panel_period": "1955--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 284,
+      "panel_period": "1955--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_HPI",
+      "cycle": "kitchin",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": 0.5382059800664452,
+      "p_coh": 0.7043189368770764,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_HPI",
+      "cycle": "juglar",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": 0.17275747508305647,
+      "p_coh": 0.8604651162790697,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_HPI",
+      "cycle": "kuznets",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_INV",
+      "cycle": "kitchin",
+      "n_obs": 254,
+      "panel_period": "1960--2023",
+      "p1": 0.21262458471760798,
+      "p_coh": 0.3687707641196013,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_INV",
+      "cycle": "juglar",
+      "n_obs": 254,
+      "panel_period": "1960--2023",
+      "p1": 0.24916943521594684,
+      "p_coh": 0.6079734219269103,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_INV",
+      "cycle": "kuznets",
+      "n_obs": 254,
+      "panel_period": "1960--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_INV",
+      "cycle": "kondratieff",
+      "n_obs": 254,
+      "panel_period": "1960--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_UNRATE",
+      "cycle": "kitchin",
+      "n_obs": 220,
+      "panel_period": "1971--2025",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.4684385382059801,
+      "reject_existence": false
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_UNRATE",
+      "cycle": "juglar",
+      "n_obs": 220,
+      "panel_period": "1971--2025",
+      "p1": 0.0033222591362126247,
+      "p_coh": 0.7242524916943521,
+      "reject_existence": false
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_UNRATE",
+      "cycle": "kuznets",
+      "n_obs": 220,
+      "panel_period": "1971--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_UNRATE",
+      "cycle": "kondratieff",
+      "n_obs": 220,
+      "panel_period": "1971--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.3488372093023256,
+      "p_coh": 0.21262458471760798,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_YIELD",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.574750830564784,
+      "p_coh": 0.0033222591362126247,
+      "reject_existence": true
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "GBR",
+      "variable": "Q_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": 0.006644518272425249,
+      "p_coh": 0.23588039867109634,
+      "reject_existence": false
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": 0.09302325581395349,
+      "p_coh": 0.840531561461794,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": 0.08305647840531562,
+      "p_coh": 0.9069767441860465,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": 0.22259136212624583,
+      "p_coh": 0.5614617940199336,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": 0.14285714285714285,
+      "p_coh": 0.2691029900332226,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 96,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 96,
+      "panel_period": "2002--2025",
+      "p1": 0.38870431893687707,
+      "p_coh": 0.9335548172757475,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 96,
+      "panel_period": "2002--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 96,
+      "panel_period": "2002--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 96,
+      "panel_period": "2002--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": 0.08305647840531562,
+      "p_coh": 0.9069767441860465,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": 0.22259136212624583,
+      "p_coh": 0.5614617940199336,
+      "reject_existence": true
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ID_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 199,
+      "panel_period": "1976--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 179,
+      "panel_period": "1981--2025",
+      "p1": 0.292358803986711,
+      "p_coh": 0.34219269102990035,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 179,
+      "panel_period": "1981--2025",
+      "p1": 0.7109634551495017,
+      "p_coh": 0.654485049833887,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 179,
+      "panel_period": "1981--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 179,
+      "panel_period": "1981--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.8372093023255814,
+      "p_coh": 0.016611295681063124,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.893687707641196,
+      "p_coh": 0.15946843853820597,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.8571428571428571,
+      "p_coh": 0.0033222591362126247,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.8770764119601329,
+      "p_coh": 0.1461794019933555,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 74,
+      "panel_period": "2007--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 80"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 74,
+      "panel_period": "2007--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 74,
+      "panel_period": "2007--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 74,
+      "panel_period": "2007--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 68,
+      "panel_period": "2009--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 80"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 68,
+      "panel_period": "2009--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 68,
+      "panel_period": "2009--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 68,
+      "panel_period": "2009--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.8571428571428571,
+      "p_coh": 0.0033222591362126247,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.8770764119601329,
+      "p_coh": 0.1461794019933555,
+      "reject_existence": true
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "IN_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CPI",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1955--2021",
+      "p1": 0.973421926910299,
+      "p_coh": 0.5880398671096345,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CPI",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1955--2021",
+      "p1": 0.7774086378737541,
+      "p_coh": 0.8604651162790697,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CPI",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1955--2021",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CPI",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1955--2021",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 243,
+      "panel_period": "1965--2025",
+      "p1": 0.6744186046511628,
+      "p_coh": 0.574750830564784,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 243,
+      "panel_period": "1965--2025",
+      "p1": 0.5548172757475083,
+      "p_coh": 0.5448504983388704,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 243,
+      "panel_period": "1965--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 243,
+      "panel_period": "1965--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_GDP",
+      "cycle": "kitchin",
+      "n_obs": 128,
+      "panel_period": "1994--2026",
+      "p1": 0.2292358803986711,
+      "p_coh": 0.5182724252491694,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_GDP",
+      "cycle": "juglar",
+      "n_obs": 128,
+      "panel_period": "1994--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_GDP",
+      "cycle": "kuznets",
+      "n_obs": 128,
+      "panel_period": "1994--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 128,
+      "panel_period": "1994--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_HPI",
+      "cycle": "kitchin",
+      "n_obs": 283,
+      "panel_period": "1955--2025",
+      "p1": 0.973421926910299,
+      "p_coh": 0.8006644518272426,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_HPI",
+      "cycle": "juglar",
+      "n_obs": 283,
+      "panel_period": "1955--2025",
+      "p1": 0.3853820598006645,
+      "p_coh": 0.2724252491694352,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_HPI",
+      "cycle": "kuznets",
+      "n_obs": 283,
+      "panel_period": "1955--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 283,
+      "panel_period": "1955--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_UNRATE",
+      "cycle": "kitchin",
+      "n_obs": 285,
+      "panel_period": "1955--2026",
+      "p1": 0.019933554817275746,
+      "p_coh": 0.8305647840531561,
+      "reject_existence": false
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_UNRATE",
+      "cycle": "juglar",
+      "n_obs": 285,
+      "panel_period": "1955--2026",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.18272425249169436,
+      "reject_existence": false
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_UNRATE",
+      "cycle": "kuznets",
+      "n_obs": 285,
+      "panel_period": "1955--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_UNRATE",
+      "cycle": "kondratieff",
+      "n_obs": 285,
+      "panel_period": "1955--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 149,
+      "panel_period": "1989--2026",
+      "p1": 0.4950166112956811,
+      "p_coh": 0.9667774086378738,
+      "reject_existence": true
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_YIELD",
+      "cycle": "juglar",
+      "n_obs": 149,
+      "panel_period": "1989--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 149,
+      "panel_period": "1989--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "JPN",
+      "variable": "Q_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 149,
+      "panel_period": "1989--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": 0.023255813953488372,
+      "p_coh": 0.6843853820598007,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 212,
+      "panel_period": "1972--2025",
+      "p1": 0.016611295681063124,
+      "p_coh": 0.33222591362126247,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 212,
+      "panel_period": "1972--2025",
+      "p1": 0.09302325581395349,
+      "p_coh": 0.6511627906976745,
+      "reject_existence": true
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 212,
+      "panel_period": "1972--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 212,
+      "panel_period": "1972--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.019933554817275746,
+      "p_coh": 0.3222591362126246,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.08305647840531562,
+      "p_coh": 0.4684385382059801,
+      "reject_existence": true
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "kitchin",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": 0.7308970099667774,
+      "p_coh": 0.3920265780730897,
+      "reject_existence": true
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "juglar",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "kuznets",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "kondratieff",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.016611295681063124,
+      "p_coh": 0.8803986710963455,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.013289036544850499,
+      "p_coh": 0.3122923588039867,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 204,
+      "panel_period": "1975--2025",
+      "p1": 0.016611295681063124,
+      "p_coh": 0.6345514950166113,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 204,
+      "panel_period": "1975--2025",
+      "p1": 0.0664451827242525,
+      "p_coh": 0.893687707641196,
+      "reject_existence": true
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 204,
+      "panel_period": "1975--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 204,
+      "panel_period": "1975--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.019933554817275746,
+      "p_coh": 0.3222591362126246,
+      "reject_existence": false
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.08305647840531562,
+      "p_coh": 0.4684385382059801,
+      "reject_existence": true
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "KR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": 0.006644518272425249,
+      "p_coh": 0.029900332225913623,
+      "reject_existence": false
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": 0.5149501661129569,
+      "p_coh": 0.6079734219269103,
+      "reject_existence": true
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 140,
+      "panel_period": "1990--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": 0.046511627906976744,
+      "p_coh": 0.46179401993355484,
+      "reject_existence": false
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": 0.006644518272425249,
+      "p_coh": 0.574750830564784,
+      "reject_existence": false
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 124,
+      "panel_period": "1994--2025",
+      "p1": 0.39867109634551495,
+      "p_coh": 0.5514950166112956,
+      "reject_existence": true
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 124,
+      "panel_period": "1994--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 124,
+      "panel_period": "1994--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 124,
+      "panel_period": "1994--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 84,
+      "panel_period": "2005--2025",
+      "p1": 0.40863787375415284,
+      "p_coh": 0.9767441860465116,
+      "reject_existence": true
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 84,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 84,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 84,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": 0.046511627906976744,
+      "p_coh": 0.46179401993355484,
+      "reject_existence": false
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": 0.006644518272425249,
+      "p_coh": 0.574750830564784,
+      "reject_existence": false
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "MX_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 180,
+      "panel_period": "1980--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CPI",
+      "cycle": "kitchin",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.9833887043189369,
+      "p_coh": 0.19933554817275748,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CPI",
+      "cycle": "juglar",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.9833887043189369,
+      "p_coh": 0.6843853820598007,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CPI",
+      "cycle": "kuznets",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CPI",
+      "cycle": "kondratieff",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": 0.5913621262458472,
+      "p_coh": 0.20930232558139536,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": 0.19269102990033224,
+      "p_coh": 0.16611295681063123,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 311,
+      "panel_period": "1948--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_GDP",
+      "cycle": "kitchin",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.34219269102990035,
+      "p_coh": 0.53156146179402,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_GDP",
+      "cycle": "juglar",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": 0.6644518272425249,
+      "p_coh": 0.5149501661129569,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_GDP",
+      "cycle": "kuznets",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 316,
+      "panel_period": "1947--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_HPI",
+      "cycle": "kitchin",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": 0.5415282392026578,
+      "p_coh": 0.24584717607973422,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_HPI",
+      "cycle": "juglar",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": 0.1362126245847176,
+      "p_coh": 0.946843853820598,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_HPI",
+      "cycle": "kuznets",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 230,
+      "panel_period": "1968--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_INV",
+      "cycle": "kitchin",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": 0.11627906976744186,
+      "p_coh": 0.9169435215946844,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_INV",
+      "cycle": "juglar",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": 0.15614617940199335,
+      "p_coh": 0.5348837209302325,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_INV",
+      "cycle": "kuznets",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_INV",
+      "cycle": "kondratieff",
+      "n_obs": 264,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_PRD",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.11627906976744186,
+      "p_coh": 0.5415282392026578,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_PRD",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.717607973421927,
+      "p_coh": 0.6943521594684385,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_PRD",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_PRD",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_UNRATE",
+      "cycle": "kitchin",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.7740863787375415,
+      "reject_existence": false
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_UNRATE",
+      "cycle": "juglar",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.8637873754152824,
+      "reject_existence": false
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_UNRATE",
+      "cycle": "kuznets",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_UNRATE",
+      "cycle": "kondratieff",
+      "n_obs": 313,
+      "panel_period": "1948--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": 0.17940199335548174,
+      "p_coh": 0.6212624584717608,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_YIELD",
+      "cycle": "juglar",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": 0.06976744186046512,
+      "p_coh": 0.3554817275747508,
+      "reject_existence": true
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "OECDQ",
+      "variable": "Q_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 292,
+      "panel_period": "1953--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 112,
+      "panel_period": "1997--2025",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.9900332225913622,
+      "reject_existence": false
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 112,
+      "panel_period": "1997--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 112,
+      "panel_period": "1997--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 112,
+      "panel_period": "1997--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 82,
+      "panel_period": "2005--2025",
+      "p1": 0.2425249169435216,
+      "p_coh": 0.7009966777408638,
+      "reject_existence": true
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 82,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 82,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 82,
+      "panel_period": "2005--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": 0.16279069767441862,
+      "p_coh": 0.8471760797342193,
+      "reject_existence": true
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": 0.18604651162790697,
+      "p_coh": 0.8837209302325582,
+      "reject_existence": true
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 111,
+      "panel_period": "1998--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": 0.770764119601329,
+      "p_coh": 0.9169435215946844,
+      "reject_existence": true
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 100,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": 0.16279069767441862,
+      "p_coh": 0.8471760797342193,
+      "reject_existence": true
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "RU_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 122,
+      "panel_period": "1995--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": 0.5282392026578073,
+      "p_coh": 0.18272425249169436,
+      "reject_existence": true
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": 0.5415282392026578,
+      "p_coh": 0.9501661129568106,
+      "reject_existence": true
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 119,
+      "panel_period": "1996--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": 0.584717607973422,
+      "p_coh": 0.893687707641196,
+      "reject_existence": true
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "kitchin",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": 0.26578073089701,
+      "p_coh": 0.8305647840531561,
+      "reject_existence": true
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "juglar",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "kuznets",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_GVCRED",
+      "cycle": "kondratieff",
+      "n_obs": 99,
+      "panel_period": "2001--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": 0.009966777408637873,
+      "p_coh": 0.9501661129568106,
+      "reject_existence": false
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 64,
+      "panel_period": "2010--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 80"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 64,
+      "panel_period": "2010--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 64,
+      "panel_period": "2010--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 64,
+      "panel_period": "2010--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": 0.584717607973422,
+      "p_coh": 0.893687707641196,
+      "reject_existence": true
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "TR_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 159,
+      "panel_period": "1986--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CPI",
+      "cycle": "kitchin",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": 0.973421926910299,
+      "p_coh": 0.760797342192691,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CPI",
+      "cycle": "juglar",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": 0.8205980066445183,
+      "p_coh": 0.6212624584717608,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CPI",
+      "cycle": "kuznets",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CPI",
+      "cycle": "kondratieff",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CREDIT",
+      "cycle": "kitchin",
+      "n_obs": 263,
+      "panel_period": "1960--2025",
+      "p1": 0.8106312292358804,
+      "p_coh": 0.33222591362126247,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CREDIT",
+      "cycle": "juglar",
+      "n_obs": 263,
+      "panel_period": "1960--2025",
+      "p1": 0.2159468438538206,
+      "p_coh": 0.14950166112956811,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CREDIT",
+      "cycle": "kuznets",
+      "n_obs": 263,
+      "panel_period": "1960--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_CREDIT",
+      "cycle": "kondratieff",
+      "n_obs": 263,
+      "panel_period": "1960--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_GDP",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.4485049833887043,
+      "p_coh": 0.132890365448505,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_GDP",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.2823920265780731,
+      "p_coh": 0.132890365448505,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_GDP",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_GDP",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_HPI",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.9667774086378738,
+      "p_coh": 0.7342192691029901,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_HPI",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.06976744186046512,
+      "p_coh": 0.45182724252491696,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_HPI",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_HPI",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_INV",
+      "cycle": "kitchin",
+      "n_obs": 206,
+      "panel_period": "1972--2023",
+      "p1": 0.8870431893687708,
+      "p_coh": 0.036544850498338874,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_INV",
+      "cycle": "juglar",
+      "n_obs": 206,
+      "panel_period": "1972--2023",
+      "p1": 0.14950166112956811,
+      "p_coh": 0.2724252491694352,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_INV",
+      "cycle": "kuznets",
+      "n_obs": 206,
+      "panel_period": "1972--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_INV",
+      "cycle": "kondratieff",
+      "n_obs": 206,
+      "panel_period": "1972--2023",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_PRD",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.2757475083056478,
+      "p_coh": 0.717607973421927,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_PRD",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.6843853820598007,
+      "p_coh": 0.5548172757475083,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_PRD",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_PRD",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_UNRATE",
+      "cycle": "kitchin",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": 0.4584717607973422,
+      "p_coh": 0.6013289036544851,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_UNRATE",
+      "cycle": "juglar",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": 0.06312292358803986,
+      "p_coh": 0.16279069767441862,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_UNRATE",
+      "cycle": "kuznets",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_UNRATE",
+      "cycle": "kondratieff",
+      "n_obs": 266,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_YIELD",
+      "cycle": "kitchin",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.0033222591362126247,
+      "p_coh": 0.21262458471760798,
+      "reject_existence": false
+    },
+    {
+      "group": "USA",
+      "variable": "Q_YIELD",
+      "cycle": "juglar",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": 0.26578073089701,
+      "p_coh": 0.6943521594684385,
+      "reject_existence": true
+    },
+    {
+      "group": "USA",
+      "variable": "Q_YIELD",
+      "cycle": "kuznets",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "USA",
+      "variable": "Q_YIELD",
+      "cycle": "kondratieff",
+      "n_obs": 265,
+      "panel_period": "1960--2026",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.132890365448505,
+      "p_coh": 0.9601328903654485,
+      "reject_existence": true
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.26245847176079734,
+      "p_coh": 0.9401993355481728,
+      "reject_existence": true
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_BUSCRED",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kitchin",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": 0.059800664451827246,
+      "p_coh": 0.6511627906976745,
+      "reject_existence": true
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "juglar",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": 0.0033222591362126247,
+      "p_coh": 0.21262458471760798,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kuznets",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CGAP",
+      "cycle": "kondratieff",
+      "n_obs": 203,
+      "panel_period": "1975--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.03986710963455149,
+      "p_coh": 0.4584717607973422,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.0033222591362126247,
+      "p_coh": 0.9368770764119602,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_CRATIO",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kitchin",
+      "n_obs": 71,
+      "panel_period": "2008--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 80"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "juglar",
+      "n_obs": 71,
+      "panel_period": "2008--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 176"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kuznets",
+      "n_obs": 71,
+      "panel_period": "2008--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_HHCRED",
+      "cycle": "kondratieff",
+      "n_obs": 71,
+      "panel_period": "2008--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kitchin",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": 0.046511627906976744,
+      "p_coh": 0.4019933554817276,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "juglar",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": 0.006644518272425249,
+      "p_coh": 0.9501661129568106,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kuznets",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_RPP",
+      "cycle": "kondratieff",
+      "n_obs": 224,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kitchin",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.03986710963455149,
+      "p_coh": 0.4584717607973422,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "juglar",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": 0.0033222591362126247,
+      "p_coh": 0.9368770764119602,
+      "reject_existence": false
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kuznets",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 400"
+    },
+    {
+      "group": "ZA_BIS",
+      "variable": "BIS_TCRED",
+      "cycle": "kondratieff",
+      "n_obs": 223,
+      "panel_period": "1970--2025",
+      "p1": null,
+      "p_coh": null,
+      "skip_reason": "n_obs < 960"
+    }
+  ]
+}
