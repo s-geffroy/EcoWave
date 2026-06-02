@@ -9,6 +9,15 @@ Grinsted et al. (2004), "Application of the cross wavelet transform". Both
 use AR(1) as the canonical null because pure red noise has no preferred
 frequency — a band-power that rises above red noise is evidence of an actual
 cyclic component at that frequency.
+
+Note on phase-scramble (Schreiber & Schmitz 2000) — the Theiler surrogate
+preserves the empirical Fourier amplitudes exactly. Testing CF band-power
+against a phase-scrambled surrogate is therefore degenerate by Parseval:
+the surrogate band-power equals the real band-power. The phase-scramble
+null here tests a different statistic — the **stability of the instantaneous
+frequency** inside the band — which is destroyed by phase randomisation
+even when the spectrum is preserved. This corresponds to the
+"coherence" interpretation of Null~2 in the companion paper.
 """
 from __future__ import annotations
 
@@ -16,6 +25,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
+from scipy.signal import hilbert as _hilbert
 
 from ecowave.cycles.decompose import cf_bandpass
 from ecowave.cycles.surrogate_generators import (
@@ -24,6 +34,49 @@ from ecowave.cycles.surrogate_generators import (
     phase_scramble_surrogate_series,
     simulate_ar1 as _simulate_ar1,
 )
+
+
+def phase_coherence_in_band(series: pd.Series, lo_years: float,
+                             hi_years: float,
+                             samples_per_year: float = 1.0) -> float:
+    """Stability of the instantaneous frequency inside the canonical band.
+
+    Bandpass-filters ``series`` to the band ``[lo_years, hi_years]``, takes
+    the Hilbert transform to obtain the analytic signal, computes the
+    instantaneous frequency from the unwrapped phase, and returns a
+    coherence score in [0, 1]:
+
+    The coherence score ``C`` is ``1 / (1 + CV(f_t))``
+
+    where ``CV`` is the coefficient of variation (std / mean) of the
+    instantaneous frequency ``f_t = (1/2π)·dφ/dt``. A pure cosine yields
+    ``CV → 0`` and ``C → 1``; uniformly-distributed phase noise yields
+    ``CV ≫ 1`` and ``C → 0``.
+
+    The score is the test statistic of :func:`phase_scramble_null` —
+    phase-randomised surrogates have a destabilised instantaneous
+    frequency by construction, even when the spectrum is preserved, so
+    the score distinguishes a true cyclical band from a noisy spectrum
+    that happens to peak there.
+    """
+    y = series.dropna().astype(float).to_numpy()
+    if y.size < 16:
+        return 0.0
+    bp = cf_bandpass(pd.Series(y), lo_years, hi_years,
+                     samples_per_year=samples_per_year).dropna().to_numpy()
+    if bp.size < 4:
+        return 0.0
+    analytic = _hilbert(bp)
+    phase = np.unwrap(np.angle(analytic))
+    if phase.size < 2:
+        return 0.0
+    inst_freq = np.diff(phase) / (2.0 * np.pi)
+    mean_f = np.abs(np.mean(inst_freq))
+    std_f = float(np.std(inst_freq))
+    if mean_f < 1e-12:
+        return 0.0
+    cv = std_f / mean_f
+    return 1.0 / (1.0 + cv)
 
 
 @dataclass(frozen=True)
@@ -72,40 +125,45 @@ def phase_scramble_null(series: pd.Series, lo_years: float, hi_years: float,
                         samples_per_year: float = 1.0,
                         n_surrogates: int = 1000, alpha: float = 0.05,
                         seed: int = 0) -> NullResult:
-    """Phase-randomised Fourier surrogate (Theiler et al. 1992).
+    """Phase-randomised Fourier surrogate (Theiler et al. 1992) — coherence test.
 
-    Preserves the full power spectrum but randomises the phases — i.e. it
-    asks "is the band-power concentration *locally coherent in time* (a real
-    cycle), or just an artefact of spectral content with random phases?"
+    Tests whether the **stability of the instantaneous frequency** inside
+    the canonical band is greater than expected under a phase-randomised
+    surrogate that preserves the empirical Fourier amplitudes exactly.
 
-    The AR(1) null and the phase-scrambling null are complementary:
+    The test statistic is :func:`phase_coherence_in_band`. It is *not*
+    band-power: by Parseval's theorem the band-power of any
+    amplitude-preserving phase randomisation equals the band-power of the
+    original series, so band-power against this surrogate is degenerate
+    (cf. Schreiber & Schmitz 2000 for the canonical discussion). The
+    coherence-based statistic, by contrast, is destroyed by phase
+    randomisation even when the spectrum is preserved: a stable
+    instantaneous frequency is a phase-dependent property.
 
-    - **AR(1)** asks whether the band stands out *above red noise* of the
-      same persistence — sensitive to spectral concentration relative to a
-      smooth red-noise baseline.
-    - **Phase-scrambling** preserves the spectrum exactly, so the surrogate
-      has the *same* band-power on average as the real series. It rejects
-      when the real series has unusually large CF-band-power *given its own
-      spectrum* — typically because cyclical phases are aligned in a way
-      pure-random phases are not.
+    The AR(1) null (:func:`ar1_bootstrap_null`) tests cycle *existence*
+    against red noise. This null tests phase *coherence* — they are
+    complementary aspects of the data and are reported separately by
+    :func:`dual_null`.
 
-    The two are run side-by-side as a dual-null test (`surrogate.dual_null`).
-    Source: Theiler, J., Eubank, S., Longtin, A., Galdrikian, B., & Farmer,
-    J. D. (1992). Testing for nonlinearity in time series: the method of
-    surrogate data. Physica D, 58, 77–94.
+    Reference: Theiler et al. (1992) Physica D 58, 77–94 ; the limitation
+    of band-power against phase-randomised surrogates is discussed in
+    Schreiber & Schmitz (2000) Physica D 142, 346–382.
     """
     y = series.dropna().astype(float).to_numpy()
-    if y.size < 8:
+    if y.size < 16:
         return NullResult(real_band_power=np.nan, p_value=1.0,
                           reject_cycle=True, n_surrogates=0,
-                          method="phase-scramble (Theiler 1992)")
+                          method="phase-scramble coherence (Theiler 1992)")
 
-    real_cycle = cf_bandpass(pd.Series(y), lo_years, hi_years,
-                              samples_per_year=samples_per_year).dropna().to_numpy()
-    real_power = float(np.sum(real_cycle ** 2))
+    real_coherence = phase_coherence_in_band(pd.Series(y), lo_years, hi_years,
+                                              samples_per_year=samples_per_year)
+    if real_coherence <= 0.0:
+        return NullResult(real_band_power=0.0, p_value=1.0,
+                          reject_cycle=True, n_surrogates=0,
+                          method="phase-scramble coherence (Theiler 1992)")
 
-    # FFT once; scramble phases for each surrogate. We preserve conjugate
-    # symmetry so the inverse transform stays real-valued.
+    # FFT once; scramble phases for each surrogate. Conjugate symmetry
+    # preserves the inverse transform real-valued.
     spectrum = np.fft.rfft(y - y.mean())
     magnitude = np.abs(spectrum)
     rng = np.random.default_rng(seed)
@@ -118,14 +176,15 @@ def phase_scramble_null(series: pd.Series, lo_years: float, hi_years: float,
             random_phase[-1] = 0.0
         scrambled = magnitude * np.exp(1j * random_phase)
         surrogate = np.fft.irfft(scrambled, n=n) + y.mean()
-        surr_cycle = cf_bandpass(pd.Series(surrogate), lo_years, hi_years,
-                                  samples_per_year=samples_per_year).dropna().to_numpy()
-        if np.sum(surr_cycle ** 2) >= real_power:
+        surr_coherence = phase_coherence_in_band(pd.Series(surrogate),
+                                                  lo_years, hi_years,
+                                                  samples_per_year=samples_per_year)
+        if surr_coherence >= real_coherence:
             n_geq += 1
     p_value = (n_geq + 1) / (n_surrogates + 1)
-    return NullResult(real_band_power=real_power, p_value=p_value,
+    return NullResult(real_band_power=real_coherence, p_value=p_value,
                       reject_cycle=p_value >= alpha, n_surrogates=n_surrogates,
-                      method="phase-scramble (Theiler 1992)")
+                      method="phase-scramble coherence (Theiler 1992)")
 
 
 def wavelet_bandpower_null(series: pd.Series, lo_years: float, hi_years: float,
@@ -182,22 +241,37 @@ def dual_null(series: pd.Series, lo_years: float, hi_years: float,
               samples_per_year: float = 1.0,
               n_surrogates: int = 1000, alpha: float = 0.05,
               seed: int = 0) -> dict:
-    """Run both AR(1) and phase-scrambling nulls; return combined verdict.
+    """Run both AR(1) and phase-scrambling nulls; return both verdicts.
 
-    A cell passes Gate 1 only when **both** nulls reject. Returns a dict
-    with the two NullResult, the conservative ``reject_cycle`` flag
-    (True iff EITHER null fails — strict dual-null protocol), and the
-    larger of the two p-values as ``p_value`` (the bottleneck).
+    Empirical calibration (see ``scripts/calibrate_dual_null.py`` and
+    ``reports/calibration_v1.json``) shows that the AR(1) bootstrap is
+    highly powerful against AR(1)+cosine alternatives and is the
+    load-bearing test for cycle *existence*. The phase-scramble
+    coherence null is reported alongside as a complementary
+    *coherence* diagnostic — it tests a different property (stability
+    of the instantaneous frequency under spectrum preservation), and
+    is informative on broadband non-Gaussian data but degenerate on
+    clean single-frequency Gaussian alternatives.
+
+    The returned dict contains both NullResult and two booleans:
+
+    - ``reject_cycle``  (the existence verdict, equal to the AR(1)
+      null's ``reject_cycle`` flag);
+    - ``reject_existence_and_coherence`` (the strict conjunction —
+      cell only admitted if BOTH nulls pass; useful as a robustness
+      check but should not be used as the primary gate because the
+      coherence statistic is conservative against simple Gaussian
+      cycles).
     """
     ar1 = ar1_bootstrap_null(series, lo_years, hi_years, samples_per_year,
                               n_surrogates, alpha, seed)
     psr = phase_scramble_null(series, lo_years, hi_years, samples_per_year,
                                n_surrogates, alpha, seed + 1)
-    reject = ar1.reject_cycle or psr.reject_cycle
     return {
         "ar1": ar1,
         "phase_scramble": psr,
-        "reject_cycle": reject,
-        "p_value": max(ar1.p_value, psr.p_value),
-        "binding_null": "ar1" if ar1.p_value >= psr.p_value else "phase_scramble",
+        "reject_cycle": ar1.reject_cycle,
+        "reject_existence_and_coherence": ar1.reject_cycle or psr.reject_cycle,
+        "p_value": ar1.p_value,
+        "binding_null": "ar1",
     }

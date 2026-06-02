@@ -32,10 +32,15 @@ the protocol fails its calibration---falsified.
 
 \paragraph{Limits.}
 Three honest limits temper the claim. First, the power of the
-protocol degrades sharply below \(\mathrm{SNR}\approx 0.3\),
-which is plausibly the regime of much macroeconomic data; where
-power is low, ``rejected'' should be read as ``not detected at
-the attainable resolution''. Second, our threshold commitment
+protocol depends critically on the generative model assumed:
+high against linear sinusoidal cycles (Family I in
+Appendix~\ref{app:methods}: \(\geq 80\%\) at \(\mathrm{SNR}\geq 0.2\)),
+low against regime-switching and multifractal cycles
+(Families II and III: 3--26\% and 1--10\% respectively across
+all tested SNRs). The verdict is therefore properly scoped to
+the historical \emph{linear sinusoidal} reading of the canonical
+cycles; detecting non-sinusoidal cyclical structure would
+require a different protocol. Second, our threshold commitment
 through public Git history is not equivalent to a formal
 pre-registration (OSF / AEA registry) by a third party, and we
 record this distinction openly. Third, the present negative

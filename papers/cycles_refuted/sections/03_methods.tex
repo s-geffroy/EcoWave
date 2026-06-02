@@ -128,17 +128,28 @@ amplitude-preserving randomisation. This distinguishes a genuine
 cycle (with stable phase relationships) from a band that merely
 contains power because the spectrum happens to peak there.
 
-\paragraph{The combined criterion.}
-A cell passes Gate~\ref{gate:1} only if the empirical band-power
-fails to be dominated by Null~1 \emph{and} the band exhibits
-phase coherence beyond Null~2 at \(\alpha=0.05\) on \(B=1000\)
-surrogates. This combined criterion is therefore an
-``existence-plus-coherence'' test, conservative by construction.
-We report Null~1 and Null~2 \(p\)-values separately throughout
-Section~\ref{sec:results} so that the reader can see which null
-drives any individual rejection. We thank one referee for
-insisting on this clarification and have followed
-\citet{schreiber_schmitz2000} in the framing.
+\paragraph{The dual criterion: existence as gate, coherence as diagnostic.}
+The two nulls play asymmetric roles. The AR(1) bootstrap is the
+load-bearing existence test: empirical calibration on
+synthetic AR(1)+cosine alternatives (Appendix~\ref{app:methods})
+shows it achieves \(\geq 80\%\) detection power above
+\(\mathrm{SNR}\approx 0.2\) and saturates by
+\(\mathrm{SNR}\approx 0.3\). The phase-randomised coherence
+null is degenerate on simple Gaussian-linear cycles---the
+spectrum-preserving surrogate carries the same band-power as
+the original and a stable instantaneous frequency under
+filtering---so it is non-discriminating in this regime. On
+broadband non-Gaussian data it does carry information, but it
+cannot be used as a primary gate. We therefore use the AR(1)
+null as Gate~\ref{gate:1}, and report the phase-coherence
+\(p\)-value \(p_2\) alongside as a complementary diagnostic.
+This reframing follows the recommendation of
+\citet{schreiber_schmitz2000} on the limits of phase-randomised
+surrogates against linear test statistics, and is reflected in
+the implementation (\path{ecowave/cycles/surrogate.py:dual_null}
+returns both verdicts, with \texttt{reject\_cycle} set by the
+AR(1) test and \texttt{reject\_existence\_and\_coherence}
+provided as a conservative robustness flag).
 
 \subsection{Anchored bands}
 

@@ -9,17 +9,19 @@ consensus over four heterogeneous estimators (Christiano-Fitzgerald,
 Morlet, Hamilton Markov-switching, PELT), a cross-panel agreement
 criterion, and a per-variable safeguard against composite-aggregation
 artefacts \citep{wen2005}. The threshold values are committed to a
-public Git history before any panel is ingested. Calibration on
-synthetic alternatives (\(\AR{1}\)+cosine, MS-\(\AR{1}\), multifractal
-random walk) shows that the protocol has acceptable power above
-\(\mathrm{SNR}\approx 0.5\) and degrades sharply below; we report the
-power curve and discuss its implications for our findings. None of
-the four canonical periodicities passes the uniform protocol on more
-than a small minority of panels. This is consistent with the
-empirical scepticism that has been building since \citet{garvy1943},
-\citet{solomou1987}, \citet{romer1999}, \citet{stock_watson2003} and
-\citet{wen2005}; it does not, by itself, deny the existence of
-cyclical components in macroeconomic series but rather refutes the
-claim that a single canonical period describes them universally
-across heterogeneous panels.
+public Git history before any panel is ingested. Empirical
+calibration on synthetic alternatives shows that the protocol is
+highly powerful against linear sinusoidal cycles (\(\geq 80\%\)
+detection at \(\mathrm{SNR}\geq 0.2\) on \(\AR{1}\)+cosine
+panels) but weak against the regime-switching and multifractal
+alternatives that the empirical macroeconomic literature has
+documented (3--26\% detection on MS-\(\AR{1}\); 1--10\% on the
+multifractal random walk). The rejection of the four canonical
+periodicities that we report should accordingly be read as a
+refutation of the historical \emph{linear-sinusoidal universalist}
+reading, in the spirit of \citet{garvy1943}, \citet{solomou1987},
+\citet{romer1999}, \citet{stock_watson2003} and \citet{wen2005},
+and not as a denial of cyclical structure as such. We
+make the power profile and its implications load-bearing rather
+than incidental.
 \end{abstract}

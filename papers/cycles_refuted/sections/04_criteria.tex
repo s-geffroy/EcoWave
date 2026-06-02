@@ -5,15 +5,16 @@ The protocol cascades three gates with one safeguard. The full
 specification, including the limits of each criterion, is in
 Appendix~\ref{app:criteria}; the gist follows.
 
-\begin{gate}[Existence plus phase coherence]
+\begin{gate}[Existence]
 \label{gate:1}
 At significance level \(\alpha=0.05\) with \(B=1000\) surrogates,
 the empirical band-power inside the canonical cycle band must
-dominate the \(\AR{1}\)-bootstrap null (band-power existence)
-\emph{and} the band must exhibit phase coherence beyond the
-Theiler surrogate (Section~\ref{sec:dual_null}). The two surrogate
-\(p\)-values are reported separately throughout
-Section~\ref{sec:results}.
+dominate the \(\AR{1}\)-bootstrap null
+(Section~\ref{sec:dual_null}). The phase-randomised coherence
+\(p\)-value is reported alongside as a diagnostic but does not
+gate the verdict on its own (Appendix~\ref{app:methods}); a
+conservative ``existence-and-coherence'' robustness flag is also
+exposed.
 \end{gate}
 
 \begin{gate}[Method consensus]

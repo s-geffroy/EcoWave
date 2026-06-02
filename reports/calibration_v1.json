@@ -1,0 +1,147 @@
+{
+  "version": "v1",
+  "n_replicates": 100,
+  "n_surrogates": 200,
+  "t_len": 150,
+  "band_lo_years": 7.0,
+  "band_hi_years": 11.0,
+  "period_at_centre": 8.0,
+  "alpha": 0.05,
+  "cells": [
+    {
+      "family": "ar1_plus_cosine",
+      "snr": 0.2,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.82,
+      "rejection_rate_dual": 0.03,
+      "median_p_ar1": 0.009950248756218905,
+      "median_p_coherence": 0.5174129353233831
+    },
+    {
+      "family": "ar1_plus_cosine",
+      "snr": 0.3,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 1.0,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.004975124378109453,
+      "median_p_coherence": 0.6791044776119404
+    },
+    {
+      "family": "ar1_plus_cosine",
+      "snr": 0.5,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 1.0,
+      "rejection_rate_dual": 0.01,
+      "median_p_ar1": 0.004975124378109453,
+      "median_p_coherence": 0.8582089552238805
+    },
+    {
+      "family": "ar1_plus_cosine",
+      "snr": 1.0,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 1.0,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.004975124378109453,
+      "median_p_coherence": 1.0
+    },
+    {
+      "family": "ar1_plus_cosine",
+      "snr": 2.0,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 1.0,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.004975124378109453,
+      "median_p_coherence": 1.0
+    },
+    {
+      "family": "ms_ar1",
+      "snr": 0.2,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.04,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.43034825870646765,
+      "median_p_coherence": 0.5422885572139303
+    },
+    {
+      "family": "ms_ar1",
+      "snr": 0.3,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.03,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.48507462686567165,
+      "median_p_coherence": 0.5024875621890548
+    },
+    {
+      "family": "ms_ar1",
+      "snr": 0.5,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.03,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.49502487562189057,
+      "median_p_coherence": 0.5497512437810945
+    },
+    {
+      "family": "ms_ar1",
+      "snr": 1.0,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.08,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.42288557213930345,
+      "median_p_coherence": 0.5099502487562189
+    },
+    {
+      "family": "ms_ar1",
+      "snr": 2.0,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.26,
+      "rejection_rate_dual": 0.01,
+      "median_p_ar1": 0.18407960199004975,
+      "median_p_coherence": 0.5174129353233831
+    },
+    {
+      "family": "mfrw",
+      "snr": 0.2,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.1,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.40298507462686567,
+      "median_p_coherence": 0.6044776119402986
+    },
+    {
+      "family": "mfrw",
+      "snr": 0.3,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.07,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.39303482587064675,
+      "median_p_coherence": 0.5920398009950248
+    },
+    {
+      "family": "mfrw",
+      "snr": 0.5,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.06,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.37064676616915426,
+      "median_p_coherence": 0.6542288557213931
+    },
+    {
+      "family": "mfrw",
+      "snr": 1.0,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.02,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.40049751243781095,
+      "median_p_coherence": 0.6442786069651741
+    },
+    {
+      "family": "mfrw",
+      "snr": 2.0,
+      "n_replicates": 100,
+      "rejection_rate_ar1": 0.01,
+      "rejection_rate_dual": 0.0,
+      "median_p_ar1": 0.4651741293532338,
+      "median_p_coherence": 0.5696517412935322
+    }
+  ]
+}

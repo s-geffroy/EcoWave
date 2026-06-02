@@ -138,12 +138,18 @@ cyclical modulation of the integrated intermittency. SNR
 controls the cyclical share of the variance.
 
 \paragraph{Empirical power.}
-Table~\ref{tab:power} reports \(\hat\pi\) for each combination.
+Table~\ref{tab:power} reports the empirical detection power of
+the AR(1) bootstrap component of Gate~\ref{gate:1} (the primary
+existence test). The numbers are from the actual run shipped in
+\path{reports/calibration_v1.json}.
 
 \begin{table}[h]
 \centering
-\caption{Empirical detection power \(\hat\pi\) at \(\alpha=0.05\)
-on \(T=150\) annual observations, \(N=1000\) replicates.}
+\caption{Empirical detection power of the \(\AR{1}\) bootstrap
+component of Gate~\ref{gate:1} at \(\alpha=0.05\), on \(T=150\)
+annual observations, \(N=100\) replicates, \(B=200\) surrogates.
+Source: \path{reports/calibration_v1.json} (v1, period at band
+centre 8\,y, band \([7,11]\)\,y).}
 \label{tab:power}
 \small
 \begin{tabularx}{\linewidth}{@{}X c c c c c@{}}
@@ -152,26 +158,56 @@ on \(T=150\) annual observations, \(N=1000\) replicates.}
 \cmidrule(l){2-6}
    & 0.2 & 0.3 & 0.5 & 1.0 & 2.0 \\
 \midrule
-Family I — AR(1) + cosine    & 0.18 & 0.42 & 0.74 & 0.93 & 0.99 \\
-Family II — MS-AR(1)          & 0.11 & 0.28 & 0.56 & 0.81 & 0.95 \\
-Family III — MFRW + modulation & 0.07 & 0.19 & 0.43 & 0.71 & 0.88 \\
+Family I --- AR(1) + cosine      & 0.82 & 1.00 & 1.00 & 1.00 & 1.00 \\
+Family II --- MS-AR(1)           & 0.04 & 0.03 & 0.03 & 0.08 & 0.26 \\
+Family III --- MFRW + modulation & 0.10 & 0.07 & 0.06 & 0.02 & 0.01 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{Implication.}
-The protocol has acceptable power above
-\(\mathrm{SNR}\approx 0.5\) on AR(1)+cosine, but degrades
-substantially on more realistic generative models. Below
-\(\mathrm{SNR}\approx 0.3\) the protocol effectively cannot
-detect cycles, and macroeconomic data with a small cyclical share
-(typical estimates of the cyclical share of post-1945 US GDP put
-it at 10--20\,\% \citep{king_plosser_stock_watson1991}) sit at
-or below this boundary. A ``rejected'' verdict in
-Section~\ref{sec:results} therefore should be read as ``not
-detected under the present protocol at the SNR available on
-this panel''. We make this disclosure load-bearing rather than
-incidental.
+The empirical calibration is stark. On the simplest possible
+alternative---a cosine embedded in linear AR(1) noise---the
+\(\AR{1}\) bootstrap is extremely powerful, with \(\geq 80\%\)
+detection at \(\mathrm{SNR}\geq 0.2\) and saturation by
+\(\mathrm{SNR}\geq 0.3\). On the two realistic alternatives,
+however, the picture inverts. Against Markov-switching
+\(\AR{1}\) processes whose mean-shift dwell time matches the
+canonical band, the test detects between 3\% and 26\% of cases
+across the SNR range. Against multifractal random walks with
+cyclical modulation of the intermittency, detection peaks at
+10\% at low SNR and \emph{decreases} towards 1\% at high SNR
+(large SNR amplifies the volatility-of-volatility, which the
+\(\AR{1}\) bootstrap is not designed to recognise as a cycle).
+
+This is the load-bearing caveat of the paper. The test we apply
+to the panels is well-suited to detect simple linear sinusoidal
+cycles but is poorly suited to detect the regime-switching and
+multifractal cyclical structures that the modern empirical
+macroeconomic literature has documented
+\citep{hamilton1989,calvet_fisher2002,king_plosser_stock_watson1991}.
+The rejection of canonical periodicities in
+Section~\ref{sec:results} therefore should be read as
+``no \emph{linear sinusoidal} canonical periodicity passes the
+protocol''---which is the historical claim under attack
+(\citealt{kitchin1923,juglar1862,kuznets1930,kondratieff1925}
+all presented their cycles as approximately sinusoidal
+regularities)---and \emph{not} as a refutation of cyclical
+structure as such. We make this disclosure load-bearing rather
+than incidental.
+
+\paragraph{The phase-coherence null in calibration.}
+The phase-coherence \(p\)-value reported by
+\path{phase_scramble_null} is, on these calibration panels,
+near-uniformly distributed on \([0,1]\) (median across all
+calibration cells: 0.81 on AR(1)+cosine, 0.49 on MS-AR(1), 0.50
+on MFRW). The coherence statistic does not discriminate real
+cycles from spectrum-preserving surrogates on these generative
+models, consistent with the theoretical observation of
+\citet{schreiber_schmitz2000} that band-power-based statistics
+against phase-randomised surrogates are degenerate by Parseval.
+The phase-coherence verdict is therefore reported as a
+diagnostic but is not the primary Gate~\ref{gate:1}.
 
 \subsection{False-positive calibration}
 
