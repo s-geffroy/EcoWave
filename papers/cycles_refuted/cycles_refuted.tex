@@ -40,8 +40,26 @@
 \newcommand{\pvalue}{p}
 \newcommand{\AR}[1]{\mathrm{AR}(#1)}
 \newcommand{\Cls}[1]{\texttt{\detokenize{#1}}}
+% A \path{...} that allows line-breaking at /, _, :, . characters,
+% so long file paths and dotted module references don't overflow.
 \providecommand{\path}{}
-\renewcommand{\path}[1]{\texttt{\detokenize{#1}}}
+\renewcommand{\path}[1]{%
+  \begingroup
+  \texttt{\expandafter\pathbreaks\detokenize{#1}\relax}%
+  \endgroup
+}
+\makeatletter
+\def\pathbreaks#1{%
+  \ifx#1\relax\else
+    \ifx#1/\char`\/\allowbreak
+    \else\ifx#1_\char`\_\allowbreak
+    \else\ifx#1:\char`\:\allowbreak
+    \else\ifx#1.\char`\.\allowbreak
+    \else#1\fi\fi\fi\fi
+    \expandafter\pathbreaks
+  \fi
+}
+\makeatother
 
 % Theorem-style boxes for predictions / gates
 \newtheorem{gate}{Gate}
@@ -49,6 +67,11 @@
 
 % ===== Front matter =====
 \journal{Physica A: Statistical Mechanics and its Applications}
+
+% Allow LaTeX a little slack in justification to avoid overfull boxes
+% in paragraphs that contain long inline citations or code paths. We
+% keep \fussy inside floats so tables remain tight.
+\sloppy
 
 \begin{document}
 
