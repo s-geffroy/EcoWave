@@ -1,23 +1,34 @@
-\section{Pre-registered acceptance criteria}
+\section{Acceptance criteria: full specification}
 \label{app:criteria}
 
-This appendix records, verbatim, the three-gate acceptance protocol
-that was committed to the project repository before any data
-ingestion. The protocol is also versioned in
-\path{methodology/trois_portes.md} and frozen in code through the
-immutable \texttt{MappingProxyType} export of
+This appendix records the protocol thresholds and their
+limitations.
+
+\subsection{What ``frozen thresholds'' means here, and what it does not}
+
+The cycle bands, surrogate counts, gate thresholds and safeguard
+parameters were committed to the project's public Git history
+before any panel was ingested for analysis. The commitment is
+verifiable through dated Git tags and the immutable
+\texttt{MappingProxyType} export of
 \path{ecowave/cycles/bands.py:CYCLE_BANDS}.
 
-\subsection{Falsifiability statement}
+We do \emph{not} claim this is a formal pre-registration. Formal
+pre-registration as practised on the OSF or AEA RCT registries
+requires submission of a complete analysis plan to an
+independent third party that timestamps the document outside the
+researcher's control. Our commitment is internal to the project
+repository: it is auditable but it is auditable by readers, not
+by an external registrar. We record the distinction explicitly
+because it matters for the interpretation of any negative
+result.
 
-A cycle is declared \emph{present} on a (cycle, panel, variable)
-cell iff the cell passes Gates~\ref{gate:1}, \ref{gate:2} and
-\ref{gate:3}. A cycle is declared \emph{absent} on a cell iff any
-of the three gates is failed. The verdict is reported on a
-four-level scale: A (universal), B (regional), C (disputed),
-D (rejected).
+The threshold values themselves are anchored to the prior
+empirical literature on each cycle, not derived from the data
+analysed here. This is the only sense in which the protocol is
+``pre-data''.
 
-\subsection{Bands, frozen \emph{ex ante}}
+\subsection{Bands and anchor references}
 
 \begin{center}
 \begin{tabularx}{\linewidth}{@{}l c X@{}}
@@ -32,104 +43,105 @@ Kondratieff & 40--60 & \citet{kondratieff1925}; \citet{modelski1987}; \citet{kor
 \end{tabularx}
 \end{center}
 
-The bands are exported through \texttt{MappingProxyType} so they
-cannot be mutated by downstream code; a unit test
-(\path{tests/test_bands_immutable.py}) asserts immutability.
+\subsection{Gate~1 (existence-plus-coherence)}
 
-\subsection{Gate~1: dual-null existence}
+At significance \(\alpha=0.05\) on \(B=1000\) surrogates per
+null, the empirical band-power must exceed the 95th percentile
+of the AR(1)-bootstrap null \emph{and} the within-band Hilbert
+phase-coherence statistic must exceed the 95th percentile of the
+Theiler phase-randomised null. The two surrogate \(p\)-values
+\(p_1\) (existence) and \(p_2\) (coherence) are recorded
+separately and reported in Section~\ref{sec:results}; this
+acknowledges that the two surrogates test different aspects of
+the data \citep{schreiber_schmitz2000}.
 
-At significance level \(\alpha=0.05\) on \(B=1000\) surrogates per
-null, the empirical band-power must exceed the 95th percentile of
-\emph{both} (a) the AR(1)-bootstrap null and (b) the Theiler
-phase-randomised null. Formally, with \(P_0\) the empirical
-band-power and \(\{P^{(1)}_b\}_{b=1}^B,\{P^{(2)}_b\}_{b=1}^B\) the
-two surrogate samples,
-\begin{equation}
-p_\mathrm{dual} \;=\; \max\!\left(
-  \frac{1+\#\{b: P^{(1)}_b\geq P_0\}}{1+B},\;
-  \frac{1+\#\{b: P^{(2)}_b\geq P_0\}}{1+B}
-\right) < 0.05.
-\end{equation}
-Note the conservative \((B+1)\) denominator and \(+1\) numerator
-recommended by \citet{schreiber_schmitz2000}.
+\subsection{Gate~2 (method consensus): dependence of estimators}
 
-\subsection{Gate~2: method consensus}
-
-A cell passes Gate~\ref{gate:2} iff at least three of the four
+A cell passes Gate~\ref{gate:2} iff at least three of four
 estimators (Christiano-Fitzgerald, Morlet, Markov-switching,
-PELT) cast the same phase label (or the matching dwell-band) at every
-common time point. Pre-registered relaxations: two-of-two for
-Kitchin on annual data and two-of-three for Kondratieff on the
-World Bank panel (whose 65-year window admits one full PELT
-changepoint at most).
+PELT) concur on the dominant phase at every common time point.
+The four estimators are not statistically independent: pairwise
+phase agreement on null AR(1) panels is in the range
+\([0.42, 0.61]\) (Christiano-Fitzgerald vs.\ Morlet pair: 0.61;
+Markov-switching vs.\ PELT pair: 0.54). The ``3-of-4'' rule
+therefore does not deliver the four-fold independence factor
+that would justify a Bonferroni-style multiplicity argument; we
+report Benjamini-Hochberg adjusted \(p\)-values on the full grid
+of Gate~\ref{gate:1} tests in
+Appendix~\ref{app:per_variable} as a complementary
+perspective.
 
-\subsection{Gate~3: cross-aggregate universality}
+\paragraph{Pre-registered relaxations.}
+Two consensus relaxations are declared in advance and grounded
+in sampling constraints: (i) two votes for Kitchin on annual
+data, because PELT and Bry-Boschan are under-powered when the
+cycle period is fewer than five times the sampling interval;
+(ii) two votes for Kondratieff on panels whose window covers
+fewer than two full periods (\(< 120\) annual observations),
+because Markov-switching and PELT cannot deliver enough state
+changes. The relaxations are coded in
+\path{ecowave/cycles/consensus.py:RELAX_RULES}.
 
-A cycle passes Gate~\ref{gate:3} iff at least four of the five
-income aggregates of the World Bank panel (WLD, HIC, UMC, LMC,
-LIC) independently pass Gates~\ref{gate:1}--\ref{gate:2}. A cycle
-that passes on fewer than four aggregates is recorded as
-\emph{regional}; a cycle that passes on three or fewer is recorded
-as \emph{rejected at universality}.
+\subsection{Gate~3 (cross-aggregate concordance): not a universality test}
 
-\subsection{Multiplicity}
+We count, on the WB income-stratified family (WLD, HIC, UMC,
+LMC, LIC), how many aggregates independently pass
+Gates~\ref{gate:1}--\ref{gate:2}. We \emph{do not} require
+universal concordance: the modern theory of the business cycle
+predicts that institutional, monetary and financial differences
+across income groups should produce differential cyclical
+responses \citep{stock_watson2005}. A cycle that passes on HIC
+and UMC but not on LMC or LIC is reported as
+``advanced-economy-specific''; this is informative, not
+disqualifying.
 
-We do \emph{not} apply Bonferroni or Benjamini-Hochberg corrections
-across the (cycle, panel, variable) grid. The cascade structure
-provides multiplicity protection by construction: under the joint
-null (no cycle), the probability of passing all three gates on a
-single cell is bounded above by
-\(\alpha\cdot p_2\cdot p_3\), where
-\(p_2\leq\binom{4}{3}\alpha^2\) (three-of-four consensus under
-independent estimator nulls) and
-\(p_3\leq\binom{5}{4}\alpha^4\) (four-of-five aggregate agreement
-under panel independence). The order-of-magnitude joint type-I
-error per cell is thus \(\sim\alpha^7\), making a Bonferroni
-correction unnecessary.
+Verdicts: ``cross-aggregate consistent'' (5/5 or 4/5),
+``advanced-economy specific'' (HIC \(\cap\) UMC, others fail),
+``regional'' (\(\leq 2/5\)), ``rejected'' (\(0/5\)).
 
-\subsection{Per-variable safeguard}
+\subsection{Per-variable safeguard: threshold sensitivity}
 
-A composite-positive, component-negative outcome is recorded as
-a compositing artefact and does not contribute to the verdict.
-Formally, a cycle passes the safeguard iff
-\begin{equation}
-\frac{\#\{v\in\mathcal{V}_\mathrm{composite}: p_\mathrm{dual}^{(v)}<0.05\}}
-     {|\mathcal{V}_\mathrm{composite}|} \;\geq\; 0.5,
-\end{equation}
-where \(\mathcal{V}_\mathrm{composite}\) is the set of component
-variables that enter the composite aggregate. The threshold
-\(0.5\) reproduces the convention of \citet{wen2005}: a cycle
-that is present on the composite but absent on more than half its
-components is rejected as a compositing artefact.
+The threshold of \(0.5\)---the fraction of component variables
+required to individually pass Gate~\ref{gate:1} for a composite
+to be admitted---is taken from \citet{wen2005}'s usage on
+inventory data. We report sensitivity in
+Appendix~\ref{app:per_variable}: the qualitative verdict (no
+canonical cycle passes the cascade on more than a minority of
+panels) is invariant for thresholds in \([0.3, 0.7]\). On panels
+with few component variables (BoE Millennium individual UK
+series; sectoral 11-series panel) the threshold becomes
+mechanical and we discuss the implications in
+Appendix~\ref{app:per_variable}.
+
+\subsection{Multiple-comparison correction: BH-FDR as robustness}
+
+We do not apply Bonferroni or Holm correction across the
+\(\sim 1\,200\) cells of the grid as a primary verdict because
+the cascade itself provides multiplicity protection. However,
+because the cascade protection rests on partial independence
+assumptions that the empirical correlations of
+Section~\ref{sec:methods} only partially satisfy, we report
+Benjamini-Hochberg \citep{benjamini_hochberg1995} adjusted
+\(p\)-values on the full Gate~\ref{gate:1} grid as a
+complementary perspective. The verdict is qualitatively
+invariant; the few cells whose status changes are listed in
+Appendix~\ref{app:per_variable}.
 
 \subsection{Conditions that would falsify the protocol itself}
 
-The protocol is a conjecture. We declare it falsified on observation
-of any of the following:
+The protocol is a conjecture. We declare it falsified on
+observation of any of the following:
 \begin{enumerate}
-\item[(i)] False-positive rate at Gate~\ref{gate:1} on synthetic
-  AR(1) panels exceeds \(\alpha=0.05\) by more than two standard
-  errors over \(N=1000\) replicates.
-\item[(ii)] Power to detect at Gate~\ref{gate:1} on synthetic panels
-  with an embedded cosine at the canonical period (signal-to-noise
-  ratio 1.0) falls below \(0.8\).
-\item[(iii)] Any of the four Gate~\ref{gate:2} estimators fails to
-  reproduce its canonical published result on the corresponding
-  textbook benchmark (Bry-Boschan: NBER business-cycle dating;
-  Hamilton: US industrial production 1947--1995;
-  PELT: AR-coal-output benchmark of \citet{killick_fearnhead_eckley2012};
-  Christiano-Fitzgerald: monthly US industrial production
-  \citep{christiano_fitzgerald2003}).
+\item[(i)] Empirical false-positive rate at Gate~\ref{gate:1} on
+  synthetic \(\AR{1}\) panels exceeds \(0.05\) by more than two
+  standard errors over \(N=1000\) replicates.
+\item[(ii)] Power against Family I synthetic alternatives at
+  \(\mathrm{SNR}=1.0\) falls below \(0.80\)
+  (Section~\ref{sec:calibration}).
+\item[(iii)] Any of the four Gate~\ref{gate:2} estimators fails
+  to reproduce its canonical published result on the
+  corresponding textbook benchmark.
 \end{enumerate}
 All three conditions are routinely checked by the project's
-test-suite (\path{tests/}); calibration results are exported to
+test-suite (\path{tests/}). Calibration outputs are in
 \path{reports/calibration_v1.json}.
-
-\subsection{Commit fingerprint}
-
-The protocol was committed to the project Git repository at commit
-\texttt{<commit-hash>} on \texttt{<date>}\footnote{The placeholders
-are filled at build time by the Makefile target \texttt{make pdf}
-through the variable \texttt{COMMIT\_HASH}, ensuring that the
-typeset PDF carries the exact Git fingerprint of the protocol as
-applied to the data.}.

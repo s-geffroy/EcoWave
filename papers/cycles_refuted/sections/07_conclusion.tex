@@ -1,64 +1,83 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-We submitted the four canonical economic cycles---Kitchin, Juglar,
-Kuznets and Kondratieff---to a pre-registered three-gate falsifiable
-protocol applied across six independent macroeconomic panels spanning
-1700--2024. The cycles were armed with four heterogeneous estimators
-and tested against a conservative dual null. None of the four
-periodicities survives the cascade on more than a small minority of
-panels, and Kondratieff is the most fragile: when the per-variable
-safeguard of \citet{wen2005} is enforced, zero individual variables
-survive on the long-history panels. The few apparent survivals on
-income-aggregate composites are diagnosed as compositing artefacts.
+We submitted the four canonical economic cycles to a single
+uniform protocol applied across six independent macroeconomic
+panels spanning 1700--2024. The protocol combines a dual
+surrogate test (AR(1) bootstrap and Theiler phase randomisation,
+which test different aspects of the data and which we report
+separately), an inter-method consensus across four heterogeneous
+estimators, a cross-aggregate concordance criterion that
+distinguishes universalist from regional regularities, and a
+per-variable safeguard against composite-aggregation artefacts.
 
-The result reproduces, under a falsifiable design, the empirical
-consensus of four successive waves of scepticism:
-\citet{garvy1943} on Kondratieff, \citet{klotz_neal1973} and
-\citet{solomou1987} on Kuznets and Kondratieff, \citet{romer1999} and
-\citet{stock_watson2003} on Juglar, and \citet{wen2005} on Kitchin.
-The negative result is therefore not a methodological failure---it
-is the quantitative confirmation of a long-standing
-empirical consensus that has been built piecemeal across the
-twentieth century and that, until now, has lacked a unifying
-pre-registered protocol.
+The headline finding is narrow. No canonical periodicity from
+the \{Kitchin, Juglar, Kuznets, Kondratieff\} taxonomy passes the
+uniform protocol on more than a small minority of panels. The
+result is qualitatively invariant under Benjamini-Hochberg
+correction at FDR 0.05. It is a refutation of universalism
+rather than of cyclical structure as such: regional swings
+(Klotz-Neal residential construction), sectoral inventory cycles
+(Wen on dedicated inventory variables) and regime-dependent
+business-cycle facts (Romer; Stock-Watson) are not at stake
+here, and indeed some of them pass our protocol.
 
-Two methodological lessons follow. First, claims about canonical
-periodicities should be treated as conjectures and tested against
-conservative nulls on the strongest data available, not asserted on
-the basis of visual inspection of low-pass-filtered composites.
-Second, the well-known compositing artefact \citep{wen2005} is the
-single largest source of false positives in the literature; a
-per-variable safeguard should be a standard requirement.
+This finding is consistent with the empirical scepticism that
+has been building since \citet{garvy1943}, through
+\citet{solomou1987}, \citet{romer1999}, \citet{stock_watson2003}
+and \citet{wen2005}. We do not claim novelty in the substantive
+conclusion; we claim novelty in providing a uniform protocol
+under which the conclusion can be verified, reproduced and---if
+the protocol fails its calibration---falsified.
 
-The substantive question that motivates this paper---\emph{what is
-the empirical structure of macroeconomic fluctuations?}---admits an
-answer that is statistically robust, theoretically well-founded and
-pre-registered, but lies outside the cycle paradigm. It is sketched
-in Section~\ref{sec:pointers} and developed in a companion paper.
-The Kitchin, Juglar, Kuznets and Kondratieff cycles are not
-empirically supported as universal macroeconomic phenomena; the
-profession's modelling effort should move beyond them.
+\paragraph{Limits.}
+Three honest limits temper the claim. First, the power of the
+protocol degrades sharply below \(\mathrm{SNR}\approx 0.3\),
+which is plausibly the regime of much macroeconomic data; where
+power is low, ``rejected'' should be read as ``not detected at
+the attainable resolution''. Second, our threshold commitment
+through public Git history is not equivalent to a formal
+pre-registration (OSF / AEA registry) by a third party, and we
+record this distinction openly. Third, the present negative
+result gains scientific value only when read together with the
+positive companion work sketched in Section~\ref{sec:pointers};
+we do not regard this paper as standalone.
 
-\section*{Pre-registration and replication}
+\paragraph{Methodological lessons.}
+Two lessons stand out. First, the composite-versus-component
+distinction \citep{wen2005} is the single largest source of
+false-positive cycle findings in the literature; a per-variable
+safeguard should be standard. Second, the relevant question for
+practical macroeconomic modelling is not ``which canonical
+period?'' but ``what is the joint empirical signature?''---and on
+our panels that signature is non-cyclical (multifractal long
+memory with reflexive drift) rather than periodic. The
+companion paper develops the alternative.
 
-The protocol thresholds, cycle bands and surrogate counts used here
-were frozen in source code at project inception
-(\path{ecowave/cycles/bands.py:CYCLE_BANDS}, immutable
-\texttt{MappingProxyType}). The complete pipeline---data ingestion,
-Gate~1--3 evaluation, per-variable safeguard---runs end-to-end in a
-Docker container in under thirty minutes. The container, the data
-manifests with SHA-256 checksums, and the figure-generation scripts
-are available on request to the corresponding author and will be
-deposited in a Zenodo archive upon journal acceptance.
+\section*{Reproducibility and open science}
+
+The full pipeline---data ingestion, gate evaluation, per-variable
+safeguard, calibration on synthetic alternatives, generation of
+figures and tables---runs end-to-end in a Docker container
+shipped with this paper. Every raw payload is fingerprinted with
+SHA-256 and stored in a versioned SQLite catalogue. Threshold
+commitments are recorded as dated Git tags. The container, data
+manifests, validation scripts (DOI/ISBN resolution against the
+CrossRef API; bibliographic consistency check
+\(\{\backslash\)cite\(\}\leftrightarrow\) \texttt{.bib}) and
+LaTeX sources are deposited as part of the project repository
+and will be archived to Zenodo with a permanent DOI upon journal
+acceptance.
 
 \section*{Acknowledgements}
 
-This work was developed in the EcoWave research project. The author
-thanks the contributors to the J\`ord\`a-Schularick-Taylor
-Macrohistory Database, the Bank of England's OBRA team, and the
+This work was developed in the EcoWave research project. The
+author thanks the contributors to the Jord\`a-Schularick-Taylor
+Macrohistory Database, the Bank of England's OBRA team and the
 Bank for International Settlements for the public availability of
-the data on which this study rests.
+the data on which this study rests. The author is solely
+responsible for the methodological choices and for any errors
+that remain.
 
 \section*{Declaration of competing interests}
 
@@ -67,5 +86,7 @@ The author declares no competing interests.
 \section*{Data availability}
 
 All data are derived from public-domain or academically-licensed
-sources listed in Appendix~\ref{app:data} with full provenance and
-SHA-256 checksums.
+sources listed in Appendix~\ref{app:data} with full provenance,
+licences and SHA-256 checksums. The code used to ingest and
+analyse the data is available on request and will be deposited
+to Zenodo upon journal acceptance.

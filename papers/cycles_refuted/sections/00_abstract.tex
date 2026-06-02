@@ -1,28 +1,25 @@
 \begin{abstract}
-We test whether the four canonical economic cycles---Kitchin (3--5 years),
-Juglar (7--11 years), Kuznets (15--25 years) and Kondratieff (40--60
-years)---are statistically distinguishable from coloured noise across six
-heterogeneous macroeconomic panels spanning 1700--2024 (Bank of England
-Millennium, J\`ord\`a-Schularick-Taylor R6, Bank for International
-Settlements credit aggregates, World Bank annual indicators, FRED/Eurostat
-quarterly, and a sectoral panel). A pre-registered three-gate falsifiable
-protocol is applied to every cell of the
-\(\{\text{cycle}\}\times\{\text{panel}\}\times\{\text{variable}\}\) grid:
-(i) Gate~1 requires the band-pass power in the canonical band to exceed
-both an \(\AR{1}\)-bootstrap null and a phase-randomised null at
-\(\alpha=0.05\) with \(B=1000\) surrogates; (ii) Gate~2 requires consensus
-between at least three of four heterogeneous estimators
-(Christiano-Fitzgerald band-pass with Hilbert phase, Bry-Boschan turning
-points, Hamilton-style Markov-switching \(\AR{1}\) and PELT changepoints);
-(iii) Gate~3 requires universality across at least four of five income
-aggregates. A per-variable safeguard reproduces \citet{wen2005} and
-removes composite-aggregation artefacts. None of the four cycles survives
-the cascade on more than a small minority of panels, and Kondratieff is
-the most fragile: when the safeguard is enforced, zero individual
-variables survive on the long-history panels. The negative result is not
-a methodological failure---it reproduces a long-standing empirical
-consensus \citep{garvy1943,solomou1987,romer1999,stock_watson2003,wen2005}.
-The paper ends by pointing to an alternative empirical signature
-(long memory, multifractality, non-linearity, permutation entropy and
-reflexive drift), developed in a companion methodological paper.
+We submit the four canonical economic ``cycles'' (Kitchin 3--5 years,
+Juglar 7--11 years, Kuznets 15--25 years, Kondratieff 40--60 years) to
+a single uniform protocol applied across six independent macroeconomic
+panels spanning 1700--2024. The protocol combines an
+\(\AR{1}\)-bootstrap surrogate against the canonical band-power
+\citep{theiler_et_al1992,schreiber_schmitz2000}, an inter-method
+consensus over four heterogeneous estimators (Christiano-Fitzgerald,
+Morlet, Hamilton Markov-switching, PELT), a cross-panel agreement
+criterion, and a per-variable safeguard against composite-aggregation
+artefacts \citep{wen2005}. The threshold values are committed to a
+public Git history before any panel is ingested. Calibration on
+synthetic alternatives (\(\AR{1}\)+cosine, MS-\(\AR{1}\), multifractal
+random walk) shows that the protocol has acceptable power above
+\(\mathrm{SNR}\approx 0.5\) and degrades sharply below; we report the
+power curve and discuss its implications for our findings. None of
+the four canonical periodicities passes the uniform protocol on more
+than a small minority of panels. This is consistent with the
+empirical scepticism that has been building since \citet{garvy1943},
+\citet{solomou1987}, \citet{romer1999}, \citet{stock_watson2003} and
+\citet{wen2005}; it does not, by itself, deny the existence of
+cyclical components in macroeconomic series but rather refutes the
+claim that a single canonical period describes them universally
+across heterogeneous panels.
 \end{abstract}

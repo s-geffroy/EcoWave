@@ -2,88 +2,97 @@
 \label{sec:intro}
 
 A century after \citet{kitchin1923}, \citet{juglar1862},
-\citet{kuznets1930} and \citet{kondratieff1925} introduced the four
-canonical economic cycles, the periodicities they identified remain
-widely cited and routinely invoked in econophysics
-\citep{korotayev_tsirel2010}, macroprudential policy
-\citep{borio2014,drehmann_borio_tsatsaronis2012}, and the long-wave
-literature \citep{perez2002,modelski1987}. Yet four successive waves of
-empirical scepticism---\citet{garvy1943} on Kondratieff,
-\citet{klotz_neal1973} on Kuznets, \citet{solomou1987} on both,
-\citet{romer1999} and \citet{stock_watson2003} on Juglar, and
-\citet{wen2005} on Kitchin---have steadily eroded the claim that any of
-these periodicities is more than an artefact of measurement, sample
-selection or visual inspection. \citet{burns_mitchell1946} themselves
+\citet{kuznets1930} and \citet{kondratieff1925} introduced four
+canonical economic cycles, the periodicities they identified are
+routinely cited in long-wave \citep{perez2002,modelski1987,
+korotayev_tsirel2010}, macroprudential
+\citep{borio2014,drehmann_borio_tsatsaronis2012} and econophysics
+work. Yet the empirical-economics community itself has long stopped
+defending the claim that a single canonical period describes
+macroeconomic fluctuations universally. \citet{burns_mitchell1946}
 refused to commit to a canonical period when constructing the NBER
-business-cycle dating procedure.
+business-cycle dating procedure. \citet{garvy1943} attributed
+Kondratieff's long waves to exogenous shocks. \citet{klotz_neal1973}
+and \citet{solomou1987} found no spectral peaks at the Kuznets or
+Kondratieff frequencies. \citet{romer1999} and
+\citet{stock_watson2003} documented the dissolution of the post-1945
+Juglar regularity. \citet{wen2005} demonstrated that the Kitchin
+inventory cycle is visible on dedicated sectoral series but disappears
+on macro composites. The modern empirical literature has, in effect,
+already rejected the strong universalist reading of the four-cycle
+taxonomy.
 
-This paper closes the gap between the canonical claim and the empirical
-consensus by applying a single pre-registered falsifiable protocol to
-the strongest data and methods available. We treat the four cycles as
-\emph{conjectures} in the Popperian sense, gather the most exhaustive
-macroeconomic panel set assembled to date (1700--2024, six independent
-sources), arm the conjectures with the best available cycle-fitting
-machinery (Christiano-Fitzgerald \citep{christiano_fitzgerald2003},
-Morlet wavelets \citep{torrence_compo1998}, Hamilton-switching
-\citep{hamilton1989}, Bry-Boschan/Harding-Pagan
-\citep{bry_boschan1971,harding_pagan2002} and PELT
-\citep{killick_fearnhead_eckley2012}), and test them against a
-conservative dual null \citep{theiler_et_al1992,schreiber_schmitz2000}.
+What this literature has \emph{not} produced, to our knowledge, is a
+single uniform protocol that takes the canonical-cycle conjectures at
+their face value, applies them across heterogeneous panels and a
+diverse fitting arsenal, and reports the verdict on every cell of the
+\(\{\text{cycle}\}\times\{\text{panel}\}\times\{\text{variable}\}\)
+grid under thresholds committed in advance to a public version
+history. Our contribution is that protocol and its application to six
+panels spanning 1700--2024.
 
-Three contributions follow.
+\paragraph{What we claim, and what we do not.}
+Our central finding is narrow. We do not claim that macroeconomic
+series contain no cyclical structure: regime-switching, persistent
+deviations, regional swings and sectoral inventory dynamics are
+all real and not at stake here. We claim that no single canonical
+period from the \{Kitchin, Juglar, Kuznets, Kondratieff\} taxonomy
+survives a uniform protocol when applied across heterogeneous
+panels, and that the few apparent survivals on income-aggregate
+composites are diagnosed as compositing artefacts under a
+per-variable safeguard. This is a refutation of universalism, not
+of cyclical structure as such.
 
-\paragraph{(i)~A three-gate falsification protocol, pre-registered.}
-We submit every cell of the (cycle, panel, variable) grid to a cascade
-of three gates---existence (Gate~1), method consensus (Gate~2) and
-cross-panel universality (Gate~3)---whose thresholds were fixed before
-data ingestion and frozen in source code
-(\path{ecowave/cycles/bands.py:CYCLE_BANDS} is implemented as an
-immutable \texttt{MappingProxyType}). A per-variable safeguard
-\citep{wen2005} forbids composite aggregation artefacts. The protocol
-is reviewed in detail in Appendix~\ref{app:criteria}.
+\paragraph{The protocol.}
+The protocol cascades three filters. First, a dual surrogate test
+contrasts the empirical band-power against (i) an AR(1) bootstrap
+null and (ii) a phase-randomised null
+\citep{theiler_et_al1992,schreiber_schmitz2000}. We are explicit, in
+Section~\ref{sec:methods} and Appendix~\ref{app:methods}, about the
+asymmetric role of these two surrogates: the AR(1) null tests
+whether the band carries more power than expected under a linear
+short-memory process; the phase-randomised null tests whether the
+\emph{temporal coherence} inside the band is greater than expected
+under any linear stationary process with the same empirical
+spectrum. The latter does not test cycle existence on its own and
+we do not present it as such. Second, four heterogeneous estimators
+(Christiano-Fitzgerald \citep{christiano_fitzgerald2003}, Morlet
+\citep{torrence_compo1998}, Hamilton-switching \citep{hamilton1989},
+PELT \citep{killick_fearnhead_eckley2012}) must concur on the dominant
+phase. Third, we report the result on five income-stratified
+aggregates and quantify how many co-agree---without treating
+disagreement across institutional groupings as evidence of
+methodological failure. A per-variable safeguard
+\citep{wen2005} filters out composite-aggregation artefacts.
 
-\paragraph{(ii)~Maximum-charity for the cycles.}
-We give the cycles every reasonable chance to survive. We use canonical
-bands (Kitchin 3--5y, Juglar 7--11y, Kuznets 15--25y, Kondratieff
-40--60y) frozen \emph{ex ante}, four independent estimators covering
-band-pass, wavelet, regime-switching and changepoint families, and six
-panels spanning 324 years and seventeen economies. The
-Hodrick-Prescott filter \citep{hodrick_prescott1997,hamilton2018} and
-empirical mode decomposition---both known to introduce spurious
-periodicities---are excluded \emph{a priori} and the reasons are
-documented in Appendix~\ref{app:methods}.
+\paragraph{Calibration and power.}
+We treat power calibration as central, not peripheral. We report,
+in Appendix~\ref{app:methods}, the empirical detection power of
+the cascade against three families of synthetic alternatives at
+signal-to-noise ratios from 0.2 to 2.0, and we discuss the
+implications: the protocol has good power when the cyclical
+component carries at least half the panel variance, and degrades
+sharply below \(\mathrm{SNR}\approx 0.3\). Where it degrades, the
+verdict ``rejected'' should be read as ``not detected at the
+attainable resolution''.
 
-\paragraph{(iii)~Publication of every failure.}
-Because the protocol pre-registers acceptance criteria, every cell
-that fails is reported with the same prominence as those that pass.
-Section~\ref{sec:results} summarises the result: across the
-(cycle, panel, variable) grid, no cycle survives the full cascade on
-more than a small minority of panels, Kondratieff is the most fragile,
-and the few apparent survivals on income-aggregate composites
-collapse under the per-variable safeguard---exactly the diagnosis of
-\citet{wen2005} on inventory cycles.
+\paragraph{Commitment of thresholds.}
+The cycle bands, surrogate counts, gate thresholds and aggregate
+groupings used here were committed to the project's public Git
+history before any panel was ingested. We do not claim this is a
+formal pre-registration in the sense of OSF or the AEA RCT
+Registry, and we make the distinction explicit in
+Appendix~\ref{app:criteria}. The values are nonetheless derived
+from the prior empirical literature, not from the data analysed
+here; we list each band's anchor references in
+Appendix~\ref{app:criteria}.
 
-The paper is deliberately short because its claim is narrow.
-Section~\ref{sec:data} documents the data and their provenance.
-Section~\ref{sec:methods} reviews the cycle-fitting arsenal.
+The paper is deliberately short. Section~\ref{sec:data} documents
+the data and their provenance. Section~\ref{sec:methods} reviews
+the cycle-fitting arsenal and the dual-null construction.
 Section~\ref{sec:criteria} formalises the three gates.
 Section~\ref{sec:results} reports the verdict.
-Section~\ref{sec:pointers} sketches an alternative empirical signature
-and points to a companion methodological paper.
-Section~\ref{sec:conclusion} concludes.
-
-Appendices~\ref{app:data}--\ref{app:per_variable} carry the technical
-detail needed to defend each pillar against a hostile reviewer:
-provenance with SHA-256 checksums, formulae and implementation pointers,
-the pre-registered acceptance criteria, and the per-variable evidence
-that demonstrates composite-aggregation artefacts.
-
-\paragraph{Thesis.}
-Our central claim is twofold. \emph{Empirically:} no canonical cycle
-survives a state-of-the-art pre-registered cascade on state-of-the-art
-data. \emph{Methodologically:} this is not a failure of the protocol---it
-is the quantitative confirmation, under a falsifiable design, of a
-sceptical empirical consensus that has been building since
-\citet{garvy1943}. Modelling of macroeconomic fluctuations should
-move beyond the cycle paradigm and adopt the alternative statistical
-signatures sketched in Section~\ref{sec:pointers}.
+Section~\ref{sec:pointers} sketches an alternative empirical
+signature that we develop in companion work.
+Section~\ref{sec:conclusion} concludes. Appendices~\ref{app:data}
+through~\ref{app:per_variable} carry the technical detail.

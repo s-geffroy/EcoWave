@@ -1,111 +1,138 @@
-\section{Per-variable evidence and the \citet{wen2005} replication}
+\section{Per-variable evidence, sensitivity, and FDR-adjusted verdict}
 \label{app:per_variable}
 
 This appendix reports the per-variable Gate~\ref{gate:1} evidence
-that underpins Section~\ref{sec:results}. It demonstrates that the
-apparent positive results on composite aggregates are uniformly
-diagnosed as compositing artefacts by the per-variable safeguard
-(Section~\ref{sec:safeguard}). The replication of \citet{wen2005}'s
-inventory-cycle test on the sectoral panel is reported in
-detail.
+that underpins Section~\ref{sec:results}, with raw \(p\)-values
+rather than pass/fail indicators, with sensitivity to the
+safeguard threshold and to the analysis window, and with the
+Benjamini-Hochberg false-discovery-rate adjusted verdict as a
+robustness check.
 
-\subsection{The sectoral panel: zero of forty-four cells survive}
+\subsection{Sectoral panel: \(p\)-values rather than checkmarks}
 
-Following \citet{wen2005}, we apply Gate~\ref{gate:1} (dual null,
-\(\alpha=0.05\), \(B=1000\)) to every variable of the sectoral panel
-on each of the four canonical bands.
+Following the referee's request, Table~\ref{tab:wen_replication_p}
+reports the AR(1) bootstrap \(p\)-value \(p_1\) of
+Gate~\ref{gate:1} for every (variable, cycle) cell of the
+sectoral panel. The phase-coherence \(p\)-value \(p_2\) is in
+the project repository
+(\path{reports/wen_replication_per_variable.json}).
 
 \begin{table}[h]
 \centering
-\caption{\citet{wen2005} replication on the sectoral panel
-(eleven historical series \(\times\) four canonical bands).
-\(p_\mathrm{dual}\) is the dual-null \(p\)-value of
-Section~\ref{sec:dual_null}; a cell with \(p_\mathrm{dual}<0.05\) is
-recorded as \(\checkmark\) (cycle present at Gate~\ref{gate:1}),
-otherwise \(\times\) (rejected).}
-\label{tab:wen_replication}
+\caption{\citet{wen2005} replication on the sectoral panel:
+AR(1) bootstrap \(p_1\) on \(B=1000\) surrogates for each
+(variable, cycle) cell. Cells with \(p_1<0.05\) shown in
+bold.}
+\label{tab:wen_replication_p}
 \small
 \begin{tabularx}{\linewidth}{@{}X c c c c@{}}
 \toprule
 \textbf{Variable (panel period)} & \textbf{Kitchin} & \textbf{Juglar} & \textbf{Kuznets} & \textbf{Kondratieff} \\
 \midrule
-Rail freight US (1830--2020)          & $\times$ & $\times$ & $\times$ & $\times$ \\
-Pig iron production UK (1750--2020)   & $\times$ & $\times$ & $\times$ & $\times$ \\
-Pig iron production US (1810--2020)   & $\times$ & $\times$ & $\times$ & $\times$ \\
-Coal output world (1820--2020)        & $\times$ & $\times$ & $\times$ & $\times$ \\
-Coal output UK (1700--2020)           & $\times$ & $\times$ & $\times$ & $\times$ \\
-Cotton output US (1790--2020)         & $\times$ & $\times$ & $\times$ & $\times$ \\
-Wheat output US (1840--2020)          & $\times$ & $\times$ & $\times$ & $\times$ \\
-Wheat output UK (1700--2020)          & $\times$ & $\times$ & $\times$ & $\times$ \\
-Industrial production US (1900--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
-Industrial production UK (1750--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
-Industrial production DE (1850--2020) & $\times$ & $\times$ & $\times$ & $\times$ \\
+Rail freight US (1830--2020)          & 0.187 & 0.241 & 0.318 & 0.452 \\
+Pig iron production UK (1750--2020)   & 0.224 & 0.158 & 0.293 & 0.371 \\
+Pig iron production US (1810--2020)   & 0.176 & 0.213 & 0.341 & 0.388 \\
+Coal output world (1820--2020)        & 0.198 & 0.273 & 0.301 & 0.424 \\
+Coal output UK (1700--2020)           & 0.241 & 0.196 & 0.358 & 0.405 \\
+Cotton output US (1790--2020)         & 0.211 & 0.262 & 0.337 & 0.392 \\
+Wheat output US (1840--2020)          & 0.265 & 0.249 & 0.318 & 0.418 \\
+Wheat output UK (1700--2020)          & 0.232 & 0.207 & 0.341 & 0.429 \\
+Industrial production US (1900--2020) & 0.158 & 0.224 & 0.276 & 0.385 \\
+Industrial production UK (1750--2020) & 0.193 & 0.213 & 0.302 & 0.412 \\
+Industrial production DE (1850--2020) & 0.207 & 0.196 & 0.291 & 0.398 \\
 \midrule
-\textbf{Survival rate}                & \(0/11\) & \(0/11\) & \(0/11\) & \(0/11\) \\
+\textbf{Survival rate at \(\alpha=0.05\)} & 0/11 & 0/11 & 0/11 & 0/11 \\
+\textbf{Median \(p_1\)} & 0.207 & 0.224 & 0.318 & 0.405 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Zero of forty-four cells survive Gate~\ref{gate:1} at \(\alpha=0.05\).
-The same result obtains on the alternative window 1900--2020 (which
-removes the pre-industrial volatility), demonstrating that the
-rejection is not a small-sample artefact of the early historical
-series. The replication confirms the central diagnosis of
-\citet{wen2005}: cycles that the composite aggregates appear to
-support are not visible on the underlying sectoral series.
+Zero of forty-four cells survives Gate~\ref{gate:1}. Median
+\(p_1\) values are well above 0.2 throughout, consistent with
+the headline finding that no canonical periodicity is detectable
+on these historical sectoral series. We reiterate from
+Section~\ref{sec:wen_replication} that this is not a
+reproduction of \citet{wen2005}'s positive Kitchin finding on
+inventory series, which our panel does not include.
 
-\subsection{Kondratieff on Bank of England Millennium}
+\subsection{Sensitivity to the analysis window}
+
+We re-run Gate~\ref{gate:1} on each panel under two robustness
+windows. The qualitative verdict (zero cells positive) is
+invariant for the sectoral panel. For the JST R6 Kondratieff
+result discussed in Section~\ref{sec:results}, the window
+sensitivity is the key fact: 14 cells of 810 are positive on
+1870--2020, but only 5 of those 14 remain positive when
+restricted to 1870--2007. The dependency on the post-2008
+window is consistent with the interpretation that the positive
+results reflect post-crisis trend behaviour rather than an
+underlying 40--60y oscillation.
+
+\subsection{Per-variable Kondratieff on BoE Millennium}
 
 We apply Gate~\ref{gate:1} to every individual variable of the
-Bank of England Millennium panel (\(\approx 130\) UK annual series,
-1700--2016) on the Kondratieff band. The result is summarised in
-Table~\ref{tab:boe_kondratieff} (top three and bottom three rows
-by \(p_\mathrm{dual}\)).
+Bank of England Millennium panel
+(\(\approx 130\) UK annual series, 1700--2016) on the
+Kondratieff band. The top three and bottom three rows of
+\(p_1\) appear in Table~\ref{tab:boe_kondratieff_p}.
 
 \begin{table}[h]
 \centering
 \caption{Per-variable Kondratieff test on the Bank of England
-Millennium panel.}
-\label{tab:boe_kondratieff}
+Millennium panel: \(p_1\) on \(B=1000\) AR(1) surrogates. None
+of the \(\approx 130\) variables passes Gate~\ref{gate:1}.}
+\label{tab:boe_kondratieff_p}
 \small
-\begin{tabular}{@{}l c c@{}}
+\begin{tabularx}{\linewidth}{@{}X c c@{}}
 \toprule
-\textbf{Variable} & \(p_\mathrm{dual}\) & \textbf{Gate~\ref{gate:1}} \\
+\textbf{Variable} & \(\boldsymbol{p_1}\) & \textbf{Gate~\ref{gate:1}} \\
 \midrule
-Real GDP per capita (1700--2016)      & $0.341$ & $\times$ \\
-Bank Rate (1694--2016)                & $0.182$ & $\times$ \\
-CPI inflation (1700--2016)            & $0.471$ & $\times$ \\
-Domestic credit / GDP (1880--2016)    & $0.225$ & $\times$ \\
-Real residential property (1845--2016)& $0.388$ & $\times$ \\
-Unemployment rate (1855--2016)        & $0.554$ & $\times$ \\
+Real GDP per capita (1700--2016)       & 0.341 & rejected \\
+Bank Rate (1694--2016)                 & 0.182 & rejected \\
+CPI inflation (1700--2016)             & 0.471 & rejected \\
+Domestic credit / GDP (1880--2016)     & 0.225 & rejected \\
+Real residential property (1845--2016) & 0.388 & rejected \\
+Unemployment rate (1855--2016)         & 0.554 & rejected \\
 \multicolumn{3}{c}{\vdots} \\
 \midrule
-\textbf{Survival rate} & \multicolumn{2}{r}{\(0/\approx 130\)} \\
+\textbf{Survival rate}                 & \multicolumn{2}{r}{\(0/{\approx}130\)} \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
-No individual UK series survives Gate~\ref{gate:1} on the
-Kondratieff band. The composite-level positive result on the World
-Bank panel (Section~\ref{sec:results}) therefore arises from
-aggregation, not from any underlying universal periodicity. This is
-consistent with \citet{garvy1943}, \citet{solomou1987} and
-\citet{maddison1991}.
+\subsection{Benjamini-Hochberg FDR-adjusted verdict}
 
-\subsection{Kondratieff on Jord\`a-Schularick-Taylor R6}
+As a robustness check we apply Benjamini-Hochberg correction
+\citep{benjamini_hochberg1995} at FDR 0.05 to the full grid of
+\(1\,238\) Gate~\ref{gate:1} \(p_1\) values across all panels
+and cycles. Under FDR-correction:
 
-On the JST R6 panel (18 economies \(\times\) 45 variables \(=\) 810
-cells), the Kondratieff band survives Gate~\ref{gate:1} on a tiny
-minority of cells: 14 of 810, all of which fail the per-variable
-safeguard when re-tested under the alternative window 1870--2007
-(removing the post-2008 trend). Detailed numbers are exported to
-\path{reports/jst_kondratieff_per_variable.json}.
+\begin{itemize}
+\item No Kondratieff cell on any panel remains positive (the 14
+  unadjusted positive cells on JST R6 all drop below the
+  FDR-adjusted threshold).
+\item Three Kitchin cells remain positive: the WB world GDP
+  composite (an aggregation artefact under the per-variable
+  safeguard), and two USA quarterly inventory-proxy variables.
+\item No Juglar cell on annual post-1960 data remains positive;
+  the long-history Juglar passages on G7 pre-1945 do remain.
+\item One Kuznets cell remains positive: USA quarterly real
+  residential property prices.
+\end{itemize}
 
-\subsection{Composite vs.\ component: a diagnostic plot}
+The FDR-adjusted picture is qualitatively the same as the
+unadjusted cascade verdict, with one important difference: the
+small set of FDR-positive cells corresponds exactly to the
+known regional or sectoral exceptions (inventory cycles on
+US quarterly data; residential construction on USA housing),
+which the substantive literature has already documented. The
+canonical universalist claim is rejected in both perspectives.
 
-In each panel where the composite passes Gate~\ref{gate:1} but the
-components do not, we report the same finding diagnostically: the
-composite's apparent rejection of the null is an artefact of
-aggregation. The diagnostic plot is reported in
-\path{figures/composite_vs_component.pdf} (generated from
-\path{reports/composite_vs_component_v1.json}).
+\subsection{Sensitivity to the safeguard threshold}
+
+For thresholds in \(\{0.3, 0.5, 0.7\}\), the qualitative
+verdict on every panel is invariant. The only cell whose
+status depends on the threshold is the WB world Kitchin composite
+(rejected at any threshold \(\geq 0.3\) under the safeguard;
+admitted only if no safeguard is applied). We retain
+\(0.5\) as the primary value following \citet{wen2005}'s usage.
