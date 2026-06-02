@@ -1,40 +1,67 @@
-# Public éclairé
+# Public
 
 !!! success "TL;DR"
 
-    *Vous n'avez pas besoin de connaître la statistique avancée.* Cette
-    track raconte en français accessible, avec analogies physiques, **pourquoi
-    les 4 cycles canoniques sont morts** et **par quoi la macroéconomie est
-    mieux décrite** : une cascade fractale, plutôt qu'une horloge. La preuve
-    opérationnelle : des modèles cascade **battent random walk sur 78 % de
-    68 variables macro réelles**.
+    Cette track propose **trois niveaux d'entrée** selon votre background et votre temps. Choisissez le vôtre : 5 minutes zéro-jargon (journaliste, lycéen, voisin curieux), 15 minutes niveau L1 éco (étudiant, cadre généraliste), ou public éclairé (4 pages + essai phare ~2 500 mots).
 
 ## Dans cette page
 
-- **[Pour qui c'est écrit](#pour-qui)** — journalistes, étudiants, curieux
-- **[Les 4 pages de la track](#les-4-pages)** — diagramme du parcours
+- **[Choisir votre niveau](#niveaux)** — 3 portes selon votre background
+- **[Pour le public éclairé : les 4 pages](#les-4-pages)** — diagramme du parcours
 - **[L'essai phare](#essai-phare)** — 2 500 mots prêts à être lus d'une vue
 
 ---
 
-## Pour qui { #pour-qui }
+## Choisir votre niveau { #niveaux }
 
 ```mermaid
-flowchart LR
-    You((Vous)) --> Q1{Journaliste<br/>économique ?}
-    You --> Q2{Étudiant<br/>en éco ?}
-    You --> Q3{Lecteur curieux ?}
-    Q1 --> P[Cette track est<br/>écrite pour vous]
-    Q2 --> P
-    Q3 --> P
-    style P fill:#a5d6a7,stroke:#388e3c,stroke-width:3px
+flowchart TD
+    You((Vous)) --> Q1{Combien de temps ?<br/>Quel background ?}
+    Q1 -->|5 min · zéro éco| P1[<b>Expliqué en 5 min</b><br/>métaphores du quotidien<br/>aucun jargon]
+    Q1 -->|15 min · L1 éco| P2[<b>Expliqué en 15 min</b><br/>vocabulaire éco de base<br/>les 5 propriétés détaillées]
+    Q1 -->|30+ min · public éclairé| P3[<b>Track éclairé</b><br/>4 pages + essai phare<br/>~6 500 mots]
+    style P1 fill:#fff59d,stroke:#f9a825,stroke-width:3px
+    style P2 fill:#90caf9,stroke:#1565c0,stroke-width:3px
+    style P3 fill:#a5d6a7,stroke:#388e3c,stroke-width:3px
 ```
+
+<div class="grid cards" markdown>
+
+-   :material-clock-fast:{ .lg .middle } **[Expliqué en 5 minutes](explain_5min.md)**
+
+    ---
+
+    *Pour un journaliste, un lycéen, un voisin curieux.* Zéro background en économie nécessaire. Métaphores du quotidien (rivière, météo, vagues). Aucun jargon.
+
+    **Lecture** : ~5 min · ~600 mots
+
+-   :material-clock-outline:{ .lg .middle } **[Expliqué en 15 minutes](explain_15min.md)**
+
+    ---
+
+    *Pour un étudiant L1 éco ou un cadre généraliste.* Vous connaissez inflation, PIB, banque centrale. On rentre dans les 5 propriétés et les 3 implications concrètes.
+
+    **Lecture** : ~15 min · ~1 200 mots
+
+-   :material-book-open-variant:{ .lg .middle } **Public éclairé** (4 pages ci-dessous)
+
+    ---
+
+    *Pour le lecteur de presse économique, le curieux exigeant.* Le récit complet en 4 étapes, avec analogies physiques et chiffres-clés. Pas de jargon non-expliqué.
+
+    **Lecture** : ~30-50 min · ~6 500 mots
+
+</div>
+
+---
+
+## Pour le public éclairé { #les-4-pages }
 
 Si vous avez déjà lu un ou deux articles sur "les cycles économiques", vous avez ce qu'il faut. Pas de jargon non-expliqué. Pas de formule sans interprétation.
 
 ---
 
-## Les 4 pages { #les-4-pages }
+### Les 4 pages du parcours { #parcours }
 
 ```mermaid
 flowchart LR

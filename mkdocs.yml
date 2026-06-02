@@ -76,6 +76,10 @@ nav:
   - Accueil: index.md
   - Comment naviguer: how_to_navigate.md
   - Glossaire: glossary.md
+  - API (contrat REST):
+      - Vue d'ensemble: api/index.md
+      - Implémentation serveur: api/server.md
+      - Utilisation client: api/client.md
   - Pour qui ?:
       - Académique:
           - tracks/acad/index.md
@@ -101,8 +105,10 @@ nav:
           - Extensions roadmap: tracks/quants/extensions_roadmap.md
           - Failure modes (22 % d'échecs): tracks/quants/failure_modes.md
           - "Note phare (~5 000 mots)": tracks/quants/note_quants.md
-      - Public éclairé:
+      - Public:
           - tracks/public/index.md
+          - "Expliqué en 5 minutes (zéro jargon)": tracks/public/explain_5min.md
+          - "Expliqué en 15 minutes (niveau L1 éco)": tracks/public/explain_15min.md
           - Le cycle est mort: tracks/public/the_cycle_is_dead.md
           - Ce qui le remplace: tracks/public/what_replaces_it.md
           - Pourquoi ça compte: tracks/public/why_it_matters.md

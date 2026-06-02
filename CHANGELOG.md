@@ -5,6 +5,69 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### Pages "langage de tous les jours" + spec API contract-first ✅
+
+Deux ajouts indépendants :
+
+**Pages lay (track Public)** — Le track public visait jusqu'ici le
+*public éclairé* (jargon contrôlé mais présent : cluster, multifractalité,
+régime). Deux paliers en amont sont ajoutés :
+
+- **`docs/tracks/public/explain_5min.md`** — ~600 mots, zéro jargon, pour
+  journaliste / lycéen / voisin curieux. Métaphores du quotidien
+  (rivière turbulente, vagues, fleuve vs étang). Une figure Mermaid
+  "ancien monde / nouveau monde".
+- **`docs/tracks/public/explain_15min.md`** — ~1 200 mots, niveau L1 éco
+  / cadre généraliste. Les 5 propriétés expliquées en une phrase
+  chacune, 3 implications concrètes.
+- **`docs/tracks/public/index.md`** — devient un sélecteur 3 portes
+  (5 min / 15 min / éclairé) avec cartes Material.
+
+**API contract-first (nouvelle section)** — Le module Python
+`ecowave.forecasting` avait une doc humaine (`tracks/quants/code_api.md`)
+mais pas de **spec formelle**. Ajout d'un contrat REST OpenAPI 3.1
+indépendant de l'implémentation :
+
+- **`docs/api/openapi.yaml`** — source de vérité unique. 6 endpoints
+  (`POST /v1/forecast`, `POST /v1/benchmark`, `GET /v1/verdict`,
+  `GET /v1/panels`, `GET /v1/panels/{panel}/variables`,
+  `GET /v1/diagnostics/{panel}/{variable}`). Schemas miroirs des
+  dataclasses Python (`ProbabilisticForecast`, `BenchmarkRequest`,
+  `BenchmarkReport`, `Verdict`, `DiagnosticBundle`). Erreurs au format
+  RFC 7807 Problem Details.
+- **`docs/api/index.md`** — vue d'ensemble humaine : pourquoi
+  contract-first, comment lire `openapi.yaml`, outils (Swagger UI,
+  Spectral, openapi-generator).
+- **`docs/api/server.md`** — guide d'implémentation serveur (référence
+  FastAPI) avec mapping endpoint ↔ fonction Python existante dans
+  `ecowave.forecasting`. Snippets minimaux pour chaque endpoint.
+- **`docs/api/client.md`** — guide client : exemples `curl`,
+  Python `httpx`, JS `fetch` pour chaque endpoint. Génération
+  automatique de clients via `openapi-generator-cli`.
+
+**Décisions structurantes** :
+
+- Spec **indépendante** de l'implémentation : pas générée depuis
+  FastAPI. Quand un serveur sera livré, il devra s'y conformer.
+- `tracks/quants/code_api.md` reste la doc du **module Python
+  in-process** (import direct). La nouvelle section décrit le
+  **contrat REST externe**. Les deux coexistent ; un encart en haut
+  de `code_api.md` renvoie vers la spec REST.
+- Pas d'auth en V1 (lecture publique + POST techniques limités).
+  Si auth requise plus tard : `bearer` JWT dans `securitySchemes`.
+
+**Navigation `mkdocs.yml`** — nouvelle section *"API (contrat REST)"*
+juste après *"Glossaire"*. Track Public renommé (de *"Public éclairé"*
+à *"Public"*) et enrichi des 2 nouvelles pages lay.
+
+**Accueil (`docs/index.md`)** — pointeur vers les 2 pages lay
+("Vous découvrez ? Expliqué en 5 / 15 minutes") et carte Public mise
+à jour.
+
+**Vérification** : `mkdocs build --strict` passe. Aucun code Python
+modifié → 229 tests existants intacts. `spectral lint openapi.yaml`
+attendu sans erreur (validation à la première PR).
+
 ### Roadmap #22 Phase 6 — Hub crossover + live verdict ✅ — Chantier #22 LIVRÉ
 
 Sixième et dernier incrément du chantier de refonte. Le hub multi-track

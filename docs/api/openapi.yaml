@@ -1,0 +1,627 @@
+openapi: 3.1.0
+info:
+  title: EcoWave CPV API
+  version: 1.0.0
+  summary: REST contract for the Cycle Position Vector forecast and diagnostics service.
+  description: |
+    Contract-first specification of the EcoWave (CPV — Cycle Position Vector)
+    REST API. This document is the single source of truth: a server can be
+    implemented from it, and a client can consume it, without reference to
+    any other artefact. The contract is independent of the reference
+    implementation (currently the in-process Python module
+    `ecowave.forecasting`). A conformant server may be written in any
+    language, provided it honours the schemas and status codes below.
+
+    ## Scope (V1)
+
+    Six endpoints covering probabilistic forecasting, benchmarking,
+    consolidated verdict pull, panel discovery, and the 14 non-cyclic
+    diagnostics (cluster C+B+D+I+S).
+
+    ## Out of scope (V1)
+
+    Authentication, rate limiting, web-socket streaming, mutation of
+    underlying datasets. A V2 may add a `securitySchemes` section
+    (bearer JWT) once the service is hosted.
+  contact:
+    name: EcoWave maintainers
+    url: https://github.com/s-geffroy/EcoWave
+  license:
+    name: MIT
+    identifier: MIT
+
+servers:
+  - url: https://api.ecowave.example.org/v1
+    description: Reference URL — not yet provisioned.
+  - url: http://localhost:8000/v1
+    description: Local FastAPI server (see api/server.md).
+
+tags:
+  - name: forecast
+    description: Probabilistic forecast for one series.
+  - name: benchmark
+    description: Rolling-origin benchmark across models and variables.
+  - name: verdict
+    description: Consolidated live verdict (last benchmark run).
+  - name: catalog
+    description: Panel and variable discovery.
+  - name: diagnostics
+    description: 14 non-cyclic diagnostics (C+B+D+I+S families).
+
+paths:
+  /forecast:
+    post:
+      tags: [forecast]
+      operationId: forecast
+      summary: Produce a probabilistic forecast for a single series.
+      description: |
+        Fit the requested model on the provided historical series and
+        return a sample-based probabilistic forecast for the requested
+        horizons.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForecastRequest'
+            examples:
+              minimal:
+                summary: Random-walk forecast at h=12, 1000 samples
+                value:
+                  model: rw
+                  series: [100.0, 100.2, 99.8, 100.5, 101.1, 100.7, 100.3, 100.9, 101.4, 101.0, 100.6, 101.2, 101.8, 101.5, 102.0, 101.7, 102.3, 102.6, 102.1, 101.9, 102.4, 102.8, 103.1, 102.7, 102.5, 103.0, 103.4, 103.2, 102.9, 103.5, 103.8, 104.0]
+                  horizons: [1, 6, 12]
+                  n_samples: 1000
+              msm_long:
+                summary: MSM forecast on a longer history
+                value:
+                  model: msm
+                  series: [1.0, 1.02, 0.98, 1.05, 1.01, 0.99, 1.03, 0.97, 1.04, 1.02, 1.00, 1.06, 0.95, 1.03, 1.08, 0.99, 1.01, 1.04, 1.00, 1.07, 0.96, 1.05, 1.02, 0.98, 1.09, 1.03, 0.97, 1.04, 1.06, 1.00, 1.08, 0.94]
+                  horizons: [1, 3, 6, 12]
+                  n_samples: 2000
+                  seed: 42
+                  msm_components: 4
+      responses:
+        '200':
+          description: Forecast produced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProbabilisticForecast'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '503':
+          $ref: '#/components/responses/ModelUnavailable'
+
+  /benchmark:
+    post:
+      tags: [benchmark]
+      operationId: benchmark
+      summary: Run a rolling-origin benchmark on a known panel.
+      description: |
+        Execute the benchmark pipeline on a named panel (loaded by the
+        server) with the requested models and rolling-origin
+        configuration. Returns the per-cell CRPS, the acceptance
+        verdict at the decision horizon, and the failed evaluations.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BenchmarkRequest'
+            examples:
+              wb_default:
+                summary: Default config on the World Bank panel
+                value:
+                  panel: wb
+                  models: [rw, ar1, arma11, har, arfima_rs, msm]
+                  horizons: [1, 3, 6, 12]
+                  n_origins: 8
+                  n_samples: 1000
+                  beat_threshold: 0.50
+                  decision_horizon: 12
+      responses:
+        '200':
+          description: Benchmark completed; verdict available.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BenchmarkReport'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/PanelNotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '500':
+          $ref: '#/components/responses/FitError'
+
+  /verdict:
+    get:
+      tags: [verdict]
+      operationId: getVerdict
+      summary: Consolidated live verdict from the last benchmark run.
+      description: |
+        Returns the consolidated verdict aggregated across panels. The
+        server reads the most recent persisted sidecar
+        (`reports/forecast_benchmark_*.json` in the reference
+        implementation) and serialises it according to the `Verdict`
+        schema. Read-only; cacheable for short TTL.
+      parameters:
+        - name: as_of
+          in: query
+          required: false
+          schema: { type: string, format: date }
+          description: |
+            Optional `YYYY-MM` cutoff. If omitted, the latest available
+            verdict is returned.
+      responses:
+        '200':
+          description: Verdict found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Verdict'
+        '404':
+          description: No verdict available for the given cutoff.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  /panels:
+    get:
+      tags: [catalog]
+      operationId: listPanels
+      summary: List the six known panels.
+      description: |
+        Returns the catalog of panels available on the server. Read-only;
+        cacheable. The six panels are loaded statically at server boot
+        from the manifest files shipped with the reference data.
+      responses:
+        '200':
+          description: List of panels.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/PanelInfo' }
+
+  /panels/{panel}/variables:
+    get:
+      tags: [catalog]
+      operationId: listPanelVariables
+      summary: List variables available in a panel.
+      description: |
+        Returns the variables present in the requested panel, with
+        their labels, units, source identifier, and observation count.
+      parameters:
+        - $ref: '#/components/parameters/PanelCode'
+      responses:
+        '200':
+          description: List of variables.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/VariableInfo' }
+        '404':
+          $ref: '#/components/responses/PanelNotFound'
+
+  /diagnostics/{panel}/{variable}:
+    get:
+      tags: [diagnostics]
+      operationId: getDiagnostics
+      summary: 14 non-cyclic diagnostics (cluster C+B+D+I+S) for one cell.
+      description: |
+        Returns the Tier 1+2 diagnostic bundle (long memory `d` via GPH,
+        multifractal width `Δα`, BDS non-linearity, entropies,
+        Kolmogorov-Smirnov sliding regime drift, etc.) for the requested
+        panel × variable cell.
+      parameters:
+        - $ref: '#/components/parameters/PanelCode'
+        - $ref: '#/components/parameters/VariableCode'
+      responses:
+        '200':
+          description: Diagnostic bundle for this cell.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DiagnosticBundle' }
+        '404':
+          description: Cell not found.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+components:
+
+  parameters:
+    PanelCode:
+      name: panel
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/PanelCode' }
+      description: Short panel code (`wb`, `q`, `long`, `boe`, `bis`, `sh`).
+    VariableCode:
+      name: variable
+      in: path
+      required: true
+      schema: { type: string, minLength: 1, maxLength: 128 }
+      description: Variable identifier within the panel.
+
+  responses:
+    BadRequest:
+      description: Payload malformed.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    ValidationError:
+      description: Payload syntactically valid but semantically invalid.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    PanelNotFound:
+      description: Unknown panel code.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    FitError:
+      description: A model failed to fit on the provided series.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    ModelUnavailable:
+      description: Requested model not available on this server.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+
+  schemas:
+
+    ModelName:
+      type: string
+      description: Identifier of a supported forecast model.
+      enum: [rw, ar1, arma11, har, arfima_rs, msm]
+
+    PanelCode:
+      type: string
+      description: |
+        Short code for one of the six panels:
+        `wb` (World Bank 1960-2024), `q` (quarterly 1995-2024),
+        `long` (Maddison + JST 1870-2024), `boe` (Bank of England
+        Millennium 1700-2016), `bis` (BIS macroprudential 1970-2024),
+        `sh` (sectoral history FRED+OWID+BEIS).
+      enum: [wb, q, long, boe, bis, sh]
+
+    ForecastRequest:
+      type: object
+      required: [model, series, horizons]
+      properties:
+        model: { $ref: '#/components/schemas/ModelName' }
+        series:
+          type: array
+          minItems: 32
+          items: { type: number }
+          description: |
+            1-D historical observations sampled at a regular cadence.
+            Minimum length 32 (HAR identification floor).
+        horizons:
+          type: array
+          minItems: 1
+          maxItems: 24
+          items: { type: integer, minimum: 1 }
+          description: Horizons (in cadence steps) at which to forecast.
+        n_samples:
+          type: integer
+          minimum: 100
+          maximum: 10000
+          default: 1000
+          description: Number of Monte Carlo paths to draw.
+        seed:
+          type: integer
+          minimum: 0
+          default: 0
+          description: Deterministic seed for reproducibility.
+        msm_components:
+          type: integer
+          minimum: 1
+          maximum: 8
+          default: 4
+          description: Number of multifractal components (MSM only).
+        series_length_hint:
+          type: integer
+          minimum: 32
+          description: |
+            Optional hint to the server about the original series
+            length, when the series is truncated for payload size.
+
+    ProbabilisticForecast:
+      type: object
+      description: |
+        Sample-based probabilistic forecast. Mirrors the
+        `ecowave.forecasting.types.ProbabilisticForecast` dataclass:
+        `horizons` are the forecast lead times (in cadence steps),
+        `samples[i][h]` is the level (not the increment) at
+        `horizons[h]` for path `i`.
+      required: [horizons, samples, model_name]
+      properties:
+        horizons:
+          type: array
+          items: { type: integer, minimum: 1 }
+        samples:
+          type: array
+          description: |
+            Shape `(n_samples, H)`. Each row is one Monte Carlo path
+            of the predictive distribution, evaluated at each horizon.
+          items:
+            type: array
+            items: { type: number }
+        model_name: { $ref: '#/components/schemas/ModelName' }
+        metadata:
+          type: object
+          additionalProperties: true
+          description: |
+            Model-specific fit metadata. Examples:
+            RW → `{sigma_increment, last_level}`;
+            AR(1) → `{intercept, phi, sigma_residual}`;
+            ARMA(1,1) → `{converged}`;
+            HAR → `{daily_lag, weekly_lag, monthly_lag, sigma_residual}`;
+            ARFIMA+RS → `{d_estimate, n_regimes, phi_per_regime}`;
+            MSM → `{n_components, m0, sigma, lambda_var, gamma_kbar}`.
+
+    BenchmarkRequest:
+      type: object
+      required: [panel]
+      properties:
+        panel: { $ref: '#/components/schemas/PanelCode' }
+        models:
+          type: array
+          items: { $ref: '#/components/schemas/ModelName' }
+          default: [rw, ar1, arma11, har, arfima_rs, msm]
+          description: Subset of models to benchmark.
+        horizons:
+          type: array
+          items: { type: integer, minimum: 1 }
+          default: [1, 3, 6, 12]
+        n_origins:
+          type: integer
+          minimum: 1
+          maximum: 64
+          default: 8
+          description: Number of rolling origins.
+        n_samples:
+          type: integer
+          minimum: 100
+          maximum: 10000
+          default: 1000
+        test_fraction:
+          type: number
+          minimum: 0.05
+          maximum: 0.5
+          default: 0.25
+          description: Terminal hold-out fraction.
+        seed:
+          type: integer
+          minimum: 0
+          default: 0
+        beat_threshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          default: 0.50
+          description: |
+            Pass-rate threshold for the acceptance verdict. The verdict
+            passes if `pass_rate >= beat_threshold`.
+        decision_horizon:
+          type: integer
+          minimum: 1
+          default: 12
+          description: Horizon at which the verdict is evaluated.
+        min_train_length:
+          type: integer
+          minimum: 32
+          default: 64
+
+    ScoreRow:
+      type: object
+      description: One scored forecast at one origin × model × horizon.
+      required: [group, variable, model, horizon, origin_index, observation, crps, rmse, mae, coverage_95, tail_left_5pct, tail_right_5pct, bias]
+      properties:
+        group: { type: string }
+        variable: { type: string }
+        model: { $ref: '#/components/schemas/ModelName' }
+        horizon: { type: integer, minimum: 1 }
+        origin_index: { type: integer, minimum: 0 }
+        observation: { type: number }
+        crps: { type: number, minimum: 0 }
+        rmse: { type: number, minimum: 0 }
+        mae: { type: number, minimum: 0 }
+        coverage_95: { type: number, enum: [0, 1] }
+        tail_left_5pct: { type: number, enum: [0, 1] }
+        tail_right_5pct: { type: number, enum: [0, 1] }
+        bias: { type: number }
+
+    AcceptanceVerdict:
+      type: object
+      description: |
+        Pass/fail decision at the decision horizon. Mirrors
+        `ecowave.forecasting.benchmark.AcceptanceVerdict`.
+      required: [decision_horizon, beat_threshold, n_variables_total, n_variables_with_baseline, pass_rate, passes]
+      properties:
+        decision_horizon: { type: integer, minimum: 1 }
+        beat_threshold: { type: number }
+        n_variables_total: { type: integer, minimum: 0 }
+        n_variables_with_baseline: { type: integer, minimum: 0 }
+        best_cluster_model_per_variable:
+          type: object
+          additionalProperties: { $ref: '#/components/schemas/ModelName' }
+        cluster_beats_baseline_per_variable:
+          type: object
+          additionalProperties: { type: boolean }
+        pass_rate:
+          type: number
+          minimum: 0
+          maximum: 1
+        passes: { type: boolean }
+
+    BenchmarkReport:
+      type: object
+      required: [panel, as_of, config, score_rows, verdict]
+      properties:
+        panel: { $ref: '#/components/schemas/PanelCode' }
+        as_of:
+          type: string
+          format: date
+          description: Cutoff month of the benchmark (`YYYY-MM-DD`).
+        config:
+          $ref: '#/components/schemas/BenchmarkRequest'
+        score_rows:
+          type: array
+          items: { $ref: '#/components/schemas/ScoreRow' }
+        verdict: { $ref: '#/components/schemas/AcceptanceVerdict' }
+        failed_evaluations:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+
+    LeaderboardEntry:
+      type: object
+      required: [model, wins, share]
+      properties:
+        model: { $ref: '#/components/schemas/ModelName' }
+        wins: { type: integer, minimum: 0 }
+        share:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    Verdict:
+      type: object
+      description: |
+        Consolidated cross-panel verdict, produced by the reference
+        implementation's `consolidated_report.py`. Mirrors the JSON
+        shape of `reports/forecast_benchmark_*.json`.
+      required: [as_of, beat_threshold, decision_horizon, n_variables_total, n_variables_pass, pass_rate, leaderboard]
+      properties:
+        as_of:
+          type: string
+          format: date
+        beat_threshold: { type: number }
+        decision_horizon: { type: integer, minimum: 1 }
+        n_variables_total: { type: integer, minimum: 0 }
+        n_variables_pass: { type: integer, minimum: 0 }
+        pass_rate:
+          type: number
+          minimum: 0
+          maximum: 1
+        passes: { type: boolean }
+        leaderboard:
+          type: array
+          items: { $ref: '#/components/schemas/LeaderboardEntry' }
+        per_panel:
+          type: array
+          items:
+            type: object
+            required: [panel, pass_rate]
+            properties:
+              panel: { $ref: '#/components/schemas/PanelCode' }
+              pass_rate: { type: number }
+              n_variables: { type: integer, minimum: 0 }
+
+    PanelInfo:
+      type: object
+      required: [panel, label, frequency, start_year, end_year, n_variables]
+      properties:
+        panel: { $ref: '#/components/schemas/PanelCode' }
+        label: { type: string }
+        frequency:
+          type: string
+          enum: [annual, quarterly, monthly]
+        start_year: { type: integer }
+        end_year: { type: integer }
+        n_variables: { type: integer, minimum: 0 }
+        license: { type: string }
+        manifest_url:
+          type: string
+          format: uri
+
+    VariableInfo:
+      type: object
+      required: [panel, variable, label]
+      properties:
+        panel: { $ref: '#/components/schemas/PanelCode' }
+        variable: { type: string }
+        label: { type: string }
+        units: { type: string }
+        source_id: { type: string }
+        n_observations: { type: integer, minimum: 0 }
+
+    DiagnosticBundle:
+      type: object
+      description: |
+        14 Tier 1+2 non-cyclic diagnostics (cluster C+B+D+I+S).
+        Each value is the test statistic; the `*_p` companion is the
+        p-value when applicable.
+      required: [panel, variable, family_c, family_b, family_d, family_i, family_s]
+      properties:
+        panel: { $ref: '#/components/schemas/PanelCode' }
+        variable: { type: string }
+        family_c:
+          type: object
+          description: Long memory (C). GPH `d` and Hurst.
+          properties:
+            d_gph: { type: number }
+            d_gph_p: { type: number }
+            hurst: { type: number }
+        family_b:
+          type: object
+          description: Multifractality (B). MF-DFA width.
+          properties:
+            delta_alpha: { type: number }
+            delta_alpha_p: { type: number }
+        family_d:
+          type: object
+          description: Non-linearity (D). BDS test.
+          properties:
+            bds: { type: number }
+            bds_p: { type: number }
+        family_i:
+          type: object
+          description: Structured information (I). Entropies.
+          properties:
+            permutation_entropy: { type: number }
+            sample_entropy: { type: number }
+        family_s:
+          type: object
+          description: Reflexive regime drift (S). KS sliding window.
+          properties:
+            ks_breaks: { type: integer, minimum: 0 }
+            ks_mean_pvalue: { type: number }
+
+    ErrorResponse:
+      type: object
+      description: |
+        RFC 7807 Problem Details. Returned by all error responses with
+        `Content-Type: application/problem+json`.
+      required: [type, title, status]
+      properties:
+        type:
+          type: string
+          format: uri
+          default: 'about:blank'
+        title:
+          type: string
+          description: Short, human-readable summary of the problem.
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        detail:
+          type: string
+          description: Human-readable explanation specific to this occurrence.
+        instance:
+          type: string
+          format: uri
+          description: URI reference identifying the specific occurrence.

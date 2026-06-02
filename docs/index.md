@@ -137,10 +137,14 @@ flowchart LR
 
 ## Choisir son point d'entrée
 
+!!! tip "Vous découvrez ?"
+
+    **[Expliqué en 5 minutes](tracks/public/explain_5min.md)** — zéro jargon, métaphores du quotidien (rivière, vagues). Pour journaliste, lycéen, voisin curieux. · **[Expliqué en 15 minutes](tracks/public/explain_15min.md)** — niveau L1 éco, les 5 propriétés et 3 implications concrètes.
+
 ```mermaid
 flowchart TD
     Hub((Hub CPV))
-    Hub --> Pub[📖 <b>Public éclairé</b><br/>Journalistes, étudiants, curieux<br/>~6 500 mots accessibles]
+    Hub --> Pub[📖 <b>Public</b><br/>5 min · 15 min · éclairé<br/>3 niveaux d'entrée]
     Hub --> BC[🏦 <b>Banque centrale</b><br/>Praticiens BC, régulateurs<br/>4 outils opérationnels]
     Hub --> Quants[💻 <b>Quants</b><br/>Data scientists, prévisionnistes<br/>Code, API, benchmark]
     Hub --> Acad[🎓 <b>Académique</b><br/>Économistes, DSGE community<br/>Paper V2 + théorie]
@@ -149,11 +153,11 @@ flowchart TD
 
 <div class="grid cards" markdown>
 
--   :material-book-open-variant:{ .lg .middle } **[Public éclairé](tracks/public/index.md)**
+-   :material-book-open-variant:{ .lg .middle } **[Public](tracks/public/index.md)**
 
     ---
 
-    *Pour journalistes, lecteurs de presse économique, étudiants, curieux.*
+    *3 niveaux d'entrée : journaliste/lycéen (5 min), étudiant L1 (15 min), public éclairé (essai ~2 500 mots).*
 
     Le cycle est mort, voici ce qui le remplace. Sans jargon, avec analogies physiques.
 

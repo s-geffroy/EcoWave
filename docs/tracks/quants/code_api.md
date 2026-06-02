@@ -1,5 +1,9 @@
 # API publique `ecowave.forecasting`
 
+!!! info "Module Python in-process vs contrat REST"
+
+    Cette page documente le **module Python `ecowave.forecasting`** importable directement dans un notebook ou un script. Pour le **contrat REST externe** (service HTTP avec spec OpenAPI 3.1 formelle, implémentable serveur + requêtable client), voir **[API (contrat REST)](../../api/index.md)**.
+
 !!! success "TL;DR"
 
     Module Python conteneurisé Docker, sous licence MIT. **`ProbabilisticForecast`** est le format pivot — tous les modèles le retournent. Pipeline composable : 6 modèles individuels → benchmark rolling-origin → scoring propre → sidecar JSON → consolidation cross-panel.
