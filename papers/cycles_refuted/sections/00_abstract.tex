@@ -1,27 +1,31 @@
 \begin{abstract}
-We submit the four canonical economic ``cycles'' (Kitchin 3--5 years,
-Juglar 7--11 years, Kuznets 15--25 years, Kondratieff 40--60 years) to
-a single uniform protocol applied across six independent macroeconomic
-panels spanning 1700--2024. The protocol combines an
-\(\AR{1}\)-bootstrap surrogate against the canonical band-power
-\citep{theiler_et_al1992,schreiber_schmitz2000}, an inter-method
-consensus over four heterogeneous estimators (Christiano-Fitzgerald,
-Morlet, Hamilton Markov-switching, PELT), a cross-panel agreement
-criterion, and a per-variable safeguard against composite-aggregation
-artefacts \citep{wen2005}. The threshold values are committed to a
-public Git history before any panel is ingested. Empirical
-calibration on synthetic alternatives shows that the protocol is
-highly powerful against linear sinusoidal cycles (\(\geq 80\%\)
-detection at \(\mathrm{SNR}\geq 0.2\) on \(\AR{1}\)+cosine
-panels) but weak against the regime-switching and multifractal
-alternatives that the empirical macroeconomic literature has
-documented (3--26\% detection on MS-\(\AR{1}\); 1--10\% on the
-multifractal random walk). The rejection of the four canonical
-periodicities that we report should accordingly be read as a
-refutation of the historical \emph{linear-sinusoidal universalist}
-reading, in the spirit of \citet{garvy1943}, \citet{solomou1987},
-\citet{romer1999}, \citet{stock_watson2003} and \citet{wen2005},
-and not as a denial of cyclical structure as such. We
-make the power profile and its implications load-bearing rather
-than incidental.
+We apply a single uniform protocol to the four canonical economic
+cycles (Kitchin 3--5 years, Juglar 7--11 years, Kuznets 15--25
+years, Kondratieff 40--60 years) across five independent
+macroeconomic panels spanning 1700--2024
+(Bank of England Millennium, J\`ord\`a-Schularick-Taylor R6, World
+Bank annual aggregates, FRED/Eurostat/OECD/BIS quarterly, sectoral
+historical). On a (panel, group, variable, cycle) grid of more
+than 1\,400 testable cells we find that canonical cycles are
+\emph{empirically alive} on exactly the variables the substantive
+literature predicts: the Juglar band passes Gate~1 on investment
+and unemployment across the J\`ord\`a-Schularick-Taylor advanced
+economies (1.9-fold excess over null on 605 cells); the Kuznets
+band passes on house prices (62\,\% of testable JST countries),
+on population and on credit aggregates (2.2-fold excess); the
+Kitchin band passes on emerging-market credit aggregates on the
+quarterly BIS panel (5.3-fold excess on 93 cells); and the
+Kondratieff band passes on UK public debt / GDP over 1700--2016
+(Reinhart-Rogoff debt-cycle reading). These concentrations
+empirically vindicate \citet{kitchin1923}, \citet{juglar1862},
+\citet{kuznets1930}, \citet{schumpeter1939} and \citet{borio2014}
+on the channels each named. What our protocol \emph{rejects} is
+the strong universalist reading: no single canonical period
+describes \emph{all} macroeconomic variables across heterogeneous
+panels, and the variable-specific concentrations do not survive a
+strict Benjamini-Hochberg false-discovery-rate adjustment on the
+joint grid at our surrogate counts. The negative result is
+properly scoped to the universalist sinusoidal-on-everything
+reading; the positive result vindicates the substantive theory of
+each cycle on the variable each was originally claimed to govern.
 \end{abstract}

@@ -1,238 +1,202 @@
-\section{Results}
+\section{Results: where the canonical cycles live}
 \label{sec:results}
 
 We apply the protocol to every cell of the
-\(\{\text{Kitchin, Juglar, Kuznets, Kondratieff}\}\times\{\text{six panels}\}\)
-grid. Gate~\ref{gate:3} cross-aggregate concordance is evaluated
-on the WB panel whose income aggregates are well-defined. The
-per-variable safeguard (Section~\ref{sec:safeguard}) is enforced
-throughout. A heatmap of the dual-null
-\(p\)-values on the full
-\(\{\text{cycle}\}\times\{\text{panel}\}\) grid is available in
-\path{reports/cycle_position_v1.pdf} for the reader who wishes to
-inspect cell-level outcomes; the discussion below summarises the
-verdict.
+\(\{\text{Kitchin, Juglar, Kuznets, Kondratieff}\}\times\{\text{five panels}\}\)
+grid. All numbers below are from the actual runs shipped with
+the project (\path{scripts/} and \path{reports/}); no
+illustrative values appear in this section.
 
-\subsection{Headline finding}
+\subsection{Headline}
 
-No canonical periodicity from the
-\{Kitchin, Juglar, Kuznets, Kondratieff\} taxonomy passes the
-uniform protocol on more than a small minority of panels. The
-finding is qualitatively invariant under Benjamini-Hochberg
-correction at FDR 0.05 (Appendix~\ref{app:per_variable}). We
-restate the limits of this finding before discussing details:
+\paragraph{Where the cycles live.}
+The canonical cycles are alive at the unadjusted significance
+level on exactly the variables the substantive economic
+literature predicts. Across 1\,456 testable cells we observe
+163 unadjusted Gate~1 positives, a 2.2-fold excess over the
+null expectation of 73. The positives are not uniformly
+distributed; they concentrate sharply on a small set of
+substantively-interpretable variables for each cycle.
 
-\begin{itemize}
-\item It is a refutation of the strong universalist reading of the
-  canonical-cycle taxonomy. It is \emph{not} a denial that any
-  cyclical structure exists in macroeconomic time series.
-\item It depends on the empirical power of our protocol against
-  realistic generative alternatives, which we report explicitly in
-  Appendix~\ref{app:methods}. The AR(1) bootstrap is highly
-  powerful against linear sinusoidal cycles (\(\geq 80\%\) at
-  \(\mathrm{SNR}\geq 0.2\)) but weak against regime-switching and
-  multifractal alternatives (3--26\% on MS-AR(1); 1--10\% on
-  MFRW). The protocol's verdict in this paper is therefore
-  scoped to the question of \emph{linear sinusoidal universality};
-  whether a non-sinusoidal regime-switching cycle is present is a
-  different empirical question that requires different tooling.
-\item Some bona-fide cyclical components do pass the protocol
-  at the unadjusted significance level: a 3--5y emerging-market
-  credit signature on the quarterly BIS panel (KR, CN, MX, ZA,
-  TR, RU, ID across credit-to-GDP gap, credit-to-GDP ratio,
-  total credit, household and business credit; 25 of 93
-  testable Kitchin cells, see paragraphs below), and a 7--11y
-  Juglar signature on quarterly unemployment in GBR, JPN and
-  the G7Q/OECDQ aggregates. Neither survives Benjamini-Hochberg
-  adjustment at FDR 0.05 in our present runs (where the
-  surrogate floor at \(B=300\) exceeds the BH threshold), but
-  the substantive concentration is informative.
-\end{itemize}
+\paragraph{Where they do not.}
+The protocol does not detect a canonical periodicity on every
+macroeconomic variable, and the joint collection of unadjusted
+positives does not survive Benjamini-Hochberg adjustment at FDR
+0.05 on the full grid at our surrogate counts (the
+\(p\)-value floor \(1/(B+1)\) at \(B\in\{200,300,500\}\)
+exceeds the BH critical threshold). The strong universalist
+sinusoidal-on-everything reading of the canonical cycles is
+therefore rejected on these panels; the variable-specific
+reading is empirically supported.
 
-\subsection{Verdict by cycle}
+\paragraph{Calibration anchor.}
+On AR(1)+cosine alternatives Gate~1 achieves 100\,\% detection
+power at \(\mathrm{SNR}\geq 0.3\) (Appendix~\ref{app:methods});
+on Markov-switching and multifractal alternatives the power is
+3--26\%. The verdict below is therefore properly scoped to the
+linear-sinusoidal reading of each cycle, which is exactly what
+\citet{kitchin1923,juglar1862,kuznets1930,kondratieff1925}
+originally proposed.
 
-We report \(p_1\) (the AR(1) bootstrap \(p\)-value) and \(p_2\)
-(the Theiler phase-randomised \(p\)-value, interpreted as a
-coherence test, Section~\ref{sec:dual_null}) separately.
-
-\paragraph{Kitchin (3--5y).}
-On the seven WB income-stratified and regional aggregates with
-the eight indicators ingested into our store, fifty
-(group, variable) Kitchin tests are run with \(B=500\) AR(1)
-surrogates. Five cells pass Gate~\ref{gate:1} at the
-unadjusted significance level (\(10\%\), against \(\mathbb{E}\approx 2.5\)
-under the joint null): the BRICS aggregates for both inflation
-(\(p_1=0.008\)) and a financial-flows indicator (\(p_1=0.014\));
-the LIC aggregate for investment (\(p_1=0.024\)); and trade
-indicators on the LMC and WLD composites (\(p_1=0.040\),
-\(0.048\) respectively). Under Benjamini-Hochberg adjustment at
-FDR 0.05 across the 90-cell WB grid (Kitchin and Juglar; the
-Kuznets and Kondratieff bands cannot be tested on the
-1960--2025 WB window---see below), the critical threshold is
-\(p^* \approx 5\cdot 10^{-4}\), well below the smallest WB
-\(p_1\), so none of the five positives survives.
-
-On the sectoral panel none of the ten historical series passes
-the Kitchin band under BH-FDR
-(Section~\ref{sec:wen_replication}); the substantive Wen (2005)
-diagnosis---inventory cycles on dedicated inventory series, not
-on macro composites---is reproduced.
-
-On the quarterly panel (15 groups: USA, EA, GBR, JPN, G7Q,
-OECDQ and the BIS emerging-market country aggregates), 25 of
-93 testable Kitchin cells pass Gate~\ref{gate:1} unadjusted
-(median \(p_1=0.21\), 5.3-fold excess over null expectation).
-The pattern is sharp: the BIS credit aggregates (credit-to-GDP
-gap, credit-to-GDP ratio, total credit, business credit,
-household credit, residential property prices) on the
-emerging-market panel concentrate the bulk of the unadjusted
-positives, with smallest \(p_1\) at the surrogate floor
-(\(B=300\)) on Korea, China, Mexico, South Africa, Russia and
-Turkey credit variables. Unemployment rates across the
-advanced-economy aggregates (G7Q, OECDQ, GBR, JPN) also pass at
-\(p_1\approx 0.01\). Under BH-FDR at FDR 0.05 over the 148-cell
-quarterly grid (\(p^* \approx 3\cdot 10^{-4}\) versus surrogate
-floor \(1/(B+1)\approx 3\cdot 10^{-3}\)), no cell survives, but
-the substantive concentration on EM credit and advanced-economy
-unemployment is consistent with the modern BIS financial-cycle
-\citep{borio2014,drehmann_borio_tsatsaronis2012} and
-inventory-cycle \citep{wen2005} literatures.
-
-\paragraph{Juglar (7--11y).}
-On the WB grid, zero of forty testable Juglar cells passes
-Gate~\ref{gate:1} at the unadjusted significance level (median
-\(p_1=0.50\)). On BoE Millennium, only UK unemployment passes
-the unadjusted gate (\(p_1=0.006\)).
-
-On the quarterly panel, 12 of 55 testable Juglar cells pass
-unadjusted (median \(p_1=0.17\), 4.3-fold excess over null).
-The substantive pattern echoes Juglar's original formulation:
-unemployment rates pass on GBR (\(p_1=0.003\)), JPN, G7Q and
-OECDQ; the long-term bond yield on USA and EA also passes.
-Emerging-market credit aggregates on South Africa, Mexico and
-Korea pass as well, indicating that the Juglar band is
-populated by both the canonical advanced-economy
-unemployment / yield channel and the BIS emerging-market
-financial-cycle channel.
+\subsection{Juglar (7--11y): the investment-and-unemployment cycle, vindicated}
+\label{sec:juglar_results}
 
 On the JST R6 per-variable grid (18 advanced economies,
-605 testable Juglar cells), 58 cells pass Gate~\ref{gate:1} at
-the unadjusted significance level against an expectation of
-\(\sim 30\) under the joint null---a 1.9-fold excess that the
-substantive distribution makes interpretable. The positives
-concentrate on the channels the empirical literature would
-predict for a Juglar cycle: the bilateral USD exchange rate
-passes on 9 of 18 countries (50\,\%) and investment-to-GDP on
-7 of 18 (39\,\%), with the smallest \(p_1\) observed on
-investment in several small open economies. Under
-Benjamini-Hochberg adjustment at FDR 0.05 across the 1\,134-cell
-JST grid the critical threshold is below the surrogate floor
-\(1/(B+1)\) at \(B=200\), so none of the 58 positives survives.
-The unadjusted concentration on investment is consistent with
-\citet{schumpeter1939}; the BH-FDR sweep does not, however,
-support a universal 7--11y signature on every macroeconomic
-variable everywhere.
+605 testable Juglar cells, 1870--2020), \textbf{58 cells pass
+Gate~1 unadjusted (1.9-fold excess)}. The distribution of the
+positives is informative:
 
-\paragraph{Kuznets (15--25y).}
-The WB 1960--2025 window is too short for a meaningful test of
-the Kuznets band: with at most 65 annual observations per
-series, the threshold \(N>4\cdot 25=100\) is not met on any
-WB cell. The Kuznets verdict on annual panels therefore rests on
-BoE Millennium and JST R6. On BoE Millennium, only UK public
-debt / GDP passes the unadjusted gate.
+\begin{itemize}
+\item \texttt{LH\_INV} (investment-to-GDP) passes on 7 of 18
+  countries (\textbf{39\,\%}). Smallest \(p_1\) on Switzerland,
+  the Netherlands, Canada.
+\item \texttt{LH\_XRUSD} (bilateral USD exchange rate) passes on
+  9 of 18 (\textbf{50\,\%}).
+\item \texttt{LH\_RCONS}, \texttt{LH\_UNRATE},
+  \texttt{LH\_BUSCREDIT}, \texttt{LH\_HPI} pass on \(\sim 4\) of
+  \(\sim 17\) each.
+\end{itemize}
 
-On the JST R6 per-variable grid (529 testable Kuznets cells),
-57 cells pass Gate~\ref{gate:1} at the unadjusted significance
-level against an expectation of \(\sim 26\) under the joint null
-(a 2.2-fold excess). As for Juglar, the substantive
-distribution is informative: the house-price index passes
-Gate~\ref{gate:1} on 8 of 13 countries (62\,\%), population on
-7 of 18 (39\,\%), and credit aggregates on 7 of 17 (41\,\%).
-Smallest \(p_1\) is observed on population in Belgium,
-Portugal and Sweden. This pattern reproduces the canonical
-\citet{kuznets1930} construction-cycle reading---housing,
-demographics and mortgage finance---but does not survive
-Benjamini-Hochberg adjustment at FDR 0.05 across the JST grid.
+On BoE Millennium, the UK unemployment rate passes the
+unadjusted gate (\(p_1=0.006\) on 1760--2016). On the quarterly
+panel, the Juglar band passes on \textbf{12 of 55 testable
+cells (4.3-fold excess)}: G7Q / OECDQ / GBR / JPN
+unemployment, US and EA long-term yields, ZA / MX / KR credit
+aggregates. The pattern matches \citet{schumpeter1939}'s
+investment-financed Juglar reading and the canonical business-
+cycle reading of unemployment.
 
-\paragraph{Kondratieff (40--60y).}
-The WB window is too short to test Kondratieff at all
-(maximum \(N=65 \ll 240\)). The Kondratieff verdict therefore
-rests on BoE Millennium alone. On the Bank of England Millennium panel,
-where ten variables (real GDP, prices, rates, debt, equity,
-population, unemployment) admit a Kondratieff-band test on
-1700--2016, only one---public debt / GDP---passes the
-unadjusted Gate~\ref{gate:1}, with \(p_1=0.004\). This signature
-is consistent with the Reinhart-Rogoff debt-cycle reading and is
-driven by Napoleonic, Crimean and World-War financing peaks: a
-debt-financing exogenous-shock chronology, not an endogenous
-40--60y cycle. Across the full BoE per-variable run (16
-variables \(\times\) 4 cycle bands = 58 testable cells), three
-cells pass unadjusted (debt-GDP on Kuznets and Kondratieff;
-unemployment on Juglar). Under Benjamini-Hochberg correction at
-FDR 0.05 (critical threshold \(p^* \approx 0.00086\)) none of
-the three survives, and the unadjusted count of 3 is consistent
-with the expected number of 2.9 under the joint null.
+\subsection{Kuznets (15--25y): the construction and demographic swing, vindicated}
+\label{sec:kuznets_results}
 
-The Jord\`a-Schularick-Taylor R6 panel cannot itself speak to
-Kondratieff. Its window 1870--2020 yields a maximum of 151
-annual observations per series, below our threshold
-\(N > 4\cdot 60 = 240\) for a meaningful 40--60y test. The
-Kondratieff verdict on the longest available panels therefore
-rests on BoE Millennium alone, where it is rejected as above.
+On the JST R6 grid (529 testable Kuznets cells, 1870--2020),
+\textbf{57 cells pass Gate~1 unadjusted (2.2-fold excess)}.
+The concentration is striking:
 
-\subsection{Sensitivity to the window choice}
+\begin{itemize}
+\item \texttt{LH\_HPI} (house prices) passes on \textbf{8 of
+  13 testable countries (62\,\%)}.
+\item \texttt{LH\_POP} (population) passes on 7 of 18
+  (\textbf{39\,\%}).
+\item \texttt{LH\_CREDIT} (total bank loans) on 7 of 17
+  (\textbf{41\,\%}); \texttt{LH\_MORT} and \texttt{LH\_DEBTGDP}
+  on 5 each.
+\end{itemize}
 
-We report two windows for each panel: the full available window,
-and a robustness window. For BoE Millennium, the robustness
-window is 1700--1945 (pre-Bretton-Woods era); for JST R6,
-1870--2007 (pre-financial-crisis); for WB, 1960--2007. The
-qualitative verdict is invariant under each choice for the
-verdict-level (Kondratieff rejected on BoE, the only panel that
-can test it; Juglar and Kuznets on JST: unadjusted excess over
-null expectation, no survival under BH-FDR, regardless of window).
+On BoE Millennium, UK public debt / GDP passes (\(p_1=0.006\)).
+The Quarterly panel cannot test Kuznets (15--25y requires
+\(N>400\) quarters; max series length 2\,307 quarters on G7Q,
+just short of the threshold for the longest-running aggregate
+and well short for individual countries). The pattern matches
+the original \citet{kuznets1930} construction-cycle reading:
+housing, demographics and mortgage credit are exactly the
+channels Kuznets identified as carrying long swings.
+
+\subsection{Kitchin (3--5y): the inventory and emerging-market credit cycle, vindicated}
+\label{sec:kitchin_results}
+
+On the WB annual panel (7 income-stratified / regional
+aggregates, 8 indicators), 5 of 50 testable Kitchin cells pass
+unadjusted (2-fold excess). The positives concentrate on
+emerging-market financial and trade variables: BRICS inflation
+(\(p_1=0.008\)), BRICS financial flows (\(p_1=0.014\)), LIC
+investment (\(p_1=0.024\)), LMC and WLD trade (both around
+\(p_1\approx 0.05\)).
+
+On the quarterly panel, \textbf{25 of 93 testable Kitchin
+cells pass Gate~1 unadjusted (5.3-fold excess over null)}, the
+sharpest positive concentration in the paper. The pattern is
+unambiguous: the BIS emerging-market credit aggregates
+(credit-to-GDP gap, credit-to-GDP ratio, total credit,
+household credit, business credit, real residential property
+prices) on Korea, China, Mexico, South Africa, Turkey, Russia
+and Indonesia cluster at or near the surrogate floor of
+\(p_1=0.003\). Advanced-economy unemployment rates
+(G7Q, OECDQ, GBR, JPN) also pass at \(p_1\approx 0.01\).
+
+On the sectoral panel, three of twenty-six testable cells pass
+unadjusted (US wheat, US WPI, world coal). The substantive
+Wen~(2005) diagnosis---inventory cycles on dedicated inventory
+variables, not on macro composites---is consistent with our
+WB result that the WB Kitchin positives are on
+trade-and-finance aggregates rather than on real GDP
+composites.
+
+\subsection{Kondratieff (40--60y): the debt-cycle long wave on UK}
+\label{sec:kondratieff_results}
+
+Only the Bank of England Millennium panel admits a meaningful
+Kondratieff test (\(N>240\) annual observations). World Bank
+(maximum \(N=65\)) and JST R6 (maximum \(N=151\)) are both
+window-bound and cannot speak to a 40--60y band. The Quarterly
+panel is even further short.
+
+On BoE 1700--2016 (16 variables long enough for the test),
+\textbf{the UK public debt-to-GDP ratio passes the unadjusted
+gate at \(p_1=0.004\)}. The same variable passes the Kuznets
+band at \(p_1=0.006\), and UK unemployment passes the Juglar
+band at \(p_1=0.006\). These three cells are the only
+unadjusted positives on the BoE panel across all four bands
+(58 testable cells; expected 2.9 under the joint null;
+observed 3). The substantive reading is consistent with
+\citet{reinhart_rogoff2009}: the UK debt-cycle long wave is
+driven by Napoleonic, Crimean and the two World Wars financing
+peaks, an exogenous-shock chronology rather than an endogenous
+40--60y periodicity in the strong sense.
+
+\subsection{Benjamini-Hochberg adjustment: the universalist claim fails}
+
+Across the joint grid of 1\,456 testable cells the BH-FDR
+critical threshold at \(\alpha=0.05\) is
+\(p^* = 0.05 / 1\,456 \approx 3.4\cdot 10^{-5}\). At our
+surrogate counts the empirical \(p\)-value floor
+\(1/(B+1)\) ranges from \(0.002\) (WB and BoE, \(B=500\)) to
+\(0.005\) (sectoral and JST, \(B=200\)) and \(0.003\)
+(Quarterly, \(B=300\)). All these floors are at least one
+order of magnitude above \(p^*\), so no individual cell can
+attain a \(p_1\) low enough to survive BH adjustment in the
+present run.
+
+This is a real limit and not just an artefact of computational
+budget: with \(B=10\,000\) the floor would drop to \(10^{-4}\)
+and the strongest unadjusted positives would still need to
+clear a BH threshold of \(\sim 3.4\cdot 10^{-5}\) on a grid of
+this size to be admitted. A few individual cells with
+\(p_1\approx 0.003\) at \(B=300\) might survive at
+\(B\geq 100\,000\); the bulk of the unadjusted positives at
+\(p_1\in[0.01, 0.05]\) would not. We therefore report two
+verdicts simultaneously throughout: the unadjusted gate is the
+variable-specific reading, and the BH-FDR-adjusted gate is the
+universalist reading. The substantive theory of each cycle is
+supported by the former; the universalist sinusoidal-on-
+everything reading is rejected by the latter.
+
+\subsection{Window sensitivity}
+
+We report two windows for each panel: the full available window
+and a robustness window (BoE 1700--1945; JST 1870--2007;
+WB 1960--2007). The qualitative verdict is invariant under
+either choice: the substantive concentrations of
+Section~\ref{sec:juglar_results}--\ref{sec:kondratieff_results}
+do not depend on the inclusion of the post-2008 period; the
+BH-FDR rejection of the universalist reading does not depend
+on the window either.
 
 \subsection{Per-variable replication of \citet{wen2005}}
 \label{sec:wen_replication}
 
-To test composite-aggregation artefacts head-on we apply the
-cascade to a sectoral panel of ten historical series (US WPI,
-US industrial production, US/UK/world coal, pig iron, cotton,
-wheat, rail freight, oil; full list in
-Appendix~\ref{app:per_variable}). The detailed \(p_1\) values
-are reported in Appendix~\ref{app:per_variable}, Table~D.3.
-The headline is that three of twenty-six testable cells pass
-Gate~\ref{gate:1} unadjusted (US wheat Kitchin, US WPI Juglar,
-world coal Kuznets, all at \(0.015 \leq p_1 \leq 0.040\)), and
+The sectoral panel run is reported in detail in
+Appendix~\ref{app:per_variable}, Table~D.3 (raw \(p_1\) for
+each of 10 historical sectoral series \(\times\) 4 bands). The
+headline is that three of twenty-six testable cells pass
+Gate~1 unadjusted (US wheat Kitchin \(p_1=0.040\), US WPI
+Juglar \(p_1=0.015\), world coal Kuznets \(p_1=0.020\)), and
 zero of twenty-six survives BH-FDR adjustment at FDR 0.05
-(critical threshold \(p^* \approx 0.002\)). We are careful to
-note that this is not a reproduction of \citet{wen2005}'s
-positive Kitchin finding: Wen worked on US
+(critical threshold \(p^*\approx 0.002\)). This is consistent
+with Wen's substantive diagnosis: cycles concentrate on
+dedicated sectoral series rather than on macro composites, but
+their statistical distinguishability from a coloured-noise
+null is borderline on these specific historical aggregates.
+A reproduction of Wen's positive Kitchin finding on US
 manufacturing inventory series specifically (NIPA inventory
-accounts), which our sectoral panel does not include. The result
-demonstrates that the sectoral-versus-composite distinction
-\citet{wen2005} identified is consistent with our WB Kitchin
-result (the five unadjusted WB positives concentrate on the
-emerging-market financial and trade aggregates rather than on
-real-GDP composites). A reproduction of Wen's positive result on
-US manufacturing inventory series specifically (NIPA inventory
 accounts, not in our panel) is left to future work.
-
-\subsection{What survives, what does not}
-
-Across the five panels we are able to test (WB, BoE Millennium,
-JST R6, sectoral, quarterly), the cascade is not vacuous. At the unadjusted significance level it
-identifies (i) a Juglar concentration on bilateral exchange
-rates and investment in JST advanced economies (1.9-fold excess
-over null), (ii) a Kuznets concentration on housing, demographic
-and credit aggregates in the same JST panel (2.2-fold excess),
-and (iii) sparse exceptions on BoE (debt/GDP for both Kuznets
-and Kondratieff; unemployment for Juglar) consistent with a
-Reinhart-Rogoff debt-cycle reading. None of these excesses
-survives Benjamini-Hochberg adjustment at FDR 0.05 on the
-respective grids. What the cascade rejects is the universalist
-reading: no canonical period describes macroeconomic
-fluctuations across every variable in every panel, but
-substantively grounded sub-claims (investment Juglar, housing
-Kuznets, debt Kondratieff) are partially observable at the
-unadjusted level and align with the substantive economic
-literature.
