@@ -8,52 +8,64 @@ safeguard threshold and to the analysis window, and with the
 Benjamini-Hochberg false-discovery-rate adjusted verdict as a
 robustness check.
 
-\subsection{Sectoral panel: \(p\)-values rather than checkmarks}
+\subsection{Sectoral panel: empirical \(p\)-values}
 
-Following the referee's request, Table~\ref{tab:wen_replication_p}
-reports the AR(1) bootstrap \(p\)-value \(p_1\) of
-Gate~\ref{gate:1} for every (variable, cycle) cell of the
-sectoral panel. The phase-coherence \(p\)-value \(p_2\) is in
-the project repository
-(\path{reports/wen_replication_per_variable.json}).
+Table~\ref{tab:wen_replication_p} reports the AR(1) bootstrap
+\(p\)-value \(p_1\) of Gate~\ref{gate:1} for every (variable,
+cycle) cell of the sectoral panel, computed by
+\path{scripts/wen_replication.py} on the raw data shipped with
+the project. The Kondratieff column is empty because no sectoral
+series in the panel is long enough to support a meaningful test
+on a 40--60y band (we require \(N>4\cdot 60=240\) annual
+observations); a dash indicates an untestable band.
 
 \begin{table}[h]
 \centering
-\caption{\citet{wen2005} replication on the sectoral panel:
-AR(1) bootstrap \(p_1\) on \(B=1000\) surrogates for each
-(variable, cycle) cell. Cells with \(p_1<0.05\) shown in
-bold.}
+\caption{Empirical \citet{wen2005} replication on the sectoral
+panel. AR(1) bootstrap \(p_1\) on \(B=200\) surrogates per cell,
+computed from the raw CSV by
+\path{scripts/wen_replication.py}; source:
+\path{reports/wen_replication_per_variable.json}. Cells with
+\(p_1<0.05\) are shown in bold.}
 \label{tab:wen_replication_p}
 \small
 \begin{tabularx}{\linewidth}{@{}X c c c c@{}}
 \toprule
 \textbf{Variable (panel period)} & \textbf{Kitchin} & \textbf{Juglar} & \textbf{Kuznets} & \textbf{Kondratieff} \\
 \midrule
-Rail freight US (1830--2020)          & 0.187 & 0.241 & 0.318 & 0.452 \\
-Pig iron production UK (1750--2020)   & 0.224 & 0.158 & 0.293 & 0.371 \\
-Pig iron production US (1810--2020)   & 0.176 & 0.213 & 0.341 & 0.388 \\
-Coal output world (1820--2020)        & 0.198 & 0.273 & 0.301 & 0.424 \\
-Coal output UK (1700--2020)           & 0.241 & 0.196 & 0.358 & 0.405 \\
-Cotton output US (1790--2020)         & 0.211 & 0.262 & 0.337 & 0.392 \\
-Wheat output US (1840--2020)          & 0.265 & 0.249 & 0.318 & 0.418 \\
-Wheat output UK (1700--2020)          & 0.232 & 0.207 & 0.341 & 0.429 \\
-Industrial production US (1900--2020) & 0.158 & 0.224 & 0.276 & 0.385 \\
-Industrial production UK (1750--2020) & 0.193 & 0.213 & 0.302 & 0.412 \\
-Industrial production DE (1850--2020) & 0.207 & 0.196 & 0.291 & 0.398 \\
+UK coal output       (1700--2019)  & 0.811 & 0.995 & 0.632 & --- \\
+US coal output       (1856--1958)  & 0.224 & 0.811 & 0.726 & --- \\
+US cotton            (1912--1961)  & 0.169 & 0.975 & ---   & --- \\
+US industrial prod.  (1919--2026)  & 0.174 & 0.224 & 0.881 & --- \\
+US rail freight      (1866--1922)  & 0.632 & 0.761 & ---   & --- \\
+US steel             (1863--1965)  & 0.766 & 0.189 & ---   & --- \\
+US wheat             (1866--1952)  & \textbf{0.040} & 0.592 & ---   & --- \\
+US WPI               (1860--2026)  & 0.299 & \textbf{0.015} & 0.701 & --- \\
+World coal           (1900--2024)  & 0.299 & 0.672 & \textbf{0.020} & --- \\
+World oil            (1900--2024)  & 0.701 & 0.488 & 0.274 & --- \\
 \midrule
-\textbf{Survival rate at \(\alpha=0.05\)} & 0/11 & 0/11 & 0/11 & 0/11 \\
-\textbf{Median \(p_1\)} & 0.207 & 0.224 & 0.318 & 0.405 \\
+\textbf{Survival rate at \(\alpha=0.05\)} & 1/10 & 1/10 & 1/6 & 0/0 \\
+\textbf{Median \(p_1\)}                   & 0.299 & 0.632 & 0.667 & --- \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Zero of forty-four cells survives Gate~\ref{gate:1}. Median
-\(p_1\) values are well above 0.2 throughout, consistent with
-the headline finding that no canonical periodicity is detectable
-on these historical sectoral series. We reiterate from
-Section~\ref{sec:wen_replication} that this is not a
-reproduction of \citet{wen2005}'s positive Kitchin finding on
-inventory series, which our panel does not include.
+The unadjusted survival rate is 3 of 26 testable cells at
+\(\alpha=0.05\) (US wheat Kitchin, US WPI Juglar, world coal
+Kuznets). Under Benjamini-Hochberg adjustment at FDR 0.05
+applied to the 26 \(p_1\) values, the critical threshold is
+\(p^* = 0.05\cdot 1/26 \approx 0.0019\); none of the three
+individually-significant cells passes the BH threshold, so zero
+of twenty-six cells survives the FDR-adjusted gate. The three
+positive cells under the unadjusted gate are individually
+plausible exceptions (US wheat Kitchin: agricultural inventory
+cycle; US WPI Juglar: the original Juglar variable; world coal
+Kuznets: long-swing residential-construction-style pattern) but
+do not constitute evidence for a universal canonical
+periodicity. The result reproduces, on real historical data,
+the substantive finding of \citet{wen2005}: cycles that appear
+on composite aggregates are typically not detectable on the
+underlying sectoral series.
 
 \subsection{Sensitivity to the analysis window}
 
@@ -68,37 +80,21 @@ window is consistent with the interpretation that the positive
 results reflect post-crisis trend behaviour rather than an
 underlying 40--60y oscillation.
 
-\subsection{Per-variable Kondratieff on BoE Millennium}
+\subsection{Per-variable Kondratieff on BoE Millennium (status)}
 
-We apply Gate~\ref{gate:1} to every individual variable of the
-Bank of England Millennium panel
-(\(\approx 130\) UK annual series, 1700--2016) on the
-Kondratieff band. The top three and bottom three rows of
-\(p_1\) appear in Table~\ref{tab:boe_kondratieff_p}.
-
-\begin{table}[h]
-\centering
-\caption{Per-variable Kondratieff test on the Bank of England
-Millennium panel: \(p_1\) on \(B=1000\) AR(1) surrogates. None
-of the \(\approx 130\) variables passes Gate~\ref{gate:1}.}
-\label{tab:boe_kondratieff_p}
-\small
-\begin{tabularx}{\linewidth}{@{}X c c@{}}
-\toprule
-\textbf{Variable} & \(\boldsymbol{p_1}\) & \textbf{Gate~\ref{gate:1}} \\
-\midrule
-Real GDP per capita (1700--2016)       & 0.341 & rejected \\
-Bank Rate (1694--2016)                 & 0.182 & rejected \\
-CPI inflation (1700--2016)             & 0.471 & rejected \\
-Domestic credit / GDP (1880--2016)     & 0.225 & rejected \\
-Real residential property (1845--2016) & 0.388 & rejected \\
-Unemployment rate (1855--2016)         & 0.554 & rejected \\
-\multicolumn{3}{c}{\vdots} \\
-\midrule
-\textbf{Survival rate}                 & \multicolumn{2}{r}{\(0/{\approx}130\)} \\
-\bottomrule
-\end{tabularx}
-\end{table}
+A per-variable Kondratieff test on the Bank of England Millennium
+panel (\(\approx 130\) UK annual series, 1700--2016) requires the
+panel itself to be ingested into the project's SQLite store first.
+At the time of writing the BoE ingestion is on the project's
+roadmap but the per-variable run is not yet committed; we
+therefore omit the table that would otherwise appear here.
+The companion \path{scripts/wen_replication.py} script generalises
+trivially to any panel of annual series in raw-CSV form, and the
+BoE per-variable verdict will be added in a follow-up commit
+together with the same \(p\)-value tabulation as the sectoral
+panel above. Until then the BoE Kondratieff claim of
+Section~\ref{sec:results} should be read as conditional on the
+JST R6 result of the next subsection.
 
 \subsection{Benjamini-Hochberg FDR-adjusted verdict}
 
