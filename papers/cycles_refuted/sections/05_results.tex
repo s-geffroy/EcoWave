@@ -68,23 +68,45 @@ does not include) in Section~\ref{sec:wen_replication}.
 
 \paragraph{Juglar (7--11y).}
 On WB post-1960 the Juglar band fails Gate~\ref{gate:1} on all
-income aggregates: typical \(p_1\) values are between 0.18 and
-0.45. On the long-history panels (BoE pre-1945 and JST R6
-restricted to 1870--1945) the band passes Gate~\ref{gate:1} on
-G7 and ANGLO subsamples with \(p_1<0.01\), \(p_2<0.05\), then
-collapses when the post-1945 window is added. The result
-reproduces \citet{romer1999}'s Great Moderation finding under our
-uniform protocol.
+income aggregates with typical \(p_1\) between 0.18 and 0.45.
+On BoE Millennium, only UK unemployment passes the unadjusted
+gate (\(p_1=0.006\)).
+
+On the JST R6 per-variable grid (18 advanced economies,
+605 testable Juglar cells), 58 cells pass Gate~\ref{gate:1} at
+the unadjusted significance level against an expectation of
+\(\sim 30\) under the joint null---a 1.9-fold excess that the
+substantive distribution makes interpretable. The positives
+concentrate on the channels the empirical literature would
+predict for a Juglar cycle: the bilateral USD exchange rate
+passes on 9 of 18 countries (50\,\%) and investment-to-GDP on
+7 of 18 (39\,\%), with the smallest \(p_1\) observed on
+investment in several small open economies. Under
+Benjamini-Hochberg adjustment at FDR 0.05 across the 1\,134-cell
+JST grid the critical threshold is below the surrogate floor
+\(1/(B+1)\) at \(B=200\), so none of the 58 positives survives.
+The unadjusted concentration on investment is consistent with
+\citet{schumpeter1939}; the BH-FDR sweep does not, however,
+support a universal 7--11y signature on every macroeconomic
+variable everywhere.
 
 \paragraph{Kuznets (15--25y).}
-Universally rejected on annual panels at Gate~\ref{gate:1}
-(\(p_1>0.20\)) except the WLD composite which is borderline
-(\(p_1=0.054\)). On quarterly USA and GBR, residential
-construction variables pass the cascade up to Gate~\ref{gate:2}.
-This is the residential-investment swing of
-\citet{klotz_neal1973} and \citet{solomou1987}: a regional
-construction cycle rather than a universal macroeconomic
-periodicity.
+Universally rejected on annual WB aggregates at
+Gate~\ref{gate:1} (\(p_1>0.20\)). On BoE Millennium, only UK
+public debt / GDP passes the unadjusted gate.
+
+On the JST R6 per-variable grid (529 testable Kuznets cells),
+57 cells pass Gate~\ref{gate:1} at the unadjusted significance
+level against an expectation of \(\sim 26\) under the joint null
+(a 2.2-fold excess). As for Juglar, the substantive
+distribution is informative: the house-price index passes
+Gate~\ref{gate:1} on 8 of 13 countries (62\,\%), population on
+7 of 18 (39\,\%), and credit aggregates on 7 of 17 (41\,\%).
+Smallest \(p_1\) is observed on population in Belgium,
+Portugal and Sweden. This pattern reproduces the canonical
+\citet{kuznets1930} construction-cycle reading---housing,
+demographics and mortgage finance---but does not survive
+Benjamini-Hochberg adjustment at FDR 0.05 across the JST grid.
 
 \paragraph{Kondratieff (40--60y).}
 On WB world GDP, HIC and OECD composites we observe small
@@ -106,13 +128,12 @@ FDR 0.05 (critical threshold \(p^* \approx 0.00086\)) none of
 the three survives, and the unadjusted count of 3 is consistent
 with the expected number of 2.9 under the joint null.
 
-On the JST R6 panel taken as a flat (variable, country) grid
-of 810 cells, an analogous per-variable run is on the project
-roadmap but not yet committed; an approximate count consistent
-with the BoE rate would predict roughly 40 unadjusted positives
-under the joint null, of which none would survive BH-FDR. The
-qualitative finding---no universal canonical 40--60y
-periodicity---is robust to either accounting.
+The Jord\`a-Schularick-Taylor R6 panel cannot itself speak to
+Kondratieff. Its window 1870--2020 yields a maximum of 151
+annual observations per series, below our threshold
+\(N > 4\cdot 60 = 240\) for a meaningful 40--60y test. The
+Kondratieff verdict on the longest available panels therefore
+rests on BoE Millennium alone, where it is rejected as above.
 
 \subsection{Sensitivity to the window choice}
 
@@ -120,25 +141,27 @@ We report two windows for each panel: the full available window,
 and a robustness window. For BoE Millennium, the robustness
 window is 1700--1945 (pre-Bretton-Woods era); for JST R6,
 1870--2007 (pre-financial-crisis); for WB, 1960--2007. The
-qualitative verdict is invariant under each choice. The
-exception is the small set of 14 JST Kondratieff cells discussed
-above: 9 of 14 disappear when 2008--2020 is excluded, and 12 of
-14 disappear when 2008--2020 is included but BH-FDR correction
-is applied. The two perspectives agree that no Kondratieff
-signal survives.
+qualitative verdict is invariant under each choice for the
+verdict-level (Kondratieff rejected on BoE, the only panel that
+can test it; Juglar and Kuznets on JST: unadjusted excess over
+null expectation, no survival under BH-FDR, regardless of window).
 
 \subsection{Per-variable replication of \citet{wen2005}}
 \label{sec:wen_replication}
 
 To test composite-aggregation artefacts head-on we apply the
-cascade to a sectoral panel of eleven historical series (rail
-freight, pig iron, coal, cotton, wheat, etc.). The detailed
-\(p_1, p_2\) values and survival rate per band are reported in
-Appendix~\ref{app:per_variable}. The headline is that zero of
-forty-four (\(11\times 4\)) cells survives Gate~\ref{gate:1}, on
-both the full historical window and the post-1900 robustness
-window. We are careful to note that this is not a reproduction
-of \citet{wen2005}'s positive Kitchin finding: Wen worked on US
+cascade to a sectoral panel of ten historical series (US WPI,
+US industrial production, US/UK/world coal, pig iron, cotton,
+wheat, rail freight, oil; full list in
+Appendix~\ref{app:per_variable}). The detailed \(p_1\) values
+are reported in Appendix~\ref{app:per_variable}, Table~D.3.
+The headline is that three of twenty-six testable cells pass
+Gate~\ref{gate:1} unadjusted (US wheat Kitchin, US WPI Juglar,
+world coal Kuznets, all at \(0.015 \leq p_1 \leq 0.040\)), and
+zero of twenty-six survives BH-FDR adjustment at FDR 0.05
+(critical threshold \(p^* \approx 0.002\)). We are careful to
+note that this is not a reproduction of \citet{wen2005}'s
+positive Kitchin finding: Wen worked on US
 manufacturing inventory series specifically (NIPA inventory
 accounts), which our sectoral panel does not include. The result
 demonstrates that the sectoral-versus-composite distinction
