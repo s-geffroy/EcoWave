@@ -1,7 +1,7 @@
 \section{Data provenance and reproducibility}
 \label{app:data}
 
-This appendix documents the six panels of Section~\ref{sec:data} at
+This appendix documents the five panels of Section~\ref{sec:data} at
 the level of detail needed to defend the empirical claim against a
 hostile reviewer: source URL, version, access date, SHA-256
 checksum, licence, pre-processing decisions, and cross-source
@@ -20,13 +20,18 @@ formation, domestic credit, CPI inflation, current-account balance,
 2024-11. SHA-256 of bulk download in
 \path{ecowave/db.py:raw_files}.
 
-\paragraph{Quarterly macroeconomic data (Q).}
-FRED \citep{fred}, Eurostat and OECD, quarterly, 1995--2024, four
-economies (USA, EA, JPN, GBR), sixty series (real GDP, CPI, 10-year
-sovereign yield, unemployment rate, domestic credit, real
-residential property prices). Licence: FRED public-domain, Eurostat
-and OECD academic-citation. Monthly FRED inputs are aggregated to
-quarterly by simple averaging. Access date: 2024-11.
+\paragraph{Quarterly macroeconomic data (Quarterly).}
+\citet{bis_credit} for credit-to-GDP and household credit on the
+emerging-market and G7 cross-section (Korea, China, Mexico, South
+Africa, Turkey, Russia, Indonesia, India, Brazil); FRED \citep{fred},
+Eurostat, and OECD for GDP, CPI, ten-year sovereign yields and
+unemployment on USA, EA, JPN, GBR plus the G7Q and OECDQ aggregates;
+quarterly frequency, 1970--2024, fifteen country-aggregate groups,
+fifteen variables. Licence: BIS citation-required, FRED public-
+domain, Eurostat and OECD academic-citation. Monthly FRED inputs
+are aggregated to quarterly by simple averaging. Real residential
+property prices are taken from the BIS property price database
+\citep{bis_credit}. Access date: 2024-11.
 
 \paragraph{Jord\`a-Schularick-Taylor R6 (JST).}
 \citet{jorda_schularick_taylor2017}, release 6 (2024), annual,
@@ -42,12 +47,6 @@ quarterly coverage from 1700; \(\approx 130\) series (real GDP,
 CPI, Bank Rate, unemployment, domestic credit, real GDP per
 capita). Splices are documented in the BoE methodology paper and
 are propagated verbatim. Licence: citation required.
-
-\paragraph{Bank for International Settlements (BIS).}
-\citet{bis_credit}, quarterly, 1970--2024, seventeen advanced and
-emerging economies. Two flagship variables: credit-to-GDP
-\citep{borio2014}, and real residential property prices. Licence:
-citation required.
 
 \paragraph{Sectoral historical panel (Sectoral).}
 Eleven historical series (US rail freight ton-miles 1830+, UK pig
@@ -111,7 +110,7 @@ pipeline is implemented in the EcoWave Python package and runs
 end-to-end in \(\approx 30\) minutes inside the Docker container
 shipped with this paper (\path{papers/cycles_refuted/Dockerfile}).
 The five steps are: (i) build the LaTeX image, (ii) run the unit
-tests, (iii) ingest the six panels into a versioned SQLite store
+tests, (iii) ingest the five panels into a versioned SQLite store
 fingerprinted by SHA-256, (iv) run Gates~1--3 with the per-variable
 safeguard, (v) consolidate the results into the JSON sidecars that
 populate the tables and figures of this paper.

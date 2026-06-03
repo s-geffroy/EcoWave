@@ -103,8 +103,9 @@ different aspects of the data, and the cascade reflects this.
 
 \paragraph{Null~1: AR(1) bootstrap.}
 We fit \(y_t = \mu + \phi(y_{t-1}-\mu) + \epsilon_t\) by OLS and
-simulate \(B=1000\) independent realisations of identical length,
-mean, variance and persistence. The empirical band-power is
+simulate \(B\) independent realisations of identical length, mean,
+variance and persistence (the panel-specific surrogate count is
+specified in Section~\ref{sec:criteria}). The empirical band-power is
 compared to the 95th percentile of the surrogate band-powers.
 Null~1 directly tests \emph{cycle existence}: a band that carries
 more power than a generic AR(1) process would have under random

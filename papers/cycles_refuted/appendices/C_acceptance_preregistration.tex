@@ -45,15 +45,19 @@ Kondratieff & 40--60 & \citet{kondratieff1925}; \citet{modelski1987}; \citet{kor
 
 \subsection{Gate~1 (existence-plus-coherence)}
 
-At significance \(\alpha=0.05\) on \(B=1000\) surrogates per
-null, the empirical band-power must exceed the 95th percentile
-of the AR(1)-bootstrap null \emph{and} the within-band Hilbert
-phase-coherence statistic must exceed the 95th percentile of the
-Theiler phase-randomised null. The two surrogate \(p\)-values
-\(p_1\) (existence) and \(p_2\) (coherence) are recorded
-separately and reported in Section~\ref{sec:results}; this
-acknowledges that the two surrogates test different aspects of
-the data \citep{schreiber_schmitz2000}.
+At significance \(\alpha=0.05\) on \(B\) AR(1) surrogates per
+cell (\(B=1000\) on JST R6, \(B=500\) on Bank of England Millennium
+and World Bank, \(B=300\) on the quarterly panel, \(B=200\) on the
+sectoral panel; the count is chosen to keep total runtime tractable
+on the project's reproducible Docker image), the empirical
+band-power must exceed the 95th percentile of the AR(1)-bootstrap
+null \emph{and} the within-band Hilbert phase-coherence statistic
+must exceed the 95th percentile of the Theiler phase-randomised
+null. The two surrogate \(p\)-values \(p_1\) (existence) and
+\(p_{\mathrm{coh}}\) (coherence) are recorded separately and
+reported in Section~\ref{sec:results}; this acknowledges that the
+two surrogates test different aspects of the data
+\citep{schreiber_schmitz2000}.
 
 \subsection{Gate~2 (method consensus): dependence of estimators}
 

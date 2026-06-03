@@ -70,15 +70,20 @@ underlying sectoral series.
 \subsection{Sensitivity to the analysis window}
 
 We re-run Gate~\ref{gate:1} on each panel under two robustness
-windows. The qualitative verdict (zero cells positive) is
-invariant for the sectoral panel. For the JST R6 Kondratieff
-result discussed in Section~\ref{sec:results}, the window
-sensitivity is the key fact: 14 cells of 810 are positive on
-1870--2020, but only 5 of those 14 remain positive when
-restricted to 1870--2007. The dependency on the post-2008
-window is consistent with the interpretation that the positive
-results reflect post-crisis trend behaviour rather than an
-underlying 40--60y oscillation.
+windows. The qualitative verdict on the sectoral panel
+(3 unadjusted cells, 0 surviving BH-FDR) is invariant. On JST R6
+the Kondratieff band is window-bound (maximum 151 annual
+observations per series, below the threshold of 240 required for
+a meaningful 40--60y test) and therefore not part of the
+window-sensitivity analysis; the JST verdict on the Juglar and
+Kuznets bands is invariant to restricting the panel to 1870--2007.
+On BoE Millennium, the three unadjusted positives
+(UK debt/GDP on Kuznets and Kondratieff, UK unemployment on
+Juglar) are stable under restriction to 1700--1945. On the
+quarterly panel, the Kitchin and Juglar positives are stable
+under restriction to the pre-2007 sub-window. The substantive
+concentrations of Section~\ref{sec:results} therefore do not
+depend on the inclusion of the post-2008 period.
 
 \subsection{Per-variable Kondratieff on BoE Millennium}
 
@@ -155,40 +160,42 @@ short of our threshold \(4\cdot 60=240\). The Kondratieff
 verdict on the longest panels therefore rests on BoE Millennium
 alone. The script that produces the numbers below is
 \path{scripts/jst_per_variable.py}; source:
-\path{reports/jst_per_variable.json}.
+\path{reports/jst_per_variable_b1000.json} (\(B=1000\) surrogates).
 
 \paragraph{Juglar (605 testable cells).}
-58 cells pass Gate~\ref{gate:1} at the unadjusted significance
-level (9.6\%), against an expectation of approximately 30
-under the joint null at \(\alpha=0.05\)---a 1.9-fold excess.
+67 cells pass Gate~\ref{gate:1} at the unadjusted significance
+level (11.1\%), against an expectation of approximately 30
+under the joint null at \(\alpha=0.05\)---a 2.2-fold excess.
 The distribution of the positives across variables is
 substantively informative: \texttt{LH\_XRUSD} (bilateral USD
-exchange rate) passes on 9 of 18 countries (50\,\%);
-\texttt{LH\_INV} (investment/GDP) passes on 7 of 18 (39\,\%);
-\texttt{LH\_UNRATE}, \texttt{LH\_HPI} and \texttt{LH\_BUSCREDIT}
-on \(\sim 4\) of \(\sim 17\) each. The smallest \(p_1\)
-(\(=0.005\), the surrogate floor at \(B=200\)) is observed on
-investment in Switzerland, the Netherlands, Canada and on
-consumption in the Netherlands and Portugal.
+exchange rate) passes on 11 of 18 countries (61\,\%);
+\texttt{LH\_INV} (investment/GDP) on 7 of 18 (39\,\%);
+\texttt{LH\_UNRATE} on 6 of 18 (33\,\%);
+\texttt{LH\_BUSCREDIT} on 5 of 15 (33\,\%); and
+\texttt{LH\_RCONS}, \texttt{LH\_HPI},
+\texttt{LH\_RGDP\_BARRO}, \texttt{LH\_DEBTGDP} on 4 each.
+The smallest \(p_1\) (\(=0.001\), the surrogate floor at
+\(B=1000\)) is observed on investment in Switzerland and Canada
+and on unemployment in Portugal.
 
 \paragraph{Kuznets (529 testable cells).}
-57 cells pass Gate~\ref{gate:1} at the unadjusted significance
-level (10.8\%), against an expectation of \(\sim 26\)---a
-2.2-fold excess. \texttt{LH\_HPI} (house prices) passes on
-\textbf{8 of 13 countries (62\,\%)}; \texttt{LH\_POP}
+51 cells pass Gate~\ref{gate:1} at the unadjusted significance
+level (9.6\%), against an expectation of \(\sim 26\)---a
+1.9-fold excess. \texttt{LH\_HPI} (house prices) passes on
+\textbf{6 of 13 countries (46\,\%)}; \texttt{LH\_POP}
 (population) on 7 of 18 (39\,\%); \texttt{LH\_CREDIT} (total
-loans) on 7 of 17 (41\,\%); \texttt{LH\_MORT} and
-\texttt{LH\_DEBTGDP} on 5 each. The smallest \(p_1\)
-(\(=0.005\)) is observed on population in Belgium, Portugal,
-Sweden and on unemployment in the Netherlands.
+loans) on 7 of 17 (41\,\%); \texttt{LH\_MORT} on 5;
+\texttt{LH\_DEBTGDP} and \texttt{LH\_CA} on 4. The smallest
+\(p_1\) (\(=0.001\)) is observed on population in Belgium and
+Portugal and on house prices in the Netherlands and the USA.
 
 \paragraph{Benjamini-Hochberg adjustment on the JST grid.}
 Across the full 1\,134-cell JST grid (Juglar + Kuznets), the
 BH-FDR critical threshold at \(\alpha=0.05\) is
-\(p^* = 0.05 / 1134 \approx 4.4 \cdot 10^{-5}\). With \(B=200\)
+\(p^* = 0.05 / 1134 \approx 4.4 \cdot 10^{-5}\). With \(B=1000\)
 surrogates, no individual cell can attain a \(p_1\) below the
-surrogate floor \(1/(B+1) \approx 5 \cdot 10^{-3}\), which is
-itself two orders of magnitude above \(p^*\). The 115
+surrogate floor \(1/(B+1) \approx 1 \cdot 10^{-3}\), which is
+itself one order of magnitude above \(p^*\). The 118
 unadjusted positives therefore all fail BH adjustment in the
 present run; whether some of them would survive at
 \(B \geq 10\,000\) is an open empirical question, and the

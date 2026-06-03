@@ -5,6 +5,36 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### 2026-06-03 — Cycles Refuted V2 : re-run JST B=1000 + audit illustratives ✅
+
+Finalisation du papier `papers/cycles_refuted/` avant rebuild PDF
+final. Trois axes :
+
+- **Re-run JST R6 B=1000 surrogates** (`scripts/jst_per_variable.py`,
+  output `reports/jst_per_variable_b1000.json`) — passage du floor
+  p-value de 0.005 (B=200) à 0.001 (B=1000) pour la précision
+  BH-FDR. Script étendu avec `--checkpoint-every` (sauvegarde
+  partielle atomique tous les N cells) et `--resume` (reprise sans
+  perte après interruption).
+- **Chiffres mis à jour** dans `sections/00_abstract.tex`,
+  `sections/01_introduction.tex`, `sections/05_results.tex`,
+  `sections/07_conclusion.tex`, `appendices/D_per_variable_evidence.tex` :
+  Juglar 58→67 cells passent Gate 1 (1.9×→2.2× fold-excess),
+  Kuznets 57→51 (2.2×→1.9× fold-excess), HPI Kuznets 8/13→6/13
+  (62%→46%), XRUSD Juglar 9/18→11/18 (50%→61%), aggregate
+  163→166 cells (2.2×→2.3× fold-excess).
+- **Audit illustratives** : remplacement de "LMC and WLD trade
+  (both around $p_1\approx 0.05$)" par valeurs exactes
+  ($p_1=0.040$ / $p_1=0.048$) extraites de
+  `reports/wb_per_variable.json`. Correction de la sensibilité
+  Kondratieff JST dans appendice D (Kondratieff non-testable sur
+  JST, N≤151 < threshold 240). Cohérence 5 panels (BIS fusionné
+  dans Quarterly).
+
+Conclusion qualitative inchangée : cycles canoniques vivants sur
+les variables que la théorie prédit ; lecture universaliste
+sinusoïdale rejetée par BH-FDR.
+
 ### Working paper LaTeX "Cycles Refuted" — V1 ✅
 
 Premier papier académique formel du projet, livré sous forme PDF

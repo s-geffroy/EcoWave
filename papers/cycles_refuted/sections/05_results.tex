@@ -13,7 +13,7 @@ illustrative values appear in this section.
 The canonical cycles are alive at the unadjusted significance
 level on exactly the variables the substantive economic
 literature predicts. Across 1\,456 testable cells we observe
-163 unadjusted Gate~1 positives, a 2.2-fold excess over the
+166 unadjusted Gate~1 positives, a 2.3-fold excess over the
 null expectation of 73. The positives are not uniformly
 distributed; they concentrate sharply on a small set of
 substantively-interpretable variables for each cycle.
@@ -23,7 +23,7 @@ The protocol does not detect a canonical periodicity on every
 macroeconomic variable, and the joint collection of unadjusted
 positives does not survive Benjamini-Hochberg adjustment at FDR
 0.05 on the full grid at our surrogate counts (the
-\(p\)-value floor \(1/(B+1)\) at \(B\in\{200,300,500\}\)
+\(p\)-value floor \(1/(B+1)\) at \(B\in\{200,300,500,1000\}\)
 exceeds the BH critical threshold). The strong universalist
 sinusoidal-on-everything reading of the canonical cycles is
 therefore rejected on these panels; the variable-specific
@@ -42,19 +42,20 @@ originally proposed.
 \label{sec:juglar_results}
 
 On the JST R6 per-variable grid (18 advanced economies,
-605 testable Juglar cells, 1870--2020), \textbf{58 cells pass
-Gate~1 unadjusted (1.9-fold excess)}. The distribution of the
-positives is informative:
+605 testable Juglar cells, 1870--2020, \(B=1000\) surrogates),
+\textbf{67 cells pass Gate~1 unadjusted (2.2-fold excess)}. The
+distribution of the positives is informative:
 
 \begin{itemize}
 \item \texttt{LH\_INV} (investment-to-GDP) passes on 7 of 18
-  countries (\textbf{39\,\%}). Smallest \(p_1\) on Switzerland,
-  the Netherlands, Canada.
+  countries (\textbf{39\,\%}). Smallest \(p_1\) on Switzerland
+  and Canada (\(p_1=0.001\)).
 \item \texttt{LH\_XRUSD} (bilateral USD exchange rate) passes on
-  9 of 18 (\textbf{50\,\%}).
-\item \texttt{LH\_RCONS}, \texttt{LH\_UNRATE},
-  \texttt{LH\_BUSCREDIT}, \texttt{LH\_HPI} pass on \(\sim 4\) of
-  \(\sim 17\) each.
+  11 of 18 (\textbf{61\,\%}).
+\item \texttt{LH\_UNRATE} passes on 6 of 18 (\textbf{33\,\%}),
+  \texttt{LH\_BUSCREDIT} on 5 of 15 (\textbf{33\,\%}),
+  \texttt{LH\_RCONS}, \texttt{LH\_HPI},
+  \texttt{LH\_RGDP\_BARRO}, \texttt{LH\_DEBTGDP} on 4 each.
 \end{itemize}
 
 On BoE Millennium, the UK unemployment rate passes the
@@ -69,18 +70,18 @@ cycle reading of unemployment.
 \subsection{Kuznets (15--25y): the construction and demographic swing, vindicated}
 \label{sec:kuznets_results}
 
-On the JST R6 grid (529 testable Kuznets cells, 1870--2020),
-\textbf{57 cells pass Gate~1 unadjusted (2.2-fold excess)}.
-The concentration is striking:
+On the JST R6 grid (529 testable Kuznets cells, 1870--2020,
+\(B=1000\) surrogates), \textbf{51 cells pass Gate~1 unadjusted
+(1.9-fold excess)}. The concentration is striking:
 
 \begin{itemize}
-\item \texttt{LH\_HPI} (house prices) passes on \textbf{8 of
-  13 testable countries (62\,\%)}.
+\item \texttt{LH\_HPI} (house prices) passes on \textbf{6 of
+  13 testable countries (46\,\%)}.
 \item \texttt{LH\_POP} (population) passes on 7 of 18
   (\textbf{39\,\%}).
 \item \texttt{LH\_CREDIT} (total bank loans) on 7 of 17
-  (\textbf{41\,\%}); \texttt{LH\_MORT} and \texttt{LH\_DEBTGDP}
-  on 5 each.
+  (\textbf{41\,\%}); \texttt{LH\_MORT} on 5; \texttt{LH\_DEBTGDP}
+  and \texttt{LH\_CA} on 4.
 \end{itemize}
 
 On BoE Millennium, UK public debt / GDP passes (\(p_1=0.006\)).
@@ -100,8 +101,8 @@ aggregates, 8 indicators), 5 of 50 testable Kitchin cells pass
 unadjusted (2-fold excess). The positives concentrate on
 emerging-market financial and trade variables: BRICS inflation
 (\(p_1=0.008\)), BRICS financial flows (\(p_1=0.014\)), LIC
-investment (\(p_1=0.024\)), LMC and WLD trade (both around
-\(p_1\approx 0.05\)).
+investment (\(p_1=0.024\)), LMC trade (\(p_1=0.040\))
+and WLD trade (\(p_1=0.048\)).
 
 On the quarterly panel, \textbf{25 of 93 testable Kitchin
 cells pass Gate~1 unadjusted (5.3-fold excess over null)}, the

@@ -46,6 +46,10 @@ def main() -> None:
     parser.add_argument("--countries", default="",
                          help="comma-separated ISO3 codes (default: all)")
     parser.add_argument("--out", default="reports/jst_per_variable.json")
+    parser.add_argument("--checkpoint-every", type=int, default=0,
+                         help="Write partial output every N completed cells (0=never)")
+    parser.add_argument("--resume", action="store_true",
+                         help="If --out exists, skip cells already present in it")
     args = parser.parse_args()
 
     xlsx_path = Path(args.xlsx)
@@ -64,8 +68,41 @@ def main() -> None:
           f"{len(var_codes)} variables, {len(bands_to_run)} bands")
     print(f"Running ~{len(countries) * len(var_codes) * len(bands_to_run)} cells...")
 
-    cells = []
-    cell_count = 0
+    out_path = Path(args.out)
+    cells: list[dict] = []
+    done_keys: set[tuple[str, str, str]] = set()
+    if args.resume and out_path.exists():
+        try:
+            with out_path.open() as f:
+                prior = json.load(f)
+            cells = list(prior.get("cells", []))
+            done_keys = {(c["country"], c["variable"], c["cycle"]) for c in cells}
+            print(f"Resume: loaded {len(cells)} prior cells from {out_path}")
+        except Exception as e:
+            print(f"Resume failed ({e}); starting fresh")
+            cells = []
+            done_keys = set()
+
+    def write_partial() -> None:
+        out = {
+            "version": "v1",
+            "xlsx": str(xlsx_path),
+            "start_year": args.start_year,
+            "n_surrogates": args.n_surrogates,
+            "seed": args.seed,
+            "bands_run": bands_to_run,
+            "variables_run": var_codes,
+            "countries_run": countries,
+            "cells": cells,
+            "partial": True,
+        }
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = out_path.with_suffix(out_path.suffix + ".tmp")
+        with tmp.open("w") as f:
+            json.dump(out, f, indent=2)
+        tmp.replace(out_path)
+
+    cell_count = len(cells)
     for var_code in var_codes:
         if var_code not in JST_VARS:
             continue
@@ -88,6 +125,8 @@ def main() -> None:
                 lo, hi = BANDS[cycle]
                 if n < 4 * hi:
                     continue
+                if (country, var_code, cycle) in done_keys:
+                    continue
                 try:
                     d = dual_null(series, lo, hi, samples_per_year=1.0,
                                    n_surrogates=args.n_surrogates,
@@ -100,7 +139,13 @@ def main() -> None:
                         "reject_existence": bool(d["reject_cycle"])})
                     cell_count += 1
                     if cell_count % 200 == 0:
-                        print(f"  {cell_count} cells done")
+                        print(f"  {cell_count} cells done", flush=True)
+                    if (args.checkpoint_every > 0
+                            and cell_count % args.checkpoint_every == 0):
+                        write_partial()
+                        print(f"  checkpoint @ {cell_count}: wrote "
+                              f"{out_path.name} ({len(cells)} cells)",
+                              flush=True)
                 except Exception as e:
                     cells.append({
                         "country": country, "variable": var_code,
@@ -135,8 +180,8 @@ def main() -> None:
         "variables_run": var_codes,
         "countries_run": countries,
         "cells": cells,
+        "partial": False,
     }
-    out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open("w") as f:
         json.dump(out, f, indent=2)

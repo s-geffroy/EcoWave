@@ -80,7 +80,7 @@ penalty. Implementation: \path{ecowave/waves/model_d_regime.py}.
 \paragraph{Null~1: AR(1) bootstrap.}
 \begin{algorithmic}[1]
 \State Fit \(\hat\phi,\hat\mu,\hat\sigma\) on \(y\) by OLS.
-\For{\(b=1,\ldots,B=1000\)}
+\For{\(b=1,\ldots,B\)}
   \State Draw \(\epsilon^{(b)}_t\sim\mathcal{N}(0,\hat\sigma^2)\).
   \State Simulate \(y^{(b)}_t = \hat\mu + \hat\phi(y^{(b)}_{t-1}-\hat\mu)+\epsilon^{(b)}_t\).
   \State Compute band-power \(P_b\) of \(y^{(b)}\) on the canonical band.
@@ -91,7 +91,7 @@ penalty. Implementation: \path{ecowave/waves/model_d_regime.py}.
 \paragraph{Null~2: Phase-randomised surrogate (coherence test).}
 \begin{algorithmic}[1]
 \State Compute \(\hat y_k = \mathcal{F}[y]_k\) (DFT).
-\For{\(b=1,\ldots,B=1000\)}
+\For{\(b=1,\ldots,B\)}
   \State Draw new phases \(\theta^{(b)}_k\sim\mathrm{Uniform}[0,2\pi)\)
          with conjugate symmetry
          \(\theta^{(b)}_{T-k}=-\theta^{(b)}_k\).
