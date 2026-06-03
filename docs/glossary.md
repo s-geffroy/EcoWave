@@ -2,7 +2,7 @@
 
 !!! success "TL;DR"
 
-    Glossaire des termes techniques utilisés cross-track. Organisation alphabétique. Chaque entrée pointe vers une page détaillée. Termes les plus consultés : [CRPS](#crps-continuous-ranked-probability-score) · [Cluster C+B+D+I+S](#cluster-cbdis) · [Dual null](#dual-null) · [GPH](#gph-geweke-porter-hudak-1983) · [MSM](#msm-markov-switching-multifractal) · [ProbabilisticForecast](#probabilisticforecast).
+    Glossaire des termes techniques utilisés cross-track. Organisation alphabétique. Chaque entrée pointe vers une page détaillée. Termes les plus consultés : [ARFIMA-conditional verdict](#arfima-conditional-verdict-v3) · [Band-edge sensitivity (R4)](#band-edge-sensitivity-r4) · [CRPS](#crps-continuous-ranked-probability-score) · [Cluster C+B+D+I+S](#cluster-cbdis) · [Dual null](#dual-null-v3) · [GPH](#gph-geweke-porter-hudak-1983) · [MSM](#msm-markov-switching-multifractal) · [Reinhart-Rogoff debt chronology](#reinhart-rogoff-debt-chronology) · [Threshold transparency](#threshold-transparency).
 
 ## Index rapide
 
@@ -35,17 +35,63 @@ vers random walk si `|φ| ≥ 0.999`.
 ### ARFIMA(p, d, q)
 
 ARMA généralisé à intégration fractionnaire. `d ∈ (-0.5, 0.5)` capture
-la longue mémoire exacte. Notre implémentation est ARFIMA(0, d, 0)
+la longue mémoire exacte. Notre implémentation forecast est ARFIMA(0, d, 0)
 avec Markov regime-switching à 2 états sur le résidu. Voir
 [arfima_rs](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/arfima_rs.py).
 
+### ARFIMA(0, d̂_GPH, 0) null (V3)
+
+Second composant du dual null Gate 1 introduit en V3 (R1 referee TSE) :
+on simule `B` trajectoires sous un ARFIMA(0, d̂, 0) où `d̂` est estimé
+par GPH sur la série, on recalcule la puissance de bande CF, puis on
+rejette si la puissance empirique se trouve au-dessus du percentile
+`1 - α`. Remplace l'ancien phase-scrambling, qui était dégénéré par
+Parseval contre la puissance de bande. Critique parce que 97–100 %
+des cellules JST/BoE ont `|d̂| > 0.1` — l'AR(1) seul est
+mis-spécifié sur les niveaux bruts à mémoire longue. Voir
+[arfima_dual_null.md](methodology/arfima_dual_null.md).
+
+### ARFIMA-conditional verdict (V3)
+
+Le verdict load-bearing de Gate 1 sur les cellules à mémoire longue :
+quand un cell passe AR(1) mais échoue ARFIMA(0, d̂, 0), il est
+**déclassé comme faux positif long-memory**. Sur BoE, 16 cellules
+sont concernées. Quand il passe les deux nulls, la lecture
+substantive est **renforcée** (ex. UK chômage Juglar : *p*<sub>AR(1)</sub>
+= 0.004, *p*<sub>ARFIMA</sub> = 0.002 à d̂ = 0.49 ; UK dette
+publique Kondratieff : *p*<sub>AR(1)</sub> = 0.002, *p*<sub>ARFIMA</sub>
+= 0.022 à d̂ = +0.436).
+
 ## B
+
+### Band-edge sensitivity (R4)
+
+Test de robustesse introduit en V3 (recommandation R4 du referee TSE).
+On perturbe les bornes de la bande canonique de ±1 année pour
+Kitchin/Juglar et ±2 années pour Kuznets/Kondratieff, on relance
+Gate 1, on compare les pass-rates. Un cycle substantif survit aux
+quatre perturbations ; un artefact de bande s'effondre asymétriquement.
+**Exemple V3** : BoE Kitchin pass-rate 7.7 % sur [3,5] → **0 % sous
+[4,5]**, 16.9 % sous [3,6]. La cellule BoE Kitchin est **déclassée**
+comme artefact et exclue du support de la vindication Kitchin. Voir
+[band_sensitivity.md](methodology/band_sensitivity.md).
 
 ### BDS test (Brock-Dechert-Scheinkman 1996)
 
 Test non-paramétrique de non-linéarité contre l'hypothèse IID. Rejette
 sur ~75 % des cellules CPV. Composante de la famille D du cluster.
 Voir [diagnostics](dx_diagnostics.md).
+
+### Benjamini-Hochberg FDR (BH-FDR)
+
+Ajustement multi-comparaisons contrôlant le False Discovery Rate à un
+seuil cible (ici α = 0.05). Sur la grille jointe de 1 456 cellules
+testables (V3), le seuil critique est `p* = 0.05 / 1 456 ≈ 3.4·10⁻⁵`.
+Au surrogate count actuel `B ≤ 1 000`, le floor empirique
+`1 / (B + 1) ≈ 10⁻³` excède `p*` d'un ordre de grandeur. **Conséquence
+V3** : aucun positif individuel ne survit BH-FDR ; la lecture
+**universaliste** sinusoïdale-sur-tout est rejetée. La lecture
+**variable-spécifique** est lue sur Gate 1 unadjusted.
 
 ### Bry-Boschan
 
@@ -88,13 +134,19 @@ du benchmark Roadmap #20.
 ### Cycle Position Vector (CPV)
 
 Le pipeline de recherche reproductible qui :
-1. Teste les 4 cycles canoniques via 3 portes falsifiables (Gate 1
-   dual null + Gate 2 consensus + Gate 3 universalité).
-2. Identifie le cluster diagnostique C+B+D+I+S via 14 tests Tier 1+2.
+1. Teste les 4 cycles canoniques via Gate 1 dual null (AR(1) +
+   ARFIMA), Gate 2 consensus 4 méthodes, Gate 3 concordance
+   cross-agrégats, plus robustesses R4 (band-edge sensitivity) et
+   R5 (rolling-window).
+2. Identifie le cluster diagnostique C+B+D+I+S via 14 tests Tier 1+2
+   (companion paper en préparation).
 3. Bat random walk via les modèles HAR/ARFIMA+RS/MSM sur 78 % des
-   variables.
+   variables (companion paper).
 
-Voir [méthode complète](methodology/protocole_cpv.md).
+**Verdict V3** : trois cycles vindiqués sur canaux substantifs ;
+Kondratieff recasté chronologie Reinhart-Rogoff ; universalisme rejeté
+BH-FDR. Voir [méthode complète](methodology/protocole_cpv.md) et
+[papier V3](papers/cycles_refuted_v3.md).
 
 ## D
 
@@ -103,7 +155,16 @@ Voir [méthode complète](methodology/protocole_cpv.md).
 Paramètre de l'opérateur `(1-L)^d`. Pour `d ∈ (-0.5, 0.5)` le processus
 est stationnaire mais à longue mémoire. Estimé par GPH ou local-Whittle.
 Indicateur principal de la famille C du cluster. Voir
-[credibility radar](tracks/bc/credibility_radar.md).
+[credibility radar](tracks/bc/credibility_radar.md) et
+[diagnostics par cellule](methodology/long_memory_diagnostics.md).
+
+### DFA Hurst (Peng 1994)
+
+*Detrended Fluctuation Analysis*. Estimateur du paramètre de Hurst
+`H` (long memory : `H > 0.5`) résistant aux trends non-stationnaires.
+Composante des diagnostics par cellule V3 : sur JST R6, médiane
+`H = 1.76` ; sur BoE Millennium, `H = 1.64`. Voir
+[long_memory_diagnostics](methodology/long_memory_diagnostics.md).
 
 ### DSGE (Dynamic Stochastic General Equilibrium)
 
@@ -119,12 +180,16 @@ diagnostics non-cycliques Tier 1+2 (11 familles théoriques). Output
 JSON sidecars `reports/dx_diagnostics_*.json`. Voir
 [dx_diagnostics.md](dx_diagnostics.md).
 
-### Dual null
+### Dual null (V3)
 
-Le test Gate 1 du protocole CPV : la cellule passe ssi *les deux*
-nulls (AR(1) bootstrap + phase scrambling) rejettent l'hypothèse
-d'absence de cycle. Plus conservateur que chaque null individuel.
-Voir [trois portes](methodology/trois_portes.md).
+Le test Gate 1 du protocole CPV V3 : la cellule passe ssi *les deux*
+nulls rejettent — **AR(1) bootstrap** (primaire) et
+**ARFIMA(0, d̂_GPH, 0)** (robustesse long-memory, R1 referee TSE).
+L'ARFIMA est load-bearing sur les 97–100 % de cellules à `|d̂| > 0.1`.
+Le phase-scrambling, présent en V1/V2, est désormais rapporté en
+diagnostic mais ne gate pas le verdict (dégénéré par Parseval contre
+la puissance de bande). Voir
+[arfima_dual_null.md](methodology/arfima_dual_null.md).
 
 ## E
 
@@ -160,21 +225,29 @@ formaliser S + I du cluster. Couvre 3/5 piliers. Voir
 
 ## G
 
-### Gate 1 / Gate 2 / Gate 3
+### Gate 1 / Gate 2 / Gate 3 (V3)
 
 Les trois portes falsifiables du protocole CPV :
-- **Gate 1** : dual null (AR(1) + phase scramble)
+- **Gate 1** : dual null **AR(1) + ARFIMA(0, d̂_GPH, 0)**
 - **Gate 2** : consensus 4 méthodes (3/4)
-- **Gate 3** : universalité cross-aggregates (4/5)
+- **Gate 3** : concordance cross-agrégats (compte des agrégats
+  WLD/HIC/UMC/LMC/LIC qui s'accordent, sans traiter l'asymétrie
+  comme un échec — pas un test d'universalité par construction
+  en V3)
 
-Voir [méthode trois portes](methodology/trois_portes.md).
+S'y ajoutent **deux robustesses** V3 : R4 band-edge sensitivity et
+R5 rolling-window Gate 1 50–80y. Voir
+[méthode trois portes](methodology/trois_portes.md).
 
 ### GPH (Geweke-Porter-Hudak 1983)
 
 Estimateur de `d` par régression log-periodogramme :
 `log I(λ_j) = c - d log(4 sin²(λ_j/2)) + ε_j` pour les basses
-fréquences. Bandwidth `m = T^{0.5}` ou `T^{0.8}`. Voir
-[fractional.py](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/fractional.py).
+fréquences. Bandwidth `m = T^{0.5}` ou `T^{0.8}`. Utilisé en V3 pour
+alimenter le null ARFIMA(0, d̂_GPH, 0) et comme diagnostic par
+cellule. Voir
+[fractional.py](https://github.com/s-geffroy/EcoWave/blob/main/ecowave/forecasting/fractional.py)
+et [long_memory_diagnostics](methodology/long_memory_diagnostics.md).
 
 ## H
 
@@ -213,11 +286,18 @@ CPI, monnaie). Source principale du panel `long`. Voir
 
 ## K
 
-### Kitchin / Juglar / Kuznets / Kondratieff
+### Kitchin / Juglar / Kuznets / Kondratieff (V3)
 
 Les 4 cycles canoniques de la macroéconomie classique (3-5, 7-11,
-15-25, 40-60 ans). Aucun ne survit aux 3 portes CPV sur les 6 panels
-testés. Voir [Kitchin](cycles/kitchin.md) et pages connexes.
+15-25, 40-60 ans). **Verdict V3** : trois cycles **vindiqués** sur
+les canaux substantifs prédits — Juglar (investissement + chômage,
+67 / 605 JST, 2.2×), Kuznets (HPI + population + crédit, 51 / 529,
+1.9×), Kitchin (crédit BIS marchés émergents, 25 / 93, 5.3×).
+**Kondratieff recasté** chronologie Reinhart-Rogoff de dette de
+guerre (2 cellules UK BoE uniquement). Lecture universaliste
+sinusoïdale-sur-tout rejetée BH-FDR. Voir
+[Kitchin](cycles/kitchin.md) · [Juglar](cycles/juglar.md) ·
+[Kuznets](cycles/kuznets.md) · [Kondratieff](cycles/kondratieff.md).
 
 ### Kolmogorov-Smirnov (KS)
 
@@ -303,8 +383,10 @@ pénalité linéaire. L'une des 4 méthodes votantes de Gate 2.
 
 Méthode de simulation de surrogates : on randomise les phases de la
 DFT en préservant le module (donc le spectre de puissance). Préserve
-les propriétés linéaires de second ordre mais détruit la phase. L'un
-des 2 nulls de Gate 1.
+les propriétés linéaires de second ordre mais détruit la phase.
+**Statut V3** : rapporté en diagnostic mais ne gate plus le verdict
+Gate 1 (dégénéré par Parseval contre la puissance de bande). Remplacé
+par ARFIMA(0, d̂_GPH, 0) dans le dual null.
 
 ### `ProbabilisticForecast`
 
@@ -322,6 +404,29 @@ G7Q et OECDQ). Sources : FRED, Eurostat, OECD/IFS. Voir
 [sources](sources.md).
 
 ## R
+
+### Reinhart-Rogoff debt chronology
+
+Lecture substantive V3 du seul positif Kondratieff (UK dette
+publique + dette gouv. centrale, BoE Millennium 1700-2016). Le signal
+40-60y émerge du **espacement des grandes guerres** (Napoléon ~1815,
+Crimée, WWI, WWII) et des phases d'amortissement entre, **pas** d'un
+mécanisme économique endogène à la Kondratieff. Réf. Reinhart & Rogoff
+(2009) *This Time Is Different*. Le rolling-window heat map (R5)
+localise la puissance maximale exactement post-1815 et post-1945,
+windows que la lecture R-R anticipe. Voir [Kondratieff](cycles/kondratieff.md).
+
+### Rolling-window Gate 1 (R5)
+
+Test de robustesse introduit en V3 (recommandation R5 du referee TSE).
+On applique Gate 1 sur des fenêtres glissantes de 50 ans (200 ans
+pour Kondratieff) avec step 25 ans, pour cartographier la présence
+temporelle du cycle. **Exemple V3** : Kondratieff sur BoE pass-rate
+14.1 % (40 / 284 fenêtres 80y), modestement élevé au-dessus du
+nominal 5 %, compatible avec une présence intermittente plutôt qu'une
+cyclicité stationnaire ; les fenêtres les plus puissantes sont
+post-1815 (amortissement napoléonien) et post-1945 (build-up WWII).
+Voir [rolling_window_gates.md](methodology/rolling_window_gates.md).
 
 ### Reflexivity (Soros)
 
@@ -378,6 +483,31 @@ failures. Sources de la page consolidée. Voir
 
 ## T
 
+### Théorique faux positif (LH_XRUSD)
+
+Concept V3 (section 5.2 du papier `Cycles Refuted`). Une cellule qui
+passe Gate 1 mais dont le passage n'est pas prédit par la théorie
+substantive qu'on prétend vindiquer. **Exemple V3** : le taux de
+change bilatéral USD (LH_XRUSD) passe Juglar sur 11 / 18 pays JST
+(61 %, plus grande concentration single-variable du bloc Juglar),
+mais Juglar (Juglar 1862 ; Schumpeter 1939) attribue le cycle à
+l'investissement et au crédit, **sans rôle direct pour le taux de
+change bilatéral USD**. Cellule retenue dans le compteur pour
+transparence, **exclue** de la claim « investissement-et-chômage »
+de la headline.
+
+### Threshold transparency
+
+Engagement V3 (recommandation R10 du referee TSE) : les bornes des
+bandes cycles, surrogate counts, gate thresholds et regroupements
+d'agrégats sont **figés dans l'historique Git public avant
+ingestion des panels**. **Distincte** d'une pre-registration formelle
+(OSF, AEA RCT Registry) qui requiert un timestamp tiers hors du
+contrôle du chercheur. La V3 emploie « threshold transparency » pour
+ce niveau d'engagement et réserve « pre-registration » pour le sens
+formel — non revendiqué pour l'analyse présente, mais engagé
+prospectivement pour la réplication out-of-sample post-2024.
+
 ### Tsallis non-extensivity
 
 Famille de distributions q-Gaussiennes paramétrées par `q`. `q = 1` =
@@ -387,11 +517,16 @@ Gaussienne. `q > 1` = queues lourdes. Identifiée empiriquement sur
 
 ## U
 
-### Universalité (Gate 3)
+### Universalité (Gate 3, V3)
 
-Critère du triple-gate CPV : un cycle est qualifié `universal` ssi
-≥ 4 / 5 agrégats de revenu (WLD, HIC, UMC, LMC, LIC) partagent la
-même phase modale. Sinon `regional` ou `idiosyncratic`.
+Critère du triple-gate CPV. **Reformulation V3** : Gate 3 compte
+combien d'agrégats de revenu (WLD, HIC, UMC, LMC, LIC) s'accordent
+sur la phase modale, **sans traiter l'asymétrie comme un échec**.
+La lecture **universaliste sinusoïdale-sur-tout** (un seul cycle
+canonique pour toutes les variables, toutes les fenêtres) est
+testée *séparément* par BH-FDR sur la grille jointe, et est rejetée
+en V3. Sinon `regional` ou `idiosyncratic`. Voir aussi
+[BH-FDR](#benjamini-hochberg-fdr-bh-fdr).
 
 ## V
 
@@ -401,24 +536,41 @@ Quantile prédictif à un seuil de confiance (typiquement 99 %).
 Utilisé par Bâle II. Critiqué pour non-cohérence sous-additive et
 sous-estimation des queues sous distributions non-gaussiennes.
 
-### Verdict consolidé
+### Verdict consolidé (companion paper)
 
 Page `docs/forecast_benchmark.md` générée par `ecowave
 forecast-benchmark-consolidate` à partir des 6 sidecars par panel.
-Affiche pass rate global, table par panel, leaderboard cluster,
-lecture qualitative.
+Affiche pass rate global (78 % en mai 2026), table par panel,
+leaderboard cluster, lecture qualitative. Verdict du **papier
+compagnon en préparation**, distinct du verdict V3 *Cycles Refuted*.
+
+### Verdict V3 (cycles)
+
+Verdict du papier `papers/cycles_refuted/` V3 (juin 2026, post-referee
+TSE). Sur 1 456 cellules testables, 166 positifs Gate 1 unadjusted
+(2.3× excès). Trois cycles vindiqués sur canaux substantifs ;
+Kondratieff recasté chronologie Reinhart-Rogoff ; lecture universaliste
+rejetée BH-FDR. Voir [résumé portail](papers/cycles_refuted_v3.md) et
+les 4 pages cycles.
 
 ## W
 
-### Working paper V1 vs V2
+### Working paper V1 vs V2 vs V3
 
 V1 : `docs/papers/cpv_main_paper.md`, ~10 000 mots, décembre 2025,
 **dramaturgie réfutation-first** (les 4 cycles sont morts → cluster).
-Archivé.
+**Archivé** (la thèse de réfutation totale a été révisée).
 
 V2 : `docs/tracks/acad/paper_v2_academic.md`, ~4 500 mots,
 **dramaturgie constructive** (benchmark PASS 78 % → cluster →
 réfutation comme conséquence). Cible AER/JME/QJE.
+
+V3 (papier LaTeX *Cycles Refuted*) : `papers/cycles_refuted/`, juin
+2026, **dramaturgie variable-spécifique + recast Kondratieff**.
+Trois cycles vindiqués sur les canaux substantifs prédits ;
+Kondratieff recasté chronologie Reinhart-Rogoff ; lecture
+universaliste rejetée BH-FDR. Cible *Physica A* / *Journal of
+Economic Behavior & Organization*. Voir [résumé V3](papers/cycles_refuted_v3.md).
 
 ## ψ (psi)
 

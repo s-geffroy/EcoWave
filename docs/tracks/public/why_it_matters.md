@@ -1,8 +1,12 @@
 # Pourquoi ça compte
 
+!!! info "Mise à jour V3 (juin 2026)"
+
+    Le verdict V3 raffine la thèse : ce qui change est la lecture **« un cycle unique pour toutes les variables »**. Trois cycles substantifs **survivent** sur leurs canaux propres (Juglar / Kuznets / Kitchin), Kondratieff devient une chronologie de dette de guerre. Les implications pratiques ci-dessous sont **renforcées** par la lecture variable-spécifique : on peut continuer à parler de cycle Juglar pour l'investissement, de cycle Kuznets pour le crédit immobilier, etc., tant qu'on ne sur-généralise pas. Voir [résumé V3](../../papers/cycles_refuted_v3.md).
+
 !!! success "TL;DR"
 
-    Accepter que la macroéconomie n'est pas cyclique change **5 choses concrètes** : (1) la **crédibilité monétaire** devient mesurable en temps réel via `d` GPH ; (2) les **booms de crédit ont des ombres très longues** que Bâle III sous-estime ; (3) le **VaR sous-estime les queues**, l'ES doit être recalibré sur Tsallis/Lévy (20-40 % plus élevé) ; (4) les **prévisions publiques** (SPF, FOMC, BMPE) sont battables au-delà de 3 trimestres ; (5) **DSGE n'est pas mort** mais doit être révisé structurellement.
+    Accepter que la macroéconomie n'est **pas universellement cyclique** (mais que trois cycles substantifs survivent sur leurs canaux propres) change **5 choses concrètes** : (1) la **crédibilité monétaire** devient mesurable en temps réel via `d` GPH ; (2) les **booms de crédit ont des ombres très longues** que Bâle III sous-estime ; (3) le **VaR sous-estime les queues**, l'ES doit être recalibré sur Tsallis/Lévy (20-40 % plus élevé) ; (4) les **prévisions publiques** (SPF, FOMC, BMPE) sont battables au-delà de 3 trimestres ; (5) **DSGE n'est pas mort** mais doit être révisé structurellement.
 
 ## Dans cette page
 

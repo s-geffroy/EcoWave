@@ -1,8 +1,12 @@
 # Implications du verdict CPV — modélisation, prévision, politique, théorie
 
+!!! info "Mise à jour V3 (juin 2026) — implications recadrées"
+
+    Cette page cartographie les implications du **pilier 2 (cluster CBDIS)** documenté dans le papier compagnon en préparation. Le **pilier 1 (V3 *Cycles Refuted*)** ajoute en parallèle : Juglar / Kuznets / Kitchin **vindiqués** sur leurs canaux substantifs (donc les implications BC sur le crédit Juglar, l'investissement Schumpeter, le Kitchin EM, etc. sont *renforcées* par la lecture variable-spécifique), et **Kondratieff recasté** comme chronologie Reinhart-Rogoff (les implications « long-wave endogène » sont à reformuler en termes de chronologie de dette de guerre). Voir [résumé V3](../papers/cycles_refuted_v3.md).
+
 > *"Macroeconomic dynamics are a fractional, multifractal, non-linear
 > long-memory process with cognitive regime drift."*
-> — Working paper CPV §5.1
+> — Working paper compagnon CPV §5.1
 
 Le sprint Roadmap #15 a livré une signature empirique sur 9 436 cellules
 diagnostiques : le **cluster C+B+D+I+S**. Cette page cartographie ce que

@@ -1,6 +1,18 @@
 # Diagnostics non-cycliques — au-delà des cycles, structure statistique du panel
 
-> **Pourquoi cette page existe.** Le pipeline CPV a rejeté les 4 cycles canoniques (Kitchin, Juglar, Kuznets, Kondratieff) sur 100 % des cellules après les garde-fous Roadmap #14 — cf. [Évidence par variable](evidence_per_variable.md). Cette défaite empirique posée, la question devient : **si pas un cycle, quoi alors ?** La page panoramique [Au-delà des cycles — cadres physiques alternatifs](methodology_beyond_cycles.md) recense 21 familles ; **la présente page implémente le Tier 1 — 10 diagnostics couvrant 10 des 21 familles**, plus une famille de panel-level (G — RMT). Chaque diagnostic est scoré contre un null AR(1) ou phase-scramble pour reproduire la philosophie Gate 1 sur le terrain non-cyclique.
+> **Pourquoi cette page existe.** Le pipeline CPV V3 a rejeté la **lecture universaliste** sinusoïdale-sur-tout des 4 cycles canoniques (BH-FDR sur grille jointe 1 456 cellules) — tout en **vindiquant trois cycles substantifs** sur les variables que la théorie prédit (Juglar / Kuznets / Kitchin) et **recastant Kondratieff** comme chronologie de dette Reinhart-Rogoff. Cf. [verdict V3 portail](papers/cycles_refuted_v3.md) et [évidence par variable](evidence_per_variable.md). La question devient : **à côté de ces trois cycles vindiqués, quelle structure non-cyclique porte le reste du signal ?** La page panoramique [Au-delà des cycles — cadres physiques alternatifs](methodology_beyond_cycles.md) recense 21 familles ; **la présente page implémente le Tier 1 — 10 diagnostics couvrant 10 des 21 familles**, plus une famille de panel-level (G — RMT). Chaque diagnostic est scoré contre un null AR(1) ou phase-scramble pour reproduire la philosophie Gate 1 sur le terrain non-cyclique.
+
+> **Lien avec V3 : long-memory.** Les diagnostics par cellule
+> [ADF · KPSS · GPH *d̂* · DFA Hurst](methodology/long_memory_diagnostics.md)
+> sont la couche de **diagnostics structurels par cellule** ajoutée en
+> V3 (R1 referee TSE) : 97-100 % des cellules JST R6 / BoE Millennium
+> ont `|d̂| > 0.1`, ce qui motive le **dual null AR(1) + ARFIMA(0, *d̂*, 0)**
+> ([détail](methodology/arfima_dual_null.md)). Les diagnostics
+> Tier 1+2 ci-dessous étendent cette couche structurelle aux 10
+> familles non-cycliques. Le diagnostic `hurst_dfa` ci-dessous est
+> conceptuellement aligné avec le diagnostic V3 *Ĥ*<sub>DFA</sub>
+> mais opère sur les composites z-scorés, tandis que le diagnostic
+> V3 opère sur les niveaux bruts par cellule.
 
 **Lecture de l'encart 🟢🟡🟠🔴.** 🟢 = p ≤ 0.01 (diagnostic rejette le null avec haute confiance) · 🟡 = 0.01 < p ≤ 0.05 (rejet standard CPV) · 🟠 = 0.05 < p ≤ 0.10 (marginal) · 🔴 = p > 0.10 (compatible avec le null). Statistique = valeur observée du diagnostic ; on en tire l'orientation de la famille physique.
 

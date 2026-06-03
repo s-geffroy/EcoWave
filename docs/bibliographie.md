@@ -36,6 +36,13 @@ composante transversale.*
 
 ## B
 
+### Baillie (1996) {#baillie1996}
+
+Baillie, R. T. (1996). Long memory processes and fractional integration
+in econometrics. *Journal of Econometrics*, 73(1), 5–59. *Survey de
+référence sur les processus ARFIMA en économétrie. Justification de
+l'usage du null ARFIMA(0, d̂_GPH, 0) en V3 sur séries macro.*
+
 ### Baaquie (2004) {#baaquie-2004}
 
 Baaquie, B. E. (2004). *Quantum finance: path integrals and Hamiltonians
@@ -212,6 +219,13 @@ trivial. Définit l'ε-machine minimale. Fondement théorique de la
 
 ## D
 
+### Dickey & Fuller (1979) {#dickey_fuller1979}
+
+Dickey, D. A., & Fuller, W. A. (1979). Distribution of the estimators
+for autoregressive time series with a unit root. *Journal of the
+American Statistical Association*, 74(366a), 427–431. *Test ADF de
+référence pour la racine unitaire. Diagnostic par cellule V3.*
+
 ### Dakos et al. (2008) {#dakos-2008}
 
 Dakos, V., Scheffer, M., van Nes, E. H., Brovkin, V., Petoukhov, V., &
@@ -270,6 +284,22 @@ modélisation d'agents économiques qui inférent et anticipent. Pilier
 de la "Famille S" (avec Soros).*
 
 ## G
+
+### Geweke & Porter-Hudak (1983) {#geweke-porter-hudak1983}
+
+Geweke, J., & Porter-Hudak, S. (1983). The estimation and application of
+long memory time series models. *Journal of Time Series Analysis*, 4(4),
+221–238. *Estimateur GPH du paramètre `d` de différenciation
+fractionnaire par régression log-périodogramme. Utilisé en V3 pour
+alimenter le null ARFIMA(0, d̂_GPH, 0) et comme diagnostic par cellule.*
+
+### Granger & Joyeux (1980) {#granger-joyeux1980}
+
+Granger, C. W. J., & Joyeux, R. (1980). An introduction to long-memory
+time series models and fractional differencing. *Journal of Time Series
+Analysis*, 1(1), 15–29. *Article fondateur des modèles ARFIMA(p, d, q).
+Distinction long-memory stationnaire vs. unit-root. Cadre du null ARFIMA
+V3.*
 
 ### Garvy (1943) {#garvy-1943}
 
@@ -411,6 +441,14 @@ Juglar, C. (1862). *Des crises commerciales et de leur retour périodique en
 France, en Angleterre et aux États-Unis*. Guillaumin.
 
 ## K
+
+### Kwiatkowski, Phillips, Schmidt & Shin (1992) {#kpss1992}
+
+Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., & Shin, Y. (1992).
+Testing the null hypothesis of stationarity against the alternative of a
+unit root. *Journal of Econometrics*, 54(1-3), 159–178. *Test KPSS dual
+de l'ADF (nulle = stationnaire, alternative = unit-root). Diagnostic par
+cellule V3.*
 
 ### Killick, Fearnhead & Eckley (2012) {#killick-fearnhead-eckley-2012}
 
@@ -769,6 +807,15 @@ Summers, L. H. (2014). U.S. economic prospects: secular stagnation,
 hysteresis, and the zero lower bound. *Business Economics*, 49(2), 65–73.
 
 ## T
+
+### Toutain (1997) {#toutain1997}
+
+Toutain, J.-C. (1997). Le produit intérieur brut de la France de 1789 à
+1990. *Economies et Sociétés*, Série Histoire Économique Quantitative,
+HEQ 1, INSEE / ISMEA. *Reconstruction historique du PIB français
+1789-1990 et de séries fiscales associées. Source candidate pour
+l'extension cross-country du verdict V3 sur la chronologie Reinhart-Rogoff
+de dette de guerre (hors UK).*
 
 ### Takens (1981) {#takens-1981}
 

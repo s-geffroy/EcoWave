@@ -1,8 +1,12 @@
 # Paper V2 — La macroéconomie comme cascade falsifiable
 
+!!! info "Mise à jour V3 (juin 2026) — papier V2 = draft du *companion paper*"
+
+    Le présent paper V2 est le **draft du papier compagnon en préparation** (cluster CBDIS + benchmark PASS 78 %), **distinct du V3 *Cycles Refuted*** déjà publié. Le V3 a recadré le verdict sur les 4 cycles : **trois sont vindiqués** sur les variables substantives prédites (Juglar / Kuznets / Kitchin), **Kondratieff est recasté** Reinhart-Rogoff, **lecture universaliste rejetée** par BH-FDR. Ce paper V2 retient ses propres claims sur le cluster mais doit être lu en complément, pas en substitution, du V3. Voir [résumé V3 portail](../../papers/cycles_refuted_v3.md).
+
 !!! success "TL;DR"
 
-    Sur **68 séries macroéconomiques** spanning **1700-2024** sur **6 panels**, trois modèles statistiques (Calvet-Fisher MSM, Bhardwaj-Swanson ARFIMA+RS, Corsi HAR) **battent random walk en out-of-sample CRPS à h = 12 sur 78 %** des variables. Ce résultat est cohérent avec une **signature empirique cluster C+B+D+I+S** (long memory, multifractality, non-linearity, structured information, reflexive regime drift) qui co-apparaît sur > 60 % des cellules. Conséquence : les **4 cycles canoniques** (Kitchin, Juglar, Kuznets, Kondratieff) échouent systématiquement à un triple-gate falsifiable sur les mêmes 6 panels. Les modèles DSGE New-Keynesian doivent être révisés structurellement (chocs ARFIMA, Markov layer, queues Tsallis/Lévy). La synthèse théorique unifiée des 5 piliers reste ouverte — AMH + Friston + MRW sont les candidats.
+    Sur **68 séries macroéconomiques** spanning **1700-2024** sur **6 panels**, trois modèles statistiques (Calvet-Fisher MSM, Bhardwaj-Swanson ARFIMA+RS, Corsi HAR) **battent random walk en out-of-sample CRPS à h = 12 sur 78 %** des variables. Ce résultat est cohérent avec une **signature empirique cluster C+B+D+I+S** (long memory, multifractality, non-linearity, structured information, reflexive regime drift) qui co-apparaît sur > 60 % des cellules. La **lecture universaliste sinusoïdale-sur-tout** des 4 cycles canoniques (Kitchin, Juglar, Kuznets, Kondratieff) est rejetée par BH-FDR sur la grille jointe ; **trois cycles vindiqués sur les variables substantives** prédites (V3 *Cycles Refuted*) coexistent avec le cluster. Les modèles DSGE New-Keynesian doivent être révisés structurellement (chocs ARFIMA, Markov layer, queues Tsallis/Lévy). La synthèse théorique unifiée des 5 piliers reste ouverte — AMH + Friston + MRW sont les candidats.
 
 *Working paper académique. Version 2.0. ~4 500 mots. Dramaturgie constructive : commence par le verdict opérationnel, puis dérive la signature empirique, puis présente la méthode, puis discute la réfutation des cycles comme conséquence.*
 

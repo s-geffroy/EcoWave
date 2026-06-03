@@ -1,14 +1,26 @@
 # Évidence par variable — où le cycle survit-il quand on ne moyenne pas ?
 
-> **Thèse centrale CPV.** Quand Gate 1 rejette un cycle sur un agrégat composite, c'est cohérent avec la littérature critique moderne ([Wen 2005](bibliographie.md#wen-2005), [Solomou 1987](bibliographie.md#solomou-1987), [Maddison 1991](bibliographie.md#maddison-1991)) qui montre que les cycles canoniques sont **étroits** : ils survivent sur des séries sectorielles spécifiques (inventaire, investissement, crédit, prix), pas sur des composites macro. Cette page démonte le composite et publie Gate 1 sur **chaque variable individuellement**.
+> **Thèse centrale V3 (juin 2026).** Quand Gate 1 rejette un cycle sur un agrégat composite, c'est cohérent avec la littérature critique moderne ([Wen 2005](bibliographie.md#wen-2005), [Solomou 1987](bibliographie.md#solomou-1987), [Maddison 1991](bibliographie.md#maddison-1991)) qui montre que les cycles canoniques sont **étroits** : ils survivent sur des séries sectorielles spécifiques (inventaire, investissement, crédit, prix), pas sur des composites macro. Cette page démonte le composite et publie Gate 1 sur **chaque variable individuellement**.
 
-## Résultat global
+!!! success "Résultat V3 — la lecture variable-spécifique tient pour trois cycles"
 
-Sur **1584 cellules** testées au total (variable × agrégat × cycle, 3 horizons), seules **21 survivent Gate 1** dual-null à α = 0.05 — soit **1.3%**.
+    Source : `papers/cycles_refuted/sections/{00_abstract,05_results}.tex`.
 
-**Comparaison avec les composites** (cf. [home dashboard](index.md#ou-en-sommes-nous)) : Gate 1 sur les agrégats composites laisse passer environ 25-30% des cellules. L'écart s'explique mécaniquement — sommer plusieurs séries z-scorées crée des artefacts de variance autocorrélée qui battent un null AR(1), même quand aucune des séries n'a individuellement de signal cyclique. **C'est exactement le diagnostic posé par [Wen (2005)](bibliographie.md#wen-2005) sur le cycle d'inventaire et par [Solomou (1987)](bibliographie.md#solomou-1987) sur Kuznets/Kondratieff il y a 40 et 20 ans respectivement.**
+    Sur la grille V3 des **1 456 cellules testables** (panel × group × variable × cycle, 5 panels), **166 cellules passent Gate 1 unadjusted** (excès **2.3× sur null**) — concentrées sur les canaux substantifs prédits par chaque théorie d'origine :
 
-**Implication pour le protocole CPV.** Cette page ne remplace pas le dashboard composite (qui répond à *"que fait le cycle quand il survit ?"*). Elle le **stress-teste** : si une cellule survit sur le composite mais pas sur aucune de ses variables constituantes, le composite hallucine et la cellule devrait être réinterprétée. À l'inverse, si une variable individuelle survit isolément (`Q_PRD` Kondratieff, `CY_INV` Kitchin, `CY_GDP` Kuznets ci-dessous), c'est la **fenêtre sectorielle** où le cycle persiste — exactement la lecture des découvreurs (Kitchin sur l'inventaire, Kuznets sur la construction, etc.).
+    | Cycle | Pass / testable | Excès | Canal porteur principal |
+    |---|---|---|---|
+    | **Juglar** | 67 / 605 JST + 12 / 55 Q | 2.2-4.3× | LH_INV 39 %, chômage G7Q/OECDQ |
+    | **Kuznets** | 51 / 529 JST | 1.9× | LH_HPI 46 %, LH_POP 39 %, LH_CREDIT 41 % |
+    | **Kitchin** | 25 / 93 BIS Q + 5 / 50 WB + 3 / 26 sectoral | 5.3× (BIS) | crédit BIS EM (KR/CN/MX/ZA/TR/RU/ID) |
+    | **Kondratieff** | 2 / 16 BoE UK | n/a | UK dette publique + centrale brute → recasté R-R |
+    | **Total** | **166 / 1 456** | **2.3×** | |
+
+    **Ce qui est rejeté** : la lecture **universaliste sinusoïdale-sur-tout** (un seul cycle pour toutes les variables) ne survit pas l'ajustement Benjamini-Hochberg FDR au seuil α = 0.05 sur la grille jointe. Le seuil critique *p\** = 0.05 / 1 456 ≈ 3.4×10⁻⁵ ; le floor empirique 1/(B+1) au surrogate count actuel (B ≤ 1 000) est d'un ordre de grandeur au-dessus de *p\**.
+
+    **Comparaison composite vs per-variable** : Gate 1 sur les agrégats composites laisse passer environ 25–30 % des cellules. L'écart s'explique mécaniquement — sommer plusieurs séries z-scorées crée des artefacts de variance autocorrélée qui battent un null AR(1), même quand aucune des séries n'a individuellement de signal cyclique. **C'est exactement le diagnostic posé par [Wen (2005)](bibliographie.md#wen-2005) sur le cycle d'inventaire et par [Solomou (1987)](bibliographie.md#solomou-1987) sur Kuznets/Kondratieff il y a 40 et 20 ans respectivement.** Le [garde-fou Roadmap #14](methodology_safeguard_roadmap_14.md) clôt cette faille.
+
+**Tableaux détaillés ci-dessous (run précédent B=200, conservés à titre indicatif).** Les chiffres exhaustifs cycle-par-cycle (B=1 000 surrogates) sont dans le [résumé V3 portail](papers/cycles_refuted_v3.md) et dans `papers/cycles_refuted/sections/05_results.tex`.
 
 ## Lecture
 

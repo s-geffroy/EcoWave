@@ -1,8 +1,12 @@
 # Le cycle est mort, vive la cascade
 
-!!! success "TL;DR"
+!!! warning "Mise à jour V3 (juin 2026) — titre partiellement obsolète"
 
-    Depuis cent ans, on enseigne aux étudiants en économie que la macroéconomie est rythmée par 4 cycles emboîtés (Kitchin 3-5 ans, Juglar 7-11 ans, Kuznets 15-25 ans, Kondratieff 40-60 ans). **C'est faux** : aucun ne survit à un test statistique rigoureux sur 9 436 cellules de 6 panels macro (1700-2024). Ce qui prend la place est plus intéressant : une **cascade fractale non-linéaire à mémoire longue**. Et la preuve opérationnelle : des modèles cascade **battent random walk sur 78 % de 68 variables macro**.
+    Le verdict V3 raffine la thèse : ce qui est mort, c'est la lecture **« un seul cycle pour toutes les variables »**. **Trois cycles substantifs** (Juglar, Kuznets, Kitchin) restent vivants sur exactement les variables que leur théorie prédit. **Kondratieff est recasté** comme chronologie de dette de guerre Reinhart-Rogoff. La cascade fractale est désormais une **signature complémentaire** qui co-existe avec les trois cycles vindiqués, pas leur substitut. Voir [résumé V3](../../papers/cycles_refuted_v3.md). Essai conservé pour son intérêt pédagogique sur la lecture universaliste qui *est* effectivement morte.
+
+!!! success "TL;DR — version V3"
+
+    Depuis cent ans, on enseigne aux étudiants en économie que la macroéconomie est rythmée par 4 cycles **universels** (Kitchin 3-5 ans, Juglar 7-11 ans, Kuznets 15-25 ans, Kondratieff 40-60 ans). La lecture **universaliste** (un même cycle pour toute série macro) **est fausse** : elle ne survit pas à Benjamini-Hochberg FDR sur 1 456 cellules. Mais les trois premiers cycles **vivent bel et bien** sur les variables qu'ils sont supposés décrire — c'est la lecture **variable-spécifique** qui tient. Kondratieff devient une chronologie de dette de guerre. À côté, une signature complémentaire émerge : la **cascade fractale non-linéaire à mémoire longue**, qui co-existe avec les trois cycles. Preuve opérationnelle : des modèles cascade **battent random walk sur 78 % de 68 variables macro**.
 
 *Essai pour lecteur éclairé. ~2 500 mots, prêt à être lu d'une vue.*
 

@@ -1,10 +1,18 @@
-# Où se situe le monde en 2026-05 dans les 4 cycles canoniques ?
+# Banque mondiale annuel (1960-2024) — position cyclique 2026-05
 
 > Note signée — sortie du protocole CPV (Cycle Position Vector).
 > Méthode : CF band-pass + Morlet wavelet + Hilbert phase + Markov-switching
-> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus
-> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir
-> `methodology/multi_cycle_decomposition.md` pour la spécification complète.
+> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1) + ARFIMA en V3, consensus
+> méthodologique ≥3/4, concordance cross-group). Voir
+> [protocole CPV](../methodology/protocole_cpv.md) pour la spécification complète.
+
+!!! info "Mise à jour V3 (juin 2026) — WB capture Kitchin EM sur trade/inflation"
+
+    Verdicts V3 (source : `papers/cycles_refuted/sections/05_results.tex`) :
+
+    - **Kitchin** : 5 / 50 cellules WB passent Gate 1 unadjusted (excès 2×). Positifs sur agrégats EM : BRICS inflation (*p*<sub>1</sub> = 0.008), BRICS financial flows (*p*<sub>1</sub> = 0.014), LIC investment (*p*<sub>1</sub> = 0.024), LMC trade (*p*<sub>1</sub> = 0.040), WLD trade (*p*<sub>1</sub> = 0.048). Cohérent avec la lecture BIS quarterly (5.3× excès) : Kitchin vit sur agrégats émergents et trade/inflation, pas sur PIB composite.
+    - **Kuznets / Kondratieff** : WB est **window-bound** (N max = 65 ans < seuil [Torrence & Compo 1998](../bibliographie.md#torrence-compo-1998) ≥ 240 obs.). La Porte 1 rejette structurellement, sans préjuger du signal substantif (testable sur BoE Millennium ou JST).
+    - **Long-memory** : la médiane *|d̂|* sur WB est plus basse que sur JST/BoE (sample courts), mais le pattern AR(1) mis-spécifié reste présent. Voir [diagnostics par cellule](../methodology/long_memory_diagnostics.md).
 
 ## Glossaire des agrégats
 

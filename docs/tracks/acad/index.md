@@ -1,8 +1,13 @@
 # Académique
 
-!!! success "TL;DR"
+!!! success "TL;DR (V3, juin 2026)"
 
-    Pour économistes théoriciens, DSGE community, philosophes de l'économie. CPV est une **réfutation falsifiable** du paradigme cycle + équilibre intertemporel, doublée d'une **signature empirique alternative robuste** (cluster C+B+D+I+S sur 9 436 cellules). Le benchmark out-of-sample valide 3 modèles qui reproduisent cette signature (MSM, ARFIMA+RS, HAR) qui battent random walk sur **78 % de 68 variables**. Conséquence : **DSGE New-Keynesian standard doit être révisé structurellement** (chocs ARFIMA, Markov layer paramètres deep, queues Tsallis/Lévy).
+    Pour économistes théoriciens, DSGE community, philosophes de l'économie. CPV se compose désormais de **deux papiers parallèles** :
+
+    1. **Papier publié — *Cycles Refuted* V3** : trois cycles canoniques **vindiqués** sur les variables substantives prédites (Juglar 67/605 JST 2.2× ; Kuznets 51/529 JST 1.9× ; Kitchin 25/93 BIS Q 5.3×). **Kondratieff recasté** chronologie Reinhart-Rogoff (UK dette seule). **Lecture universaliste** sinusoïdale-sur-tout **rejetée** par BH-FDR sur grille jointe 1 456 cellules. Voir [résumé portail](../../papers/cycles_refuted_v3.md).
+    2. **Papier compagnon en préparation** : signature empirique **cluster C+B+D+I+S** sur > 60 % des cellules. Benchmark out-of-sample valide 3 modèles cluster (MSM, ARFIMA+RS, HAR) qui battent random walk sur **78 % de 68 variables**. Conséquence : DSGE New-Keynesian standard doit être révisé structurellement (chocs ARFIMA, Markov layer paramètres deep, queues Tsallis/Lévy).
+
+    Les six pages de cette track restent organisées autour du **papier compagnon** (cluster + DSGE + AMH/Friston/MRW + 5 prédictions falsifiables) ; le verdict sur les quatre cycles canoniques **suit** le V3 *Cycles Refuted*.
 
 ## Dans cette page
 
@@ -17,7 +22,7 @@
 
 ```mermaid
 flowchart TD
-    C1[Claim 1<br/>4 cycles canoniques<br/>statistiquement morts]
+    C1[Claim 1<br/>3 cycles vindiqués + K recasté<br/>universalisme rejeté]
     C2[Claim 2<br/>Cluster C+B+D+I+S<br/>signature empirique stable]
     C3[Claim 3<br/>Benchmark cluster<br/>bat RW à 78%]
     C4[Claim 4<br/>DSGE requiert<br/>3 modifications structurelles]
@@ -35,9 +40,9 @@ flowchart TD
 
 | # | Claim | Statut |
 |---|---|---|
-| 1 | Kitchin/Juglar/Kuznets/Kondratieff échouent au triple-gate sur 6 panels | **Démontré** (0 / 9 436 cellules survivent) |
-| 2 | Cluster C+B+D+I+S co-apparaît sur ≥ 60 % des cellules | **Démontré** (14 diagnostics Tier 1+2) |
-| 3 | 3 modèles cluster battent RW out-of-sample CRPS sur 78 % des variables | **Démontré** (PASS 78 %, robuste à n_origins) |
+| 1 | **V3** : 3 cycles vindiqués (Juglar/Kuznets/Kitchin) sur canaux substantifs ; Kondratieff recasté chronologie Reinhart-Rogoff ; lecture universaliste rejetée BH-FDR | **Démontré** ([Cycles Refuted V3](../../papers/cycles_refuted_v3.md), 166 / 1 456 Gate 1 unadjusted, 2.3× excès) |
+| 2 | Cluster C+B+D+I+S co-apparaît sur ≥ 60 % des cellules | **Démontré** (14 diagnostics Tier 1+2 — companion paper) |
+| 3 | 3 modèles cluster battent RW out-of-sample CRPS sur 78 % des variables | **Démontré** (PASS 78 %, robuste à n_origins — companion paper) |
 | 4 | DSGE requiert 3 modifications structurelles | **Argumenté** (programme 2-3 ans documenté) |
 | 5 | AMH + Friston + MRW = candidats synthèse théorique | **Ouvert** (aucun n'unifie seul les 5 piliers) |
 

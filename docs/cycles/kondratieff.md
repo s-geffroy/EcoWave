@@ -1,13 +1,41 @@
 # Kondratieff (40–60 ans)
 
-> **Résumé.** L'onde longue. [Kondratieff (1925)](../bibliographie.md#kondratieff-1925)
+!!! warning "Verdict V3 (juin 2026) — Kondratieff *recasté*, pas vindiqué comme long-wave endogène"
+
+    Source : `papers/cycles_refuted/sections/{01_introduction,05_results,07_conclusion}.tex`.
+
+    **Le résultat le plus délicat du papier.** Seul **BoE Millennium 1700–2016** admet un test Kondratieff (les autres panels sont window-bound : WB max *N* = 65, JST max *N* = 151, Quarterly encore plus court ; [Torrence & Compo 1998](../bibliographie.md#torrence-compo-1998) requièrent ≥ 2.5 périodes complètes pour Gate 1, soit ≥ 100–150 ans et ≥ 240 obs. annuelles sur 40-60y).
+
+    **Sur les 16 séries UK long-enough du BoE Millennium, seules deux séries de dette UK passent Gate 1** :
+
+    | Cellule | *p*<sub>AR(1)</sub> | *p*<sub>ARFIMA</sub> | *d̂*<sub>GPH</sub> |
+    |---|---|---|---|
+    | UK dette publique (public-sector debt) | 0.002 | **0.022** | +0.436 |
+    | UK dette centrale brute (central-gov gross) | 0.032 | **0.048** | +0.468 |
+
+    **Toutes les autres séries UK Kondratieff-éligibles** (PIB réel, CPI, prix de gros, salaires réels, Bank Rate, actions, population) échouent Gate 1 sur les deux nulls, avec *p*<sub>1</sub> ∈ [0.10, 0.99].
+
+    !!! info "Recast Reinhart-Rogoff : chronologie de dette de guerre"
+
+        À l'inspection, la série UK debt/GDP 1700-2016 est **dominée par quatre chocs fiscaux exogènes** : pic de financement des guerres napoléoniennes (~1815), guerre de Crimée, deux guerres mondiales — séparés par des phases d'amortissement. Ce pattern est plus proche de la lecture **public-debt cycle** de [Reinhart & Rogoff (2009)](../bibliographie.md#reinhart-rogoff-2009) — où la période émerge de l'espacement des grandes guerres — que de la **long-wave endogène** de [Kondratieff (1925)](../bibliographie.md#kondratieff-1925) ou de [Schumpeter (1939)](../bibliographie.md#schumpeter-1939) (innovation, crédit, prix agricoles).
+
+        Le null **ARFIMA(0, *d̂*, 0)** est crucial : *d̂*<sub>GPH</sub> est proche du clipping bound long-memory sur les deux séries de dette, donc l'AR(1) seul est mis-spécifié. La survie au null ARFIMA convertit ce qui aurait pu être un signal AR(1)-only en un finding **two-independent-nulls** robuste à la mémoire longue.
+
+        Le **rolling-window R5** (Gate 1 sur fenêtres glissantes 80y, step 40y, 284 fenêtres) donne un pass-rate Kondratieff de 14.1 % (40 / 284), modestement élevé au-dessus du nominal 5 %, **compatible avec une présence intermittente** plutôt qu'une cyclicité stationnaire sur 1700-2016. La heat-map localise la puissance maximale **post-1815** (amortissement napoléonien) et **post-1945** (build-up WWII) — windows que la lecture R-R anticipe.
+
+    **Ce que V3 ne revendique pas** : une vindication de la long-wave endogène de Kondratieff sur les variables macro qu'il aurait reconnues (PIB réel, CPI, salaires, actions, population — toutes échouent les deux nulls sur BoE). « Kondratieff » est conservé comme **nom de bande** (40–60y) par convention, **pas comme support à la théorie substantive**.
+
+    **Ce qui falsifierait ou élargirait le verdict** : une réplication cross-country avec des séries de dette longues hors-UK (Toutain France [Toutain 1997](../bibliographie.md#toutain1997), Allemagne, Pays-Bas) trancherait entre signature multi-pays de financement-guerre vs. artefact spécifique à l'empire britannique (priorité d'extension V4).
+
+> **Résumé historique.** L'onde longue. [Kondratieff (1925)](../bibliographie.md#kondratieff-1925)
 > l'identifie à partir de séries de niveau de prix et de taux d'intérêt ;
 > elle est ensuite associée à des clusters d'innovation techno-économique
 > ([Schumpeter, 1939](../bibliographie.md#schumpeter-1939) ;
 > [Mensch, 1979](../bibliographie.md#mensch-1979)) et à des super-cycles de
-> prix de matières premières. C'est la bande où le verrou du *small-N* est
-> le plus aigu sur le panel WB ; le panel d'histoire longue
-> (Maddison + JST, 1870-2022) permet de la trancher proprement.
+> prix de matières premières. **V3 ré-encadre** le résultat sur BoE
+> comme chronologie de dette de guerre Reinhart-Rogoff plutôt que comme
+> vindication de la long-wave endogène ; les autres panels sont
+> window-bound.
 
 ## Diagramme de phase polaire — panel d'histoire longue (1870-2022)
 

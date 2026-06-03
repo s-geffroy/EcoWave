@@ -1,8 +1,12 @@
 # La méthode CPV pour les praticiens
 
+!!! info "Mise à jour V3 (juin 2026) — verdict variable-spécifique + dual null AR(1)+ARFIMA"
+
+    Le protocole CPV V3 a évolué : **dual null AR(1) + ARFIMA(0, *d̂*<sub>GPH</sub>, 0)** au Gate 1 (la variante AR(1) seule était mis-spécifiée sur les 97-100 % de cellules à mémoire longue, cf. [diagnostics](../../methodology/long_memory_diagnostics.md)). Le verdict V3 est **variable-spécifique** : trois cycles vindiqués (Juglar sur investissement/chômage, Kuznets sur HPI/population/crédit, Kitchin sur crédit BIS EM), Kondratieff recasté Reinhart-Rogoff, lecture universaliste rejetée BH-FDR. Voir [résumé V3](../../papers/cycles_refuted_v3.md). Engagement V3 : « **threshold transparency** » (Git tags pré-ingestion) au lieu de « pre-registration » formelle.
+
 !!! success "TL;DR"
 
-    Pour praticiens BC : CPV est un **complément diagnostique** rigoureux et falsifiable, pas une refonte de votre modèle officiel. Le protocole **3 portes** (dual null + consensus 4 méthodes + universalité 4/5) teste les cycles canoniques sur 6 panels. Verdict : Kitchin/Juglar/Kuznets/Kondratieff échouent systématiquement. Implication pratique : vos modèles DSGE qui supposent AR(1) chocs, paramètres deep stables, distributions gaussiennes sous-estiment 3 effets clés (persistance, régimes, queues).
+    Pour praticiens BC : CPV est un **complément diagnostique** rigoureux et falsifiable, pas une refonte de votre modèle officiel. Le protocole **3 portes V3** (dual null AR(1)+ARFIMA + consensus 4 méthodes + concordance cross-agrégats, plus robustesses R4 band-edge sensitivity et R5 rolling-window) teste les cycles canoniques sur 5 panels indépendants. Verdict V3 : Juglar / Kuznets / Kitchin **vindiqués** sur leurs canaux substantifs ; Kondratieff **recasté** chronologie de dette de guerre Reinhart-Rogoff ; lecture universaliste rejetée. Implication pratique : vos modèles DSGE qui supposent AR(1) chocs, paramètres deep stables, distributions gaussiennes sous-estiment 3 effets clés (persistance, régimes, queues).
 
 ## Dans cette page
 

@@ -1,14 +1,22 @@
 # Au-delà des cycles — cadres physiques alternatifs pour les séries macroéconomiques
 
-> **Résumé.** Le pipeline CPV a démontré empiriquement que les cycles
-> canoniques Kitchin / Juglar / Kuznets / Kondratieff sont indétectables
-> au niveau strictement statistique — ni sur composites, ni sur variables
-> individuelles, ni même sur les séries originales que les découvreurs
-> ont étudiées. Cette défaite empirique est la base du papier académique
-> et ne doit pas être quittée. Mais les séries macroéconomiques ne sont
-> **pas du bruit blanc** : ACF lag-1 ≈ 1.000, agglomération de la
-> volatilité, ruptures structurelles, lois de puissance dans les
-> distributions de crashes — autant de signatures de *quelque chose*.
+> **Résumé.** Le pipeline CPV a démontré empiriquement que la lecture
+> **universaliste sinusoïdale-sur-tout** des cycles canoniques
+> Kitchin / Juglar / Kuznets / Kondratieff est rejetée par
+> Benjamini-Hochberg FDR sur la grille jointe (V3) — il n'y a pas
+> d'horloge cyclique unique au cœur de toute série macro.
+> Simultanément, **trois cycles substantifs vindiqués** émergent sur
+> les variables que la théorie d'origine prédit (Juglar sur
+> investissement/chômage, Kuznets sur HPI/population/crédit, Kitchin
+> sur crédit BIS marchés émergents) et **Kondratieff est recasté**
+> comme chronologie Reinhart-Rogoff de dette de guerre (V3
+> [résumé](papers/cycles_refuted_v3.md)). Cette page documente le
+> programme **complémentaire** : si la lecture universaliste est
+> rejetée, quelles signatures *non-cycliques* portent la dynamique
+> macro ? Le pipeline CPV a démontré que les séries macroéconomiques
+> ne sont **pas du bruit blanc** : ACF lag-1 ≈ 1.000, agglomération
+> de la volatilité, ruptures structurelles, lois de puissance dans
+> les distributions de crashes — autant de signatures de *quelque chose*.
 > Cette page passe en revue **21 familles de cadres physiques
 > candidats** (15 initiales + 6 ajoutées dans l'extension : cascades
 > K41, universalité/MaxEnt, diffusion anormale, réflexivité,
@@ -24,20 +32,22 @@
 > Le papier reste falsifiabiliste — on multiplie les cadres pour ne
 > pas tomber dans un nouveau dogme.
 
-## Préambule — si pas un cycle, quoi alors ?
+## Préambule — si pas un cycle universaliste, quoi alors ?
 
 La chaîne d'audits CPV (cf. études de cas
 [CN_BIS](case_study_cn_bis_kondratieff.md),
 [WLD-WB](case_study_wld_wb_kondratieff.md),
 [G7-long & UK_BOE](case_study_g7_long_uk_boe_kondratieff.md),
 [Wen 2005 falsifié](case_study_wen_2005_test.md) +
-[safeguard Roadmap #14](methodology_safeguard_roadmap_14.md)) établit :
+[safeguard Roadmap #14](methodology_safeguard_roadmap_14.md))
+et le verdict V3 ([Cycles Refuted V3 portail](papers/cycles_refuted_v3.md))
+établissent :
 
-- **Composites macro** : 35 cellules vetoed sur 128, 4 survies authentiques.
-- **Per-variable Gate 1** : ~5000 cellules testées toutes bandes confondues, 1.5 % de survie globale (et après safeguard quasi-zéro).
-- **Séries originales de Kitchin (1923)** : 0/44 cellules survivent sur le panel sectoriel `SH_*` (charbon, fonte, fret, blé, coton).
+- **Composites macro** : 35 cellules vetoed sur 128 (Roadmap #14), 4 survies authentiques composite — toutes recastées en V3 comme survies *per-variable* sur les canaux substantifs (Juglar/Kuznets/Kitchin), pas comme survies universalistes.
+- **Per-variable Gate 1 (V3)** : sur 1 456 cellules testables, 166 positifs Gate 1 unadjusted (excès 2.3×) concentrés sur les variables que la théorie substantive prédit. Mais **0 cellule** ne survit à l'ajustement Benjamini-Hochberg FDR α = 0.05 sur la grille jointe (floor 1/(B+1) > p* = 3.4·10⁻⁵).
+- **Séries originales de Kitchin (1923)** : sur le panel sectoriel `SH_*`, 3 / 26 cellules passent Gate 1 unadjusted (US wheat *p*<sub>1</sub> = 0.040, US WPI *p*<sub>1</sub> = 0.015, world coal *p*<sub>1</sub> = 0.020), zéro après BH-FDR — cohérent avec la lecture Wen (2005) que les cycles vivent sur des séries d'inventaire dédiées plutôt que sur composites macro, mais distinguabilité borderline sur ces agrégats historiques spécifiques.
 
-Aucune périodicité statistiquement défendable n'émerge.
+Conclusion : la lecture **universaliste sinusoïdale-sur-tout** est rejetée ; la lecture **variable-spécifique** est tenue pour trois cycles ; Kondratieff est recasté Reinhart-Rogoff. Le programme « au-delà des cycles » ci-dessous documente une signature non-cyclique **complémentaire**, qui pourrait porter la dynamique macro à côté des trois cycles substantifs vindiqués.
 
 Pourtant les signatures qu'on observe ne sont pas celles du bruit blanc :
 

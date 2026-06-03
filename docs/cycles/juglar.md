@@ -1,12 +1,25 @@
 # Juglar (7–11 ans)
 
-> **Résumé.** Le « cycle des affaires » classique.
+!!! success "Verdict V3 (juin 2026) — Juglar empiriquement vivant"
+
+    Source : `papers/cycles_refuted/sections/{01_introduction,05_results}.tex`.
+
+    - **JST R6 (1870–2020, 18 économies avancées)** : **67 / 605 cellules** passent Gate 1 unadjusted, soit **2.2× l'excès sur null**. Concentration :
+        - `LH_INV` (investissement-PIB) : **39 % des pays** (7 / 18). Plus petites *p*<sub>1</sub> sur Suisse et Canada (*p*<sub>1</sub> = 0.001).
+        - `LH_UNRATE` : **33 %** (6 / 18). `LH_BUSCREDIT` : **33 %** (5 / 15). `LH_RCONS`, `LH_HPI`, `LH_RGDP_BARRO`, `LH_DEBTGDP` : 4 chacune.
+    - **Quarterly (1995–2024)** : **12 / 55 cellules** (4.3× excès) — G7Q / OECDQ / GBR / JPN chômage, US et EA long-term yields, ZA / MX / KR crédit.
+    - **BoE Millennium UK chômage** survit aux **deux nulls** : *p*<sub>AR(1)</sub> = 0.004, *p*<sub>ARFIMA</sub> = 0.002 à *d̂* = 0.49 ; idem real USD-GBP exchange rate (*p*<sub>AR(1)</sub> = 0.006, *p*<sub>ARFIMA</sub> = 0.002 à *d̂* = 0.428).
+    - **Théorique faux positif `LH_XRUSD`** : passe sur 11 / 18 (61 %, plus grosse concentration single-variable Juglar) mais le mécanisme substantif Juglar n'attribue pas de rôle direct au taux de change bilatéral USD ; cellule **retenue pour transparence, exclue** de la claim « investissement-et-chômage ».
+
+    **Lecture V3** : la vindication substantive de [Juglar (1862)](../bibliographie.md#juglar-1862) et de [Schumpeter (1939)](../bibliographie.md#schumpeter-1939) sur l'investissement-credit channels est tenue ; la lecture universaliste (un Juglar sur toutes les variables macro) reste rejetée par BH-FDR sur la grille jointe.
+
+> **Résumé historique.** Le « cycle des affaires » classique.
 > [Juglar (1862)](../bibliographie.md#juglar-1862) l'identifie sur les
 > données bancaires et commerciales françaises ;
 > [Schumpeter (1939)](../bibliographie.md#schumpeter-1939) le popularise
 > comme cycle d'investissement fixe et de crédit. C'est la bande sur
-> laquelle CPV produit ses verdicts les plus solides en mai 2026, avec
-> une divergence économique observée entre USA/ANGLO (expansion) et
+> laquelle CPV produit ses verdicts les plus solides en juin 2026 (V3),
+> avec une divergence économique observée entre USA/ANGLO (expansion) et
 > NORDIC (contraction profonde).
 
 ## Diagramme de phase polaire — panel Banque mondiale 2026

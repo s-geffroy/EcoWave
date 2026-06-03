@@ -1,8 +1,12 @@
 # Ce qui remplace les cycles
 
+!!! info "Mise à jour V3 (juin 2026) — page recadrée comme *complément*, pas substitut"
+
+    En V3, le verdict s'est affiné : la lecture **universaliste** des cycles est rejetée, mais **trois cycles substantifs sont vindiqués** sur leurs canaux propres. Le cluster des 5 propriétés ci-dessous est donc à lire comme **signature complémentaire** qui co-existe avec les trois cycles vindiqués (Juglar, Kuznets, Kitchin), pas comme leur substitut. Le projet a désormais deux papiers en parallèle : *Cycles Refuted V3* (publié, vindication variable-spécifique + Kondratieff recasté Reinhart-Rogoff) et un *companion paper en préparation* (cluster CBDIS + benchmark PASS 78 %). Voir [résumé V3](../../papers/cycles_refuted_v3.md).
+
 !!! success "TL;DR"
 
-    À la place des cycles, **5 propriétés statistiques** apparaissent **partout** dans les séries macro : **C** longue mémoire (les chocs s'éteignent lentement, comme dans un fleuve, pas un étang) ; **B** multifractalité (la texture des fluctuations diffère selon l'échelle, comme une côte rocheuse vue d'avion vs à pied) ; **D** non-linéarité (cause et effet ne sont pas proportionnels) ; **I** information structurée (prédictibilité partielle exploitable) ; **S** dérive de régime cognitif (les croyances changent le système — Soros). Métaphore unificatrice : la **cascade en turbulence**.
+    À côté des trois cycles substantifs vindiqués, **5 propriétés statistiques** apparaissent **dans la plupart** des séries macro : **C** longue mémoire (les chocs s'éteignent lentement, comme dans un fleuve, pas un étang) ; **B** multifractalité (la texture des fluctuations diffère selon l'échelle, comme une côte rocheuse vue d'avion vs à pied) ; **D** non-linéarité (cause et effet ne sont pas proportionnels) ; **I** information structurée (prédictibilité partielle exploitable) ; **S** dérive de régime cognitif (les croyances changent le système — Soros). Métaphore unificatrice : la **cascade en turbulence**.
 
 ## Dans cette page
 

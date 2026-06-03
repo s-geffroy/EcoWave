@@ -16,10 +16,10 @@
 | $\varphi(t)$ | Phase instantanée de Hilbert | rad $\in (-\pi, \pi]$ |
 | $A(t)$ | Amplitude instantanée de Hilbert | sans dim. |
 | $P_{\text{band}}$ | Puissance dans la bande CF | sans dim. |
-| $p_{\text{dual}}$ | $p$-value combinée (AR(1) + scramble de phase) | $\in [0, 1]$ |
+| $p_{\text{dual}}$ | $p$-value combinée (AR(1) + ARFIMA(0, $\hat d_{\mathrm{GPH}}$, 0)) | $\in [0, 1]$ |
 | $\alpha$ | Seuil de rejet du null | $0.05$ |
 
-## Bandes de cycle (pré-enregistrées, figées)
+## Bandes de cycle (threshold transparency, figées)
 
 | Cycle | Bande de période (années) | Référence |
 |---|---|---|
@@ -82,22 +82,32 @@ cosinus, pic à $\varphi = 0$) :
 
 Règle figée dans `PHASE_BOUNDS` (dans `phase.py`).
 
-## Étape 4 — null de surrogate (Porte 1, existence)
+## Étape 4 — null de surrogate (Porte 1, existence) — V3 dual
 
-Implémentation : `ecowave/cycles/surrogate.py`. Trois variantes :
+Implémentation : `ecowave/cycles/surrogate.py`. **Dual null V3** :
 
 - `ar1_bootstrap_null` — ajuste un AR(1) de mêmes moyenne / variance /
   persistance que la série, simule $B = 1\,000$ trajectoires, compare la
-  puissance dans la bande après filtrage CF.
+  puissance dans la bande après filtrage CF (**primaire**).
+- `arfima_bootstrap_null` — simule sous ARFIMA(0, $\hat d_{\mathrm{GPH}}$, 0)
+  via récursion Hosking, compare la puissance dans la bande
+  (**robustesse long-memory**, R1 referee TSE).
 - `phase_scramble_null` — préserve le spectre, randomise les phases
   ([Theiler *et al.*, 1992](../bibliographie.md#theiler-et-al-1992)).
-- `dual_null` — exige le rejet sous **les deux** nulls simultanément
-  (conservatif).
+  **Statut V3 : diagnostique uniquement, ne gate plus le verdict** car
+  dégénéré par Parseval contre la puissance de bande.
 
-Si $p_{\text{dual}} \geq \alpha$, le cycle n'est pas distinguable du bruit
-auto-corrélé et la cellule est publiée `phase = rejected`, `separable = 0`,
-`ar1_p_value = p`. Référence : [Torrence & Compo (1998)](../bibliographie.md#torrence-compo-1998) ;
-[Grinsted *et al.* (2004)](../bibliographie.md#grinsted-moore-jevrejeva-2004).
+Si $p_{1,\mathrm{AR(1)}} \geq \alpha$, le cycle n'est pas distinguable
+du bruit auto-corrélé et la cellule est publiée `phase = rejected`. Si
+$p_{1,\mathrm{AR(1)}} < \alpha$ mais $p_{1,\mathrm{ARFIMA}} \geq \alpha$
+avec $|\hat d| > 0.1$, la cellule est **déclassée comme faux positif
+long-memory**. Voir [arfima_dual_null.md](arfima_dual_null.md) et
+[long_memory_diagnostics.md](long_memory_diagnostics.md).
+
+Référence : [Torrence & Compo (1998)](../bibliographie.md#torrence-compo-1998) ;
+[Grinsted *et al.* (2004)](../bibliographie.md#grinsted-moore-jevrejeva-2004) ;
+[Granger & Joyeux (1980)](../bibliographie.md#granger-joyeux1980) ;
+Hosking (1981) ; [Baillie (1996)](../bibliographie.md#baillie1996).
 
 ## Étape 5 — consensus inter-méthode (Porte 2)
 
@@ -116,14 +126,33 @@ s'accordent ; sinon la cellule est `phase = disputed`. Le désaccord est
 **publié explicitement** dans la table de votes par méthode
 (`cycle_consensus`) et jamais résolu en choisissant une méthode « amicale ».
 
-## Étape 6 — universalité cross-groupes (Porte 3)
+## Étape 6 — concordance cross-agrégats (Porte 3)
 
 Implémentation : `ecowave/cycles/universality.py:compute_cross_group_concordance`.
 
-Pour chaque cycle et chaque mois `as_of`, le cycle est qualifié `universal`
-seulement si $\geq 4$ agrégats de revenu sur 5 (WLD + HIC + UMC + LMC + LIC)
-partagent la même phase modale. Sinon le cycle est `regional / idiosyncratic`
-et le drapeau `cycle_universality.universal` vaut 0.
+Pour chaque cycle et chaque mois `as_of`, Gate 3 compte combien
+d'agrégats de revenu (WLD + HIC + UMC + LMC + LIC) partagent la même
+phase modale. En V3, Gate 3 **ne traite pas l'asymétrie comme un échec
+de gate** : la lecture universaliste sinusoïdale-sur-tout est testée
+*séparément* par **BH-FDR sur la grille jointe** des 1 456 cellules
+(`p* = 0.05 / 1456 ≈ 3.4·10⁻⁵`), et rejetée parce que le floor
+empirique `1/(B+1)` est d'un ordre de grandeur au-dessus de `p*` aux
+surrogate counts actuels (`B ≤ 1 000`). Le drapeau
+`cycle_universality.universal` reste publié comme diagnostic
+cross-agrégat ; le verdict universaliste est lu sur le BH-FDR.
+
+## Étape 7 — robustesses V3 (R4 + R5)
+
+Implémentation : `scripts/band_sensitivity.py` et
+`scripts/rolling_window_gates.py`.
+
+- **R4 band-edge sensitivity** : Gate 1 relancé sous perturbation
+  ±1y (Kitchin/Juglar) / ±2y (Kuznets/Kondratieff) des bornes
+  canoniques. Sortie : `reports/band_sensitivity.json`. Voir
+  [band_sensitivity.md](band_sensitivity.md).
+- **R5 rolling-window** : Gate 1 sur fenêtres glissantes 50–80y avec
+  step 25–40y. Sortie : `reports/rolling_window_gates.json`. Voir
+  [rolling_window_gates.md](rolling_window_gates.md).
 
 ## Variables ingérées (Banque mondiale)
 
@@ -164,8 +193,12 @@ Voir [Sources & données](../sources.md).
   `endpoint_caveat = 1`.
 - **Fréquence annuelle WB** : Kitchin (3–5 ans) est borderline ; la bande
   basse 3 ans est inutilisable annuellement (Nyquist).
-- **Small-N Kondratieff (WB)** : WB démarre en 1960, soit $\approx 1.0$–$1.5$
-  K-wave. Le panel long-history (1870-2022) permet de retrouver K3 et K4.
+- **Small-N Kondratieff** : WB (max *N* = 65) et JST (max *N* = 151) sont
+  window-bound et **ne peuvent pas tester Kondratieff** ([Torrence & Compo 1998](../bibliographie.md#torrence-compo-1998) requièrent ≥ 240 obs. annuelles sur 40–60y). Seul **BoE Millennium 1700-2016** admet ce test en V3.
+- **AR(1) mis-spécifié sur niveaux long-mémoire** : 97–100 % des
+  cellules JST R6 / BoE Millennium ont $|\hat d| > 0.1$ ; la lecture
+  load-bearing sur ces cellules est l'ARFIMA-conditional. Voir
+  [long_memory_diagnostics.md](long_memory_diagnostics.md).
 
 ## Références
 

@@ -1,8 +1,12 @@
 # Expliqué en 5 minutes
 
+!!! info "Mise à jour V3 (juin 2026)"
+
+    Le verdict publié en juin 2026 est plus nuancé que cette page initiale ne le présente : ce n'est pas que **les cycles sont faux**, c'est que la lecture **« un cycle pour tout »** est fausse. Trois cycles (Juglar, Kuznets, Kitchin) survivent sur les variables qu'ils sont supposés décrire ; Kondratieff devient une chronologie de **dette de guerre**. Voir [résumé V3](../../papers/cycles_refuted_v3.md).
+
 !!! success "Ce que vous saurez à la fin"
 
-    Pourquoi ce qu'on enseigne sur l'économie depuis cent ans est probablement **faux**, ce qu'on a découvert à la place, et pourquoi ça change concrètement la prévision des crises. Sans aucun jargon.
+    Pourquoi ce qu'on enseigne sur l'économie depuis cent ans est **partiellement faux** (la lecture universaliste), ce qui survit (trois cycles substantifs sur leurs canaux propres), et pourquoi ça change concrètement la prévision des crises. Sans aucun jargon.
 
 *Niveau : zéro background en économie. Si vous savez ce qu'est une crise, vous pouvez lire.*
 

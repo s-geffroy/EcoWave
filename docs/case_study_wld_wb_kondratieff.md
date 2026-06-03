@@ -1,5 +1,9 @@
 # Étude de cas — WLD-WB Kondratieff : trends agrégées simulant un demi-K-cycle
 
+!!! info "Contexte V3 (juin 2026)"
+
+    Cette étude de cas date de l'audit ayant abouti au garde-fou [Roadmap #14](methodology_safeguard_roadmap_14.md). La conclusion (« composite WLD-WB Kondratieff = artefact de trends agrégées ») reste valide. Elle est cohérente avec le verdict V3 du papier *Cycles Refuted* : la **lecture universaliste sinusoïdale-sur-tout** est rejetée par BH-FDR, et le seul positif Kondratieff au niveau per-variable est **UK dette BoE**, recasté **chronologie Reinhart-Rogoff** de dette de guerre. WB panel reste window-bound sur Kondratieff (N max = 65 ans < seuil ≥ 240 obs.). Voir [résumé V3](papers/cycles_refuted_v3.md).
+
 > **Résumé exécutif.** Après le démasquage de [CN_BIS Kondratieff comme
 > artefact d'agrégation](case_study_cn_bis_kondratieff.md), le même
 > protocole appliqué à `WLD-WB Kondratieff p=0.001` (le seul autre

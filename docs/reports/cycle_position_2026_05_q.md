@@ -1,10 +1,19 @@
-# Où se situe le monde en 2026-05 dans les 4 cycles canoniques ?
+# Trimestriel (Path 5, 1995-2024) — position cyclique 2026-05
 
 > Note signée — sortie du protocole CPV (Cycle Position Vector).
 > Méthode : CF band-pass + Morlet wavelet + Hilbert phase + Markov-switching
-> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus
-> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir
-> `methodology/multi_cycle_decomposition.md` pour la spécification complète.
+> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1) + ARFIMA en V3, consensus
+> méthodologique ≥3/4, concordance cross-group). Voir
+> [protocole CPV](../methodology/protocole_cpv.md) pour la spécification complète.
+
+!!! success "Mise à jour V3 (juin 2026) — chômage avancé porte le verdict Juglar trimestriel"
+
+    Verdicts V3 (source : `papers/cycles_refuted/sections/05_results.tex`) :
+
+    - **Juglar** : **12 / 55 cellules** Gate 1 unadjusted (**4.3× excès**). Concentration : chômage **G7Q / OECDQ / GBR / JPN** ; **US et EA long-term yields** ; crédit **ZA / MX / KR**. Pattern cohérent avec la lecture business-cycle classique de chômage et le mécanisme investissement-crédit Schumpeter.
+    - **Kitchin** : passe sur agrégats trimestriels EM (cf. panel BIS quarterly, 25 / 93 cellules 5.3× excès) ; chômage économies avancées à *p*<sub>1</sub> ≈ 0.01.
+    - **Kuznets** : panel trimestriel **ne peut pas tester Kuznets** (15-25 ans requiert N > 400 trimestres ; max 2 307 sur G7Q en-deçà du seuil [Torrence & Compo 1998](../bibliographie.md#torrence-compo-1998) pour le plus long agrégat, et bien en-deçà pour les pays individuels).
+    - **Kondratieff** : non-testable sur trimestriel (window-bound).
 
 ## Glossaire des agrégats
 

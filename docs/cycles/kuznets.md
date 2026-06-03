@@ -1,6 +1,23 @@
 # Kuznets (15–25 ans)
 
-> **Résumé.** La vague infrastructure / démographie.
+!!! success "Verdict V3 (juin 2026) — Kuznets empiriquement vivant"
+
+    Source : `papers/cycles_refuted/sections/{01_introduction,05_results}.tex`.
+
+    Sur le panel **JST R6 1870–2020** (529 cellules testables, *B* = 1 000 surrogates), **51 cellules passent Gate 1 unadjusted**, soit **1.9× l'excès sur null**. Concentration sur les canaux substantifs prédits par [Kuznets (1930)](../bibliographie.md#kuznets-1930) :
+
+    - `LH_HPI` (prix immobiliers) : **46 % des pays testables** (6 / 13).
+    - `LH_POP` (population) : **39 %** (7 / 18).
+    - `LH_CREDIT` (crédit bancaire total) : **41 %** (7 / 17).
+    - `LH_MORT` (crédit hypothécaire) : 5 ; `LH_DEBTGDP` et `LH_CA` : 4 chacune.
+
+    Sur **BoE Millennium**, UK debt / GDP passe Gate 1 sur la bande Kuznets (*p*<sub>1</sub> = 0.006) ; les real-effective et nominal-effective exchange rates passent les **deux nulls**.
+
+    Le **Quarterly** ne peut pas tester Kuznets (15-25y requiert *N* > 400 trimestres ; max 2 307 sur G7Q, en-deçà du seuil de [Torrence & Compo (1998)](../bibliographie.md#torrence-compo-1998) pour le plus long agrégat et bien en-dessous pour les pays individuels).
+
+    **Lecture V3** : la vindication substantive de Kuznets sur **housing + démographie + crédit hypothécaire** — exactement les canaux qu'il a identifiés comme porteurs des long swings — est tenue. La lecture universaliste Kuznets-sur-tout reste rejetée BH-FDR.
+
+> **Résumé historique.** La vague infrastructure / démographie.
 > [Kuznets (1930)](../bibliographie.md#kuznets-1930) l'identifie sur les
 > données de construction et d'immigration américaines ; réinterprétée
 > ensuite à travers le cadre Lewis du dualisme économique comme cycle de

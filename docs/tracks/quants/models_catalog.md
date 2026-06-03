@@ -1,5 +1,9 @@
 # Catalogue des modèles
 
+!!! info "Mise à jour V3 (juin 2026) — catalogue documente le *companion paper*"
+
+    Ce catalogue documente les **modèles cluster** utilisés dans le papier compagnon en préparation (benchmark PASS 78 %). Les modèles **ARFIMA(0, *d*, 0)** et les diagnostics long-mémoire (GPH *d̂*, DFA Hurst) qui sous-tendent ARFIMA+RS sont également utilisés dans le V3 *Cycles Refuted* sous forme de **null Gate 1** (cf. [arfima_dual_null](../../methodology/arfima_dual_null.md)). Voir [résumé V3](../../papers/cycles_refuted_v3.md).
+
 !!! success "TL;DR"
 
     **6 modèles** = **3 baselines stationnaires** (RW, AR(1), ARMA(1,1)) + **3 modèles cluster** (HAR, ARFIMA+RS, MSM). Interface commune `ProbabilisticForecast(samples, horizons)`. **MSM** domine les histoires longues, **HAR** le quarterly contemporain, **ARFIMA+RS** la niche crédit. Verdict empirique : seul un modèle cluster gagne sur les 78 % de variables battues.

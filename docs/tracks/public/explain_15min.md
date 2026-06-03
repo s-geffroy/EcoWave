@@ -1,8 +1,12 @@
 # Expliqué en 15 minutes
 
+!!! info "Mise à jour V3 (juin 2026)"
+
+    Le verdict V3 publié en juin 2026 raffine la thèse : la lecture **universaliste** des cycles est rejetée, mais **trois cycles substantifs** (Juglar sur investissement-PIB et chômage, Kuznets sur prix immobiliers et population, Kitchin sur agrégats crédit émergents) **sont vivants** sur leurs canaux propres. Kondratieff est recasté comme chronologie de dette de guerre Reinhart-Rogoff. Voir [résumé V3](../../papers/cycles_refuted_v3.md).
+
 !!! success "Ce que vous saurez à la fin"
 
-    Pourquoi les **cycles économiques** classiques ne survivent pas à un test rigoureux. Ce qu'on observe à la place : une **dynamique sans horloge** mais avec des propriétés statistiques précises. Comment des modèles fondés sur cette nouvelle image **battent les prévisions officielles** dans 4 cas sur 5. Trois conséquences concrètes pour la politique économique.
+    Pourquoi la lecture **universaliste** des cycles économiques classiques (un cycle unique pour toutes les variables macro) ne survit pas à un test rigoureux. Ce qu'on observe à la place : trois cycles **variable-spécifiques** sur leurs canaux propres, plus une dynamique sans horloge avec des propriétés statistiques précises sur le reste. Comment des modèles fondés sur cette nouvelle image **battent les prévisions officielles** dans 4 cas sur 5. Trois conséquences concrètes pour la politique économique.
 
 *Niveau : étudiant L1 économie ou cadre généraliste. Vous savez ce qu'est l'inflation, le PIB, une banque centrale. Pas besoin de math.*
 

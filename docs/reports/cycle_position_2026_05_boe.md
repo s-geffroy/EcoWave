@@ -1,10 +1,20 @@
-# Où se situe le monde en 2026-05 dans les 4 cycles canoniques ?
+# Bank of England Millennium (1700-2016) — position cyclique 2026-05
 
 > Note signée — sortie du protocole CPV (Cycle Position Vector).
 > Méthode : CF band-pass + Morlet wavelet + Hilbert phase + Markov-switching
-> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus
-> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir
-> `methodology/multi_cycle_decomposition.md` pour la spécification complète.
+> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1) + ARFIMA en V3, consensus
+> méthodologique ≥3/4, concordance cross-group). Voir
+> [protocole CPV](../methodology/protocole_cpv.md) pour la spécification complète.
+
+!!! info "Mise à jour V3 (juin 2026) — BoE est le seul panel qui peut tester Kondratieff"
+
+    Verdicts V3 (source : `papers/cycles_refuted/sections/05_results.tex`) :
+
+    - **Kondratieff (40-60 ans) — recasté Reinhart-Rogoff.** Sur 16 séries UK long-enough, **seules 2 cellules passent Gate 1** : UK dette publique (*p*<sub>AR(1)</sub> = 0.002, *p*<sub>ARFIMA</sub> = 0.022 à *d̂* = +0.436) et UK dette gouv. centrale brute (*p*<sub>AR(1)</sub> = 0.032, *p*<sub>ARFIMA</sub> = 0.048). Toutes les autres séries UK Kondratieff-éligibles (PIB réel, CPI, salaires réels, actions, population) échouent les deux nulls. **Recasté** chronologie de dette de guerre Reinhart-Rogoff, pas long-wave endogène. R5 rolling-window localise la puissance maximale post-1815 (Napoléon) et post-1945 (WWII). Voir [Kondratieff](../cycles/kondratieff.md).
+    - **Juglar — UK chômage passe les deux nulls.** *p*<sub>AR(1)</sub> = 0.004, *p*<sub>ARFIMA</sub> = 0.002 à *d̂* = 0.49. La cellule load-bearing du verdict Juglar V3. Idem real USD-GBP exchange rate (*p*<sub>AR(1)</sub> = 0.006, *p*<sub>ARFIMA</sub> = 0.002).
+    - **Kuznets — UK debt/GDP + real/nominal effective exchange rates** passent (les 2 dernières sur les 2 nulls).
+    - **Kitchin DÉCLASSÉ (R4 band-edge).** Pass-rate 7.7 % sur `[3,5]` → **0 % sous `[4,5]`**, 16.9 % sous `[3,6]` → signature d'artefact band-edge, **exclu** du support à la vindication Kitchin V3. Voir [band_sensitivity](../methodology/band_sensitivity.md).
+    - **Long-memory diagnostics V3** : 100 % des cellules BoE ont `|d̂| > 0.1`, médiane *Ĥ*<sub>DFA</sub> = 1.64 — l'AR(1) seul est mis-spécifié, la lecture load-bearing est l'ARFIMA-conditional. 16 cellules sont déclassées comme faux positifs long-memory.
 
 ## Glossaire des agrégats
 

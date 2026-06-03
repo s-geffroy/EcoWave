@@ -1,8 +1,12 @@
 # Le cycle est mort
 
-!!! success "TL;DR"
+!!! warning "Mise à jour V3 (juin 2026) — titre partiellement obsolète"
 
-    Depuis 1923, les manuels d'économie enseignent **4 cycles canoniques** : Kitchin (3-5 ans), Juglar (7-11 ans), Kuznets (15-25 ans), Kondratieff (40-60 ans). **Aucun de leurs auteurs n'a jamais publié un test statistique.** Quand on les teste rigoureusement (notre protocole 3 portes sur 9 436 cellules de 6 panels, 1700-2024), **aucun ne survit**. C'est un test reproductible, ouvert, falsifiable.
+    Le **titre de cette page reste mais le verdict est nuancé**. Ce qui est mort, c'est la **lecture universaliste** : « un seul cycle canonique pour toutes les variables macro ». Le V3 du papier *Cycles Refuted* (juin 2026) montre que **trois cycles sont au contraire vivants** sur exactement les variables que leur théorie prédit (Juglar sur investissement-PIB et chômage ; Kuznets sur prix immobiliers, population et crédit ; Kitchin sur agrégats crédit marchés émergents). **Kondratieff est recasté** comme chronologie de dette de guerre Reinhart-Rogoff plutôt que comme long-wave endogène. Voir [résumé V3](../../papers/cycles_refuted_v3.md). La page est conservée pour préserver les permaliens et pour son contexte pédagogique sur ce qui *est* effectivement mort (la lecture universaliste).
+
+!!! success "TL;DR — version V3"
+
+    Depuis 1923, les manuels d'économie enseignent **4 cycles canoniques** : Kitchin (3-5 ans), Juglar (7-11 ans), Kuznets (15-25 ans), Kondratieff (40-60 ans). Pendant un siècle, ils ont été présentés comme **universels** — un même cycle pour toutes les variables. Notre protocole V3 (5 panels indépendants, 1 456 cellules, dual null AR(1)+ARFIMA) montre que cette lecture **universaliste est rejetée** par Benjamini-Hochberg FDR, mais que les trois premiers cycles **vivent bel et bien** sur les variables que leur théorie d'origine prédit (et seulement celles-là) — et Kondratieff devient une chronologie de **dette de guerre** plutôt qu'une long-wave endogène.
 
 ## Dans cette page
 

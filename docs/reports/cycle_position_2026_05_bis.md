@@ -1,10 +1,20 @@
-# Où se situe le monde en 2026-05 dans les 4 cycles canoniques ?
+# BIS macroprudentiel (1970-2025) — position cyclique 2026-05
 
 > Note signée — sortie du protocole CPV (Cycle Position Vector).
 > Méthode : CF band-pass + Morlet wavelet + Hilbert phase + Markov-switching
-> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus
-> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir
-> `methodology/multi_cycle_decomposition.md` pour la spécification complète.
+> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1) + ARFIMA en V3, consensus
+> méthodologique ≥3/4, concordance cross-group). Voir
+> [protocole CPV](../methodology/protocole_cpv.md) pour la spécification complète.
+
+!!! success "Mise à jour V3 (juin 2026) — Kitchin vivant sur crédit BIS marchés émergents"
+
+    Verdict V3 (source : `papers/cycles_refuted/sections/05_results.tex`) :
+
+    - **La concentration positive la plus nette du papier V3.** Sur le panel **BIS quarterly** (93 cellules Kitchin testables), **25 cellules passent Gate 1 unadjusted (5.3× excès sur null)** — la plus grosse concentration single-band du papier.
+    - Pattern sans ambiguïté : agrégats crédit BIS marchés émergents (credit-to-GDP gap, credit-to-GDP ratio, total credit, household credit, business credit, real residential property prices) sur **Corée, Chine, Mexique, Afrique du Sud, Turquie, Russie, Indonésie** — *p*<sub>1</sub> ≈ floor surrogate 0.003.
+    - Chômage économies avancées (G7Q, OECDQ, GBR, JPN) passe également à *p*<sub>1</sub> ≈ 0.01 sur Juglar.
+    - Le test **R4 band-edge sensitivity** confirme la stabilité du signal Kitchin BIS sous perturbation ±1y (fourchette ~5 points autour de la valeur de base) — la vindication Kitchin BIS est robuste.
+    - **Lecture substantive** : vindication de [Kitchin (1923)](../bibliographie.md#kitchin-1923) et de l'hypothèse inventaire/credit de [Wen (2005)](../bibliographie.md#wen-2005) sur les agrégats émergents — exactement le canal que la théorie substantive prédit. Voir [cycle Kitchin](../cycles/kitchin.md).
 
 ## Glossaire des agrégats
 

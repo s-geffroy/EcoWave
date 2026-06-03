@@ -1,6 +1,25 @@
 # Kitchin (3–5 ans)
 
-> **Résumé.** Le plus court des quatre cycles canoniques.
+!!! success "Verdict V3 (juin 2026) — Kitchin vivant sur crédit BIS EM ; BoE déclassé"
+
+    Source : `papers/cycles_refuted/sections/{01_introduction,05_results}.tex`.
+
+    **La concentration la plus nette du papier**. Sur le panel **BIS quarterly** (93 cellules Kitchin testables), **25 cellules passent Gate 1 unadjusted**, soit **5.3× l'excès sur null** — la plus grosse concentration positive du papier. La signature est sans ambiguïté :
+
+    - Agrégats crédit BIS marchés émergents (credit-to-GDP gap, credit-to-GDP ratio, total credit, household credit, business credit, real residential property prices) sur **Corée, Chine, Mexique, Afrique du Sud, Turquie, Russie, Indonésie** — *p*<sub>1</sub> ≈ floor surrogate 0.003.
+    - Chômage économies avancées (G7Q, OECDQ, GBR, JPN) à *p*<sub>1</sub> ≈ 0.01.
+
+    Sur **WB annuel** : 5 / 50 cellules (excès 2×) sur agrégats financiers et commerciaux EM (BRICS inflation *p*<sub>1</sub> = 0.008 ; BRICS financial flows *p*<sub>1</sub> = 0.014 ; LIC investment *p*<sub>1</sub> = 0.024 ; LMC trade *p*<sub>1</sub> = 0.040 ; WLD trade *p*<sub>1</sub> = 0.048).
+
+    Sur le **panel sectoriel** (test Wen 2005) : 3 / 26 cellules (US wheat *p*<sub>1</sub> = 0.040, US WPI *p*<sub>1</sub> = 0.015, world coal *p*<sub>1</sub> = 0.020).
+
+    !!! warning "BoE Kitchin déclassé comme artefact band-edge (R4)"
+
+        Sur **BoE Millennium**, le pass-rate Kitchin unadjusted est 7.7 % (5 / 65 séries testables). Le **test R4 de sensibilité band-edge** révèle une instabilité asymétrique à une perturbation d'1 an : resserrer la borne basse de `[3,5]` à `[4,5]` effondre le pass-rate à **0.0 %** ; élargir la borne haute à `[3,6]` le double à 16.9 %. Signature d'un **artefact de bande**, pas d'un cycle substantif. La cellule BoE Kitchin est **exclue** du support à la vindication Kitchin. La cellule BIS quarterly sur les agrégats crédit EM reste le verdict load-bearing Kitchin.
+
+    **Lecture V3** : vindication substantive de [Kitchin (1923)](../bibliographie.md#kitchin-1923) et de l'hypothèse d'inventaire/credit [Wen (2005)](../bibliographie.md#wen-2005) sur les agrégats EM ; lecture universaliste rejetée BH-FDR.
+
+> **Résumé historique.** Le plus court des quatre cycles canoniques.
 > [Kitchin (1923)](../bibliographie.md#kitchin-1923) l'identifie sur les
 > données de compensation bancaire et de prix de gros aux États-Unis ; il
 > capture le rythme des stocks d'entreprises et des corrections de prix

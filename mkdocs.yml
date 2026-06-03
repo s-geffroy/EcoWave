@@ -116,6 +116,10 @@ nav:
   - Méthode (détail technique):
       - Vue d'ensemble: methodology/protocole_cpv.md
       - Trois portes de falsifiabilité: methodology/trois_portes.md
+      - "Gate 1 dual null AR(1) + ARFIMA (V3 R1)": methodology/arfima_dual_null.md
+      - "Diagnostics par cellule long-memory (V3 R1)": methodology/long_memory_diagnostics.md
+      - "Sensibilité band-edge (V3 R4)": methodology/band_sensitivity.md
+      - "Rolling-window Gate 1 (V3 R5)": methodology/rolling_window_gates.md
       - Méthodes de décomposition: methodology/methodes_decomposition.md
       - Indicateur composite: methodology/indicateur_composite.md
       - Normalisation: methodology/normalisation.md
@@ -157,5 +161,7 @@ nav:
       - Bibliographie: bibliographie.md
       - "Implications du verdict (détail multi-axe)": reference/implications_of_cluster.md
       - "Sources de données citées": data_sources_cited.md
+  - Papers:
+      - "Cycles Refuted V3 (publié juin 2026)": papers/cycles_refuted_v3.md
   - Archive:
       - "Working paper V1 (réfutation-first, décembre 2025)": papers/cpv_main_paper.md

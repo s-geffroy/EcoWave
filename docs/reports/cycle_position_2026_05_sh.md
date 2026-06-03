@@ -1,10 +1,18 @@
-# Où se situe le monde en 2026-05 dans les 4 cycles canoniques ?
+# Sectoral history (1900-2024, test Wen 2005) — position cyclique 2026-05
 
 > Note signée — sortie du protocole CPV (Cycle Position Vector).
 > Méthode : CF band-pass + Morlet wavelet + Hilbert phase + Markov-switching
-> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus
-> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir
-> `methodology/multi_cycle_decomposition.md` pour la spécification complète.
+> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1) + ARFIMA en V3, consensus
+> méthodologique ≥3/4, concordance cross-group). Voir
+> [protocole CPV](../methodology/protocole_cpv.md) pour la spécification complète.
+
+!!! info "Mise à jour V3 (juin 2026) — replication Wen 2005 borderline mais cohérente"
+
+    Verdict V3 (source : `papers/cycles_refuted/sections/05_results.tex` §sec:wen_replication) :
+
+    - **3 / 26 cellules** sectoral panel passent Gate 1 unadjusted : **US wheat Kitchin** *p*<sub>1</sub> = 0.040, **US WPI Juglar** *p*<sub>1</sub> = 0.015, **world coal Kuznets** *p*<sub>1</sub> = 0.020.
+    - Aucune ne survit BH-FDR au seuil critique *p\** ≈ 0.002.
+    - **Lecture substantive** : cohérent avec le diagnostic [Wen (2005)](../bibliographie.md#wen-2005) — les cycles se concentrent sur séries sectorielles dédiées (inventaire, production) plutôt que sur composites macro, mais la distinguabilité contre coloured-noise null est borderline sur ces agrégats historiques spécifiques. La reproduction du finding Kitchin positif de Wen sur séries d'inventaire manufacturier US (NIPA inventory accounts, hors panel CPV) est laissée à future work.
 
 ## Glossaire des agrégats
 

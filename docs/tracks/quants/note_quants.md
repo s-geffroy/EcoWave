@@ -1,5 +1,9 @@
 # Note Quants — le cluster CPV en pratique
 
+!!! info "Mise à jour V3 (juin 2026) — note documente le *companion paper*"
+
+    Cette note documente le **papier compagnon en préparation** (cluster CBDIS + benchmark PASS 78 %), **distinct du V3 *Cycles Refuted*** publié. Le V3 fournit en parallèle le verdict cycle-par-cycle : Juglar / Kuznets / Kitchin **vindiqués** sur leurs canaux substantifs ; Kondratieff **recasté** Reinhart-Rogoff ; lecture universaliste rejetée BH-FDR. Voir [résumé V3](../../papers/cycles_refuted_v3.md). Les modèles cluster ci-dessous restent les outils de prévision opérationnels du projet.
+
 !!! success "TL;DR"
 
     Le benchmark CPV teste **6 modèles** (3 baselines stationnaires + 3 modèles cluster) sur **68 variables réelles × 6 panels × 4 horizons** via rolling-origin OOS. Verdict : **PASS 78 %** à h = 12. MSM gagne 23 fois (43 %), HAR 16 (30 %), ARFIMA+RS 14 (26 %). **Aucune baseline AR(1)/ARMA(1,1) ne gagne** quand un modèle cluster est compétent. Reproduction Docker en ~15-30 min, code MIT, schéma sidecars JSON versionné.

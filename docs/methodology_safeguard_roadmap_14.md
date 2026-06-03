@@ -19,12 +19,28 @@ Quatre études de cas successives ont exposé un mécanisme systématique :
 | [CN_BIS Kondratieff](case_study_cn_bis_kondratieff.md) | p=0.025 🟡 | 0/4 (CRATIO=TCRED) | duplication de série |
 | [WLD-WB Kondratieff](case_study_wld_wb_kondratieff.md) | p=0.001 🟢 | 0/7 | composite trend-dominé |
 | [G7-long & UK_BOE K](case_study_g7_long_uk_boe_kondratieff.md) | p=0.001 🟢 (×4) | 0/16 à 0/35 | cohérence post-diff |
-| Verdict général K | tous artefactuels | 1/250 (LH_DEBTGDP) | aucun K endogène |
+| Verdict général K (V1/V2) | tous artefactuels au niveau composite | 1/250 (LH_DEBTGDP) | aucune K endogène détectée |
 
 Le pattern est identique : **le composite agrégé fabrique un signal
 que les variables constituantes ne portent pas**. Le test composite
 seul est donc structurellement insuffisant pour publier des résultats
 falsifiables. La règle Roadmap #14 corrige cette faille.
+
+!!! info "Compatibilité avec le verdict V3 *Cycles Refuted*"
+
+    Le V3 du papier travaille **principalement au niveau per-variable**
+    (JST R6 605 cellules, BIS Q 93 cellules, BoE 65 cellules) et trouve
+    précisément que **trois cycles sont vindiqués sur les variables
+    substantives** prédites par leur théorie d'origine (Juglar sur
+    investissement/chômage, Kuznets sur HPI/population/crédit, Kitchin
+    sur crédit BIS marchés émergents). Le garde-fou Roadmap #14 reste
+    pleinement actif : son rôle V3 est de **bloquer toute claim
+    composite-only** non-étayée par des survies per-variable —
+    précondition de la lecture variable-spécifique du V3. Le seul
+    positif Kondratieff (UK dette BoE) survit au niveau **per-variable**
+    sur les deux nulls AR(1) et ARFIMA, et est recasté Reinhart-Rogoff
+    plutôt que long-wave endogène. Voir
+    [verdict V3 portail](papers/cycles_refuted_v3.md).
 
 ## Spécification
 
@@ -32,8 +48,8 @@ falsifiables. La règle Roadmap #14 corrige cette faille.
 
 Pour chaque cellule `(agrégat, cycle)` du pipeline :
 
-1. Calculer le composite Gate 1 (test dual-null AR(1) + scramble de
-   phase, 1000 surrogates, α=0.05, comme avant).
+1. Calculer le composite Gate 1 (V3 : test dual-null AR(1) + ARFIMA(0, *d̂*, 0),
+   1000 surrogates, α=0.05).
 2. **Si le composite REJETTE** : publier `rejected` (inchangé).
 3. **Si le composite SURVIT** : lancer le test per-variable :
    - Pour chaque variable individuelle de `band_panel` (filtrée par

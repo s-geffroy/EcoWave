@@ -1,5 +1,9 @@
 # Étude de cas — G7-long et UK_BOE Kondratieff : la différenciation redistribue l'artefact
 
+!!! info "Contexte V3 (juin 2026)"
+
+    Cette étude de cas date de l'audit ayant abouti au garde-fou [Roadmap #14](methodology_safeguard_roadmap_14.md). Sa conclusion (« 0 cellule sur BoE horizon ne survit Gate 1 » au niveau per-variable au moment de l'audit, sur la lecture niveaux différenciés) reste valide en l'état mais doit être lue à côté du verdict V3 sur le BoE : avec le **dual null AR(1) + ARFIMA(0, *d̂*, 0)** sur les niveaux bruts (pas différenciés), **UK dette publique et UK dette gouv. centrale brute** passent Gate 1, et sont **recastées chronologie Reinhart-Rogoff** de dette de guerre (cf. [Kondratieff](cycles/kondratieff.md) et [résumé V3](papers/cycles_refuted_v3.md)). La V3 ne contredit donc pas cette étude — elle ouvre un autre angle (mémoire longue native + recast substantive) qui rend les deux cellules dette UK statistiquement et substantivement défendables sous la lecture R-R.
+
 > **Résumé exécutif.** Après application de la différenciation pour la
 > bande Kondratieff (cf. [méthodologie](methodology_differencing_for_kondratieff.md)),
 > 4 nouvelles cellules K émergent comme "survivantes" sur les horizons

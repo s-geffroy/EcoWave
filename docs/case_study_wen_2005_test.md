@@ -1,5 +1,9 @@
 # Test direct Wen (2005) — Kitchin sur séries sectorielles US/UK/World
 
+!!! info "Mise à jour V3 (juin 2026)"
+
+    L'audit ci-dessous reste valide en l'état (post-safeguard, 0 cellule survit au composite SH). Le V3 du papier *Cycles Refuted* fournit une lecture plus fine du panel sectoriel : **3 / 26 cellules** passent Gate 1 unadjusted (US wheat *p*<sub>1</sub> = 0.040, US WPI *p*<sub>1</sub> = 0.015, world coal *p*<sub>1</sub> = 0.020), aucune ne survit BH-FDR au seuil critique *p\** ≈ 0.002. Lecture V3 cohérente avec Wen : les cycles se concentrent sur séries sectorielles dédiées plutôt que sur composites macro, mais la distinguabilité contre coloured-noise est borderline sur ces agrégats historiques spécifiques. Voir [résumé V3](papers/cycles_refuted_v3.md) et [Kitchin V3](cycles/kitchin.md).
+
 > **Résumé exécutif.** Cette page publie le verdict du protocole CPV
 > sur la thèse centrale de [Wen (2005)](bibliographie.md#wen-2005)
 > :

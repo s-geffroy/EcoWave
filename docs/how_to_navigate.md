@@ -4,6 +4,10 @@
 
     Le hub multi-track CPV est organisé par **audience cible** (Public éclairé, Académique, Banque centrale, Quants) plutôt que par ordre logique de recherche. Choisissez votre porte d'entrée selon votre profil ou votre question. 5 niveaux de profondeur disponibles (survol 5 min → recherche académique mois/années).
 
+!!! info "Mise à jour V3 (juin 2026)"
+
+    Le papier *Cycles Refuted* est passé en V3 (réponse aux 10 recommandations du referee TSE). La thèse a évolué : **trois cycles canoniques vindiqués** sur les variables substantives prédites (Juglar / Kuznets / Kitchin), Kondratieff **recasté** comme chronologie de dette de guerre Reinhart-Rogoff, lecture **universaliste rejetée** par BH-FDR. Voir [résumé V3](papers/cycles_refuted_v3.md). Les pages historiques type *« le cycle est mort »* ont reçu un encadré de mise à jour mais restent accessibles pour préserver les permaliens.
+
 ## Dans cette page
 
 - **[Choisir par profil](#par-profil)** — 4 audiences
@@ -104,13 +108,21 @@ les failure modes. Six pages :
 
 ### "Les 4 cycles canoniques sont-ils statistiquement valides ?"
 
-Non. Voir :
+**En trois temps (verdict V3, juin 2026)** :
 
-- [Le cycle est mort](tracks/public/the_cycle_is_dead.md) (Public)
-- [Verdict constructif §2](tracks/acad/verdict_constructive.md)
-  (Académique)
-- [Pages cycles individuels](cycles/kitchin.md) (méthode)
-- [Évidence par variable](evidence_per_variable.md) (preuves brutes)
+1. **Oui** sur les canaux substantifs prédits par chaque théorie d'origine —
+   Juglar sur investissement-PIB et chômage (67 / 605 cellules JST, excès 2.2×),
+   Kuznets sur prix immobiliers / population / crédit (51 / 529 cellules JST, 1.9×),
+   Kitchin sur agrégats crédit BIS marchés émergents (25 / 93 cellules trimestrielles, 5.3×).
+2. **Non** sur la lecture **universaliste** sinusoïdale-sur-tout (un seul cycle pour toutes les variables) — rejetée par BH-FDR sur la grille jointe de 1 456 cellules.
+3. **Kondratieff** : **pas** vindiqué comme long-wave endogène ; **recasté** comme chronologie de dette de guerre Reinhart-Rogoff (seules deux séries UK dette BoE passent Gate 1 dual null AR(1)+ARFIMA ; toutes les autres séries UK Kondratieff-éligibles échouent).
+
+Voir :
+
+- [Résumé V3 portail](papers/cycles_refuted_v3.md) (papier publié)
+- [Pages cycles individuels](cycles/kitchin.md) (verdict par cycle)
+- [Évidence par variable](evidence_per_variable.md) (chiffres bruts V3)
+- [Le cycle est mort](tracks/public/the_cycle_is_dead.md) (page historique avec encadré V3)
 
 ### "Quels modèles battent random walk en macroéconomie ?"
 

@@ -1,5 +1,9 @@
 # Étude de cas — CN_BIS Kondratieff : l'artefact d'agrégation démasqué
 
+!!! info "Contexte V3 (juin 2026)"
+
+    Cette étude de cas date de l'audit ayant abouti au garde-fou [Roadmap #14](methodology_safeguard_roadmap_14.md). Elle reste valide dans son périmètre : démontrer qu'un signal composite Kondratieff CN_BIS s'évanouit au niveau per-variable. La thèse V3 du papier *Cycles Refuted* ([résumé](papers/cycles_refuted_v3.md)) recadre par ailleurs le seul positif Kondratieff (UK dette BoE) comme **chronologie Reinhart-Rogoff de dette de guerre**, pas comme long-wave endogène — cohérent avec la conclusion de cette étude que Kondratieff endogène n'émerge nulle part au niveau per-variable.
+
 > **Résumé exécutif.** Le seul Kondratieff survivant hors `WLD-WB` dans
 > tout le pipeline CPV était `CN_BIS` à `p=0.025` (peak phase, projection
 > d'un minimum dans ~13 ans). Le diagnostic par variable montre que

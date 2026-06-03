@@ -1,8 +1,12 @@
 # Verdict constructif — cluster + benchmark
 
+!!! info "Mise à jour V3 (juin 2026) — page recadrée par rapport au papier *Cycles Refuted* V3"
+
+    Cette page a été rédigée pour le **papier compagnon en préparation** (cluster CBDIS + benchmark PASS 78 %), pas pour le V3 *Cycles Refuted* publié. Le claim « incompatible avec les 4 cycles canoniques » est désormais nuancé : V3 vindique **trois cycles substantifs** (Juglar / Kuznets / Kitchin) sur les variables que leur théorie prédit, et **recaste Kondratieff** comme chronologie Reinhart-Rogoff. Ce qui est rejeté est la lecture **universaliste** sinusoïdale-sur-tout par BH-FDR. Le cluster CBDIS reste co-apparent au-dessus des trois cycles vindiqués comme **signature complémentaire** — pas un substitut. Voir [résumé V3 portail](../../papers/cycles_refuted_v3.md).
+
 !!! success "TL;DR"
 
-    Présentation en ton AER/JME. **Claim principal** : la signature empirique des séries macro 1700-2024 est un cluster diagnostique C+B+D+I+S co-apparent sur > 60 % des 9 436 cellules, **incompatible** avec les 4 cycles canoniques et avec les hypothèses statistiques sous-jacentes au DSGE NK. 3 modèles cluster (MSM, ARFIMA+RS, HAR) battent random walk en OOS CRPS sur **78 % de 68 variables**. Trois inférences hiérarchiques (faible / intermédiaire / forte).
+    Présentation en ton AER/JME. **Claim principal** : la signature empirique des séries macro 1700-2024 est un cluster diagnostique C+B+D+I+S co-apparent sur > 60 % des 9 436 cellules, qui **co-existe** avec les trois cycles substantifs vindiqués par le V3 et **complète** mais **n'invalide pas** les hypothèses substantives originales (Juglar / Kuznets / Kitchin). Ce qui est incompatible avec ce cluster est la lecture universaliste sinusoïdale-sur-tout et l'ensemble des hypothèses statistiques sous-jacentes au DSGE NK. 3 modèles cluster (MSM, ARFIMA+RS, HAR) battent random walk en OOS CRPS sur **78 % de 68 variables**. Trois inférences hiérarchiques (faible / intermédiaire / forte).
 
 ## Dans cette page
 

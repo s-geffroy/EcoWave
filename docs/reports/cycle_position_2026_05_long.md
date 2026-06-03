@@ -1,10 +1,20 @@
-# Où se situe le monde en 2026-05 dans les 4 cycles canoniques ?
+# Histoire longue JST R6 (1870-2022) — position cyclique 2026-05
 
 > Note signée — sortie du protocole CPV (Cycle Position Vector).
 > Méthode : CF band-pass + Morlet wavelet + Hilbert phase + Markov-switching
-> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1), consensus
-> méthodologique ≥3/4, universalité cross-group ≥4/5). Voir
-> `methodology/multi_cycle_decomposition.md` pour la spécification complète.
+> + Bry-Boschan, avec 3 gates de falsifiabilité (existence AR(1) + ARFIMA en V3, consensus
+> méthodologique ≥3/4, concordance cross-group). Voir
+> [protocole CPV](../methodology/protocole_cpv.md) pour la spécification complète.
+
+!!! success "Mise à jour V3 (juin 2026) — JST porte les vindications Juglar et Kuznets"
+
+    Verdicts V3 (source : `papers/cycles_refuted/sections/05_results.tex`) :
+
+    - **Juglar (7-11 ans)** : **67 / 605 cellules** Gate 1 unadjusted (**2.2× excès**). Concentration : `LH_INV` 39 % des pays (CH/CA *p*<sub>1</sub> = 0.001) ; `LH_UNRATE` 33 % ; `LH_BUSCREDIT` 33 % ; `LH_RCONS`, `LH_HPI`, `LH_RGDP_BARRO`, `LH_DEBTGDP` : 4 chacune. **Théorique faux positif** : `LH_XRUSD` passe sur 61 % (11 / 18) mais exclu de la claim (mécanisme Juglar ne prédit pas le taux de change USD bilatéral).
+    - **Kuznets (15-25 ans)** : **51 / 529 cellules** Gate 1 unadjusted (**1.9× excès**). Concentration : `LH_HPI` 46 % (6 / 13) ; `LH_POP` 39 % (7 / 18) ; `LH_CREDIT` 41 % (7 / 17) ; `LH_MORT` 5 ; `LH_DEBTGDP` & `LH_CA` 4.
+    - **Kitchin** : reporté principalement sur les panels trimestriels (BIS quarterly 5.3× excès) ; les agrégats JST annuels sont border-Nyquist sur la bande basse [3,5].
+    - **Kondratieff** : JST est window-bound (max N = 151 < seuil 240). Voir [BoE 1700-2016](cycle_position_2026_05_boe.md) pour le test complet.
+    - **Long-memory** : 97 % des cellules JST ont `|d̂| > 0.1` ; médiane *Ĥ*<sub>DFA</sub> = 1.76. La lecture load-bearing est l'ARFIMA-conditional ([détail](../methodology/arfima_dual_null.md)).
 
 ## Glossaire des agrégats
 

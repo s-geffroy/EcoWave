@@ -1,5 +1,9 @@
 # Note BC — boîte à outils opérationnelle
 
+!!! info "Mise à jour V3 (juin 2026)"
+
+    Les 4 outils opérationnels ci-dessous restent valides et **renforcés** par le verdict V3 : Juglar sur chômage est vindiqué (G7Q/OECDQ/GBR/JPN, 4.3× excès sur 55 cellules trimestrielles), Kitchin sur crédit BIS marchés émergents est vindiqué (5.3× excès), Kondratieff est recasté comme chronologie Reinhart-Rogoff (UK dette BoE). La lecture universaliste sinusoïdale-sur-tout est rejetée. La note ci-dessous décrit le pilier 2 (cluster CBDIS + benchmark PASS 78 %, papier compagnon en préparation). Voir [résumé V3](../../papers/cycles_refuted_v3.md).
+
 !!! success "TL;DR"
 
     CPV livre **4 outils opérationnels** insérables dans une pipeline BC existante : **(1)** credibility radar via `d` GPH sur l'inflation, **(2)** forward guidance interprété comme acte réflexif, **(3)** EWS sur tipping points par KS sliding-window (~3 mois d'avance), **(4)** horizon-aware targeting (HAR court / MSM long / ARFIMA+RS crédit). Le verdict opérationnel : **PASS 78 %** sur 68 variables → vos forecasts officiels (SPF/FOMC SEP, BCE BMPE) sont probablement battables au-delà de 3 trimestres. Tout est reproductible Docker, code MIT.

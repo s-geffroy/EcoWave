@@ -5,6 +5,122 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased] — Cycle Position Vector (CPV) framework
 
+### 2026-06-03 — Site web aligné sur Cycles Refuted V3 — refonte two-pillar ✅
+
+Mise à jour exhaustive du site MkDocs (`docs/`) pour refléter la thèse
+V3 du papier `papers/cycles_refuted/` (cf. entrée précédente). La V3
+remplace l'ancienne narration « réfutation totale des 4 cycles +
+cluster CBDIS substitut » par une structure **two-pillar** :
+
+- **Pilier 1 — papier publié V3** : trois cycles canoniques
+  **vindiqués** sur les variables substantives prédites (Juglar
+  67 / 605 JST 2.2× ; Kuznets 51 / 529 JST 1.9× ; Kitchin 25 / 93
+  BIS Q 5.3×). Kondratieff **recasté** chronologie Reinhart-Rogoff
+  (UK dette seule). Lecture **universaliste** sinusoïdale-sur-tout
+  rejetée par BH-FDR sur grille jointe 1 456 cellules.
+- **Pilier 2 — papier compagnon en préparation** : cluster CBDIS +
+  benchmark PASS 78 %. Conservé comme deuxième pilier annoncé en
+  préambule.
+
+**Pages anchors refondues (Batch 1)** :
+- `docs/index.md` : TL;DR two-pillar ; tableau verdict V3 cycle par
+  cycle ; nouveau diagramme mermaid Gate 1 dual null AR(1) + ARFIMA
+  + R4/R5 ; section cluster CBDIS étiquetée companion.
+- `docs/glossary.md` : 11 entrées V3 ajoutées (ARFIMA(0, d̂, 0) null,
+  ARFIMA-conditional verdict, Band-edge sensitivity R4,
+  Benjamini-Hochberg FDR, Rolling-window Gate 1 R5,
+  Reinhart-Rogoff debt chronology, Threshold transparency, Théorique
+  faux positif LH_XRUSD, DFA Hurst, Verdict V3 cycles, Working paper
+  V1 vs V2 vs V3) ; entrées Dual null, Gate 1/2/3, Kitchin/Juglar/
+  Kuznets/Kondratieff, Phase scrambling, Universalité, GPH mises à
+  jour.
+- `docs/how_to_navigate.md` : Q&A « Les 4 cycles sont-ils valides ? »
+  réécrite en trois temps (variable-spécifique oui, universaliste
+  non, Kondratieff recasté).
+- `docs/papers/cycles_refuted_v3.md` (**nouveau**) : page-portail
+  vers le PDF V3 + résumé en chiffres exacts + bibtex.
+
+**Pages cycles (Batch 2)** : `docs/cycles/{kitchin,juglar,kuznets,kondratieff}.md`
+recoivent chacune un encadré `!!! success "Verdict V3 (juin 2026)"`
+en tête avec les chiffres exacts du papier (Juglar BoE UK chômage
+dual null, Kuznets HPI 46 %, Kitchin BIS EM 5.3× + BoE déclassé
+band-edge, Kondratieff recast R-R + ARFIMA reinforcement +
+rolling-window heat-map).
+
+**Méthodologie (Batch 3)** :
+- `docs/methodology/trois_portes.md` : Porte 1 réécrite dual null
+  AR(1) + ARFIMA(0, d̂_GPH, 0). Section robustesses R4 + R5.
+  Vocabulaire « threshold transparency » au lieu de
+  « pré-enregistrement ».
+- `docs/methodology/protocole_cpv.md` : Étape 4 réécrite avec
+  diagnostic des 16 cellules BoE déclassées comme faux positifs
+  long-memory. Étape 7 ajoutée (R4 + R5).
+- `docs/methodology/garde_fous.md` : interdictions étendues
+  (signal AR(1) seul sur série long-memory, signal qui ne survit
+  pas R4) ; clarification threshold transparency vs OSF
+  pre-registration formelle.
+- `docs/methodology_safeguard_roadmap_14.md` : note de compatibilité
+  V3 ajoutée (le garde-fou Roadmap #14 est précondition de la
+  lecture variable-spécifique V3).
+- `docs/methodology_beyond_cycles.md` : préambule reformulé
+  (programme « au-delà des cycles » est complémentaire des trois
+  cycles vindiqués, pas substitut).
+- `docs/dx_diagnostics.md` : lien explicite vers nouveaux
+  diagnostics par cellule.
+
+**4 pages neuves créées dans `docs/methodology/`** :
+- `arfima_dual_null.md` — dual null AR(1) + ARFIMA, ARFIMA-conditional
+  verdict, implémentation.
+- `long_memory_diagnostics.md` — ADF, KPSS, GPH d̂, DFA Hurst,
+  table couverture JST 97 % et BoE 100 %.
+- `band_sensitivity.md` — protocole R4 ±1y/±2y, cas BoE Kitchin
+  déclassé (pass-rate 0 % sous `[4,5]`).
+- `rolling_window_gates.md` — R5 fenêtres glissantes 50-80y,
+  heat-map Kondratieff post-1815 / post-1945.
+
+**Reports par panel (Batch 4)** :
+- `docs/reports/cycle_position_synthesis.md` : tableau V3 cycle par
+  cycle ajouté en tête ; vue composite recadrée comme diagnostic
+  d'agrégation.
+- 6 fichiers `docs/reports/cycle_position_2026_05_*.md` : titre H1
+  spécialisé par panel + encadré V3 spécifique (BoE → Kondratieff
+  recast + Kitchin déclassé ; BIS → Kitchin EM 5.3× ; WB → Kitchin
+  trade/inflation ; long → Juglar + Kuznets JST porteurs ;
+  Quarterly → chômage avancé Juglar ; sectoral → Wen 2005
+  replication borderline).
+- `docs/evidence_per_variable.md` : remplacement de l'ancienne
+  manchette « 21 / 1584 → 1.3 % » par le verdict V3
+  166 / 1 456 (excès 2.3×) + BH-FDR explicitement appelé.
+
+**Tracks audiences (Batch 5)** :
+- `docs/tracks/acad/{index,verdict_constructive,paper_v2_academic}.md`
+  recoivent des encadrés V3 + reformulation explicite des claims
+  (« 4 cycles morts » → « lecture universaliste rejetée ; 3 cycles
+  vindiqués »). `paper_v2_academic.md` est désormais clairement
+  étiqueté comme draft du companion paper.
+- `docs/tracks/public/{the_cycle_is_dead,what_replaces_it,explain_5min,
+  explain_15min,note_public,why_it_matters}.md` : encadrés V3 sur
+  chaque page. Les pages `the_cycle_is_dead.md` et `note_public.md`
+  reçoivent un `!!! warning` pour titre partiellement obsolète mais
+  sont conservées pour préserver les permaliens.
+- `docs/tracks/bc/{method_for_practitioners,note_bc}.md` et
+  `docs/tracks/quants/{note_quants,models_catalog}.md` : encadrés V3
+  + pitch méthodo mis à jour (dual null AR(1) + ARFIMA, threshold
+  transparency).
+- `docs/reference/implications_of_cluster.md` : recadré comme
+  implications du pilier 2 (cluster CBDIS, papier compagnon).
+
+**Navigation et changelog (Batch 6)** :
+- `mkdocs.yml` : 4 nouvelles pages méthodo ajoutées sous « Méthode
+  (détail technique) » ; section « Papers » ajoutée pour
+  `cycles_refuted_v3.md` à côté de l'archive V1.
+- `CHANGELOG.md` : présente entrée.
+
+Aucune page existante n'a été renommée ni supprimée. Les chiffres
+sont cités directement du papier V3 (`sections/{00_abstract,
+01_introduction,05_results,07_conclusion}.tex`), pas régénérés
+depuis les JSON sidecars (décision utilisateur).
+
 ### 2026-06-03 — Cycles Refuted V3 : application des 10 recommandations du referee TSE ✅
 
 Réponse complète au rapport de referee TSE
