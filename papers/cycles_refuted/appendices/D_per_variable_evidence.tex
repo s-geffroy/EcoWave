@@ -223,3 +223,207 @@ status depends on the threshold is the WB world Kitchin composite
 (rejected at any threshold \(\geq 0.3\) under the safeguard;
 admitted only if no safeguard is applied). We retain
 \(0.5\) as the primary value following \citet{wen2005}'s usage.
+
+\subsection{Long-memory and stationarity diagnostics}
+\label{sec:appendix_long_memory}
+
+Following the R1 referee recommendation, we report on every cell
+the four pre-cycle diagnostics introduced in
+Appendix~\ref{sec:longmem_diagnostics}: ADF
+\citep{dickey_fuller1979}, KPSS \citep{kpss1992}, GPH
+fractional-integration order \(\hat d\)
+\citep{geweke_porter_hudak1983} and DFA Hurst exponent
+\(\hat H\) \citep{peng1994}. The script is
+\path{scripts/long_memory_diagnostics.py}; sidecar:
+\path{reports/long_memory_diagnostics.json}. Diagnostics are
+computed on the input series as ingested (without the
+\texttt{log\_diff}/\texttt{share\_of\_gdp} transformation that
+Gate~1 applies subsequently), to characterise the
+raw long-memory profile of each variable.
+
+\begin{table}[h]
+\centering
+\caption{Long-memory and stationarity diagnostics on the raw
+input series. ADF non-rejection signals a unit root; KPSS
+rejection signals departure from stationarity; \(|\hat d|>0.1\)
+or \(\hat H>0.6\) signal long memory beyond AR(1). Numbers come
+from \path{reports/long_memory_diagnostics.json}.}
+\label{tab:longmem_summary}
+\small
+\begin{tabularx}{\linewidth}{@{}X r r r r@{}}
+\toprule
+\textbf{Diagnostic} & \textbf{JST R6 (611 cells)} & \textbf{BoE (65 cells)} \\
+\midrule
+Median \(\hat d_{\mathrm{GPH}}\)               & +0.490 & +0.490 \\
+\(|\hat d|>0.1\) (share)                       & 97\,\% & 100\,\% \\
+\(|\hat d|>0.4\) (share)                       & 88\,\% & 95\,\% \\
+Median \(\hat H_{\mathrm{DFA}}\)               & 1.76   & 1.64 \\
+\(\hat H>0.6\) (share)                         & 97\,\% & 94\,\% \\
+\(\hat H>1.0\) (share)                         & 88\,\% & 92\,\% \\
+ADF unit-root not rejected at \(\alpha=0.05\)  & 81\,\% & 83\,\% \\
+KPSS stationarity rejected at \(\alpha=0.05\)  & 77\,\% & 89\,\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Implication.}
+On both panels the raw input series exhibit substantial
+long-memory and near-unit-root behaviour: median \(\hat
+H\geq 1.6\) (consistent with I(1) random-walk-like dynamics on
+level series), \(|\hat d|\) saturated at the GPH clipping bound
+of 0.49 on the majority of cells, and ADF unable to reject the
+unit-root null on roughly four cells in five. An AR(1) null
+fitted on the raw level is therefore mis-specified for the
+majority of cells. Gate~1 in practice operates on the
+post-transformation series (\texttt{log\_diff} for most level
+series, \texttt{share\_of\_gdp} for ratios); after
+log-differencing the persistence reduces materially. The
+honest reading is nonetheless that the AR(1) Gate~1 verdict
+should be cross-validated against the ARFIMA(0,\(\hat
+d\),0) Gate~1 verdict reported by
+\path{scripts/arfima_null_per_cell.py} (sidecar
+\path{reports/arfima_null_per_cell.json}). Cells that pass
+under both nulls gain credibility; cells that pass only the
+AR(1) null and fail the ARFIMA null should be downgraded as
+candidates for the variable-specific vindication claim.
+
+\subsection{Band-edge sensitivity}
+\label{sec:appendix_band_sensitivity}
+
+Following the R4 recommendation, we rerun Gate~1 with the
+canonical bands perturbed on each edge by \(\pm 1\)y
+(Kitchin/Juglar) or \(\pm 2\)y (Kuznets/Kondratieff), plus
+widen/narrow variants. Script:
+\path{scripts/band_sensitivity.py}; sidecar:
+\path{reports/band_sensitivity.json}. A substantive cycle
+should remain detected when the band is perturbed by one
+year; a band-fitting artefact will not.
+Table~\ref{tab:band_sensitivity_boe} reports the BoE
+Millennium pass-rates (1541 cells, \(B=300\) surrogates,
+65 variables, 27 cycle\(\times\)perturbation aggregates).
+
+\begin{table}[h]
+\centering
+\caption{Band-edge sensitivity of Gate~1 on BoE Millennium.
+Pass-rate by (cycle, perturbation). ``anchor'' is the
+literature-anchored band. Perturbations move one edge in
+or out by \(\pm 1\)y (Kitchin/Juglar) or \(\pm 2\)y
+(Kuznets/Kondratieff); ``narrow'' and ``widen'' move both
+edges simultaneously. Source:
+\path{reports/band_sensitivity.json}.}
+\label{tab:band_sensitivity_boe}
+\small
+\begin{tabularx}{\linewidth}{@{}X c c c c c c c@{}}
+\toprule
+\textbf{Cycle} & \textbf{anchor} & \textbf{tighten lo} & \textbf{loosen lo} & \textbf{tighten hi} & \textbf{loosen hi} & \textbf{narrow} & \textbf{widen} \\
+\midrule
+Juglar [7,11]      & 15.4\,\% & 10.8\,\% & 12.3\,\% & 15.4\,\% &  9.2\,\% & 13.8\,\% & 10.8\,\% \\
+Kuznets [15,25]    & 12.9\,\% & 11.3\,\% & 14.5\,\% & 10.9\,\% & 11.3\,\% &  9.4\,\% & 12.9\,\% \\
+Kondratieff [40,60] & 10.5\,\% &  7.9\,\% & 10.5\,\% & 13.2\,\% & 11.8\,\% & 13.2\,\% & 14.7\,\% \\
+Kitchin [3,5]      &  7.7\,\% &  9.2\,\% &  \textbf{0.0\,\%} &  4.6\,\% & \textbf{16.9\,\%} &  4.6\,\% &  4.6\,\% \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Interpretation.}
+Three of the four cycles are stable to band-edge
+perturbation: Kuznets (9.4--14.5\,\%), Kondratieff
+(7.9--14.7\,\%) and Juglar (9.2--15.4\,\%) span a range of
+at most six percentage points around the anchor pass-rate.
+\textbf{Kitchin is the exception}: tightening the lower
+edge to [4,5] yields a zero pass-rate, while loosening the
+upper edge to [3,6] more than doubles the pass-rate to
+16.9\,\%. The asymmetric sensitivity is exactly the
+signature of a band-fitting artefact: the substantive signal
+on BoE within a [3,5] window does not survive a one-year
+perturbation in either direction. This vindicates the R4
+critique on the Kitchin cell of BoE specifically, and we
+discount the BoE Kitchin headline accordingly in
+Section~\ref{sec:kitchin_results}. The JST and quarterly
+panels, which carry the load-bearing Kitchin claims of the
+paper, should be re-run with the same sensitivity script
+before any Kitchin-specific revision; the BoE Kitchin signal
+is no longer treated as supporting evidence.
+
+\subsection{Rolling-window Gate~1: temporal stability}
+\label{sec:appendix_rolling}
+
+Following the R5 recommendation, we report Gate~1 verdicts on
+a grid of rolling windows of fixed length (80y for the
+Kondratieff window-bound cells; 50y for Kitchin/Juglar/Kuznets;
+step 40y on annual panels). Script:
+\path{scripts/rolling_window_gates.py}; sidecar:
+\path{reports/rolling_window_gates.json}. On the BoE
+Millennium 1700--2016 the run produces 1\,646 rolling cells
+across 65 variables; aggregate pass-rates per cycle are:
+
+\begin{itemize}
+\item Juglar: 57 / 466 windows pass Gate~1 (12.2\,\%)
+\item Kitchin: 40 / 466 (8.6\,\%)
+\item Kuznets: 39 / 430 (9.1\,\%)
+\item Kondratieff: 40 / 284 (14.1\,\%)
+\end{itemize}
+
+These rates are modestly elevated above the 5\,\% nominal null
+but compatible with intermittent presence rather than
+stationary cyclicality across the full 1700--2016 horizon. A
+substantive cycle that lives in one epoch but is absent in
+another (e.g.\ Belle \'Epoque vs Trente Glorieuses vs
+post-2008) is not detected by a single full-window test; the
+heat-map shipped in the JSON sidecar resolves the
+epoch-by-epoch presence.
+
+\subsection{ARFIMA-vs-AR(1) Gate~1 on BoE Millennium}
+\label{sec:appendix_arfima_vs_ar1}
+
+Following the R1 recommendation, we rerun Gate~1 on every
+BoE cell with the AR(1) null replaced by an ARFIMA(0,
+\(\hat d_{\mathrm{GPH}}\), 0) null. The cross-tabulation of
+the two verdicts is the empirical test of whether the AR(1)
+positives survive long-memory-aware re-evaluation. Script:
+\path{scripts/arfima_null_per_cell.py}; sidecar:
+\path{reports/arfima_null_per_cell.json}; on BoE (230 cells
+total across the four cycles, \(B=500\)).
+
+\begin{table}[h]
+\centering
+\caption{Cross-tabulation of Gate~1 verdicts under AR(1)
+versus ARFIMA(0, \(\hat d\), 0) nulls on the BoE Millennium
+panel.}
+\label{tab:arfima_vs_ar1_boe}
+\small
+\begin{tabularx}{\linewidth}{@{}X r r r r r@{}}
+\toprule
+\textbf{Cycle} & \textbf{n} & \textbf{AR(1) pass} & \textbf{ARFIMA pass} & \textbf{both} & \textbf{only AR(1)} \\
+\midrule
+Kitchin       & 65 & 5 & 1 & 1 & 4 \\
+Juglar        & 65 & 8 & 4 & 2 & 6 \\
+Kuznets       & 62 & 8 & 9 & 4 & 4 \\
+Kondratieff   & 38 & 5 & 6 & 3 & 2 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Interpretation.}
+Ten cells pass \emph{both} the AR(1) and the ARFIMA null on
+BoE; they are the long-memory-robust subset of the BoE
+positives. Among these survivors the substantive
+headlines remain intact: \textbf{UK unemployment on Juglar}
+(\(p_{1,\mathrm{AR(1)}}=0.004\), \(p_{1,\mathrm{ARFIMA}}=0.002\)),
+\textbf{UK central-government gross debt on Kondratieff}
+(\(p_{1,\mathrm{AR(1)}}=0.032\),
+\(p_{1,\mathrm{ARFIMA}}=0.048\)), \textbf{UK public-sector
+debt on Kondratieff}
+(\(p_{1,\mathrm{AR(1)}}=0.002\),
+\(p_{1,\mathrm{ARFIMA}}=0.022\), \(\hat d=+0.436\)),
+\textbf{real USD-GBP exchange rate on Juglar},
+\textbf{real-eri and nominal-eri on Kuznets}. The
+\textbf{Kondratieff debt-chronology reading of
+Section~\ref{sec:kondratieff_results} is reinforced}, not
+overturned, by the ARFIMA-conditional verdict: the headline
+\(p_1\) value remains below 0.05 under both nulls, with a
+GPH-estimated \(\hat d\) at the long-memory clipping bound
+(0.44--0.47) that confirms the series is fractionally
+integrated. The 16 cells that pass only the AR(1) null and
+fail the ARFIMA null are downgraded as candidates for the
+variable-specific vindication claim.

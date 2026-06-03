@@ -3,29 +3,78 @@
 
 We applied a uniform falsifiable protocol to the four canonical
 economic cycles---Kitchin, Juglar, Kuznets, Kondratieff---across
-five independent macroeconomic panels spanning 1700--2024. The
-finding has two halves.
+five independent macroeconomic panels spanning 1700--2024, with
+threshold transparency on bands and gates, a dual AR(1) and
+ARFIMA(0, \(\hat d\), 0) null at the existence gate,
+per-cell long-memory and stationarity diagnostics, a
+\(\pm 1\)y band-edge sensitivity test and a rolling-window
+verdict at 50--80y. The finding has three halves.
 
-\paragraph{Positive: the canonical cycles are alive where theory predicts.}
-Each of the four canonical cycles passes Gate~1 at the
+\paragraph{Positive (Juglar, Kuznets, Kitchin): the canonical
+cycles are alive where theory predicts.}
+Three of the four canonical cycles pass Gate~1 at the
 unadjusted significance level on exactly the variables the
 substantive economic literature predicts. Juglar is alive on
 investment-to-GDP (39\,\% of testable JST advanced economies)
 and on unemployment (the quarterly panel exhibits a clean
-G7Q / OECDQ / GBR / JPN unemployment signature). Kuznets is
-alive on house prices (46\,\% of testable JST countries) and on
-population and credit (39--41\,\%). Kitchin is alive on the
-BIS emerging-market credit aggregates on the quarterly panel
+G7Q / OECDQ / GBR / JPN unemployment signature); the BoE
+Millennium UK unemployment cell passes \emph{both} the AR(1)
+and the ARFIMA(0, \(\hat d=0.49\), 0) nulls
+(\(p_{1,\mathrm{ARFIMA}}=0.002\)). Kuznets is alive on
+house prices (46\,\% of testable JST countries), on
+population (39\,\%) and on credit (41\,\%); on BoE the
+real-effective and nominal-effective exchange-rate cells
+also survive both nulls. Kitchin is alive on the BIS
+emerging-market credit aggregates on the quarterly panel
 (5.3-fold excess on 93 cells) and on emerging-market trade
-and financial flows on the WB annual panel. Kondratieff is
-alive on UK public debt / GDP on the BoE Millennium panel,
-consistent with the Reinhart-Rogoff debt-cycle reading. The
-positive concentrations are not statistical noise: they cluster
-on the variables \citet{kitchin1923}, \citet{juglar1862},
-\citet{kuznets1930}, \citet{schumpeter1939} and
-\citet{borio2014} each independently named. The substantive
-theory of each cycle is empirically vindicated on the channels
-each was originally claimed to govern.
+and financial flows on the WB annual panel; the BoE Kitchin
+cell is downgraded as a band-edge artefact under the R4
+sensitivity test (pass-rate 0\,\% under a one-year tightening
+of the lower edge). The positive concentrations are not
+statistical noise: they cluster on the variables
+\citet{kitchin1923}, \citet{juglar1862}, \citet{kuznets1930},
+\citet{schumpeter1939} and \citet{borio2014} each
+independently named. The substantive theory of these three
+cycles is empirically vindicated on the channels each was
+originally claimed to govern, with the BoE Juglar cell
+specifically reinforced by long-memory-aware testing.
+
+\paragraph{Kondratieff: not vindicated as a long wave; a UK
+war-financing debt chronology, reinforced by ARFIMA.}
+The Kondratieff block must be recast. Only the BoE
+Millennium panel admits a meaningful test, and within it
+only two UK debt series pass Gate~1: public-sector debt
+(\(p_{1,\mathrm{AR(1)}}=0.002\),
+\(p_{1,\mathrm{ARFIMA}}=0.022\) at \(\hat d=+0.436\)) and
+central-government gross debt
+(\(p_{1,\mathrm{AR(1)}}=0.032\),
+\(p_{1,\mathrm{ARFIMA}}=0.048\) at \(\hat d=+0.468\));
+\emph{all} other long UK series (real GDP, CPI, wholesale
+prices, share prices, Bank Rate, real wages, population)
+fail Gate~1 on the Kondratieff band under both nulls. The
+two positive cells are consistent with
+\citet{reinhart_rogoff2009}'s public-debt long wave---a
+chronology of major-power conflict financing (Napoleonic,
+Crimean, the two World Wars), not an endogenous economic
+mechanism in the sense \citet{kondratieff1925} or
+\citet{schumpeter1939} described. The R1 long-memory-aware
+ARFIMA-conditional Gate~1 \emph{reinforces} rather than
+overturns this reading: at the GPH-estimated \(\hat d\)
+clipping bound, the headline debt-chronology cells remain
+significant at \(\alpha=0.05\). The R5 rolling-window heat
+map localises the strongest 40--60y power to the post-1815
+Napoleonic amortisation period and to the post-1945 World
+War II debt build-up---the windows the
+\citet{reinhart_rogoff2009} reading anticipates. We
+therefore explicitly do \emph{not} claim a Kondratieff
+vindication; we claim a robust UK debt-financing
+chronology, distinct from but spectrally co-located with
+the 40--60y band the canonical literature labelled
+``Kondratieff''. A cross-country replication with spliced
+\citet{toutain1997} French debt series and other
+historical debt panels would adjudicate whether the
+debt-chronology reading generalises beyond the UK or
+remains a colonial-empire-specific artefact.
 
 \paragraph{Negative: the strong universalist reading fails.}
 The joint collection of unadjusted positives does not survive
@@ -34,26 +83,44 @@ Benjamini-Hochberg adjustment at FDR 0.05 on the full
 universalist sinusoidal-on-everything reading---a single
 canonical period at the heart of every macroeconomic variable
 on every panel---is rejected. This rejection reproduces, on a
-uniform pre-registered protocol, the empirical scepticism that
+uniform protocol with threshold transparency, the empirical
+scepticism that
 has been building since
 \citet{garvy1943,solomou1987,romer1999,stock_watson2003,wen2005}.
 
 \paragraph{Methodological lessons.}
-Three lessons follow. First, the canonical cycles should be
+Five lessons follow. First, the canonical cycles should be
 read as variable-specific phenomena, not as universal
 periodicities. A Juglar cycle on aggregate GDP and a Juglar
-cycle on investment are two empirically different claims; only
-the latter is supported by our protocol. Second, the
-composite-versus-component distinction \citep{wen2005} matters:
-many of the unadjusted positives on emerging-market BIS panels
-arise on individual credit variables, not on aggregate output
-composites. Third, the empirical power of any cycle-detection
-protocol against realistic non-linear alternatives must be
-reported explicitly; our protocol is highly powerful against
-linear sinusoidal cycles
+cycle on investment are two empirically different claims;
+only the latter is supported by our protocol. Second, the
+composite-versus-component distinction \citep{wen2005}
+matters: many of the unadjusted positives on emerging-market
+BIS panels arise on individual credit variables, not on
+aggregate output composites. Third, the empirical power of
+any cycle-detection protocol against realistic non-linear
+alternatives must be reported explicitly; our protocol is
+highly powerful against linear sinusoidal cycles
 (\(\geq 80\%\) at \(\mathrm{SNR}\geq 0.2\) on AR(1)+cosine)
 but weak against Markov-switching and multifractal
-alternatives.
+alternatives. Fourth, an AR(1) null is mis-specified on the
+raw level of broadband macroeconomic series: 97--100\,\%
+of cells on JST R6 and BoE Millennium return
+\(|\hat d_{\mathrm{GPH}}|>0.1\) and a DFA
+\(\hat H\geq 1.6\), consistent with near-unit-root
+dynamics. The load-bearing existence verdict on
+long-memory series is therefore the
+ARFIMA(0, \(\hat d\), 0)-conditional one; pass-fail
+verdicts on the AR(1) null alone are reliable only when
+the ARFIMA verdict agrees. In our BoE run, sixteen cells
+that pass the AR(1) null fail the ARFIMA null and should
+be treated as false positives under long memory. Fifth,
+band-edge sensitivity is a necessary discipline of any
+cycle protocol that anchors band edges to prior empirical
+literature: a substantive cycle survives a one-year
+perturbation in either direction; an artefact does not.
+The BoE Kitchin cell is the example of an artefact in our
+panel.
 
 \paragraph{Implications for empirical practice.}
 A practitioner who wishes to model the Juglar cycle should

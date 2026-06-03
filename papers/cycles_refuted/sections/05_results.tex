@@ -51,21 +51,49 @@ distribution of the positives is informative:
   countries (\textbf{39\,\%}). Smallest \(p_1\) on Switzerland
   and Canada (\(p_1=0.001\)).
 \item \texttt{LH\_XRUSD} (bilateral USD exchange rate) passes on
-  11 of 18 (\textbf{61\,\%}).
+  11 of 18 (\textbf{61\,\%}); we caveat this cell below.
 \item \texttt{LH\_UNRATE} passes on 6 of 18 (\textbf{33\,\%}),
   \texttt{LH\_BUSCREDIT} on 5 of 15 (\textbf{33\,\%}),
   \texttt{LH\_RCONS}, \texttt{LH\_HPI},
   \texttt{LH\_RGDP\_BARRO}, \texttt{LH\_DEBTGDP} on 4 each.
 \end{itemize}
 
+\paragraph{A theoretical false-positive on \texttt{LH\_XRUSD}.}
+The Juglar pass-rate of 61\,\% on the bilateral USD exchange rate
+is the largest single-variable concentration in the Juglar block,
+but the substantive Juglar mechanism
+\citep{juglar1862,schumpeter1939} attributes the cycle to
+investment-credit dynamics with no direct role for the bilateral
+USD exchange rate. We therefore read this cell as a
+\emph{theoretical false positive}: a variable that passes Gate~1
+but whose passage is not predicted by the substantive theory we
+claim to vindicate. The natural explanation is co-movement with
+the underlying business cycle through trade-balance and
+risk-on/risk-off channels, not an independent Juglar dynamic in
+the exchange rate itself. We retain the cell in the count for
+transparency but exclude it from the
+``investment-and-unemployment'' vindication claim of the
+headline.
+
 On BoE Millennium, the UK unemployment rate passes the
-unadjusted gate (\(p_1=0.006\) on 1760--2016). On the quarterly
-panel, the Juglar band passes on \textbf{12 of 55 testable
-cells (4.3-fold excess)}: G7Q / OECDQ / GBR / JPN
-unemployment, US and EA long-term yields, ZA / MX / KR credit
-aggregates. The pattern matches \citet{schumpeter1939}'s
-investment-financed Juglar reading and the canonical business-
-cycle reading of unemployment.
+unadjusted gate (\(p_1=0.006\) on 1760--2016). The R1
+ARFIMA(0, \(\hat d=0.49\), 0) re-run on BoE
+(Appendix~\ref{sec:appendix_arfima_vs_ar1}) confirms the
+finding: \textbf{UK unemployment on Juglar passes both
+nulls} (\(p_{1,\mathrm{AR(1)}}=0.004\),
+\(p_{1,\mathrm{ARFIMA}}=0.002\), \(\hat d=+0.49\)), and so
+does the real USD-GBP exchange rate on Juglar
+(\(p_{1,\mathrm{AR(1)}}=0.006\),
+\(p_{1,\mathrm{ARFIMA}}=0.002\), \(\hat d=+0.428\)). The
+ARFIMA-conditional verdict therefore eliminates the
+long-memory mis-specification critique on the BoE Juglar
+unemployment cell. On the quarterly panel, the Juglar band
+passes on \textbf{12 of 55 testable cells (4.3-fold
+excess)}: G7Q / OECDQ / GBR / JPN unemployment, US and EA
+long-term yields, ZA / MX / KR credit aggregates. The
+pattern matches \citet{schumpeter1939}'s investment-financed
+Juglar reading and the canonical business-cycle reading of
+unemployment.
 
 \subsection{Kuznets (15--25y): the construction and demographic swing, vindicated}
 \label{sec:kuznets_results}
@@ -123,15 +151,46 @@ WB result that the WB Kitchin positives are on
 trade-and-finance aggregates rather than on real GDP
 composites.
 
-\subsection{Kondratieff (40--60y): the debt-cycle long wave on UK}
+\paragraph{BoE Kitchin downgraded as band-edge artefact.}
+On BoE Millennium the unadjusted Kitchin pass-rate is
+7.7\,\% (5 of 65 testable variables). The R4 band-edge
+sensitivity test (Appendix~\ref{sec:appendix_band_sensitivity})
+reveals that this rate is highly unstable to one-year
+perturbation: tightening the lower edge from [3,5] to [4,5]
+collapses the pass-rate to \textbf{0.0\,\%}, while loosening
+the upper edge to [3,6] more than doubles it to 16.9\,\%.
+This asymmetric sensitivity is the signature of a
+band-fitting artefact rather than a substantive cycle: a
+true 3--5y signal would survive a one-year edge perturbation
+in either direction. We therefore \emph{do not} count the
+BoE Kitchin cell as supporting evidence for the Kitchin
+vindication claim. The BIS quarterly-panel result on
+emerging-market credit aggregates remains the load-bearing
+Kitchin finding.
+
+\subsection{Kondratieff (40--60y): not vindicated as a periodicity; a UK
+debt-financing chronology instead}
 \label{sec:kondratieff_results}
 
-Only the Bank of England Millennium panel admits a meaningful
-Kondratieff test (\(N>240\) annual observations). World Bank
-(maximum \(N=65\)) and JST R6 (maximum \(N=151\)) are both
-window-bound and cannot speak to a 40--60y band. The Quarterly
-panel is even further short.
+The Kondratieff result is the weakest of the four cycle blocks
+and requires recasting. We separate the statistical finding from
+the substantive interpretation.
 
+\paragraph{Statistical scope is narrow by construction.}
+Only the Bank of England Millennium panel admits a meaningful
+Kondratieff test (\(N>240\) annual observations).
+\citet{torrence_compo1998} require at least 2.5 full periods for
+a Gate~1 dual-null test to have meaningful power, which on a
+40--60y band translates to \(\geq 100\)--\(150\) years and
+\(\geq 240\) observations on annual data. World Bank
+(maximum \(N=65\)) and JST R6 (maximum \(N=151\)) are both
+window-bound and cannot speak to a 40--60y band; the Quarterly
+panel is even further short. The verdict therefore rests on a
+\emph{single country (UK), a single panel (BoE), a single
+variable (debt/GDP)}---there is no cross-panel replication and
+none is available with currently published long-history data.
+
+\paragraph{Statistical finding.}
 On BoE 1700--2016 (16 variables long enough for the test),
 \textbf{the UK public debt-to-GDP ratio passes the unadjusted
 gate at \(p_1=0.004\)}. The same variable passes the Kuznets
@@ -139,11 +198,92 @@ band at \(p_1=0.006\), and UK unemployment passes the Juglar
 band at \(p_1=0.006\). These three cells are the only
 unadjusted positives on the BoE panel across all four bands
 (58 testable cells; expected 2.9 under the joint null;
-observed 3). The substantive reading is consistent with
-\citet{reinhart_rogoff2009}: the UK debt-cycle long wave is
-driven by Napoleonic, Crimean and the two World Wars financing
-peaks, an exogenous-shock chronology rather than an endogenous
-40--60y periodicity in the strong sense.
+observed 3). Three out of three positives are statistically
+indistinguishable from the joint-null expectation: this is the
+honest reading of the BoE evidence at the panel level.
+
+\paragraph{Substantive recast: war-financing chronology, not
+Kondratieff.}
+Even taken at face value, the single positive cell does
+\emph{not} vindicate the original \citet{kondratieff1925}
+hypothesis of an endogenous 40--60y periodicity in the real
+economy. The Kondratieff thesis identifies a self-sustaining
+long wave driven by innovation, credit expansion and
+agricultural-price cycles; the UK debt/GDP series is dominated,
+on inspection, by four large exogenous fiscal shocks---the
+Napoleonic Wars financing peak (\(\sim 1815\)), the Crimean
+War, and the two World Wars---separated by debt-amortisation
+declines. This pattern is closer to
+\citet{reinhart_rogoff2009}'s public-debt cycle, where the
+period emerges from the spacing of major-power conflicts rather
+than from an endogenous economic mechanism, than to anything
+\citet{kondratieff1925} or \citet{schumpeter1939} described.
+
+\paragraph{What we therefore claim, and what we do not.}
+We claim: a 40--60y band has elevated power on UK debt
+series over 1700--2016, consistent with the
+\citet{reinhart_rogoff2009} war-financing-debt-cycle reading.
+We \emph{do not} claim: a Kondratieff long wave is present in
+the UK real economy on any of the macroeconomic variables
+Kondratieff would have recognised (real GDP, CPI, wholesale
+prices, real wages, Bank Rate, share prices, population---all
+of which fail Gate~1 on BoE, with \(p_1\in[0.10,0.99]\):
+Appendix~\ref{app:per_variable}, Table~D.2). The title of this
+subsection should therefore be read literally: the positive
+result is a debt-chronology finding, not a Kondratieff cycle
+finding. We retain ``Kondratieff'' in the band name as a
+convention for the 40--60y window but do not extend the
+substantive theory of \citet{kondratieff1925} to cover the UK
+debt signal.
+
+\paragraph{Long-memory-aware reinforcement of the debt-chronology reading.}
+The R1 ARFIMA(0, \(\hat d\), 0) re-run of Gate~1
+(Appendix~\ref{sec:appendix_arfima_vs_ar1}) is the natural
+test for the BoE Kondratieff cell, because the GPH estimator
+returns \(\hat d\) near the long-memory clipping bound on
+both UK debt series (public-sector debt
+\(\hat d=+0.436\); central-government gross debt
+\(\hat d=+0.468\)). The headline debt-chronology cells
+survive the ARFIMA-conditional gate:
+\textbf{UK public-sector debt} passes at
+\(p_{1,\mathrm{ARFIMA}}=0.022\)
+(versus \(p_{1,\mathrm{AR(1)}}=0.002\)) and
+\textbf{UK central-government gross debt} passes at
+\(p_{1,\mathrm{ARFIMA}}=0.048\)
+(versus \(p_{1,\mathrm{AR(1)}}=0.032\)). The
+ARFIMA-conditional verdict is therefore that the
+debt-chronology signal is not an artefact of mis-specifying
+the AR(1) persistence parameter on long-memory debt series.
+The reinforcement is significant: it converts what could
+have been read as a single-null finding into a
+two-independent-nulls finding that survives a long-memory
+robustness check at \(\alpha=0.05\) on the cell-level
+\(p\)-value. The substantive interpretation is unchanged
+(war-financing chronology, not endogenous long wave), but
+the statistical floor is now firmer.
+
+\paragraph{Rolling-window stability.}
+The R5 rolling-window Gate~1 on BoE
+(Appendix~\ref{sec:appendix_rolling}) reports a Kondratieff
+pass-rate of 40 of 284 80y windows (14.1\,\%), modestly
+elevated above the 5\,\% nominal null and compatible with
+intermittent debt-driven 40--60y power rather than
+stationary cyclicality across the full 1700--2016 horizon.
+The full window heat-map (sidecar) localises the strongest
+power to the post-1815 Napoleonic-debt-amortisation period
+and to the post-1945 World-War-II debt build-up, both of
+which are the windows the \citet{reinhart_rogoff2009}
+reading anticipates.
+
+\paragraph{What would falsify or upgrade this verdict.}
+A future replication with cross-country long debt series
+(beyond UK)---which would require splicing Toutain's French
+debt accounts \citep{toutain1997} with modern OECD debt series,
+plus equivalent splices for Germany and the Netherlands---could
+either confirm a multi-country debt-financing signature or
+restrict the result to a UK-specific colonial-empire artefact.
+We mark this as the priority extension for the Kondratieff
+block (Section~\ref{sec:conclusion}).
 
 \subsection{Benjamini-Hochberg adjustment: the universalist claim fails}
 

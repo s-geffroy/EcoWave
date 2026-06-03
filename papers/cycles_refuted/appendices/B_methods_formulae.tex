@@ -75,6 +75,84 @@ The PELT algorithm \citep{killick_fearnhead_eckley2012} solves
 with \(\mathcal{C}\) the L2 segment-cost and \(\beta\) the BIC
 penalty. Implementation: \path{ecowave/waves/model_d_regime.py}.
 
+\subsection{Long-memory and stationarity diagnostics}
+\label{sec:longmem_diagnostics}
+
+For every cell we also report four pre-cycle diagnostics that bear
+on the validity of the AR(1) null:
+\begin{itemize}
+\item Augmented Dickey--Fuller test \citep{dickey_fuller1979} for a
+  unit root (regression with constant, AIC-selected lag).
+\item KPSS test \citep{kpss1992} for stationarity around a level.
+\item Geweke--Porter-Hudak log-periodogram estimator
+  \citep{geweke_porter_hudak1983} of the fractional-integration
+  order \(\hat d\). Regression of
+  \(\log I(\lambda_j) = c - d\,\log(4\sin^2(\lambda_j/2)) + \eta_j\)
+  on the first \(m = \lfloor\sqrt{T}\rfloor\) non-zero Fourier
+  frequencies; \(\hat d\) clipped to \([-0.49, 0.49]\).
+\item DFA Hurst exponent \(\hat H\) \citep{peng1994,hurst1951},
+  computed via \texttt{nolds.dfa} with a windowed fluctuation
+  fit.
+\end{itemize}
+Implementation:
+\path{ecowave/cycles/surrogate.py:stationarity_diagnostics};
+script: \path{scripts/long_memory_diagnostics.py}; sidecar:
+\path{reports/long_memory_diagnostics.json}.
+
+\subsection{ARFIMA(0, \(\hat d\), 0) Gate~1 null}
+\label{sec:arfima_null}
+
+When \(\hat d > 0.1\), the AR(1) bootstrap over-rejects against a
+fractionally-integrated alternative
+\citep{granger_joyeux1980,baillie1996,diebold_rudebusch1989}: the
+spectrum of an I\((d)\) process has unbounded power as
+\(\omega\to 0\) and concentrates extra power on any low-frequency
+band. We therefore rerun Gate~1 with the AR(1) null replaced by an
+ARFIMA(0, \(\hat d\), 0) null. Simulation uses the
+\citet{hosking1981} fractional-difference convolution
+\((1-L)^{-d} = \sum_k \psi_k L^k\) with
+\(\psi_0 = 1,\,\psi_k = \psi_{k-1}\cdot(k-1+d)/k\) and Gaussian
+innovations whose variance matches the residuals of
+\((1-L)^{\hat d} y_t\). Implementation:
+\path{ecowave/cycles/surrogate.py:arfima_bootstrap_null};
+generator: \path{ecowave/cycles/surrogate_generators.py:arfima_surrogate_series};
+estimator: \path{ecowave/cycles/surrogate_generators.py:estimate_d_gph};
+script: \path{scripts/arfima_null_per_cell.py}; sidecar:
+\path{reports/arfima_null_per_cell.json}. The joint
+(AR(1), ARFIMA) verdict is the load-bearing Gate~1 when
+\(|\hat d|>0.1\) on the cell.
+
+\subsection{Band-edge sensitivity}
+\label{sec:band_sensitivity}
+
+The canonical bands are anchored to the prior empirical literature
+(\(\text{Kitchin}=[3,5]\), \(\text{Juglar}=[7,11]\),
+\(\text{Kuznets}=[15,25]\), \(\text{Kondratieff}=[40,60]\)). To
+quantify the sensitivity of Gate~1 verdicts to the band-edge
+choice we rerun the gate on six perturbations per cycle:
+tighten/loosen on each edge by \(\pm 1\)y (Kitchin/Juglar) or
+\(\pm 2\)y (Kuznets/Kondratieff), plus widen/narrow variants.
+Script: \path{scripts/band_sensitivity.py}; sidecar:
+\path{reports/band_sensitivity.json}. The headline pass-rate is
+reported alongside the rates under each perturbation, so a
+reader can assess whether the substantive concentrations of
+Section~\ref{sec:results} survive small relabelings of the
+canonical bands.
+
+\subsection{Rolling-window Gate~1}
+\label{sec:rolling_windows}
+
+To map the temporal stability of each cycle on each variable, we
+also report Gate~1 verdicts on a grid of rolling windows of fixed
+length (default 50y for Kitchin/Juglar/Kuznets, 200y for the
+Kondratieff window-bound cells), with step 25y. Script:
+\path{scripts/rolling_window_gates.py}; sidecar:
+\path{reports/rolling_window_gates.json}. The output supports a
+heat-map of cycle presence across history; the substantive
+question is whether a cycle that passes on the full window is
+present in each sub-epoch or only on a subset (Belle \'Epoque,
+Trente Glorieuses, post-2008).
+
 \subsection{Dual-null surrogate test}
 
 \paragraph{Null~1: AR(1) bootstrap.}

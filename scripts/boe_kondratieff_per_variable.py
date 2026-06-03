@@ -75,7 +75,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--csv", default="/app/data_raw/boe/annual.csv")
     parser.add_argument("--start-year", type=int, default=1700)
-    parser.add_argument("--n-surrogates", type=int, default=500)
+    parser.add_argument("--n-surrogates", type=int, default=500,
+                        help="500 (default) for headline; 20000 for "
+                             "BH-FDR-compatible p-value resolution.")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--out",
                          default="reports/boe_per_variable.json")

@@ -5,27 +5,48 @@ years, Kondratieff 40--60 years) across five independent
 macroeconomic panels spanning 1700--2024
 (Bank of England Millennium, J\`ord\`a-Schularick-Taylor R6, World
 Bank annual aggregates, FRED/Eurostat/OECD/BIS quarterly, sectoral
-historical). On a (panel, group, variable, cycle) grid of more
-than 1\,400 testable cells we find that canonical cycles are
-\emph{empirically alive} on exactly the variables the substantive
-literature predicts: the Juglar band passes Gate~1 on investment
+historical). The protocol is dual-null: AR(1) bootstrap as the
+primary existence test, ARFIMA(0,\(\hat d\),0) as the long-memory
+robustness check, plus per-cell ADF, KPSS, GPH \(\hat d\) and DFA
+Hurst diagnostics, band-edge sensitivity tests at \(\pm 1\)y, and
+rolling-window verdicts at 50--80y. On a (panel, group, variable,
+cycle) grid of more than 1\,400 testable cells we find three
+substantive concentrations, one reinforced recast, and one
+displaced artefact. Juglar is empirically alive on investment
 and unemployment across the J\`ord\`a-Schularick-Taylor advanced
-economies (2.2-fold excess over null on 605 cells); the Kuznets
-band passes on house prices (46\,\% of testable JST countries),
-on population and on credit aggregates (1.9-fold excess); the
-Kitchin band passes on emerging-market credit aggregates on the
-quarterly BIS panel (5.3-fold excess on 93 cells); and the
-Kondratieff band passes on UK public debt / GDP over 1700--2016
-(Reinhart-Rogoff debt-cycle reading). These concentrations
-empirically vindicate \citet{kitchin1923}, \citet{juglar1862},
-\citet{kuznets1930}, \citet{schumpeter1939} and \citet{borio2014}
-on the channels each named. What our protocol \emph{rejects} is
-the strong universalist reading: no single canonical period
+economies (2.2-fold excess over null on 605 cells); the UK
+unemployment cell on BoE Millennium survives both the AR(1) and
+the ARFIMA(0, \(\hat d=0.49\), 0) null
+(\(p_{1,\mathrm{AR(1)}}=0.004\),
+\(p_{1,\mathrm{ARFIMA}}=0.002\)). Kuznets passes on house prices
+(46\,\% of testable JST countries), on population and on credit
+aggregates (1.9-fold excess). Kitchin passes on emerging-market
+credit aggregates on the quarterly BIS panel (5.3-fold excess on
+93 cells); the BoE Kitchin cell, by contrast, fails our R4
+band-sensitivity test (pass-rate 0\,\% under a one-year tightening
+of the lower edge) and is no longer treated as supporting
+evidence. The 40--60y band passes only on UK debt series on the
+Bank of England Millennium panel (public-sector debt
+\(p_{1,\mathrm{AR(1)}}=0.002\), \(p_{1,\mathrm{ARFIMA}}=0.022\)
+at \(\hat d=+0.44\); central-government gross debt
+\(p_{1,\mathrm{AR(1)}}=0.032\), \(p_{1,\mathrm{ARFIMA}}=0.048\));
+we recast this finding as a \citet{reinhart_rogoff2009}
+war-financing debt-chronology rather than as a vindication of
+the \citet{kondratieff1925} endogenous-long-wave hypothesis,
+because \emph{all} other Kondratieff-eligible UK macro series
+(real GDP, CPI, real wages, share prices, population) fail
+Gate~1 on both nulls. What our protocol \emph{rejects} is the
+strong universalist reading: no single canonical period
 describes \emph{all} macroeconomic variables across heterogeneous
-panels, and the variable-specific concentrations do not survive a
-strict Benjamini-Hochberg false-discovery-rate adjustment on the
-joint grid at our surrogate counts. The negative result is
-properly scoped to the universalist sinusoidal-on-everything
-reading; the positive result vindicates the substantive theory of
-each cycle on the variable each was originally claimed to govern.
+panels, and the variable-specific concentrations do not survive
+a strict Benjamini-Hochberg false-discovery-rate adjustment on
+the joint grid at our surrogate counts. Long-memory diagnostics
+show that 97--100\,\% of cells exhibit \(|\hat d|>0.1\); the
+AR(1) null is therefore mis-specified on the raw level series,
+and the load-bearing verdict is the ARFIMA-conditional one
+where it differs. The negative result is properly scoped to the
+universalist sinusoidal-on-everything reading; the positive
+result vindicates the substantive theory of three canonical
+cycles on the variables originally claimed, with the BoE
+debt-chronology reading reinforced by long-memory-aware testing.
 \end{abstract}

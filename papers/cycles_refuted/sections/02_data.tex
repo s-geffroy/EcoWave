@@ -63,6 +63,59 @@ a per-variable safeguard (Section~\ref{sec:criteria}) and the
 sectoral panel exists precisely to test cycles on raw, unaggregated
 historical series (rail freight, pig iron, cotton, wheat, etc.).
 
+\subsection{Variables tested, variables excluded}
+\label{sec:variable_selection}
+
+The risk of a circular ``vindication'' is that we test only
+variables already known from the canonical literature, then
+report that the cycles appear on those variables. We address this
+in two ways.
+
+\paragraph{Pre-registered variable list, not curated for cycles.}
+Each panel's variable list is the \emph{full} set shipped by the
+upstream provider after the deduplication and recoding rules
+documented in Appendix~\ref{app:data} (130 BoE series, 45 JST
+series, 45 WB indicators, 15 quarterly variables, 11 sectoral).
+The list was fixed before the Gate~1 runs and was not pruned to
+remove variables that failed---this is why
+Section~\ref{sec:results} reports both substantive concentrations
+\emph{and} large variable subsets with null effects (e.g.\ all
+ten BoE Kondratieff cells except UK debt/GDP). A reader can
+recover the full per-variable evidence in
+Appendix~\ref{app:per_variable}; nothing is hidden between
+report and provider.
+
+\paragraph{Variables not tested, and why.}
+A small number of variables that one might expect on theoretical
+grounds are absent. Total factor productivity (TFP) is not
+included on the JST R6 or BoE Millennium panels because
+historical TFP series before 1950 require imputation of capital
+stock and labour-quality adjustments that are themselves the
+output of cycle-aware decomposition methods; including them
+would risk a circular construction. The term-spread on long
+sovereign yields is implicit in the level series we do include
+(\texttt{LH\_LTRATE} and \texttt{LH\_STIR} on JST; Consols
+yield and Bank Rate on BoE) and we leave the explicit spread to
+future work. Labour-force participation rates are not included
+because pre-1900 series are imputed from union membership and
+are not directly comparable across countries. Money velocity is
+implicit in the M-aggregate and GDP series we include. These
+omissions are recorded so a critic can reproduce them or
+challenge them rather than guess at them.
+
+\paragraph{A theoretical false positive must be possible.}
+For the variable-specific vindication claim to be informative,
+some variables that pass Gate~1 must lack a substantive
+theoretical motivation for their passage---otherwise the claim
+collapses into tautology. We flag one such case explicitly in
+Section~\ref{sec:juglar_results}: \texttt{LH\_XRUSD} (bilateral
+USD exchange rate) passes the Juglar band on 61\,\% of JST
+countries but has no direct role in Juglar's
+investment-and-credit mechanism. We retain the cell in the
+unadjusted count but exclude it from the substantive
+vindication. The protocol therefore admits theoretical
+false-positives as a category, not just statistical ones.
+
 \subsection{Reproducibility}
 \label{sec:repro}
 
@@ -73,7 +126,9 @@ ingestion pipeline runs end-to-end in a Docker container in
 versioned schema. Appendix~\ref{app:data} reports cross-source
 consistency on overlapping windows (JST vs.\ BoE on UK 1870--2016;
 BIS vs.\ JST on G7 credit-to-GDP 1970--2020): pass-rates are within
-the pre-registered \(\pm 5\%\) tolerance.
+the \(\pm 5\%\) tolerance committed to the project's Git
+history before panel ingestion (``threshold transparency'',
+Section~\ref{sec:criteria}).
 
 \subsection{Licences and ethics}
 

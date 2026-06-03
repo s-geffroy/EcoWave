@@ -30,7 +30,10 @@ from scipy.signal import hilbert as _hilbert
 from ecowave.cycles.decompose import cf_bandpass
 from ecowave.cycles.surrogate_generators import (
     ar1_surrogate_series,
+    arfima_surrogate_series,
+    estimate_d_gph,
     fit_ar1 as _fit_ar1,
+    fit_arfima_d_sigma,
     phase_scramble_surrogate_series,
     simulate_ar1 as _simulate_ar1,
 )
@@ -279,6 +282,98 @@ def benjamini_hochberg_adjust(p_values: np.ndarray | list[float],
     p_adj[order] = p_adj_sorted
     rejected[order] = rejected_sorted
     return {"p_adjusted": p_adj, "rejected": rejected, "threshold": threshold}
+
+
+def arfima_bootstrap_null(series: pd.Series, lo_years: float, hi_years: float,
+                          samples_per_year: float = 1.0,
+                          n_surrogates: int = 1000, alpha: float = 0.05,
+                          seed: int = 0,
+                          d_override: float | None = None) -> NullResult:
+    """Test cycle band-power against an ARFIMA(0, d_hat, 0) null.
+
+    Long-memory analogue of :func:`ar1_bootstrap_null`. When d_hat
+    estimated by GPH (Geweke & Porter-Hudak 1983) is materially above
+    zero (d_hat > ~0.1), an AR(1) null over-rejects on broadband
+    fractionally-integrated series; the ARFIMA null is the appropriate
+    counter-test (Granger & Joyeux 1980 ; Baillie 1996).
+
+    Returns a NullResult whose ``method`` field records d_hat used.
+    """
+    y = series.dropna().astype(float).to_numpy()
+    if y.size < 16:
+        return NullResult(real_band_power=np.nan, p_value=1.0,
+                          reject_cycle=True, n_surrogates=0,
+                          method="ARFIMA(0, d_hat, 0) bootstrap (insufficient)")
+
+    real_cycle = cf_bandpass(pd.Series(y), lo_years, hi_years,
+                             samples_per_year=samples_per_year).dropna().to_numpy()
+    real_power = float(np.sum(real_cycle ** 2))
+    if real_power <= 0.0:
+        d_hat = d_override if d_override is not None else estimate_d_gph(y)
+        return NullResult(real_band_power=0.0, p_value=1.0,
+                          reject_cycle=True, n_surrogates=0,
+                          method=f"ARFIMA(0,{d_hat:+.3f},0) bootstrap")
+
+    d_hat, sigma, mu = fit_arfima_d_sigma(y)
+    if d_override is not None:
+        d_hat = float(max(-0.49, min(0.49, d_override)))
+
+    n_geq = 0
+    for surrogate in arfima_surrogate_series(y, n_surrogates, seed,
+                                              d_override=d_hat):
+        surr_cycle = cf_bandpass(pd.Series(surrogate), lo_years, hi_years,
+                                 samples_per_year=samples_per_year).dropna().to_numpy()
+        if np.sum(surr_cycle ** 2) >= real_power:
+            n_geq += 1
+    p_value = (n_geq + 1) / (n_surrogates + 1)
+    return NullResult(real_band_power=real_power, p_value=p_value,
+                      reject_cycle=p_value >= alpha, n_surrogates=n_surrogates,
+                      method=f"ARFIMA(0,{d_hat:+.3f},0) bootstrap on CF band-power")
+
+
+def stationarity_diagnostics(series: pd.Series) -> dict:
+    """Return ADF + KPSS + GPH d_hat + DFA Hurst for a single series.
+
+    Uses statsmodels for ADF (Dickey-Fuller 1979) and KPSS (1992); GPH
+    (Geweke & Porter-Hudak 1983) via :func:`estimate_d_gph`; DFA Hurst
+    (Peng et al. 1994 ; Hurst 1951) via nolds if available, with a custom
+    fallback. Returns a flat dict suitable for JSON serialisation.
+    """
+    from statsmodels.tsa.stattools import adfuller, kpss
+    y = series.dropna().astype(float).to_numpy()
+    n = y.size
+    out = {"n_observations": n}
+    if n < 16:
+        return {**out, "insufficient_data": True}
+    # ADF (H0: unit root)
+    try:
+        adf_stat, adf_p, *_ = adfuller(y, autolag="AIC", regression="c")
+        out["adf_statistic"] = float(adf_stat)
+        out["adf_p_value"] = float(adf_p)
+        out["adf_reject_unit_root"] = bool(adf_p < 0.05)
+    except Exception as e:  # pragma: no cover - statsmodels edge cases
+        out["adf_error"] = str(e)
+    # KPSS (H0: stationarity around a level)
+    try:
+        kpss_stat, kpss_p, *_ = kpss(y, regression="c", nlags="auto")
+        out["kpss_statistic"] = float(kpss_stat)
+        out["kpss_p_value"] = float(kpss_p)
+        out["kpss_reject_stationarity"] = bool(kpss_p < 0.05)
+    except Exception as e:  # pragma: no cover
+        out["kpss_error"] = str(e)
+    # GPH d_hat (long memory)
+    out["gph_d_hat"] = float(estimate_d_gph(y))
+    # DFA Hurst (Peng 1994)
+    try:
+        import nolds
+        out["dfa_hurst"] = float(nolds.dfa(y))
+    except Exception:
+        try:
+            from ecowave.cycles.alternative_dynamics import _dfa_hurst
+            out["dfa_hurst"] = float(_dfa_hurst(y))
+        except Exception as e:  # pragma: no cover
+            out["dfa_hurst_error"] = str(e)
+    return out
 
 
 def dual_null(series: pd.Series, lo_years: float, hi_years: float,

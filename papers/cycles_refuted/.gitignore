@@ -14,5 +14,6 @@
 *.nav
 *.snm
 *.vrb
+*.spl
 auto/
 _minted-*/

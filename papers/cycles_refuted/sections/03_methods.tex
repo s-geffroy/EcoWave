@@ -129,28 +129,40 @@ amplitude-preserving randomisation. This distinguishes a genuine
 cycle (with stable phase relationships) from a band that merely
 contains power because the spectrum happens to peak there.
 
-\paragraph{The dual criterion: existence as gate, coherence as diagnostic.}
-The two nulls play asymmetric roles. The AR(1) bootstrap is the
-load-bearing existence test: empirical calibration on
-synthetic AR(1)+cosine alternatives (Appendix~\ref{app:methods})
-shows it achieves \(\geq 80\%\) detection power above
+\paragraph{The dual criterion: existence as gate, coherence as
+non-discriminating diagnostic.}
+The two nulls play asymmetric roles, and the asymmetry must be
+read clearly to avoid the impression of a doubled significance
+test. The AR(1) bootstrap is the \emph{only} load-bearing
+existence test: empirical calibration on synthetic
+AR(1)+cosine alternatives (Appendix~\ref{app:methods}) shows
+it achieves \(\geq 80\%\) detection power above
 \(\mathrm{SNR}\approx 0.2\) and saturates by
-\(\mathrm{SNR}\approx 0.3\). The phase-randomised coherence
-null is degenerate on simple Gaussian-linear cycles---the
-spectrum-preserving surrogate carries the same band-power as
-the original and a stable instantaneous frequency under
-filtering---so it is non-discriminating in this regime. On
-broadband non-Gaussian data it does carry information, but it
-cannot be used as a primary gate. We therefore use the AR(1)
-null as Gate~\ref{gate:1}, and report the phase-coherence
-\(p\)-value \(p_2\) alongside as a complementary diagnostic.
-This reframing follows the recommendation of
-\citet{schreiber_schmitz2000} on the limits of phase-randomised
-surrogates against linear test statistics, and is reflected in
-the implementation (\path{ecowave/cycles/surrogate.py:dual_null}
-returns both verdicts, with \texttt{reject\_cycle} set by the
-AR(1) test and \texttt{reject\_existence\_and\_coherence}
-provided as a conservative robustness flag).
+\(\mathrm{SNR}\approx 0.3\). The phase-randomised null is
+\emph{degenerate by Parseval}
+\citep{theiler_et_al1992,schreiber_schmitz2000} against any
+band-power statistic: a Theiler phase-randomised surrogate
+preserves the empirical Fourier amplitudes exactly, so
+\(\sum_{k\in\text{band}}|\hat y_k|^2\) is identical between
+surrogate and data by construction. We retain the
+phase-randomised null only to score a \emph{different}
+statistic---the within-band Hilbert phase coherence (mean
+resultant length of the instantaneous-frequency angles)---which
+is destroyed by phase randomisation even when the spectrum is
+preserved. On the calibration panels the resulting
+\(p\)-value is near-uniformly distributed on \([0,1]\) under
+the alternatives we care about (Appendix~\ref{app:methods},
+median 0.49--0.81), confirming that this auxiliary statistic
+does not discriminate cycles from spectrum-preserving
+surrogates either. \textbf{The phase-randomised null is
+therefore reported in JSON output for completeness only and
+does not enter Gate~\ref{gate:1}.} The implementation
+(\path{ecowave/cycles/surrogate.py:dual_null}) returns both
+verdicts, with \texttt{reject\_cycle} set exclusively by the
+AR(1) test; the legacy
+\texttt{reject\_existence\_and\_coherence} flag is preserved
+for replicability but is not used as a gate anywhere in
+Section~\ref{sec:results}.
 
 \subsection{Anchored bands}
 
@@ -162,7 +174,8 @@ Juglar 7--11y \citep{juglar1862,schumpeter1939};
 Kuznets 15--25y \citep{kuznets1930,korotayev_tsirel2010};
 Kondratieff 40--60y \citep{kondratieff1925,modelski1987,
 korotayev_tsirel2010}. We do not adjust bands \emph{post hoc} and
-do not regard this as formal pre-registration in the OSF sense
+do not regard this as formal OSF-style pre-registration (we use
+the term \emph{threshold transparency} for it
 (see Appendix~\ref{app:criteria}). The only frequency-related
 robustness we permit is the inclusion of a quarterly panel to
 mitigate Nyquist concerns on Kitchin.

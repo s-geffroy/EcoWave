@@ -4,14 +4,16 @@
 This appendix records the protocol thresholds and their
 limitations.
 
-\subsection{What ``frozen thresholds'' means here, and what it does not}
+\subsection{``Threshold transparency'', not pre-registration}
 
 The cycle bands, surrogate counts, gate thresholds and safeguard
 parameters were committed to the project's public Git history
 before any panel was ingested for analysis. The commitment is
 verifiable through dated Git tags and the immutable
 \texttt{MappingProxyType} export of
-\path{ecowave/cycles/bands.py:CYCLE_BANDS}.
+\path{ecowave/cycles/bands.py:CYCLE_BANDS}. We refer to this
+arrangement throughout the paper as \emph{threshold
+transparency}.
 
 We do \emph{not} claim this is a formal pre-registration. Formal
 pre-registration as practised on the OSF or AEA RCT registries
@@ -21,12 +23,24 @@ researcher's control. Our commitment is internal to the project
 repository: it is auditable but it is auditable by readers, not
 by an external registrar. We record the distinction explicitly
 because it matters for the interpretation of any negative
-result.
+result, and we avoid the word ``pre-registered'' in the body of
+the paper to prevent the conflation.
 
 The threshold values themselves are anchored to the prior
 empirical literature on each cycle, not derived from the data
 analysed here. This is the only sense in which the protocol is
 ``pre-data''.
+
+\paragraph{Forward commitment: OSF for the out-of-sample
+extension.}
+We plan to register an out-of-sample replication protocol on
+the OSF before any post-2024 data update is ingested. The
+registered protocol will specify the cycle bands, surrogate
+counts, gate thresholds, safeguard parameters and panel
+definitions identically to the present paper, and will
+constrain the analyst from any post-hoc modification of those
+parameters on the new data. Future extensions of the present
+analysis will therefore be pre-registered in the formal sense.
 
 \subsection{Bands and anchor references}
 

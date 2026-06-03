@@ -36,7 +36,10 @@ def main() -> None:
     parser.add_argument("--xlsx",
                          default="/app/data_raw/macrohistory/jst_r6.xlsx")
     parser.add_argument("--start-year", type=int, default=1870)
-    parser.add_argument("--n-surrogates", type=int, default=200)
+    parser.add_argument("--n-surrogates", type=int, default=200,
+                        help="200 (default) for headline; 1000 for the "
+                             "reports/*_b1000.json sidecar; 20000 for "
+                             "BH-FDR-compatible p-value resolution per R2.")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--bands",
                          default="kondratieff,kuznets,juglar,kitchin",

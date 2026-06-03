@@ -59,23 +59,123 @@ reproduce \citet{wen2005}'s test on dedicated sectoral series.
 \subsection{Pre-processing decisions}
 
 \paragraph{Deflation and log-difference.}
-Nominal series are deflated by the relevant CPI or GDP deflator
-before any cycle test. The transformation applied to each variable
-(\texttt{log\_diff}, \texttt{level} or \texttt{share\_of\_gdp}) is
-recorded in the per-panel manifest JSON; the choice is fixed
-\emph{ex ante} and does not vary across cycles.
+Nominal series are deflated by the relevant price index before
+any cycle test. The transformation applied to each variable
+(\texttt{log\_diff}, \texttt{level} or \texttt{share\_of\_gdp})
+is recorded in the per-panel manifest JSON; the choice is fixed
+\emph{ex ante} and does not vary across cycles. The deflators
+used are panel-specific:
+\begin{itemize}
+\item \emph{BoE Millennium 1700--1947 (UK)}: the Bank of
+  England OBRA composite CPI of \citet{thomas_dimsdale2017},
+  which itself splices the
+  \citet{phelps_brown_hopkins1956} cost-of-consumables index
+  (1264--1954), the \citet{allen2001} silver-wage
+  consumption-basket index, the \citet{clark2005}
+  working-class cost-of-living index, and the
+  \citet{feinstein1972} retail-price series (1855--1965). The
+  splice points are 1750 (Phelps-Brown--Hopkins to Allen),
+  1850 (Allen to Clark) and 1900 (Clark to Feinstein); each
+  splice is multiplicative on the overlap mean of a five-year
+  window.
+\item \emph{BoE Millennium 1948--2016 (UK)}: ONS CPI (link to
+  CPIH after 2017).
+\item \emph{JST R6 (18 economies)}: the panel's own CPI series
+  (chain-linked national CPI for each country; see
+  \citet{jorda_schularick_taylor2017} release 6 documentation).
+\item \emph{WB and Quarterly (multi-country)}: World Bank
+  WDI / OECD chain-weighted GDP deflator; FRED series
+  \texttt{GDPCTPI} for the US; Eurostat HICP for EA aggregates.
+\item \emph{Sectoral (physical quantities)}: no deflation
+  required (tons of pig iron, ton-miles of rail freight,
+  bushels of wheat).
+\end{itemize}
 
 \paragraph{Splicing and gap-filling.}
-Splices follow the published methodology of the source (BoE OBRA,
-JST R6). Gaps shorter than two annual or four quarterly periods
-are linearly interpolated; longer gaps are left as missing and
+Splices follow the published methodology of the source (BoE
+OBRA, JST R6); the four UK pre-1900 splices are documented
+above. Three categories of multi-source splice are used:
+\begin{itemize}
+\item \emph{Multiplicative splice}: applied to all level series
+  (real GDP, CPI, real wages). The scaling factor is the ratio
+  of the two sources' means over a five-year overlap window.
+\item \emph{Additive splice}: applied to ratio series
+  (debt-to-GDP, credit-to-GDP). The shift is the difference of
+  the two sources' means over the overlap.
+\item \emph{Linear-blend splice}: applied where two sources
+  overlap for fewer than five years; a triangular weight
+  smoothly transitions from source~A to source~B over the
+  overlap.
+\end{itemize}
+Splice points and methods are recorded in the per-panel
+manifest JSON (\path{long_history_manifest.json},
+\path{sectoral_history_manifest.json}).
+
+Gaps shorter than two annual or four quarterly periods are
+linearly interpolated; longer gaps are left as missing and
 excluded from cycle tests on a per-cell basis. Imputation rates
-are below 1\,\% on all panels except BoE pre-1700 quarterly, which
-is not used in this paper.
+are below 1\,\% on all panels except BoE pre-1700 quarterly,
+which is not used in this paper.
+
+\paragraph{National-accounts breaks.}
+Three methodological breaks in the underlying national accounts
+affect the panels used here: (i) the introduction of the
+System of National Accounts (SNA 1953 / SNA 1968 / SNA 1993 /
+SNA 2008), (ii) the European System of Accounts revisions
+(ESA 1995 \(\to\) ESA 2010), and (iii) the US Bureau of
+Economic Analysis 2013 comprehensive revision (which
+capitalised R\&D and artistic originals). The JST R6
+release~6 (2024) of \citet{jorda_schularick_taylor2017} applies
+its own back-revision routine to harmonise pre-2014 series to
+the SNA 2008 / ESA 2010 framework; we adopt the JST splice
+verbatim. The BoE Millennium series likewise apply the OBRA
+back-projection of \citet{thomas_dimsdale2017} to harmonise
+pre-1948 to post-1948 conventions; we adopt the OBRA splice
+verbatim. For the WB and Quarterly panels we use the
+provider's own chained series (WDI chained-linked GDP, FRED
+\texttt{GDPC1} chained 2017 dollars), which fold the breaks
+into the chain factor.
+
+\paragraph{Pre-1850 caveat: anachronism of ``real GDP''.}
+National-accounts measurement is a 1930s--1950s
+methodological construct; what is called ``real GDP'' before
+1850 on BoE Millennium or in
+\citet{deane_cole1962,feinstein1972,maddison1991,mitchell2003ihs}
+is a back-projection from sectoral physical quantities (coal,
+pig iron, wheat, cotton, rail freight) weighted by
+contemporary price relatives. The reconstructed series
+inherit the volatility of agricultural output (which
+dominates pre-industrial GDP) and the imputation noise of
+sectoral weights. Any cycle verdict on real-GDP-style series
+in the 1700--1850 window therefore inherits these
+limitations; we flag the issue in
+Section~\ref{sec:kondratieff_results} where it matters most
+(only BoE supports the Kondratieff window).
+
+\paragraph{International comparability and survival bias.}
+The five panels are not symmetric in geographic coverage.
+The BoE Millennium and the sectoral panel are
+UK-and-Anglosphere-dominated. The JST R6 R6 covers eighteen
+advanced economies from 1870, but the depth of coverage
+before 1914 is much greater for the UK, the US, France and
+Germany than for the smaller economies (Norway, Portugal,
+Denmark). This is a survivorship bias of the historical
+archive: empires and continuously-sovereign states leave
+better trails than countries fragmented by occupation or
+revolution. France pre-1860, for example, has no continuous
+national-accounts series; the \citet{toutain1997}
+back-projection is the standard reference but is not yet
+spliced into JST R6 R6. The Kondratieff result of
+Section~\ref{sec:kondratieff_results} therefore rests on the
+UK precisely because the UK has the longest continuous
+debt/GDP series in the public-data corpus, not because the
+UK is uniquely cyclic.
 
 \paragraph{Z-score normalisation windows.}
 Surrogate-bootstrap test statistics use the empirical mean and
-variance of the variable on the pre-registered window. Two windows
+variance of the variable on the threshold-transparent window
+(committed to the project's Git history before panel ingestion).
+Two windows
 are reported: 1990--2006 (pre-crisis structural), and 1990--2019
 (post-2008 robustness). The verdict is invariant.
 

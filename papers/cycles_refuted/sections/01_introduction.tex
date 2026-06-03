@@ -36,55 +36,90 @@ the variables the substantive literature predicts:
   \textbf{investment-to-GDP and unemployment} on the JST R6
   advanced economies (2.2-fold excess on 605 testable cells),
   and on the quarterly G7Q/OECDQ unemployment aggregates
-  (4.3-fold excess on 55 cells);
+  (4.3-fold excess on 55 cells); the BoE Millennium UK
+  unemployment cell survives both the AR(1) and the
+  ARFIMA(0, \(\hat d=0.49\), 0) nulls
+  (\(p_{1,\mathrm{AR(1)}}=0.004\),
+  \(p_{1,\mathrm{ARFIMA}}=0.002\));
 \item the \textbf{Kuznets band} passes on the
   \textbf{house-price index in 6 of 13 testable JST countries
   (46\,\%)}, on population (39\,\%) and on credit aggregates
-  (41\,\%, 1.9-fold excess on 529 cells);
+  (41\,\%, 1.9-fold excess on 529 cells); on BoE, the
+  real-effective and nominal-effective exchange-rate indices
+  pass both nulls;
 \item the \textbf{Kitchin band} passes on the \textbf{BIS
   emerging-market credit aggregates} (credit-to-GDP gap and
   ratio, household and business credit, real property prices) on
   Korea, China, Mexico, South Africa, Turkey, Russia, Indonesia
   (5.3-fold excess on 93 cells), and on the BRICS / WLD / LMC
-  trade and inflation composites on the WB annual panel;
-\item the \textbf{Kondratieff band} passes on \textbf{UK public
-  debt-to-GDP on BoE Millennium 1700--2016} (\(p_1=0.004\)),
-  with the same variable also passing Kuznets ---the
-  Reinhart-Rogoff debt-cycle reading vindicated.
+  trade and inflation composites on the WB annual panel; the
+  BoE Kitchin cell, by contrast, fails the R4 band-sensitivity
+  test (pass-rate 0\,\% under a one-year tightening of the
+  lower edge) and is no longer treated as supporting evidence;
+\item the \textbf{40--60y band} passes on \textbf{two UK debt
+  series only} (BoE Millennium 1700--2016: public-sector debt
+  \(p_{1,\mathrm{AR(1)}}=0.002\),
+  \(p_{1,\mathrm{ARFIMA}}=0.022\) at \(\hat d=+0.44\);
+  central-government gross debt
+  \(p_{1,\mathrm{AR(1)}}=0.032\),
+  \(p_{1,\mathrm{ARFIMA}}=0.048\)), and on no other BoE
+  variable. We recast this finding as the
+  \citet{reinhart_rogoff2009} war-financing debt-chronology
+  rather than as a Kondratieff vindication; the long-memory-
+  aware ARFIMA null reinforces rather than overturns this
+  reading (Section~\ref{sec:kondratieff_results}).
 \end{itemize}
 
 \paragraph{What we therefore claim, and what we do not.}
-We claim that the substantive theory of each canonical cycle is
-empirically alive: Juglar on investment-financed business cycles
-\citep{schumpeter1939,juglar1862}, Kuznets on long swings in
-demographics and construction \citep{kuznets1930}, Kitchin on
-inventory and financial cycles \citep{kitchin1923,wen2005,borio2014},
-Kondratieff on debt-cycle long waves driven by exogenous shocks
-\citep{kondratieff1925,reinhart_rogoff2009}. We do \emph{not}
-claim that any single canonical period applies universally to
-every macroeconomic variable, and we do not claim that the joint
+We claim that the substantive theory of \emph{three} canonical
+cycles is empirically alive: Juglar on investment-financed
+business cycles \citep{schumpeter1939,juglar1862}, Kuznets on
+long swings in demographics and construction \citep{kuznets1930},
+Kitchin on inventory and financial cycles
+\citep{kitchin1923,metzler1941,wen2005,borio2014}. On the
+40--60y band we claim only a single statistical pass on UK
+public debt/GDP, and we read it as a
+\citet{reinhart_rogoff2009} war-financing chronology rather
+than as a vindication of the \citet{kondratieff1925}
+endogenous-long-wave hypothesis: every other Kondratieff-
+eligible UK macro variable fails Gate~1. We do \emph{not} claim
+that any single canonical period applies universally to every
+macroeconomic variable, and we do not claim that the joint
 collection of unadjusted positives survives Benjamini-Hochberg
 adjustment at FDR 0.05 on the full grid at our surrogate counts
 (it does not). The negative result is properly scoped to the
 strong universalist sinusoidal-on-everything reading; the
-positive result vindicates the substantive theory on the named
-channels.
+positive result vindicates the substantive theory of Juglar,
+Kuznets and Kitchin on the named channels and recasts the
+40--60y signal as a debt-financing chronology.
 
 \paragraph{The protocol.}
 Three gates cascade. Gate~1 (existence) requires the empirical
 band-power inside the canonical band to exceed an
-\(\AR{1}\)-bootstrap null at \(\alpha=0.05\); a complementary
-phase-coherence diagnostic
-\citep{theiler_et_al1992,schreiber_schmitz2000} is reported
-alongside but is not the load-bearing gate (Section~\ref{sec:methods}).
-Gate~2 (consensus) requires agreement of at least three of four
-heterogeneous estimators (Christiano-Fitzgerald, Morlet,
-Hamilton-switching, PELT). Gate~3 (cross-aggregate concordance)
-counts how many of the World Bank income-stratified aggregates
-agree, without treating asymmetric outcomes as failure (this is
-not a universality test by construction:
-Section~\ref{sec:criteria}). A per-variable safeguard
-\citep{wen2005} filters composite-aggregation artefacts.
+\(\AR{1}\)-bootstrap null at \(\alpha=0.05\), with a
+complementary ARFIMA(0, \(\hat d_{\mathrm{GPH}}\), 0)
+\citep{granger_joyeux1980,hosking1981,baillie1996} null reported
+alongside to ensure that the AR(1) verdict is not an artefact
+of long memory on broadband fractionally-integrated series;
+per-cell ADF \citep{dickey_fuller1979}, KPSS \citep{kpss1992},
+GPH \(\hat d\) \citep{geweke_porter_hudak1983} and DFA Hurst
+\(\hat H\) \citep{peng1994} diagnostics are recorded
+(Section~\ref{sec:methods}). A phase-coherence diagnostic
+\citep{theiler_et_al1992,schreiber_schmitz2000} is reported but
+is degenerate by Parseval against band-power and does not gate
+the verdict. Gate~2 (consensus) requires agreement of at least
+three of four heterogeneous estimators (Christiano-Fitzgerald,
+Morlet, Hamilton-switching, PELT). Gate~3 (cross-aggregate
+concordance) counts how many of the World Bank
+income-stratified aggregates agree, without treating asymmetric
+outcomes as failure (this is not a universality test by
+construction: Section~\ref{sec:criteria}). A per-variable
+safeguard \citep{wen2005} filters composite-aggregation
+artefacts. Two further robustness checks ship with the
+protocol: a band-edge sensitivity test at \(\pm 1\)y for
+Kitchin/Juglar and \(\pm 2\)y for Kuznets/Kondratieff, and a
+rolling-window Gate~1 at 50--80y windows with 25--40y step, both
+reported in Appendix~\ref{app:per_variable}.
 
 \paragraph{Calibration.}
 The empirical power of the protocol is well-mapped. On
@@ -97,15 +132,24 @@ properly scoped to the linear-sinusoidal reading of each
 canonical cycle, which is precisely what the original
 historical claims made.
 
-\paragraph{Commitment of thresholds.}
+\paragraph{Commitment of thresholds (``threshold transparency'',
+not pre-registration).}
 The cycle bands, surrogate counts, gate thresholds and
 aggregate groupings were committed to the project's public Git
-history before any panel was ingested. We do not claim this is
-a formal pre-registration in the sense of OSF or the AEA RCT
-Registry, and we make the distinction explicit in
-Appendix~\ref{app:criteria}. The threshold values themselves
-are anchored to the prior empirical literature, not derived
-from the data analysed here.
+history before any panel was ingested. We use the term
+\emph{threshold transparency} for this commitment and reserve
+the term \emph{pre-registration} for the formal OSF / AEA RCT
+Registry sense, which we do \emph{not} claim: those registries
+require submission of a complete analysis plan to a
+third-party registrar that timestamps the document outside the
+researcher's control; our Git tags do not. The distinction is
+recorded in Appendix~\ref{app:criteria}. The threshold values
+themselves are anchored to the prior empirical literature, not
+derived from the data analysed here. As a forward commitment,
+we plan to register an out-of-sample replication protocol on
+the OSF before any post-2024 data update is ingested, so that
+future extensions are pre-registered in the formal sense even
+though the present analysis is not.
 
 The paper is short because its findings are precise.
 Section~\ref{sec:data} documents the data and provenance.

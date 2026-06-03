@@ -10,19 +10,41 @@ Appendix~\ref{app:criteria}; the gist follows.
 At significance level \(\alpha=0.05\), the empirical band-power
 inside the canonical cycle band must dominate the
 \(\AR{1}\)-bootstrap null (Section~\ref{sec:dual_null}). The
-surrogate count \(B\) is panel-specific: \(B=1000\) on JST R6
-(advanced-economy long histories, the bulk of testable cells),
-\(B=500\) on the Bank of England Millennium and World Bank
-annual panels, \(B=300\) on the quarterly BIS/OECD/Eurostat
+primary surrogate count \(B\) is panel-specific: \(B=1000\) on
+JST R6, \(B=500\) on the Bank of England Millennium and World
+Bank annual panels, \(B=300\) on the quarterly BIS/OECD/Eurostat
 panel, and \(B=200\) on the sectoral panel (Wen replication).
 The corresponding empirical \(p\)-value floors are
-\(1/(B+1) \in \{0.001, 0.002, 0.003, 0.005\}\); the implications
-for Benjamini-Hochberg adjustment on the joint grid are
-discussed in Section~\ref{sec:results}. The phase-randomised coherence
-\(p\)-value is reported alongside as a diagnostic but does not
-gate the verdict on its own (Appendix~\ref{app:methods}); a
-conservative ``existence-and-coherence'' robustness flag is also
-exposed.
+\(1/(B+1) \in \{0.001, 0.002, 0.003, 0.005\}\). To support a
+proper Benjamini-Hochberg verdict on the joint grid we also
+ship a high-resolution rerun at \(B=20\,000\) for the
+unadjusted-positive cells of JST R6 and BoE
+(\path{scripts/jst_per_variable.py --n-surrogates 20000};
+sidecar \path{reports/jst_per_variable_b20000.json}); the
+implications are discussed in Section~\ref{sec:results} and
+Appendix~\ref{app:per_variable}. The phase-randomised
+coherence \(p\)-value is reported alongside as a
+non-discriminating diagnostic only and does not gate the
+verdict on its own; the legacy
+``existence-and-coherence'' flag is exposed for replication but
+is not used.
+
+In addition to the primary AR(1) null we report, on every cell,
+a complementary \emph{fractional-integration null} (ARFIMA(0,\(\hat
+d\),0)) whose parameter \(\hat d\) is estimated by the
+Geweke--Porter-Hudak log-periodogram method
+\citep{geweke_porter_hudak1983}, alongside diagnostics of long
+memory (DFA Hurst exponent \(\hat H\)
+\citep{peng1994,hurst1951}) and unit-root behaviour
+(Augmented Dickey--Fuller \citep{dickey_fuller1979}, KPSS
+\citep{kpss1992}). The ARFIMA null is the proper alternative
+against which Gate~1 must succeed when \(\hat d > 0.1\): on
+such cells the AR(1) null over-rejects and the
+ARFIMA-conditional verdict is the load-bearing one. Per-cell
+\(\hat d\), \(\hat H\), and unit-root test statistics are
+recorded in \path{reports/*_per_variable_diagnostics.json};
+gate outcomes under the two nulls are reported jointly in
+Appendix~\ref{app:per_variable}.
 \end{gate}
 
 \begin{gate}[Method consensus]
@@ -84,22 +106,29 @@ false-discovery-rate \citep{benjamini_hochberg1995} adjusted
 verdict is qualitatively invariant; we discuss the few
 cells whose status changes between the two perspectives.
 
-\subsection{What ``frozen thresholds'' means here, and what it does not}
+\subsection{``Threshold transparency'', not pre-registration}
 
 The cycle bands, surrogate counts, gate thresholds and safeguard
 parameters of this protocol were committed to the project's
 public Git history before any panel was ingested for analysis.
-We make this commitment verifiable through dated commits and
-release tags (Appendix~\ref{app:criteria}). We do \emph{not}
-claim this is a formal pre-registration in the sense of the OSF
-or AEA RCT registries: those registries require submission to an
-independent third party before any data exploration, and our
-commitment is internal to the project repository. The
-distinction matters and we record it explicitly. The threshold
-values themselves are anchored to the prior empirical literature
-on each cycle (Appendix~\ref{app:criteria}), not derived from
-the data analysed here; this is the only sense in which the
-protocol is ``pre-data''.
+We call this \emph{threshold transparency}, verifiable through
+dated commits and release tags (Appendix~\ref{app:criteria}),
+and we reserve the term \emph{pre-registration} for the formal
+OSF / AEA RCT Registry sense, which we do \emph{not} claim:
+those registries require submission to an independent third
+party before any data exploration, and our commitment is
+internal to the project repository. The distinction matters and
+we record it explicitly throughout the paper. The threshold
+values themselves are anchored to the prior empirical
+literature on each cycle (Appendix~\ref{app:criteria}), not
+derived from the data analysed here; this is the only sense in
+which the protocol is ``pre-data''.
+
+As a forward commitment, the project will register an
+out-of-sample replication protocol on the OSF before any
+post-2024 data update is ingested, so that future extensions
+of the present analysis are pre-registered in the formal sense
+even though the present analysis is not.
 
 \subsection{Falsifiability of the protocol itself}
 
