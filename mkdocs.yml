@@ -1,6 +1,8 @@
 site_name: CPV — Cycle Position Vector
 site_description: La macroéconomie comme dynamique fractale non-linéaire à mémoire longue avec dérive de régime cognitif — démontrée empiriquement, validée opérationnellement.
 site_url: https://s-geffroy.github.io/EcoWave/
+copyright: >-
+  Un travail de <a href="https://www.ligne-de-crete.fr/travaux/cpv/">Ligne de crête</a>
 repo_url: https://github.com/s-geffroy/EcoWave
 repo_name: s-geffroy/EcoWave
 
