@@ -70,6 +70,7 @@ markdown_extensions:
 # documentée par Sansec) ; toute référence à ce domaine a été retirée.
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://www.ligne-de-crete.fr/kit/v1/ldc-kit.js
 
 # Refonte multi-track (Hub 4-tracks). Inversion narrative : le constructif
 # (méthode qui marche, benchmark PASS 78 %) précède la réfutation des cycles.
