@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{#- Bandeau ligne de crete : le kit (ldc-kit.js) remplit <ldc-bandeau>, pose
+    en tete du bloc header, donc apres le lien d'evitement. Sa hauteur (33 px)
+    est reservee tant que l'element n est pas defini, sinon toute la page
+    descendrait d'autant a son arrivee (CLS). -#}
+{% block extrahead %}
+  {{ super() }}
+  <style>ldc-bandeau:not(:defined){display:block;height:33px}</style>
+{% endblock %}
+
+{% block header %}
+  <ldc-bandeau></ldc-bandeau>
+  {{ super() }}
+{% endblock %}
