@@ -43,8 +43,8 @@ Retour : un `ProbabilisticForecast` portant `samples` de shape `(n_samples, len(
 ```mermaid
 flowchart TB
     Baselines([3 baselines]) --> RW[<b>Random walk</b><br/>X_t+h = X_t + Σ ε_k<br/>Gaussian]
-    Baselines --> AR[<b>AR(1)</b><br/>X_t = c + φ X_t-1 + ε_t<br/>fallback RW si |φ| ≥ 0.999]
-    Baselines --> ARMA[<b>ARMA(1,1)</b><br/>statsmodels SARIMAX<br/>fallback AR(1)]
+    Baselines --> AR["<b>AR(1)</b><br/>X_t = c + φ X_t-1 + ε_t<br/>fallback RW si |φ| ≥ 0.999"]
+    Baselines --> ARMA["<b>ARMA(1,1)</b><br/>statsmodels SARIMAX<br/>fallback AR(1)"]
     style Baselines fill:#ffe0b2,stroke:#ef6c00
 ```
 

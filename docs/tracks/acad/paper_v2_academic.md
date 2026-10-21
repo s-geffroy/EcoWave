@@ -41,7 +41,7 @@ On présente un benchmark de prévision out-of-sample sur 68 variables macroéco
 ```mermaid
 flowchart LR
     Data[68 variables<br/>6 panels<br/>1700-2024] --> Bench[Benchmark<br/>rolling-origin OOS]
-    Bench --> Score[CRPS empirique<br/>h ∈ {1, 3, 6, 12}]
+    Bench --> Score["CRPS empirique<br/>h ∈ {1, 3, 6, 12}"]
     Score --> Verdict([<b>PASS 78 %</b><br/>cluster bat RW])
     style Verdict fill:#a5d6a7,stroke:#388e3c,stroke-width:3px
 ```

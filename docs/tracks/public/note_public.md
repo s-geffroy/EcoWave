@@ -75,7 +75,7 @@ Tester un cycle, c'est lui imposer trois conditions successives, et voir s'il su
 
 ```mermaid
 flowchart TD
-    A([Série macro]) --> B{<b>Gate 1</b><br/>Dual null<br/>AR(1) + phase-scramble}
+    A([Série macro]) --> B{"<b>Gate 1</b><br/>Dual null<br/>AR(1) + phase-scramble"}
     B -->|échec sur un| Z1([❌ Coïncidence])
     B -->|p < 0.05 sur les 2| C{<b>Gate 2</b><br/>Consensus 4 méthodes}
     C -->|< 3/4 d'accord| Z2([❌ Artefact méthode])
@@ -181,8 +181,8 @@ Notre benchmark Roadmap #20 a testé six modèles sur 68 variables macroéconomi
 flowchart LR
     subgraph baseline ["Baselines (à battre)"]
         RW[Random walk]
-        AR[AR(1)]
-        ARMA[ARMA(1,1)]
+        AR["AR(1)"]
+        ARMA["ARMA(1,1)"]
     end
     subgraph cluster ["Modèles cluster"]
         HAR[HAR]

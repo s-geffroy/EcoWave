@@ -26,7 +26,7 @@
 flowchart TB
     Types[<b>types.py</b><br/>ProbabilisticForecast<br/>format pivot] --> Models
     subgraph Models [Modèles forecast]
-        Baselines[baselines.py<br/>RW, AR(1), ARMA]
+        Baselines["baselines.py<br/>RW, AR(1), ARMA"]
         HAR[har.py<br/>Corsi 2009]
         Fractional[fractional.py<br/>Hosking + GPH]
         ARFIMA[arfima_rs.py]

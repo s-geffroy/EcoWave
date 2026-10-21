@@ -29,7 +29,7 @@ Les banques centrales sont confrontées à un défi méthodologique structurel :
 
 ```mermaid
 flowchart LR
-    DSGE[DSGE NK<br/>SW07, FRB/US, SAM, COMPASS] --> H1[Chocs AR(1) ou IID]
+    DSGE[DSGE NK<br/>SW07, FRB/US, SAM, COMPASS] --> H1["Chocs AR(1) ou IID"]
     DSGE --> H2[Paramètres deep stables]
     DSGE --> H3[Distributions gaussiennes]
     H1 --> Reject[<b>Réfutés par<br/>cluster CPV</b>]

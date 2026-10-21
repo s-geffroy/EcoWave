@@ -53,11 +53,11 @@ C'est le chantier Roadmap #20, livré dans les PRs #30 → #38.
 flowchart TB
     subgraph baseline ["3 baselines stationnaires"]
         RW[<b>Random walk</b><br/>X_t+h = X_t + Σ ε_k<br/>Gaussian]
-        AR[<b>AR(1)</b><br/>fallback RW<br/>si |φ| ≥ 0.999]
-        ARMA[<b>ARMA(1,1)</b><br/>statsmodels SARIMAX<br/>fallback AR(1)]
+        AR["<b>AR(1)</b><br/>fallback RW<br/>si |φ| ≥ 0.999"]
+        ARMA["<b>ARMA(1,1)</b><br/>statsmodels SARIMAX<br/>fallback AR(1)"]
     end
     subgraph cluster ["3 modèles cluster"]
-        HAR[<b>HAR Corsi 2009</b><br/>cascade par agrégation<br/>3 lags (1, 3, 12)]
+        HAR["<b>HAR Corsi 2009</b><br/>cascade par agrégation<br/>3 lags (1, 3, 12)"]
         ARFIMA[<b>ARFIMA + Markov RS</b><br/>Bhardwaj-Swanson 2006<br/>d GPH + 2 régimes]
         MSM[<b>MSM</b><br/>Calvet-Fisher 2002<br/>cascade multifractale K=4]
     end

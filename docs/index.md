@@ -79,10 +79,10 @@ Une cascade de gates falsifiables avec **threshold transparency** (les bornes, s
 ```mermaid
 flowchart TD
     A([Série macro<br/>panel × variable]) --> LM{Diagnostics par cellule<br/>ADF · KPSS · GPH d̂ · DFA Hurst}
-    LM --> B{Gate 1<br/>Dual null<br/>AR(1) bootstrap +<br/>ARFIMA(0, d̂_GPH, 0)}
-    B -->|p ≥ 0.05 AR(1)| Z1([❌ Rejet<br/>cycle non détecté])
-    B -->|p < 0.05 AR(1) ET ARFIMA| C{Gate 2<br/>Consensus<br/>4 méthodes}
-    B -->|p < 0.05 AR(1) seul,<br/>échec ARFIMA| FP([⚠️ Faux positif<br/>long-memory])
+    LM --> B{"Gate 1<br/>Dual null<br/>AR(1) bootstrap +<br/>ARFIMA(0, d̂_GPH, 0)"}
+    B -->|"p ≥ 0.05 AR(1)"| Z1([❌ Rejet<br/>cycle non détecté])
+    B -->|"p < 0.05 AR(1) ET ARFIMA"| C{Gate 2<br/>Consensus<br/>4 méthodes}
+    B -->|"p < 0.05 AR(1) seul,<br/>échec ARFIMA"| FP([⚠️ Faux positif<br/>long-memory])
     C -->|< 3/4 d'accord| Z2([❌ Cycle disputed])
     C -->|≥ 3/4 d'accord| D{Gate 3<br/>Concordance<br/>cross-agrégats}
     D --> Y([✅ Verdict variable-spécifique<br/>publié])
@@ -157,7 +157,7 @@ La signature statistique est validée **opérationnellement** par un benchmark o
 flowchart LR
     H[Historique<br/>panel × variable] --> Split[Hold-out<br/>25% terminal]
     Split --> Origins[n_origins = 12<br/>rolling-origin]
-    Origins --> Models[6 modèles<br/>RW · AR(1) · ARMA(1,1)<br/>HAR · ARFIMA+RS · MSM]
+    Origins --> Models["6 modèles<br/>RW · AR(1) · ARMA(1,1)<br/>HAR · ARFIMA+RS · MSM"]
     Models --> Forecast[ProbabilisticForecast<br/>n_samples × horizons]
     Forecast --> Score[Scoring propre<br/>CRPS · coverage<br/>tail · bias]
     Score --> Verdict([Verdict<br/>PASS / FAIL<br/>par variable])

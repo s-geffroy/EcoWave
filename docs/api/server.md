@@ -21,7 +21,7 @@
 flowchart LR
     Client[Client REST<br/>Python / JS / curl] --> HTTP[Couche HTTP<br/>FastAPI]
     HTTP --> Forecast[ecowave.forecasting<br/>module Python existant]
-    Forecast --> Models[6 modèles<br/>RW · AR(1) · ARMA<br/>HAR · ARFIMA+RS · MSM]
+    Forecast --> Models["6 modèles<br/>RW · AR(1) · ARMA<br/>HAR · ARFIMA+RS · MSM"]
     Forecast --> Sidecars[reports/forecast_benchmark_*.json<br/>verdict consolidé]
     style HTTP fill:#90caf9,stroke:#1565c0,stroke-width:3px
     style Sidecars fill:#fff59d,stroke:#f9a825

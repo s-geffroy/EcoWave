@@ -20,8 +20,8 @@
 flowchart LR
     subgraph baseline ["3 baselines stationnaires"]
         RW[Random walk<br/>Gaussian]
-        AR[AR(1)]
-        ARMA[ARMA(1,1)]
+        AR["AR(1)"]
+        ARMA["ARMA(1,1)"]
     end
     subgraph cluster ["3 modèles cluster"]
         HAR[HAR Corsi 2009<br/>cascade par agrégation]
